@@ -1,0 +1,36 @@
+[
+  {
+    "id": "demo-inv-001",
+    "bin": "483312",
+    "type": "DEBIT",
+    "level": "CLASSIC",
+    "issuer": "JPMORGAN CHASE BANK N.A.",
+    "state": "NY",
+    "zip": "10001",
+    "country": "USA",
+    "base": "USA PREMIUM BASE",
+    "billing": "Y",
+    "price": 5,
+    "city": "New York",
+    "isSold": false,
+    "soldTo": null,
+    "orderId": null
+  },
+  {
+    "id": "demo-inv-002",
+    "bin": "414720",
+    "type": "CREDIT",
+    "level": "SIGNATURE",
+    "issuer": "CHASE BANK USA, N.A.",
+    "state": "CA",
+    "zip": "90001",
+    "country": "USA",
+    "base": "USA HIGH TIER BASE",
+    "billing": "Y",
+    "price": 10,
+    "city": "Los Angeles",
+    "isSold": true,
+    "soldTo": "400606fe-9059-438c-8e26-290a50099db2",
+    "orderId": "ORD-94C467AB"
+  }
+]

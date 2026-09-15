@@ -1,0 +1,113 @@
+========================================================================
+  DEVELOPER INTEGRATION & DEPLOYMENT GUIDE (TEMPLATE STOREFRONT)
+========================================================================
+
+This guide provides a comprehensive roadmap for configuring, deploying, and running this digital marketplace storefront and isolated Telegram gateway bot. It is designed to allow a new developer or agentic AI to deploy this system cleanly on a fresh server, fully isolated from any existing sites.
+
+========================================================================
+  1. DECOUPLING & ISOLATION PRINCIPLES
+========================================================================
+To ensure that this new site does not conflict, connect, or interfere with any other site on the server:
+
+1. ISOLATED RUNTIME PORT
+   - By default, Node.js raw HTTP servers bind to port 80.
+   - If port 80 is occupied by another site, change the port bind in `server.js` (look for `server.listen(80)`) to a custom port (e.g. `server.listen(8080)`).
+   - Use Nginx as a reverse proxy on port 80/443 to route traffic based on your domain name to your Node.js port (8080). This isolates domains completely.
+
+2. SEPARATE STORAGE DIRECTORIES
+   - Deploy the web store files to `/var/www/new_store/`.
+   - Deploy the bot files to `/var/www/new_gateway_bot/`.
+   - Each will write their local JSON files to their own local `data/` subdirectory. They share zero database files, keeping user records, inventory, and session maps 100% independent.
+
+3. INDEPENDENT PM2 PROCESSES
+   - Start the website:
+     `cd /var/www/new_store && pm2 start server.js --name "new-marketplace"`
+   - Start the bot:
+     `cd /var/www/new_gateway_bot && pm2 start gateway_bot.js --name "new-gateway-bot"`
+   - This separates logging (`pm2 logs`), error handling, memory allocation, and allows you to restart one without interrupting the other.
+
+========================================================================
+  2. WHERE TO CONFIGURE API KEYS & CREDENTIALS
+========================================================================
+
+All private credentials have been replaced with descriptive uppercase placeholders. You must replace them in these exact locations:
+
+--- A. IN `server.js` (Web Backend) ---
+
+1. NOWPayments API Credentials (Lines 77-79):
+   - `NOWPayments Topup Key`: Replace `<NOWPAYMENTS_BALANCE_API_KEY>` with your balance topup key.
+   - `NOWPayments Orders Key`: Replace `<NOWPAYMENTS_ORDERS_API_KEY>` with your direct order checkout key.
+   - `NOWPayments IPN Secret`: Replace `<NOWPAYMENTS_IPN_SECRET>` with your IPN Secret (for HMAC verification of payment webhooks).
+
+2. HandyAPI BIN Cache Lookup Key (Line 80):
+   - Replace `<HANDYAPI_BIN_API_KEY>` with your HandyAPI key. Used to dynamically query banking details (Issuer, tier, country, scheme) when admins paste card fullz.
+
+3. Telegram Admin Notifications Bot Token (Lines 81-82):
+   - `TELEGRAM_BOT_TOKEN`: Replace `<TELEGRAM_ADMIN_BOT_TOKEN>` with the token of the bot that sends new purchase, refund, and topup alerts to admins.
+   - `TELEGRAM_ADMIN_IDS`: Replace `<ADMIN_TELEGRAM_ID_1>`, etc. with the numeric Telegram IDs of the administrators who will receive alerts.
+
+4. Telegram Restock Channel Bot Token (Line 117):
+   - `TELEGRAM_RESTOCK_BOT_TOKEN`: Replace `<TELEGRAM_RESTOCK_BOT_TOKEN>` with the token of the bot that posts automated restock alerts to your channels.
+
+5. System Accounts (Lines 71-72 & `syncSystemAccounts()`):
+   - Change the system default Admin email (`<ADMIN_EMAIL_ADDRESS>`) and GOD email (`<GOD_EMAIL_ADDRESS>`) to your own secure email logins.
+
+--- B. IN `gateway_bot.js` (Telegram Bot) ---
+
+1. Gateway Bot API Token (Line 5):
+   - `BOT_TOKEN`: Replace `<TELEGRAM_GATEWAY_BOT_TOKEN>` with the token of your human verification bot.
+2. Authorized Admin IDs (Line 10):
+   - `ADMIN_IDS`: Replace `<ADMIN_TELEGRAM_ID_1>`, etc. with the admin IDs permitted to access `/admin` and run the HTML broadcast engine.
+
+--- C. IN `deploy_gateway.py` (Isolated Bot Deployer) ---
+
+1. VPS Server Credentials (Lines 4-7):
+   - Replace `<SERVER_IP>` and `<SERVER_PASSWORD>` with the new VPS credentials.
+   - Replace `REMOTE_DIR` with the new isolated directory on the VPS (e.g. `/var/www/new_gateway_bot`).
+
+========================================================================
+  3. CHIME PAYMENT & AUTOMATED MATCHING SYSTEM (Deep Dive)
+========================================================================
+
+The Chime payment method provides a fully automated checkout and topup verification flow by listening to incoming Chime payment emails and matching them against pending invoices in the database.
+
+--- THE ARCHITECTURAL COMPONENTS ---
+1. `email_checker.py`: Runs as a background service polling a dedicated Outlook/Microsoft inbox via IMAP.
+2. `webhook_server.py`: A lightweight receiver that forwards parsed transaction records to the main server.
+3. `chime_daemon.py`: The matching engine that verifies transaction data and completes orders.
+
+--- STEP-BY-STEP SYSTEM FLOW ---
+
+1. INVOICE INITIATION:
+   - A user selects "Chime" as their payment method on Checkout or Topup.
+   - The storefront tells the user to send the payment to the store's designated Chime email address, using a unique payment amount or a unique payment note/tag (e.g., a short alphanumeric ID).
+   - The server creates a pending record in `orders.json` or `topups.json` with status `WAITING_PAYMENT`, saving the sender's Chime tag, the exact amount, and the invoice ID.
+
+2. INCOMING TRANSACTION NOTIFICATION:
+   - When the user sends funds via Chime, Chime automatically sends a notification email to the store's Microsoft Outlook inbox (e.g., "You received $15.00 from John Doe").
+
+3. EMAIL POLLING & PARSING (`email_checker.py`):
+   - The `email_checker.py` daemon continuously polls the Outlook inbox via IMAP.
+   - It searches for unread emails from the Chime domain.
+   - When a notification email is found, it extracts the HTML/Text content and parses it using regular expressions to extract:
+     - Sender's Name / Chime Tag
+     - Exact Amount deposited (e.g., `15.00`)
+     - Timestamp of the transaction.
+   - Once successfully parsed, it marks the email as read and posts the parsed transaction data via HTTP POST to your Chime Webhook receiver.
+
+4. PAYMENT MATCHING (`chime_daemon.py` / webhook endpoint):
+   - The Chime Webhook route in `server.js` (or `chime_daemon.py`) receives the POST payload containing the parsed sender, amount, and timestamp.
+   - The matching logic:
+     - Scans `orders.json` and `topups.json` for pending records with status `WAITING_PAYMENT` where `paymentMethod === "CHIME"`.
+     - It matches the transaction by comparing:
+       - **Rule A**: The exact amount AND a matching Chime tag/note, OR
+       - **Rule B**: The exact amount AND a timestamp match (within a 10-minute window).
+   - If a match is found:
+     - The invoice status is set to `COMPLETED`.
+     - If it is a Direct Purchase: The system allocates the product stock lines and displays the purchased credentials.
+     - If it is a Topup: The system adds the credited funds (plus 10% bonus) to the user's balance inside `users.json`.
+     - The admin bot fires a Telegram notification confirming the successful automated Chime match.
+   - If no match is found, the transaction is logged as "UNMATCHED" for manual admin review.
+
+This system guarantees a zero-manual-effort, completely automated checkout and topup experience for users paying through Chime.
+========================================================================

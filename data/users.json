@@ -1,0 +1,981 @@
+[
+  {
+    "id": "400606fe-9059-438c-8e26-290a50099db2",
+    "email": "admin_ops_d0c2c93f@mysterio.cc",
+    "passwordHash": "3d528c5551daddbe17e7016ec6a9a8cf:27d1ca9baf9a6515d804ff94133972166558e98238a2798b5de2e99481073660ac09a03ba0bf4fcc1040c7e8a1b91024d5a568816a844a586a3544779bd56f1a",
+    "role": "ADMIN",
+    "balance": 0,
+    "createdAt": "2026-08-15T18:45:14.333Z"
+  },
+  {
+    "id": "46153f5b-c1c9-47c7-b881-ea291a9cd2f3",
+    "email": "god_root_0674f78e@mysterio.cc",
+    "passwordHash": "9fded8f9b7df0c0c632e7a13edd69331:6fb3e8687a7267a0e7649ebbdf519239911b04a5cffe4da1a6ffa4d570e90f4a488d890775c2ec2440893ee74bbfb4248e483473a8c2c349d8289eb4de0c2b3e",
+    "role": "GOD",
+    "balance": 0,
+    "createdAt": "2026-08-15T18:45:14.405Z"
+  },
+  {
+    "id": "335ff3a0-3f1b-4902-ac82-171ad1ad883a",
+    "name": "",
+    "email": "jamesmith7623@gmail.com",
+    "passwordHash": "de0c3d5f912edf4d5e3c139be7d659f7:5f0bf07c6a0f360bc7bbae316b8b93dda752ef55f21c87305f9ec18492cd86d0eca74ae4d2624448ec7e8811354d6651f979181e4c387b6970c27620e932cdf6",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T20:39:10.339Z"
+  },
+  {
+    "id": "3bc8ed8a-a4a2-4284-b268-8f67ea5079f2",
+    "name": "Saint",
+    "email": "ccspaidd@gmail.com",
+    "passwordHash": "1f77996de6b41aee03a304b1907148e6:edc7165eb8d13e1b4f115dd89a85e65436a01fc11f99b7d9a6aa4aaaff1d7bd7fc8ccf8fc3d756677493b04c5ab7bca64da50d184ce082dae7033a79f346c0a2",
+    "role": "USER",
+    "balance": 5,
+    "createdAt": "2026-08-15T20:39:34.736Z"
+  },
+  {
+    "id": "1a631dc0-bba3-455c-a5d0-90c2118d3e3a",
+    "name": "JORDAN AMIRI",
+    "email": "amiriofye@gmail.com",
+    "passwordHash": "d75b2f395b49dab87b15d12e52faf78f:acc6a4494952803a52bd30e1ef3959e8f8d682a43d72cfa99fb8f5e39b7fd2e718cc176bfe9ce1358f0e5b046cca59de3d059145bbf3dfb71a2d10c4f841981d",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T20:40:23.016Z"
+  },
+  {
+    "id": "78dcf455-106b-4dcb-a88d-72f8d7d82930",
+    "name": "Dhxhxy",
+    "email": "shsys@dis.com",
+    "passwordHash": "a5977476b8ade6f771d4207d02b40833:e3b981efdf2bb9a7447727a8edb8bfcb82867da307511596c9f73564380f3637c026a31e0d3c75ffd3b66a9df41095827a8c7fc4cc6140bb2e193a5f822d8afa",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T20:43:11.706Z"
+  },
+  {
+    "id": "8209d723-6e82-46f2-a8b6-516bacb7ee29",
+    "name": "bokolo",
+    "email": "swimma419@gmail.com",
+    "passwordHash": "39f78ab88e5064c9adc588a33f600696:33f1ef1bdef7a483989031b8a031a743a49bdcd16b969785d2d24bf7a24181c233886b8d5a9426de2c4718e95130a921848faa0cb24d6036d59d78bb8b0c3dea",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T20:43:12.502Z"
+  },
+  {
+    "id": "9a34c53f-ad7c-45f6-b131-5e81d488960d",
+    "name": "",
+    "email": "xyrohell@gmail.com",
+    "passwordHash": "a16077555e7fea27104afd33a6542abd:d75e4b72ba3c35db3bc44b330be652ccb6bd5021d489d41483021cecc984b6d4c97ccf2d8141712299e67739dc31e809cf0a34cf2f637e97e01185a236dedb5f",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T21:18:05.716Z"
+  },
+  {
+    "id": "dffabb25-f06e-4687-84fb-7a881ccf632c",
+    "name": "kai",
+    "email": "kyhiggins@proton.me",
+    "passwordHash": "b616ad0b219fb7761d915ad0875dfa14:86e2723b8449661366da9dad326024122fdcb66482f22b6c0f57e84d0c9e182fafb964de25e36d075f55cef09653774a42c7d328626353cfc393a2648cf9a3b9",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T21:18:46.696Z"
+  },
+  {
+    "id": "68329041-96b1-45ef-af72-24b3d8d369eb",
+    "name": "DAVID",
+    "email": "jes234191@gmail.com",
+    "passwordHash": "5f1b2eb4b9b48b2067df24513741ef1a:3ec514bdaa1885ba0d3a0a9fc4f773d3989f7d7d0c856f61bf2e9ff1a8a9e240edff30378c0da4f49949bdd55cb12a9ba060599f9b5caaf986b1a6b2902cc501",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T21:18:57.690Z"
+  },
+  {
+    "id": "afa00766-1b34-4551-9576-930411088c9a",
+    "name": "",
+    "email": "samsmith18603@gmail.com",
+    "passwordHash": "e93e0ab33ac9e9c637db7e82d28531ad:8d11aa10a9dde40cd12a878bed25115560488a0463bf78f8f891c34d8adbac20ba24b822160dc0570001985a368174a003e7cb00c687bb62a09baf11c2c0c0f0",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T21:19:31.359Z"
+  },
+  {
+    "id": "dbf68607-2e1a-4f3a-8bf8-75ed275254d0",
+    "name": "Kai2",
+    "email": "kyhiggins28@proton.me",
+    "passwordHash": "bfc5b53d7cb57b4f40c56aefc92a5c72:5c469790917482af651c5a0d5321fdac394d1e3ae97ae1ad084965089d122d9bbb21faa8503abc985cfde4013fe61f81cb99c14530e4429794250f3cad0933b9",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T21:57:28.325Z"
+  },
+  {
+    "id": "03cd7d55-b0a1-4cdf-bf19-f55b4642afae",
+    "name": "",
+    "email": "lewisdavies.x@outlook.com",
+    "passwordHash": "feffb3276ed4af061bb75f5295495a0e:d67385d4cf4f85d7acaac9011b40bececdad3ec1b9cd04cb2b257b02939b1bf144e4f728e929795f0429d1e4e41de61898f1f2a489f14899b139e655740cb12c",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T21:58:29.948Z"
+  },
+  {
+    "id": "a45d6ae5-9568-4807-a132-6429e46a2a96",
+    "name": "Mames",
+    "email": "jamesben102110@gmail.com",
+    "passwordHash": "62eb22714a322a35340c58ba3f6d2801:a7dfd5dc43ce4048fa74ca24225686931968b6591415ffbe821026ebd378a38e98bbbe7f8993d405fc483baf058e8102e1f043cdab6c4c6863758c72b09a6bff",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T22:14:25.746Z"
+  },
+  {
+    "id": "e3e68958-fc84-43dd-b0ff-2f8a39b0c392",
+    "name": "",
+    "email": "starukw@gmail.com",
+    "passwordHash": "b15786b95ff12ea02884c888a114ee2b:9f4cc24f581095bc48cdc68738801faa24965746ca43b15de56d7b3d9dab2824b63528526e3b9bb0e61c7d0cc2d53da50f07720a0ad8b8a7140af625c0a202da",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T22:19:10.164Z"
+  },
+  {
+    "id": "385062f8-0ce3-46d5-9225-5974152aa9dc",
+    "name": "J",
+    "email": "jugteg22@gmail.com",
+    "passwordHash": "8f2273d2127068cd251b8281f8cd1ab7:c58114f360ee30d5099ad78418fbf510193e49da2b191262fb7a77845c2598f8cbc461c6ac319272283a5a81931e5b9b567f0e4e2465162a9734398ecd0f510a",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-15T22:22:59.563Z"
+  },
+  {
+    "id": "3017dedf-e8ab-4f96-8cbe-b0b88394a998",
+    "name": "",
+    "email": "johnnybinggg@gmail.com",
+    "passwordHash": "f91aa7fd503fd2caab94c54053c8a801:fd394fbd613bdbdfce6d7a582a3d7d5c51bdba57e0d2d7da45bd5a646b2b25c515f2451fa12a9e6cd8411817a8e9added15729290159cdc303ab333d48124a80",
+    "role": "USER",
+    "balance": 2.6,
+    "createdAt": "2026-08-15T23:36:27.850Z"
+  },
+  {
+    "id": "f5e3d2f8-5007-46f3-998c-5ef2a6dbd199",
+    "name": "adz",
+    "email": "adzfundzo@gmail.com",
+    "passwordHash": "0ae98c17ef88e0d723d764c0c1fa3825:81ab4eab8f98c1ceed1a2fb590bc44f7ac7465808995f6f254d9692d4c5a8cff55392cf9bfe4d31789ddf8a446c04a2c14ca027f2297f22e19db39607eb28af4",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T00:04:15.641Z"
+  },
+  {
+    "id": "bdb40d95-3022-42f3-83af-76f0f442fab1",
+    "name": "Yuna",
+    "email": "yunacoopa@gmail.com",
+    "passwordHash": "f4a713bc652e1a641987e3d7b4189b82:5dc3d1cc38bdcb87d5872f364bbf8d341b0ab48a5a28a6bd502c8541ea0b2ecec7945f2bd13633d26be504929fe3be47ab5ced28b2621026187550ee0192576b",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T00:59:01.039Z"
+  },
+  {
+    "id": "602eb86c-961f-4ae7-92bc-f0b935cf9b6b",
+    "name": "Kay",
+    "email": "kaychopstar@gmail.com",
+    "passwordHash": "3edba669b10947d1f12fb1e8071e81bc:7b62f49eb7b33ddb573a4c1960de52939bebce0d3bcbc9e260a033125271e41bdb8c8229c8f3fd3802629caa48dba4db713b25e7682e30e3a2dce31f3ba68f98",
+    "role": "USER",
+    "balance": 5,
+    "createdAt": "2026-08-16T04:50:44.933Z"
+  },
+  {
+    "id": "5ceb9459-0ed7-4b6b-8822-655ec6fcd00e",
+    "name": "",
+    "email": "silentfigss@gmail.com",
+    "passwordHash": "566d632d30c7783c241118df9a92e74f:f88f0012865a47cb8c5151eae417819fb2bfc91017d288127abc25903cf031b4ae0ea8b0c9f0442be2eecd87db7dad791643c1e9eef9fd3bd863dc6512944d4f",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T08:56:08.034Z"
+  },
+  {
+    "id": "1058888e-ae89-40e8-b30c-a1d99ea8d3be",
+    "name": "",
+    "email": "jugjugxav@gmail.com",
+    "passwordHash": "62b54ea6769ee7ab8f6a73153617092a:75e0ea2598dfe00e7993497329ef2be9a0ad3db07b425fd941815de784f3984cf5ca795579dd612d10dbb25378d39168da06544c78b4d0dd914ce3fdf4889c90",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T09:43:00.615Z"
+  },
+  {
+    "id": "bec6dda6-a617-440d-96c4-f2a330ed0b14",
+    "name": "",
+    "email": "zakuddin80@gmail.com",
+    "passwordHash": "f88099e766cbd9b3b8bb30e8590e3f32:7c0cef6e8b7d6008d40f3604304a980d2f8820e45c6bf0e794ba244f62acd765bfc72c4cac8e8748d79b8e641b75a2885c1308b6067a57e3e8d9a14b4c970058",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T13:40:16.923Z"
+  },
+  {
+    "id": "f0acacc4-e323-45a3-80c1-de9ea420c8a0",
+    "name": "Billion Mcduck",
+    "email": "luckylucciano@mbox.re",
+    "passwordHash": "cc3bd7ecd0e0ae1412f1d4bba98d274c:67abf02cce078f1a0969964b8f80670be7ee87073c4d12400ce53bc3808e96e49d2a1d4220be99e2d9aa7f3629b55fe1b7d8c5931b3cc18a823e817a28daf96c",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T13:40:18.615Z"
+  },
+  {
+    "id": "39413111-af44-4e06-8db3-0c65e0b6ba40",
+    "name": "",
+    "email": "ptt04960@gmail.com",
+    "passwordHash": "fb2f548eb93da0384aa4f17f50b6af09:e9f957b750abff27b70e2d2980a4fe78d7d60ac953533abb28a7e3fd14af292053dd1d36fe2afa3367dfa9909492bb1c3b8828f6eb19497d231e80f93bab3c4d",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T13:43:29.151Z"
+  },
+  {
+    "id": "41a06699-f730-4ffe-814c-299da0921980",
+    "name": "",
+    "email": "renaplenderleith@proton.me",
+    "passwordHash": "710284e181ef2363034ed3c5c3d019b7:6eb86ea1931478ae4beb6d7b3076e481e3aabba0da2a8d5226fabd6b634fa99d8d27f4921e7a1b728e0a2d6538fc21cefa40a3f3c452637972078558d5017765",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T14:53:05.271Z"
+  },
+  {
+    "id": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "name": "",
+    "email": "sunoldtax@f5.si",
+    "passwordHash": "5e204b182080654c2fe09e4d5d76e7cf:474f78a903d50bc3b39ee11816b0495a23863139a886e193a9f9ca8d0a8dd0962d63b22f3e0aaf3e76227d503d446b0130fb5dab9e89444b0274566c995d8996",
+    "role": "USER",
+    "balance": 231,
+    "createdAt": "2026-08-16T15:05:57.658Z"
+  },
+  {
+    "id": "8f7f81ab-b55e-445c-97ab-cb1dff1f717c",
+    "name": "",
+    "email": "emailspam1016@gmail.com",
+    "passwordHash": "ab7adaa6116009759952eda8acecf99b:0e0fda986ccf87f8f2e1635721dba570d0abbd126639e075578989d516a58b7fb921a9c0623b84cbac6cf00b6f9361ee9d54297aeb680e9330570f27cbab8bc8",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T15:06:11.708Z"
+  },
+  {
+    "id": "92ce4b51-fea8-4daf-baf1-46e93df237bb",
+    "name": "Kaycc",
+    "email": "kaycrops@gmail.com",
+    "passwordHash": "7ea264f11709c5eb4dcda396db67fea3:0537f018033252fdcd9b0af53feb8433e84a6f55d25f59d87bde572fb13df34e419df80ac4becba698c01820ba6c633c1ec81a3b7093b70f879a39669d4ecb8b",
+    "role": "USER",
+    "balance": 7,
+    "createdAt": "2026-08-16T15:06:22.528Z"
+  },
+  {
+    "id": "b245895a-2d59-4ef0-b270-ac159f61d3d8",
+    "name": "mugi",
+    "email": "mugifujihiro@gmail.com",
+    "passwordHash": "fab5af468313f2ee540f1e06ddd3908e:8c177a4a500fad1e63919dba7691e547debbc6a79b11d174d8f70e892224ef49b43a3e87769c4f2583043d963fefc927e683908f802fab315b85c9881deb7326",
+    "role": "USER",
+    "balance": 12.5,
+    "createdAt": "2026-08-16T15:06:45.249Z"
+  },
+  {
+    "id": "d8c8e7c0-e5de-444b-abf4-dbca57386eac",
+    "name": "John",
+    "email": "johnnyjacck1122@gmail.com",
+    "passwordHash": "ec3c93dbe0eabf7e6a5ad064646f8b74:bc49bafd9d98f522baba0f15fabbb364bb6ab5ebfc8605af977771545e7edaa6f3608e03d5bd3b37027f275d3766e26d2688b639530b6759f711fcfa97ac0728",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T15:06:45.646Z"
+  },
+  {
+    "id": "40941e30-f975-4e85-9849-813133ecf2e4",
+    "name": "Jetz",
+    "email": "jetzpaid@gmail.com",
+    "passwordHash": "05330b935bea274b0157d297a6c51fd1:e6ba222408f622d0240a6bb09c4e3c3258bd76879c510fdb0b674dd457538d68baeee5d1ba6e5ce89b54c0e383ed20f2bdc4a467afa30b09ffdcd463ed27fb8e",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T15:14:09.419Z"
+  },
+  {
+    "id": "9b80c564-00f8-494f-b828-0696ed6cbc0f",
+    "name": "",
+    "email": "captainchop@icloud.com",
+    "passwordHash": "fc0ee1e11acbb5520e47b3ab866fea8e:3b3f9f92cce868e4f062f7632211cabcde4dd6065a5bbcfbeb6e9ab936f4c175508bd49373136116c5ec417b22e623a036c04af4dc28b3125541251ace247823",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T16:44:16.130Z"
+  },
+  {
+    "id": "51e3d35f-45de-448c-bc11-a18a57d7c6f3",
+    "name": "Bala6",
+    "email": "yusufjake40@gmail.com",
+    "passwordHash": "db10eb4675f5eb69eb2766b287bc20b4:5391f1b77f452830c359fd2b9374930eb4b0da16c9b79b976b1a0a5bd7668316db893a91ce84960d746f0dab6739326aded643f9570dd0786bde2dee688de960",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T18:18:27.927Z"
+  },
+  {
+    "id": "3970d2c7-ac0b-40f2-b2e5-e45f3959b419",
+    "name": "",
+    "email": "zaida786916@gmail.com",
+    "passwordHash": "6589619947ea4fb2ef5af8ba736d2358:db32dd4bc15a39ac210b8fa3548a75692cc6ca4a57da4d49056ee5518e2a7222215fe265081dc309083a40f431dd7a276ce8f9b8873513ef88c3f4b42e18d7af",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-16T18:25:53.673Z"
+  },
+  {
+    "id": "fe0da6f2-d64f-44ac-9b91-0acf514b1ccd",
+    "name": "",
+    "email": "bothoot7@gmail.com",
+    "passwordHash": "660cfde811fb0a684d9137cc2728981c:9c34b3791ec5e1b828cf49606a8bb0ed4d26f2703bf8b0b706c76091cb8486401d179af7790a4055082a397a4207aa1d9de34208f564e3e6c05645d9e1a3f499",
+    "role": "USER",
+    "balance": 7.5,
+    "createdAt": "2026-08-16T21:21:21.898Z"
+  },
+  {
+    "id": "a65a169e-e5ca-42ff-85c5-c190d6f24d9b",
+    "name": "Btom",
+    "email": "btom34519@gmail.com",
+    "passwordHash": "97ae8b9bf9300d23641c2b7d3ff3212b:3edd06509a15678d5e5ef725187973c8766d13daff7647c07dcf97f3378f9d431b2d8a94c83980736229ce9d3d0e1bdb28267f51bf52a4316b6480396c70af90",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-17T00:09:25.094Z"
+  },
+  {
+    "id": "54fbc842-a195-40e6-9359-8d90f1cf5a00",
+    "name": "",
+    "email": "funnet278@mirai.re",
+    "passwordHash": "0873abc24beb6269e0224bb64e06f5ec:f2de7f947467dec4d997b3da4aee75f852004ad55fea5c68abe40583fbdb41954e04c0437d612c06fbfb05a5dc74526d5fd320f47d91f086e05cdde00170a776",
+    "role": "USER",
+    "balance": 0.3,
+    "createdAt": "2026-08-17T09:11:35.007Z"
+  },
+  {
+    "id": "c660e0f3-a260-49e0-b1fd-81f890a772b2",
+    "name": "Danielkwsogog",
+    "email": "danielkwafo012@yahoo.com",
+    "passwordHash": "2092c51eea3dd395eada3bfdce623a29:c793a0eab2670f30f76da99cea7f7acf9f6a761553936fdd0640cac57bb64e71396c58a9324a68498957b718507ef941d36e1d008ef25db792a23e37796818f5",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-17T12:30:46.513Z"
+  },
+  {
+    "id": "d8e52844-e372-4f5e-896a-2680b39399ec",
+    "name": "",
+    "email": "mraura0101@gmail.com",
+    "passwordHash": "f59f61aef0d6da2d5bb6d8e42c90ec73:7cf1fda2857b2099fc02896636a075bc3e4c32ea6b6c72197d474995fc5fad09b22c801b65cfda578510cbb42a15b37b5d1d62a2824d69647786947087567644",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-17T14:21:56.659Z"
+  },
+  {
+    "id": "d81e9103-9b36-4899-9b70-133047a3fa45",
+    "name": "Cash",
+    "email": "georgiamayallen0@gmail.com",
+    "passwordHash": "1d7bca62e250f09769c434e7a0794fb0:bb5747ca23bcf8219526bcb13e6f4bb231650ed94a92344f16652f9704fe617072cad3fdbf4be927b8a0b137c5b13dfa24f7071cab448ca2c2ad0e35739d30a3",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-17T15:53:54.619Z"
+  },
+  {
+    "id": "a915431a-400d-472f-9b10-8b487a374852",
+    "name": "Ashley Kirkham",
+    "email": "punx78120@gmail.com",
+    "passwordHash": "2ba560456b07465f285a14af418dfa98:1874f7208064cdc41ba6c7cdead7bc37ae52aa20a417866677050ea5bcb46bd5b9cd3de6f078d4f29c0eda380c283d390069e2836e9f58847944dff660e6120a",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-17T15:55:55.749Z"
+  },
+  {
+    "id": "ca9a79d4-ba7d-4c2e-b3b2-a6cce47c7a7b",
+    "name": "Ov",
+    "email": "ovchopped@gmail.com",
+    "passwordHash": "8be9f40881a72d96982e18ba93639ea9:402984d9501e4257e2db41cd82825c10d741301afd7cac03fe66a5f150d6e3b6e0a10336e6a958dbb858aa12579ead9c37feea48be7a9db903404e6df0a1a5d2",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-17T16:25:16.160Z"
+  },
+  {
+    "id": "cd0d98e4-3e14-4a4d-b48e-b750bc6a877f",
+    "name": "Idz",
+    "email": "yxngidrz@gmail.com",
+    "passwordHash": "fda580ef237e9b7d69a2bb6fcb388359:84a34b8199a3e5af87bc4ea18276d77fcad3dd17c942e87a8b6920f27d68d68ccd63a2a773c3d15d301ba089dd15c2736e58afd41a1d09c443d624232a089252",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-17T17:06:34.950Z"
+  },
+  {
+    "id": "ac255653-d488-4f53-bb8b-03c47ee3164c",
+    "name": "",
+    "email": "rayebennett1@outlook.com",
+    "passwordHash": "3a49823f97ad4319fa55f07a3b70692c:63591c1e402867eca2548272d4a56ff3d6c34233a5846a953596d6b36dae967db63bf3aeb8fbe4b73a3c09f08d00865e106f368f2458142d05806ff955949fa8",
+    "role": "USER",
+    "balance": 2.5,
+    "createdAt": "2026-08-17T17:44:32.465Z"
+  },
+  {
+    "id": "f905b0dd-1266-4825-8498-3e5227171554",
+    "name": "",
+    "email": "elsatonge123@gmail.com",
+    "passwordHash": "f27617d5c8ad30ee8942a1dc78b73744:e4b8aaa148ca1c58fa84367c078b1f54c993985e5c31d7520dee738d3ebf55125d67c46ce49c46ddd4ddfb33b0fe7d6a090f82ed9d196e64c050201dcf1383da",
+    "role": "USER",
+    "balance": 9,
+    "createdAt": "2026-08-18T09:45:13.073Z"
+  },
+  {
+    "id": "f353a76a-1cb4-4b92-b898-bbe2c53e0568",
+    "name": "zack",
+    "email": "tools6713@gmail.com",
+    "passwordHash": "41f525066bbc46542c385a553c2203c2:bdd1730aaa6ee9739f41c1de1f789b5842721821ae7c7ba9537f011694fa3e451a680a7588d1024714702e3578016fabad9944e98b1590bed83e8ea1fd090b9d",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-18T10:28:18.350Z"
+  },
+  {
+    "id": "0b4e099e-6d15-4ecd-991a-c8dcb13083d8",
+    "name": "",
+    "email": "adz101180@gmail.com",
+    "passwordHash": "976be690b2fb7747d84c187a968e4f64:61d7ef02acf96ef4128a8ed2ed9b9fb17a71cf52388650b6a3e4d8a2147eb0837063c0fcdee4729674ded6c82a0241aa8cbe56426790fde8640ce4279e723068",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-18T10:31:44.553Z"
+  },
+  {
+    "id": "e1c00ad2-17ed-4c6a-b0ff-a396530352f1",
+    "name": "",
+    "email": "thompsanrobert6@gmail.com",
+    "passwordHash": "8a787ce80e3cffe3fd191146140d5ff3:70456abb0f241516490d3c877273cce7eb190b4d72c4973901bf82d2f092f0897e65413952a27e4634ef6d75c3e488a71cf4832ffe4c925706cc2bf7b073cc59",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-19T08:27:30.235Z"
+  },
+  {
+    "id": "bd0deec7-f1a7-47c2-84da-e7360252b85b",
+    "name": "mz",
+    "email": "jugger2047@gmail.com",
+    "passwordHash": "85a9dd6f01d9ba4cb3d1714851866b6d:b7bdb75ac41ab0e3c6489727c702d169d8901d781dbfccbd32056c7f9ae3a9fcafb3f6a2f7ad44f2cccd5c0bd105bbddf4f704e70c3684fa855d625063531fe7",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-19T13:54:33.947Z"
+  },
+  {
+    "id": "9e7bbd66-9ace-4993-a530-ab90f508a566",
+    "name": "Da”",
+    "email": "dolabanji53@gmail.com",
+    "passwordHash": "888ddc11651cd9df90028c7464efdb31:636de73c792c1158c040e2de09e889fce449edb939b4a7985e5c7b2e90f98d4a8304e3b36bb739674a93ed926c740058e064e55700edbcbdfc66b2425ed73446",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-19T14:21:20.238Z"
+  },
+  {
+    "id": "7a69b948-f917-4a05-99e2-b36c1633ea84",
+    "name": "Monta",
+    "email": "aron113n@gmail.com",
+    "passwordHash": "e3084067aa620f942a6c32b80875d10a:f4c2c7e5c8c8e4c4975b9cce065cee0663d42639778decc5aed3c15eae5a0da61db4fdf44bdb9a96837119d45c8acb0a35ab4e9f1fc254b06fc28397248699ad",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-19T14:30:05.435Z"
+  },
+  {
+    "id": "4dfb9f61-af3e-43ff-9fc0-d6d5c0586cf6",
+    "name": "Flat 7 Jyn",
+    "email": "sn00pdoggy@proton.me",
+    "passwordHash": "712ef2617ad95fcb9f2aff964f904fb7:df985fc184f59226539377e06e2060f84939e75a0921c3cc9663ff74e1924f547e74a969ccc09fb79f0cf0e4337383157f43a4222971c9612db3fed14ab3a31c",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-19T15:13:51.498Z"
+  },
+  {
+    "id": "620699cc-d847-4665-88aa-114b4835d995",
+    "name": "",
+    "email": "betamalebnksy@proton.me",
+    "passwordHash": "295618351f81d7fc3a1b633176ab71b7:1db767acd3fb3490d2218858746b2f2fc9d3daceb766a39a744b8f6312821a3d1b928a4b6e9ca3e106308d02d683dc771d9f1c074a11110d2165024fb057afbd",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-19T15:59:33.918Z"
+  },
+  {
+    "id": "a0314e5c-0a5a-41ad-9f9e-3d21eb4ede4f",
+    "name": "",
+    "email": "frrlust@gmail.com",
+    "passwordHash": "dbb2738afdc089f1385ba18ff9776116:b4a9ef908aacea6af4ba1873f4c41b99e3aacfa935bd3331d5d38610bad1a1b3a59e2af374015cae0273b533146cc3de1d66264d2dc022a1c8f525de6380ce28",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-19T16:00:09.485Z"
+  },
+  {
+    "id": "3baad51e-6d1a-4c20-a7b4-0d7b5665474d",
+    "name": "",
+    "email": "anonheavy2801@proton.me",
+    "passwordHash": "fc401da08f578ffdb1b7b1e4a43a1e0f:66e820f94f67a6bcc4ff9ba6854351587620f62395d5026c101624c83bcd617f7437eb58d441c2d92eb93cc4685def9a457a6b286e7f2c10485123524ad987da",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-20T02:47:50.932Z"
+  },
+  {
+    "id": "05a3ee5b-52f9-479a-af01-5c455ce13cc8",
+    "name": "",
+    "email": "ihaveyourdoxlampz@gmail10p.com",
+    "passwordHash": "ba407380b2376bd6324ad77ccdd8e7e2:acd104f957c9ddacbfa6cc021f7af4233420087192d66d5c228267d385f1ab64b07b786e7c52b96e542e62082bf6972c9f8219a1abfa4ba74bc9186f47eaefe7",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-20T10:22:03.901Z"
+  },
+  {
+    "id": "45c2a664-f175-459a-bbff-ebea9fb73390",
+    "name": "lc",
+    "email": "staysmartliving@gmail.com",
+    "passwordHash": "9e2b3571c8074684c78e31da9219cf4a:4e3f2c701f96afa76e670a88ff07b985206299d9ae69b498422b841709ca4c9639f59af772e489c8b40abe8f586b677c39e8aed3f8208c18908b75128c6560bb",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-20T11:17:55.861Z"
+  },
+  {
+    "id": "ac034e33-15a5-41dd-8c8f-4e59a4b8ab58",
+    "name": "Mitch",
+    "email": "mitchpaid7@gmail.com",
+    "passwordHash": "71447729954c66deeccd02340521b9fb:da67468cbb1418002905667825e74eb40cde853b4e2f27691f8c4c0b6ba6ce94d1957c7d18027f2d57560eafaa6aba39dbdc45093a1f2f2909430c6b9a6705f2",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-21T04:49:49.916Z"
+  },
+  {
+    "id": "ab331eba-1435-4389-bfd8-394c65a0e3a4",
+    "name": "",
+    "email": "jonathanparke4z@gmail.com",
+    "passwordHash": "3db2c33d759950114ca3c7e2a8730764:736d4ba5df0292790c623a87345af593b92116f295ee48caa27d4f622ac4f322f0a1671341d007741d86f3564d851170e94412451f3987b4e8878cca804e6c65",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-21T13:17:33.491Z"
+  },
+  {
+    "id": "63c6cb82-a590-46d6-89f3-599e38e96cb7",
+    "name": "Specter ross",
+    "email": "peaoar610@via.tokyo.jp",
+    "passwordHash": "9ad66b1a9b5cb46fcfeca9d7530da33d:90915aeb707dc25102b97d098b511c40fbc16e7fb3d0bc727837027dd32e127cfee731b134d642255aae43a793e8860c50bb5b57dd3dd7a55945c881504eefeb",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-21T20:29:17.406Z"
+  },
+  {
+    "id": "6a35a480-99c1-4ead-a8c4-5c38ab54ca69",
+    "name": "",
+    "email": "bavachorr9@gmail.com",
+    "passwordHash": "f6c14a16141ca063d79e6cf079250d49:b3ccc3a0ae8a5b535d311a477d2866ea05596a032df2cf989b3a0cb1bc09ff5e2a38aa4295e9add60a6fc2fea48c5dafa979ccac90cf732c8006fb2d4ffafa9e",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-22T17:52:20.009Z"
+  },
+  {
+    "id": "98f3fd2a-5407-4a5a-b43f-407b07e1a1ab",
+    "name": "",
+    "email": "s2_trades@proton.me",
+    "passwordHash": "0e30b5ada9aee895f275428562571541:32b8c5d5e5423dbfd569c64f38123e4d238e76bc0825361fd5175747b916a1118419d6f0dd677d367d71310aa95481a158a724b7c1af79d83e1b8003722ecd6c",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T11:22:20.048Z"
+  },
+  {
+    "id": "d35863bf-4e1b-4793-8f2f-06f3a4b2eeb2",
+    "name": "",
+    "email": "haych703@gmail.com",
+    "passwordHash": "2b76cf1abdb489fdf501c07ce1284fdc:b6fe8d61875b72b88849d8c160c28d78613dc3e7f47330d1e50d91dc19e3659ba129a48d750addeaf316492d49554f654074d3e6425bfdea2e9958c99b3fe463",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T11:28:16.308Z"
+  },
+  {
+    "id": "5482afda-6432-4106-a3ce-72105f81ac1e",
+    "name": "",
+    "email": "airidasbadboy@gmail.com",
+    "passwordHash": "c37ee7ff12571420b3b895203c6982d1:c5f46e1269c99387b9d8e3f72b2ce84cecf9a3bae86e355f3b71c5adad7cc9b0a0fd8c9edd1eef1c9309e4be1334e4d0eec0c7f92c301085abd6eeb3a4bdafa0",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T11:48:07.602Z"
+  },
+  {
+    "id": "8410a95e-b5c7-485e-a5bd-7067659a6a7a",
+    "name": "FX10",
+    "email": "gcsewizpop@gmail.com",
+    "passwordHash": "8ed8926629c56e5d95b0d65f9ab46133:e8012dc2b44bb9a18f21eb9f3dd4f9ff6d69b784efed02cbb68ea4cc8641514e9bc136e9fbdcaedd49ed01671defe46cccb6a251ad4e1b67df9f496ce72ce7a4",
+    "role": "USER",
+    "balance": 12.25,
+    "createdAt": "2026-08-23T12:34:06.646Z"
+  },
+  {
+    "id": "3cdf52cd-578f-41a7-93a0-e19665a0141f",
+    "name": "ndy",
+    "email": "standrewjames91@gmail.com",
+    "passwordHash": "667b6f3a1a8d360cdcf96331eb6d19f0:4124e209e4eb29b48cb5e8ef76a9029a4857c3b5c7194846e38bc0904f0eb1af0edd9d111d0476918586e2d22f3ea0a6501a801dc042b8620bdf1678c3965ce3",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T14:33:30.389Z"
+  },
+  {
+    "id": "002574a5-b6d9-4e58-8315-be8dedd14528",
+    "name": "Kaizzz",
+    "email": "kamzzz658@gmail.com",
+    "passwordHash": "6bcf10e23c9a27e2d3af4c406cfc3266:8896ae32277186d202537d294ccea9124018e35529a11fa089794aa3b5eab8b4489a5ea34f46a5e0f21ce817311b797a487a1eab4d5b7bbeb018158038f92c1f",
+    "role": "USER",
+    "balance": 0.4,
+    "createdAt": "2026-08-23T14:36:32.701Z"
+  },
+  {
+    "id": "000a0eb5-8f24-45c3-b02f-3be1b3b7b0c0",
+    "name": "",
+    "email": "mydip202@instaddr.ch",
+    "passwordHash": "bdd5f1e4ec2da295f2aee9bcad7d3ab6:8e8b252bbfbf349c2fd1d7ddfd7e3a7bef9530a0eaabb946a2900ca50df8bc1104e567c577dd2d84649a14c458c213544e0cd942c2ab5dd81872881e1cb1d93f",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T14:52:21.303Z"
+  },
+  {
+    "id": "213131f1-160e-4552-b1d5-2f3f837042c0",
+    "name": "",
+    "email": "wgshs8841@gmail.com",
+    "passwordHash": "068d596616c7e03139dc693a6ed66634:6ca62145ae228168805fb85145eb8c5a615b66d02a7d3e08f60f0fc2ac01c518af26386b12d19bdc093237a6164da6061e4c4d0f91ad3f3a8054186abd7abb43",
+    "role": "USER",
+    "balance": 40,
+    "createdAt": "2026-08-23T17:24:28.779Z"
+  },
+  {
+    "id": "856ad26d-1bbd-42df-95c8-69eaa06f3ce1",
+    "name": "Lc",
+    "email": "igorsty22@icloud.com",
+    "passwordHash": "bbb441b399ecb63e9a617dae9df4423b:4a273b76a79814b4269caa631b6d8d12736a576eda522333a3d97b08e705013ce5dc5a1690a8c0e1872422854554eb22d09d6abbefe146ac786ea568f56dc125",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T17:24:51.617Z"
+  },
+  {
+    "id": "c8d7a432-b058-4302-99f4-52ed14ab966e",
+    "name": "Silentpriv",
+    "email": "silentarda85@gmail.com",
+    "passwordHash": "d559c8e529482129872c6c9f86336bf6:fccc0d33a226bcba78115b2669bc241480030dcc760ecabd7021109ce8c6130dc687d5b1b07577e13606fe803c2a90a84a79ecd37930ac69857c16a90d7906bd",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T17:31:03.710Z"
+  },
+  {
+    "id": "4013ff31-6ca5-4930-8625-862dd30b657a",
+    "name": "",
+    "email": "dimog67@gmail.com",
+    "passwordHash": "d555e0608e1d1ad7160cd7ddab6575cb:78b8be827989cc2c65e9bc41491457730b18ceb6d59574f39c2328b5db6688e92cedfcc73bcec0ca183f1c473ab46c126c624cc97643b4edc9bfcacc1d81bb2c",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T18:35:15.344Z"
+  },
+  {
+    "id": "eee1f302-2e68-4bc0-b751-33c2148fa6f1",
+    "name": "Skeened",
+    "email": "skeened0@gmail.com",
+    "passwordHash": "68aef9e03fec2616f37ec33606cd8f68:47ad2136c937416bfe575283a18cd6a8f54c8f5a7e92b6bfc51c1ec0fff8c2e2bb5593182739c5d68bb58cc829ac1ccb3dc2830ee35c0372e3686bc8004a2317",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T18:45:22.564Z"
+  },
+  {
+    "id": "a9c156c5-8bc1-46bf-987d-0bea81597a46",
+    "name": "Jimmy",
+    "email": "locjosh88@gmail.com",
+    "passwordHash": "ed59a5ce6fb51c54879911ff66514fd8:9b517d342e718f64f2e21e9d896706f76a2ce4367563eb6082cb37140d9c097b9f7879b124c6b45aed50e93f4ed52e0891c9b42e89ccfdd8fe6bb56eae70508c",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T18:55:26.778Z"
+  },
+  {
+    "id": "587bc13f-ef27-40aa-8402-705d9a34f6f1",
+    "name": "Masrick",
+    "email": "supperdupperseller87@gmail.com",
+    "passwordHash": "c75657a5d346d1308cd459f4b442ef75:e608ebbdbdabf2bb83262067c9bcfa794c38f6ce6a07d9866e4e7824ddcf76a39a0dd1f27089b47db25aea78813542bba10c96886efed2b6937582053bfed632",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-23T21:46:06.473Z"
+  },
+  {
+    "id": "485be1ee-c11a-4a02-97e9-f7c250a9bb09",
+    "name": "adzzotm",
+    "email": "aadelusi01@gmail.com",
+    "passwordHash": "a3e485db2889bdd84b62e628aa8a79bd:1c14dad8fdb6a4955554453ba713e13898f0821077e77119133d5b400830eb819bc5dd25217655d956709bca46541fa22c62acf81a0c77becf53209fbb519208",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-24T10:12:36.133Z"
+  },
+  {
+    "id": "8aeb0b15-5bb5-4001-aa8d-6dc08fc63c3c",
+    "name": "lorenzo",
+    "email": "kgemignani06@icloud.com",
+    "passwordHash": "6713381c82d7e632b6e0f587a8d0cbb7:02c23e84267e94c64d43bd863a6997327af53859761afdef8189076108d5700089c6f2d24bb7342fe4fdccf015c518b68c8bba9bed78febd2c25c9705cb9fd88",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-24T10:43:15.387Z"
+  },
+  {
+    "id": "9578239a-3c54-4c73-a6f6-cf2c5e93d2cd",
+    "name": "",
+    "email": "jekeis@beezo.co.uk",
+    "passwordHash": "914a0810592350e432ed434521a0d308:cda176384059b2d5ec08e15925214d6defc78ee0be9b5de4ae1d12e2f92cd60d58a8e446a802efd08f9ef08994a24484ba017ff1d7efe21f97bc35f479ad6bb4",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-25T12:24:34.713Z"
+  },
+  {
+    "id": "10789084-85b9-41d5-b677-17b9f56658e9",
+    "name": "Whysputnik",
+    "email": "whysputnik@ledger.com",
+    "passwordHash": "954a6ddaca455a81331782818754c6b4:2fa193e65379be610637d7c5f474616c337a210ccbed33452b171c5fe384b2c96bcf41cf06ff202ea4607e0f99398b074dfaddfb1c4fbf95254233c93038308a",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-25T15:51:46.194Z"
+  },
+  {
+    "id": "984057e3-1f8d-4a9d-89de-e0d860fb95d5",
+    "name": "",
+    "email": "stxrmzmxrzy@gmail.com",
+    "passwordHash": "d9696a2c33ae16f4d173d111319c9364:93048857b2eea000161a5788463637786253c49068d99fed5153ab5c455592e948a0958caa2cd76887562ff52e9f7aebd42cabde1e8db34f07e7aeb59bef3c16",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-25T16:19:35.089Z"
+  },
+  {
+    "id": "3302f0f1-7609-48db-826d-26eb9e61a4a5",
+    "name": "",
+    "email": "peterforlife432@gmail.com",
+    "passwordHash": "c9d9ca926bdb8e4adb54f7d8f4dffc3b:247a07ab96c3fe2f530d3d01c599c173c9cd8e27cad3350e5ef004f96b1a04e8b056529e156be5f91a9ae976f96bb25311d35acbe7f5cdf8bcb619f92d8f30eb",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-25T18:59:16.004Z"
+  },
+  {
+    "id": "71e7f6d5-f874-4788-8cdd-16aedbd8a886",
+    "name": "Lewiskolom",
+    "email": "jennejai44@gmail.com",
+    "passwordHash": "26d646f1d9018c501cf6ffd22127972a:3d6039bb89793a006b142d4fa92fb1a4296b96957fd740b2e3bbd3116061c6f853313c09949e0faefd0e8ef039b019e87fd9b53b3c704dd46f7f417658670c3e",
+    "role": "USER",
+    "balance": 10,
+    "createdAt": "2026-08-26T14:08:38.022Z"
+  },
+  {
+    "id": "b1dd7449-0a42-4af6-a781-0649e5b2975f",
+    "name": "Bilal",
+    "email": "bilalahmed17@icloud.com",
+    "passwordHash": "7417587c550adcc5ffbc8a7c98ae4227:ef40086be0ffa4a5b755b8627d0a851409b64a417f3c83ecc409af437633e35ab39e951d9bf3fadaa829cdbccd5c96726fa8baf80dff626fc5f383c7576d8100",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-26T17:18:05.909Z"
+  },
+  {
+    "id": "44f7cf26-2d10-49ef-88d2-7cb75c1b9ea6",
+    "name": "",
+    "email": "c0jtg@outlook.com",
+    "passwordHash": "1f41c6933013a82bb06e867861fc53df:6d1552f882f6a98df1e13d6b19d15fb29aec99de6b4e104031665b17490d14b8a93e8b84ddb1ea065f4b1ec84204684fa155ddcc206a9fdc5e42494278d43726",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-27T09:33:59.407Z"
+  },
+  {
+    "id": "1e78f333-827e-4a84-900b-2b2d28c53000",
+    "name": "",
+    "email": "cityluton@gmail.com",
+    "passwordHash": "fd5da5f0099eb91dbba9bd929e674353:bc8e1a327c90f69c767b37d206f97aaa9d90b09971f6cb3a4f9f0c095866a9c46b1f7608c4deff4d0a1aa7c0b9be4515c5c71b08fc66a1769aa02f070ed1f303",
+    "role": "USER",
+    "balance": 3,
+    "createdAt": "2026-08-28T10:07:31.813Z"
+  },
+  {
+    "id": "bcd065ba-7736-433e-b3e3-0b447f10d216",
+    "name": "Ransocay",
+    "email": "ransocay@outlook.com",
+    "passwordHash": "23a4009d70d64ada2e33c8c1fd517552:28f2d7a5960e9d841c1b487d83edae643d0e227381cc6843a8e3a29bfe9b077e9c5a1425b3dd9bec337b85cce78a8d00a75f9a25d6934eac87fe79a37ff41683",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-29T20:51:50.083Z"
+  },
+  {
+    "id": "da70dd77-4c66-455b-b6d7-2c6adc327a71",
+    "name": "",
+    "email": "bravan726@otona.uk",
+    "passwordHash": "57f75e0a95d7c75a46f7111080ee1a86:72dfcdf132e5502836e21ddc6d23801188eb8495e7eeca6bb1982d8d04829700947ac96a39a8d6863fb1ff9b9e845d6bd25406879d82b3cdc62d04da526c43c2",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-29T21:02:56.087Z"
+  },
+  {
+    "id": "8bc34cf4-df7d-4b40-a371-c8cd3ef180f5",
+    "name": "adzzotmmm",
+    "email": "davidade1309@gmail.com",
+    "passwordHash": "48d151fb255408be11e9d5a423f68a77:b1cee80026c29e0d83307a9665a458fb35e8f229dcadf00b1a99f2d0d31baf8e240df039e5c34ad3e8c3b29fcec47f443bdb379b66cabcc6be698acd8df71670",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-29T23:25:57.647Z"
+  },
+  {
+    "id": "c127ee9b-07d7-4572-ad1a-443ce756d3c2",
+    "name": "",
+    "email": "sputnik@ledger.com",
+    "passwordHash": "e2be6c9217606ae1df529e25ccff9891:a20a9141fe90b0e5f239fadf2983f40607ce1b86f73603bb2bbfb1b13de0d4a00a64766ffdc11b897fb101f1218ef6e22586a952062a07abb01fb22304a815dd",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-30T01:46:21.528Z"
+  },
+  {
+    "id": "3493c9e1-5e34-44da-a746-214a2c9ea682",
+    "name": "Lewisvanel@gmail.com",
+    "email": "lewisvanel@gmail.com",
+    "passwordHash": "1c3c087ac56ef281aaa5237535f3a28b:19f85f1b655e6544eadfa8b50cd4f4ce8b4c685e0fa98cc0b60f54c7dd34cd1f731f3825678665ad17c548d1a8f36060e1578ed37b13f3c4757f27b0c698037c",
+    "role": "USER",
+    "balance": 10,
+    "createdAt": "2026-08-30T11:25:50.387Z"
+  },
+  {
+    "id": "a986534c-af69-47e6-8ab8-feff4b59d0a3",
+    "name": "",
+    "email": "a@beezo.co.uk",
+    "passwordHash": "d285498e799236e835fd61473b07f145:ab22171b24ed5ea9c6a35fcbd67d44924a57381dc1db18bc77b70a295cc98da383b22e88ce1c03e175f2ea6f732e252f85356d154eca22549967cb80139ff559",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-30T13:05:52.157Z"
+  },
+  {
+    "id": "9ecd8482-a707-41e9-8728-0a9803715685",
+    "name": "",
+    "email": "stewilson121@hotmail.com",
+    "passwordHash": "1ddc51e8be249b76dcef0d16094f3928:907019c3c11224d39cf972da74acd52b56744ca1d96ba2bfb3c61bb207e2f25c3127f36cc9251adfc402864eb1a24d4ad75256617ea15f33891740beb0407f3c",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-30T15:53:46.195Z"
+  },
+  {
+    "id": "55d2f3b0-fd81-4de2-aafe-fc107fb06daa",
+    "name": "",
+    "email": "begrotbum@mbox.re",
+    "passwordHash": "45d8452f7d0cbc020135e07106d134ba:012ac3c07a7b9423afa3472f036950a686c299bd4d72d5f6fa0571b39df0980abf57a0b5881e3631c6f6eb5bb6fed991830089301d47b9275fbb41a60a1c689b",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-30T21:41:38.467Z"
+  },
+  {
+    "id": "d5df56d0-a579-4f40-86b8-be6d041f5965",
+    "name": "",
+    "email": "z984510@gmail.com",
+    "passwordHash": "1313cd020867971b1c391d033ab1b1bb:232621296f49cead0fa792460b30cbafc82eb74f3318abc9cf1da5b162999c4a27f13936d22bbde3aac5d2c4f7e1bf6f3ce3f355328ced156040aeb43c7829f3",
+    "role": "USER",
+    "balance": 4,
+    "createdAt": "2026-08-31T10:43:49.577Z"
+  },
+  {
+    "id": "4e35d3de-2484-420a-969f-069291c9db06",
+    "name": "Chama",
+    "email": "cheifcmama@proton.me",
+    "passwordHash": "1c5da2ac847c72f240a471231d13d8aa:58ef743a7f3cd9246c3b2bde88b067cf4d13ccdc044610208f55874530703bf44d75076c7c6759b0faeee28d05cb752cc981a174554e5f2fe7fdc7b1bd953e67",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-08-31T13:42:24.656Z"
+  },
+  {
+    "id": "3a9e41ab-3cc2-4772-b1e1-fad2ea136518",
+    "name": "",
+    "email": "whooshvixx@outlook.com",
+    "passwordHash": "bc5b5faa977e8e02d6bf4a5cb8e967d4:70a63cae750b188e4e4512433fc8e092732be6ff49fd65762bda42c2b77be215784556b9f20dac81e18376f8078f3125bba825f457197501666f6010279884c0",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-01T00:08:48.475Z"
+  },
+  {
+    "id": "765c209a-a15e-4016-bf53-5531a1f19bca",
+    "name": "",
+    "email": "hjackson1835@gmail.com",
+    "passwordHash": "ef6e8ce2af58cd75fa371158ca70674f:db6f4eab579b49cf683bf77d4e16e9c83b632aa40af7616f90e9ec08293db3486e08f6338373e3725eb2af50bf7fd258b97fa044b629dbdc71b418870470cc53",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-01T11:41:44.526Z"
+  },
+  {
+    "id": "1fd92f56-fd6f-41d6-8dbb-ceccd8456e54",
+    "name": "",
+    "email": "jakemike032@gmail.com",
+    "passwordHash": "b1efe7d9f04c83c390932987c0171faf:0b7d679a8e7563d4501252f2dd6a267368d9421122fa9013f319b191942467d7d3594ec3949d63e6247eda18984c6584e4a358cff2eb99a20f9cc81cf5f6aa1f",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-01T19:20:04.796Z"
+  },
+  {
+    "id": "f135b0ed-c02d-456f-ac9d-ae2d971da445",
+    "name": "Eman",
+    "email": "himmyleg@goatmail.uk",
+    "passwordHash": "a3d9cc2dc32569c1ea0f06db7fc65f30:886127d42d34cf8a92046ef76965fbb1ff126aba171384bc3d3d87ccd15c95a67b19ff566f8043f5ea56568a2b17a7d0526e5f8ece94fdfb0f8b550938046009",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-01T20:15:46.001Z"
+  },
+  {
+    "id": "fb8783c4-753c-4d12-b0b8-137f1a03dd9e",
+    "name": "Willz",
+    "email": "owo78879@gmail.com",
+    "passwordHash": "753e254978d5384d837d95da9b0456d8:debde77d61c87d1e0ff1ec5415635e0569c51cebf364ceb63efd12e96bbe39fa833212897c9dcc6d3b8e9aa89d2842cda70c7c6b0a2ceb715549d48508e5fae3",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-01T20:22:48.128Z"
+  },
+  {
+    "id": "23f45d44-9647-4052-8867-75e31d99845d",
+    "name": "",
+    "email": "jackcollins4@protonmail.com",
+    "passwordHash": "e9b1cd8b748d344ff2b47defaa896bf3:8d8e682d1a1a2c7d0e5cb657426919f5acd6c57ed8210a8a708d1dc4483bed329d4632b199e4891f26b9625bac0170352e23b4a18d84fccfdba0d08017494fc2",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-01T20:56:18.736Z"
+  },
+  {
+    "id": "8d8addb9-142e-44f8-894a-3b1d4fc15f46",
+    "name": "",
+    "email": "aidfoezip@usako.net",
+    "passwordHash": "c7474fd9f3ace4e9db450bd23ab11fa9:b586a4bed6a833e485e9461ebf1ce522afa1e129b3e483e3036f100ccc912c660930a323f08ce3599e68c265bc131a973b58655da702c0aedcfccd315076a160",
+    "role": "USER",
+    "balance": 10,
+    "createdAt": "2026-09-02T16:28:48.213Z"
+  },
+  {
+    "id": "f6b53667-f9f1-4ff7-8d36-16c83101e461",
+    "name": "Bobby bacala",
+    "email": "bobbybacala@mail4.uk",
+    "passwordHash": "bc44c0c98877df44cd99ea38b157ec4f:b75420a4db3d4fb68af6479603890a2e0e2a83855a2086221528740f0c3efdafe1fa96d59c3709a977da7d90aacfc1429af8f9cfb0e73880c02914d414b25577",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-03T08:31:52.707Z"
+  },
+  {
+    "id": "83880947-fb27-4ba5-833d-b7d5ba0d2dc9",
+    "name": "Rob",
+    "email": "robertstone7890@gmail.com",
+    "passwordHash": "1ab1b7a85c14ab704fbbbc89d8b7a114:98fccce6123342316d3f9d9d9ff8e604df596bf0bb33ce1c4b211134748a1b0b602347648f4a413c0e300f7c0c3d5708823891f57adb8cc75bd94ec70ed53b45",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-03T17:03:12.253Z"
+  },
+  {
+    "id": "f7b612c0-e9d1-40b6-9566-13b981111158",
+    "name": "",
+    "email": "seaspatie@nekosan.uk",
+    "passwordHash": "afc373d7f7de7847b8c55ca5006db0bf:32204793eab3537391a7c4420b70231e49199c3ea218af08602a2bea058793884870dfd58aa990284ac5be871ee7e5d33a3b87fb0b6ea99f61b02fb65922b158",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-04T01:54:26.332Z"
+  },
+  {
+    "id": "3b5e907e-423b-424c-8e3b-5262a44d8baf",
+    "name": "",
+    "email": "fillychunkz730@gmail.com",
+    "passwordHash": "e0e16c7cafdb75b3487e488baffb7bd6:0b81461e61e31929c5d6053d4a2c4cae7a2e60a9c280a706006a3db7fc9564c3f07b6392de4656c26ddbe7e4e788a647658bdf96a84d1e6cb531c0c6f8558a20",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-04T17:35:29.448Z"
+  },
+  {
+    "id": "ac8e4c89-7ed9-47e1-9ae0-e0033ddb1eae",
+    "name": "",
+    "email": "33glimma@gmail.com",
+    "passwordHash": "52def1b0f4624ef4542a1c9856e26fcb:06b4df8bbe68e6eae288624c213afce1309597c7b833e99950cd427278f3d7ae105b9c221fcb543250e6f481eb65257ce33274a44871301438dd7c3b1716c8c1",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-04T23:47:45.244Z"
+  },
+  {
+    "id": "20d427b9-c2ca-4c5e-88d0-a4ab2a7747a7",
+    "name": "Daz",
+    "email": "airissiena@gmail.com",
+    "passwordHash": "13fd2db793ba10dea7b76a0a80a7940e:bfc4361d8d4dbb9a7a4168c406395cf9becd98c977cdf337462a57c6fc010c5cebd0665e7dbcac6dd0ff3d23ba957ef60f3a74a5255a10d925ae16f92a0f91a0",
+    "role": "USER",
+    "balance": 1.6,
+    "createdAt": "2026-09-05T15:00:35.719Z"
+  }
+]

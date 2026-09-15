@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
+    <link rel="icon" type="image/png" href="/favicon.png?v=999">
+    <link rel="shortcut icon" href="/favicon.ico?v=999">
+    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Login - Falcon Logs</title>
+    
+    <link rel="alternate icon" type="image/png" href="/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #08090d;
+        color: #ffffff;
+        font-family: 'Montserrat', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+        overflow-x: hidden;
+      }
+
+      .standalone-login-wrap {
+        width: 100%;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .login-brand-link {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 22px;
+        text-decoration: none;
+      }
+
+      .login-brand-logo {
+        width: 155px;
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 4px 16px rgba(234, 88, 12, 0.18));
+        transition: transform 0.2s ease;
+      }
+
+      .login-brand-logo:hover {
+        transform: scale(1.02);
+      }
+
+      .login-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 18px;
+        letter-spacing: -0.2px;
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 12px;
+      }
+
+      .form-label {
+        font-size: 11.5px;
+        font-weight: 600;
+        color: #71717a;
+        margin-bottom: 5px;
+        letter-spacing: 0.2px;
+      }
+
+      .form-input-wrap {
+        position: relative;
+        width: 100%;
+      }
+
+      .form-input {
+        width: 100%;
+        height: 40px;
+        background: #13141b;
+        border: 1px solid #222430;
+        border-radius: 4px;
+        padding: 0 12px;
+        color: #ffffff;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        outline: none;
+        transition: border-color 0.15s ease, background 0.15s ease;
+      }
+
+      .form-input::placeholder {
+        color: #4b4d5a;
+        font-size: 12.5px;
+      }
+
+      .form-input:focus {
+        border-color: #ea580c;
+        background: #171922;
+      }
+
+      .form-input-wrap .toggle-pass-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+      }
+
+      .form-input-wrap .toggle-pass-btn:hover {
+        color: #ea580c;
+      }
+
+      .login-btn {
+        width: 100%;
+        height: 40px;
+        background: #ea580c;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 6px;
+        transition: background 0.15s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .login-btn:hover {
+        background: #c2410c;
+      }
+
+      .login-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .login-toggle-row {
+        margin-top: 14px;
+        font-size: 11.5px;
+        color: #71717a;
+        text-align: center;
+      }
+
+      .login-toggle-btn {
+        background: transparent;
+        border: none;
+        color: #ea580c;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11.5px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: underline;
+        padding: 0;
+      }
+
+      .login-toggle-btn:hover {
+        color: #f97316;
+      }
+
+      .login-back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #4b4d5a;
+        font-size: 11px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.15s ease;
+      }
+
+      .login-back-link:hover {
+        color: #94a3b8;
+      }
+
+      .login-alert-msg {
+        background: rgba(220, 38, 38, 0.12);
+        border: 1px solid rgba(220, 38, 38, 0.4);
+        color: #f87171;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 11.5px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: none;
+        text-align: center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="standalone-login-wrap">
+      <!-- LOGO -->
+      <a href="/" class="login-brand-link" aria-label="Falcon Logs Home">
+        <img src="/login-logo.png" alt="Falcon Logs" class="login-brand-logo">
+      </a>
+
+      <!-- TITLE -->
+      <h1 class="login-title" id="authTitle">Login</h1>
+
+      <!-- ERROR ALERT -->
+      <div class="login-alert-msg" id="authErrorMsg"></div>
+
+      <!-- FORM -->
+      <form class="login-form" id="authForm" autocomplete="on">
+        <!-- Optional Name on Register -->
+        <div class="form-field" id="authNameField" style="display: none;">
+          <label class="form-label" for="authName">Name</label>
+          <input type="text" id="authName" class="form-input" placeholder="Your name (optional)" autocomplete="name">
+        </div>
+
+        <!-- Email -->
+        <div class="form-field">
+          <label class="form-label" for="authEmail">Email</label>
+          <input type="email" id="authEmail" class="form-input" placeholder="email@service.com" required autocomplete="email">
+        </div>
+
+        <!-- Password -->
+        <div class="form-field">
+          <label class="form-label" for="authPassword">Password</label>
+          <div class="form-input-wrap">
+            <input type="password" id="authPassword" class="form-input" placeholder="password" required autocomplete="current-password">
+            <button type="button" class="toggle-pass-btn" id="togglePassBtn" aria-label="Toggle password">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Password on Register -->
+        <div class="form-field" id="authConfirmPassField" style="display: none;">
+          <label class="form-label" for="authConfirmPassword">Confirm Password</label>
+          <div class="form-input-wrap">
+            <input type="password" id="authConfirmPassword" class="form-input" placeholder="repeat password" autocomplete="new-password">
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="login-btn" id="authSubmitBtn">Login</button>
+      </form>
+
+      <!-- Toggle Mode -->
+      <div class="login-toggle-row">
+        <span id="authToggleText">Don't have an account?</span>
+        <button type="button" class="login-toggle-btn" id="toggleAuthBtn">create one now</button>
+      </div>
+
+      <!-- Back Link -->
+      <a href="/" class="login-back-link">&larr; Back to store</a>
+    </div>
+
+    <script>
+      let isRegister = false;
+      const form = document.querySelector('#authForm');
+      const emailInput = document.querySelector('#authEmail');
+      const passInput = document.querySelector('#authPassword');
+      const nameField = document.querySelector('#authNameField');
+      const nameInput = document.querySelector('#authName');
+      const confirmPassField = document.querySelector('#authConfirmPassField');
+      const confirmPassInput = document.querySelector('#authConfirmPassword');
+      const submitBtn = document.querySelector('#authSubmitBtn');
+      const title = document.querySelector('#authTitle');
+      const toggleText = document.querySelector('#authToggleText');
+      const toggleBtn = document.querySelector('#toggleAuthBtn');
+      const errorMsg = document.querySelector('#authErrorMsg');
+
+      function setAuthMode(register) {
+        isRegister = register;
+        if (isRegister) {
+          title.textContent = "Register";
+          submitBtn.textContent = "Register";
+          nameField.style.display = 'flex';
+          confirmPassField.style.display = 'flex';
+          confirmPassInput.required = true;
+          passInput.autocomplete = 'new-password';
+          toggleText.textContent = "Already have an account?";
+          toggleBtn.textContent = "log in now";
+        } else {
+          title.textContent = "Login";
+          submitBtn.textContent = "Login";
+          nameField.style.display = 'none';
+          confirmPassField.style.display = 'none';
+          confirmPassInput.required = false;
+          passInput.autocomplete = 'current-password';
+          toggleText.textContent = "Don't have an account?";
+          toggleBtn.textContent = "create one now";
+        }
+        errorMsg.style.display = 'none';
+      }
+
+      // Check URL parameters for mode=register
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('mode') === 'register' || urlParams.has('register')) {
+        setAuthMode(true);
+      }
+
+
+      toggleBtn.addEventListener('click', () => {
+        setAuthMode(!isRegister);
+      });
+
+      // Toggle password visibility
+      const togglePassBtn = document.querySelector('#togglePassBtn');
+      if (togglePassBtn) {
+        togglePassBtn.addEventListener('click', () => {
+          const isPass = passInput.type === 'password';
+          passInput.type = isPass ? 'text' : 'password';
+          togglePassBtn.style.color = isPass ? '#ea580c' : '#64748b';
+        });
+      }
+
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorMsg.style.display = 'none';
+
+        const email = emailInput.value.trim();
+        const password = passInput.value;
+        const name = nameInput.value.trim();
+        const confirmPassword = confirmPassInput.value;
+
+
+        if (isRegister) {
+          if (password.length < 6) {
+            errorMsg.textContent = "Password must be at least 6 characters.";
+            errorMsg.style.display = 'block';
+            return;
+          }
+          if (password !== confirmPassword) {
+            errorMsg.textContent = "Passwords do not match.";
+            errorMsg.style.display = 'block';
+            return;
+          }
+        }
+
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = isRegister ? "Registering..." : "Logging in...";
+
+        const endpoint = isRegister ? "/api/auth/register" : "/api/auth/login";
+        try {
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: name || undefined,
+              email: email,
+              password: password,
+              confirmPassword: isRegister ? confirmPassword : undefined
+            })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            if (isRegister) {
+              const loginRes = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email, password: password })
+              });
+              const loginData = await loginRes.json();
+              if (loginRes.ok) {
+                if (loginData.user && (loginData.user.role === "ADMIN" || loginData.user.role === "GOD")) {
+                  window.location.href = "/admin.html";
+                } else {
+                  window.location.href = "/dashboard.html";
+                }
+              } else {
+                setAuthMode(false);
+                errorMsg.textContent = "Registered! Please sign in.";
+                errorMsg.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Login";
+              }
+            } else {
+              if (data.user && (data.user.role === "ADMIN" || data.user.role === "GOD")) {
+                window.location.href = "/admin.html";
+              } else {
+                window.location.href = "/dashboard.html";
+              }
+            }
+          } else {
+            errorMsg.textContent = data.error || (isRegister ? "Registration failed." : "Invalid email or password.");
+            errorMsg.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = isRegister ? "Register" : "Login";
+          }
+        } catch (err) {
+          errorMsg.textContent = "Connection error. Please try again.";
+          errorMsg.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = isRegister ? "Register" : "Login";
+        }
+      });
+    </script>
+  </body>
+</html>

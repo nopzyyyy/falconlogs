@@ -1,0 +1,1223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
+    <link rel="icon" type="image/png" href="/favicon.png?v=999">
+    <link rel="shortcut icon" href="/favicon.ico?v=999">
+    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Admin - Falcon Logs</title>
+    
+    <link rel="alternate icon" type="image/png" href="/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=820">
+  </head>
+  <body class="admin-page">
+    <!-- MOBILE DRAWER BACKDROP OVERLAY -->
+    <div class="admin-drawer-overlay" id="adminMobileDrawerOverlay"></div>
+
+    <!-- MOBILE TOP BAR -->
+    <header class="admin-mobile-top-bar" id="adminMobileTopBar">
+      <div class="mobile-top-left" style="display:flex; align-items:center; gap:12px;">
+        <button type="button" class="admin-mobile-hamburger-btn" id="adminMobileMenuToggle" aria-label="Open Navigation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a class="brand admin-mobile-brand" href="/" aria-label="Falcon Logs">
+          <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img" style="height:26px; width:auto; max-width:140px; object-fit:contain; display:block;">
+        </a>
+      </div>
+      <div class="mobile-top-right">
+        <span class="mobile-active-tab-title" id="mobileActiveTabTitle">Dashboard</span>
+      </div>
+    </header>
+
+    <aside class="admin-sidebar" id="adminSidebar" style="overflow: hidden;">
+      <button type="button" class="admin-drawer-close-btn" id="adminCloseDrawerBtn" aria-label="Close Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <a class="brand admin-brand" href="/" aria-label="Falcon Logs" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; text-decoration:none; padding:2px 4px;">
+        <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img" style="height:28px; width:auto; max-width:140px; object-fit:contain; display:block;">
+        <span style="font-family:'Montserrat',sans-serif; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; background:rgba(234, 88, 12,0.15); color:#fb923c; padding:3px 7px; border-radius:4px;">ADMIN</span>
+      </a>
+      <nav class="admin-menu" aria-label="Admin" style="display:flex; flex-direction:column; gap:4px; padding: 10px 0;">
+        <div class="menu-group-label" style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em; padding: 12px 18px 4px;">Overview</div>
+        <button class="admin-tab active" type="button" data-admin-tab="analytics">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span>Dashboard</span>
+        </button>
+        
+        <div class="menu-group-label" style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em; padding: 12px 18px 4px;">Catalog</div>
+        <button class="admin-tab" type="button" data-admin-tab="products">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+          <span>Products</span>
+        </button>
+        <button class="admin-tab" type="button" data-admin-tab="categories">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Categories</span>
+        </button>
+        
+        <div class="menu-group-label" style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em; padding: 12px 18px 4px;">Sales</div>
+        <button class="admin-tab" type="button" data-admin-tab="orders">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          <span>Orders</span>
+        </button>
+        <button class="admin-tab" type="button" data-admin-tab="transactions">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 8 16 13"/><line x1="21" y1="8" x2="9" y2="8"/><polyline points="8 21 3 16 8 11"/><line x1="3" y1="16" x2="15" y2="16"/></svg>
+          <span>Transactions</span>
+        </button>
+        <button class="admin-tab" type="button" data-admin-tab="refunds">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+          <span>Refunds</span>
+        </button>
+        
+        <div class="menu-group-label" style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em; padding: 12px 18px 4px;">Customers</div>
+        <button class="admin-tab" type="button" data-admin-tab="users">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Users</span>
+        </button>
+        <button class="admin-tab" type="button" data-admin-tab="replacements">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Support Tickets</span>
+        </button>
+        
+        <div class="menu-group-label" style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em; padding: 12px 18px 4px;">Marketing</div>
+        <button class="admin-tab" type="button" data-admin-tab="coupons">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          <span>Coupons</span>
+        </button>
+        <button class="admin-tab" type="button" data-admin-tab="announcements">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <span>Announcements</span>
+        </button>
+        
+        <div class="menu-group-label" style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em; padding: 12px 18px 4px;">System</div>
+        <button class="admin-tab" type="button" data-admin-tab="audit_log">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><rect x="9" y="9" width="6" height="6"/></svg>
+          <span>Audit Log</span>
+        </button>
+        <button class="admin-tab" type="button" data-admin-tab="settings">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Settings</span>
+        </button>
+        
+        <div style="border-top:1px dashed var(--line); margin-top:10px; padding-top:10px; display:flex; flex-direction:column; gap:4px;">
+          <a class="admin-tab" href="/" style="text-decoration:none; display:flex; align-items:center; gap:10px;">
+            <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            <span>View Shop</span>
+          </a>
+          <button id="logoutBtn" class="admin-tab" type="button" style="color:var(--red); display:flex; align-items:center; gap:10px;">
+            <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <!-- DASHBOARD TAB -->
+      <section class="admin-section active" id="admin-analytics">
+        <div class="admin-topline">
+          <div>
+            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em;">OVERVIEW</span>
+            <h1 style="margin: 2px 0 0; font-size: 24px; font-weight: 800; color: #fff;">Dashboard</h1>
+          </div>
+          <a class="pill-button" href="/">View Store</a>
+        </div>
+
+        <!-- TOP METRICS GRID (12 Cards matching reference) -->
+        <div class="admin-metrics-grid">
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiUsersCount">0</strong>
+            <span class="stat-lbl">USERS</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiProductsCount">0</strong>
+            <span class="stat-lbl">PRODUCTS</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiFulfilledCount">0/0</strong>
+            <span class="stat-lbl">FULFILLED</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiTotalRevenue">£0.00</strong>
+            <span class="stat-lbl">REVENUE</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiTodayRevenue">£0.00</strong>
+            <span class="stat-lbl">TODAY</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiRevenue7D">£0.00</strong>
+            <span class="stat-lbl">REVENUE 7D</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiRevenue30D">£0.00</strong>
+            <span class="stat-lbl">REVENUE 30D</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiNewUsersToday">0</strong>
+            <span class="stat-lbl">NEW USERS TODAY</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiPendingCount">0</strong>
+            <span class="stat-lbl">PENDING</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiOpenTickets">0</strong>
+            <span class="stat-lbl">OPEN TICKETS</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiTotalWalletBalance">£0.00</strong>
+            <span class="stat-lbl">WALLET BALANCE</span>
+          </article>
+          <article class="admin-stat-card">
+            <strong class="stat-num" id="kpiOnlineNow">0</strong>
+            <span class="stat-lbl" id="kpiOnlineSub">ONLINE NOW - 0 in - 0 guests</span>
+          </article>
+        </div>
+
+        <!-- SERVER STATUS / SYSTEM HEALTH SECTION (Middle Box matching reference) -->
+        <article class="admin-health-panel">
+          <div class="health-head">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <h2 style="margin:0; font-size:14px; font-weight:700; color:#fff;">Server Status</h2>
+              <span class="health-badge healthy" id="srvStatusBadge">HEALTHY</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <span style="font-size:11px; color:rgba(255,255,255,0.45);" id="srvUpdatedTime">Updated --:--:--</span>
+              <button type="button" id="refreshStatsBtn" class="health-refresh-btn">Refresh</button>
+            </div>
+          </div>
+
+          <div class="health-grid">
+            <div class="health-item">
+              <span class="health-label">UPTIME</span>
+              <strong class="health-val" id="srvUptime">0m 0s</strong>
+            </div>
+            <div class="health-item">
+              <span class="health-label">DB LATENCY</span>
+              <strong class="health-val" id="srvDbLatency">&lt;1 ms</strong>
+            </div>
+            <div class="health-item">
+              <span class="health-label">API LATENCY</span>
+              <strong class="health-val" id="srvApiLatency">0 ms</strong>
+            </div>
+            <div class="health-item">
+              <span class="health-label">MEMORY</span>
+              <strong class="health-val" id="srvMemory">0 MB / 0 MB</strong>
+              <span class="health-sub" id="srvMemorySub">0% heap · 0 MB RSS</span>
+            </div>
+            <div class="health-item">
+              <span class="health-label">CPU LOAD</span>
+              <strong class="health-val" id="srvCpuLoad">0.00</strong>
+            </div>
+            <div class="health-item">
+              <span class="health-label">DISK</span>
+              <strong class="health-val" id="srvDisk">0%</strong>
+              <span class="health-sub" id="srvDiskSub">0 GB / 0 GB</span>
+            </div>
+            <div class="health-item">
+              <span class="health-label">DATABASE</span>
+              <strong class="health-val" id="srvDatabase">OK · 0 MB</strong>
+            </div>
+            <div class="health-item">
+              <span class="health-label">ONLINE NOW</span>
+              <strong class="health-val" id="srvOnlineNow">0 in</strong>
+              <span class="health-sub" id="srvOnlineSub">0 logged in · 0 guests</span>
+            </div>
+            <div class="health-item">
+              <span class="health-label">RUNTIME</span>
+              <strong class="health-val" id="srvRuntime">v20.0.0</strong>
+              <span class="health-sub" id="srvRuntimeSub">production · linux</span>
+            </div>
+            <div class="health-item">
+              <span class="health-label">STARTED</span>
+              <strong class="health-val" id="srvStarted">--/--/----, --:--:--</strong>
+            </div>
+          </div>
+        </article>
+
+        <!-- ALERT METRICS ROW (3 Cards matching reference) -->
+        <div class="alert-kpi-row">
+          <article class="admin-stat-card alert-card">
+            <strong class="stat-num yellow" id="kpiLowStock">0</strong>
+            <span class="stat-lbl">LOW STOCK</span>
+          </article>
+          <article class="admin-stat-card alert-card">
+            <strong class="stat-num red" id="kpiBannedUsers">0</strong>
+            <span class="stat-lbl">BANNED USERS</span>
+          </article>
+          <article class="admin-stat-card alert-card">
+            <strong class="stat-num pink" id="kpiAvgOrder">£0.00</strong>
+            <span class="stat-lbl">AVG ORDER</span>
+          </article>
+        </div>
+
+        <!-- ANALYTICS ROW: 14-DAY REVENUE CHART + TOP SELLING PRODUCTS -->
+        <div class="admin-analytics-split-row">
+          <article class="chart-panel analytics-panel-left">
+            <div class="chart-head">
+              <div>
+                <h2 style="margin:0; font-size:14px; font-weight:700; color:#fff;">Revenue — Last 14 Days</h2>
+              </div>
+              <span class="chart-total-pill" id="chart14DayTotal">£0.00</span>
+            </div>
+            <div class="revenue-line-chart-container" id="revenueLineChartContainer" style="position: relative; width: 100%; height: 210px; margin-top: 10px;">
+              <div id="chartSkeletonLoader" class="chart-skeleton-loader active">
+                <div class="skeleton-line-wave"></div>
+              </div>
+              <canvas id="revenueLineChartCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+              <div id="chartTooltip" class="chart-tooltip-bubble"></div>
+            </div>
+          </article>
+
+          <article class="top-selling-panel analytics-panel-right">
+            <div class="chart-head">
+              <h2 style="margin:0; font-size:14px; font-weight:700; color:#fff;">Top Selling Products</h2>
+            </div>
+            <div class="top-selling-list" id="topSellingList">
+              <div class="empty-top-selling">No sales data yet.</div>
+            </div>
+          </article>
+        </div>
+
+        <!-- RECENT ORDERS -->
+        <article class="recent-orders-panel">
+          <div class="chart-head">
+            <h2>Recent Orders</h2>
+            <a href="#" id="viewAllOrdersLink" class="chart-sub" style="text-decoration:none;">View all →</a>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="recentOrdersRows">
+                <tr><td colspan="5" class="empty">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- PRODUCTS TAB -->
+      <section class="admin-section" id="admin-products">
+        <div class="admin-topline">
+          <h1>Products</h1>
+          <div style="display:flex; gap:8px;">
+            <button id="manageCategoriesBtn" type="button" class="ghost-cta" style="display:inline-flex; align-items:center; gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              Categories
+            </button>
+            <button id="newProductBtn" type="button" class="pill-button" style="min-height:36px;">+ New Product</button>
+          </div>
+        </div>
+        <input id="adminProductSearch" class="admin-search" type="search" placeholder="Search products by name...">
+        <div id="adminProductsGrid" class="admin-products-grid"></div>
+      </section>
+
+      <!-- USERS TAB -->
+      <section class="admin-section" id="admin-users">
+        <div class="admin-topline">
+          <h1>Users & Staff <span id="adminUserCount" class="admin-count-badge">0</span></h1>
+          <button id="openNewStaffModalBtn" class="pill-button" type="button">+ Create Staff</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Balance</th>
+                <th>Created</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsersRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ORDERS TAB -->
+      <section class="admin-section" id="admin-orders">
+        <div class="admin-topline">
+          <h1>Orders <span id="adminOrderCount" class="admin-count-badge">0</span></h1>
+        </div>
+        <div class="admin-search-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="adminOrderSearch" type="search" placeholder="Search orders by ID, email, product, card..." autocomplete="off">
+        </div>
+        <div class="orders-table-wrapper" style="margin-top: 16px;">
+          <table class="orders-data-table">
+            <thead>
+              <tr>
+                <th style="width: 28%;">ORDER ID / USER</th>
+                <th style="width: 24%;">TITLE / REASON</th>
+                <th style="width: 12%;">PAID</th>
+                <th style="width: 12%;">EXPECTED</th>
+                <th style="width: 12%;">STATUS</th>
+                <th style="width: 12%;">DATE</th>
+              </tr>
+            </thead>
+            <tbody id="adminOrdersList">
+              <tr>
+                <td colspan="6" style="padding: 36px 18px; text-align: center; color: rgba(255,255,255,0.45); font-size: 13px;">
+                  Loading orders...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+
+      <!-- REFUNDS TAB -->
+      <section class="admin-section" id="admin-refunds">
+        <div class="admin-topline">
+          <h1>Refund Requests</h1>
+        </div>
+        <div id="refundsList" class="refunds-list">
+          <div class="empty-store">Loading refunds...</div>
+        </div>
+      </section>
+
+      <!-- SUPPORT TICKETS / REPLACEMENTS TAB -->
+      <section class="admin-section" id="admin-replacements">
+        <div class="admin-topline">
+          <h1>Support Tickets <span id="adminTicketCountBadge" class="admin-count-badge">0</span></h1>
+        </div>
+        <div class="admin-search-wrap" style="margin-bottom: 16px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="adminTicketSearchInput" type="search" placeholder="Search tickets by ID, user email, order ID, product..." autocomplete="off">
+        </div>
+
+        <div class="admin-replacements-layout">
+          <!-- Left Tickets list -->
+          <div class="admin-tickets-sidebar-card">
+            <div class="admin-tickets-sidebar-head">
+              <h2>Tickets Queue</h2>
+              <span id="adminTicketQueueCount" style="font-size: 11px; font-weight: 700; color: #fb923c; background: rgba(234, 88, 12, 0.15); padding: 2px 8px; border-radius: 4px;">0</span>
+            </div>
+            <div class="admin-tickets-scroll" id="adminTicketsListContainer">
+              <div style="font-size:12px; color:var(--muted); text-align:center; padding:20px 0;">Loading tickets...</div>
+            </div>
+          </div>
+
+          <!-- Right Conversation & Ticket Actions -->
+          <div class="admin-ticket-chat-card" id="adminChatPanel">
+            <div id="adminChatPlaceholder" class="admin-ticket-placeholder-wrap">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+              <h3>No Ticket Selected</h3>
+              <p>Select a support ticket from the queue on the left to view customer issue, reply, refund or dispatch replacements.</p>
+            </div>
+
+            <div id="adminChatActiveView" style="display:none; flex-direction:column; height:100%;">
+              <!-- MOBILE BACK BUTTON -->
+              <button type="button" class="admin-ticket-back-btn" id="adminTicketBackToQueueBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <span>Back to Tickets</span>
+              </button>
+
+              <!-- TOP ACTION BAR -->
+              <div class="admin-ticket-header-row">
+                <div class="admin-ticket-title-group">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <h2 id="adminActiveTicketTitle" style="margin: 0;">TCK-XXXXXX</h2>
+                    <span id="adminActiveTicketStatusBadge" class="ticket-status-pill pending">PENDING</span>
+                  </div>
+                  <div style="font-size:12px; color:#94a3b8; margin-top:3px;" id="adminActiveTicketUser">User: ...</div>
+                </div>
+                <div class="admin-ticket-actions-group">
+                  <button type="button" class="ticket-act-btn refund-full" id="adminTicketRefundFullBtn">Refund Fully</button>
+                  <button type="button" class="ticket-act-btn refund-part" id="adminTicketRefundPartialBtn">Refund Partially</button>
+                  <button type="button" class="ticket-act-btn replace" id="adminTicketReplaceBtn">Replace</button>
+                  <button type="button" class="ticket-act-btn deny" id="adminTicketDenyBtn">Deny</button>
+                </div>
+              </div>
+
+              <!-- TICKET META CARD -->
+              <div id="adminActiveTicketMetaCard" class="ticket-meta-grid"></div>
+
+              <!-- MESSAGES CHAT THREAD -->
+              <div style="display:flex; flex-direction:column; flex:1;">
+                <h3 style="font-size:11px; font-weight:700; text-transform:uppercase; color:#64748b; margin:0 0 8px; letter-spacing:0.5px;">Conversation Thread</h3>
+                <div class="admin-chat-thread-container" id="adminChatMessagesBox"></div>
+                
+                <div class="admin-chat-reply-bar">
+                  <textarea id="adminChatTextarea" class="admin-chat-reply-input" placeholder="Type customer support reply..."></textarea>
+                  <button type="button" class="admin-chat-send-btn" id="adminSendChatMessageBtn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    <span>Send Reply</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETTINGS TAB -->
+      <section class="admin-section" id="admin-settings">
+        <div class="admin-topline">
+          <h1>Payment Settings</h1>
+        </div>
+        <p style="color: var(--muted); margin-bottom: 24px; font-size: 14px;">Toggle which payment gateways are active on the site. Disabled payment methods will be hidden from both checkout (cart) and deposit (add funds) pages.</p>
+        
+        <div class="settings-list" style="display: flex; flex-direction: column; gap: 16px; max-width: 600px;">
+          <article class="base-card" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; margin-bottom: 0;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <strong style="font-size: 15px; color: var(--text);">Store Credit (Balance)</strong>
+              <span style="font-size: 12.5px; color: var(--muted);">Allows users to checkout using their deposited store credit.</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-balance" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </article>
+
+          <article class="base-card" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; margin-bottom: 0;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <strong style="font-size: 15px; color: var(--text);">Cryptocurrency</strong>
+              <span style="font-size: 12.5px; color: var(--muted);">Enables BTC, ETH, USDT, LTC payments with a 10% discount.</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-crypto" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </article>
+        </div>
+
+        <div class="admin-topline" style="margin-top: 40px;">
+          <h1>Telegram Auto-Forwarder Settings</h1>
+        </div>
+        <p style="color: var(--muted); margin-bottom: 24px; font-size: 14px;">Automatically forward a target channel post to all groups and channels your account is in at regular intervals.</p>
+        
+        <div class="settings-list" style="display: flex; flex-direction: column; gap: 16px; max-width: 600px;">
+          <article class="base-card" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; margin-bottom: 0;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <strong style="font-size: 15px; color: var(--text);">Enable Auto-Forwarder</strong>
+              <span style="font-size: 12.5px; color: var(--muted);">Toggles the periodic forwarding background daemon.</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-tg_forwarder_enabled">
+              <span class="toggle-slider"></span>
+            </label>
+          </article>
+          
+          <article class="base-card" style="display: flex; flex-direction: column; gap: 14px; padding: 18px 24px; margin-bottom: 0; align-items: flex-start;">
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 6px;">
+              <strong style="font-size: 15px; color: var(--text);">Source Message Telegram Link</strong>
+              <input type="text" id="tg_forwarder_source_link" placeholder="e.g. https://t.me/Flowmark/1287" class="modal-form-control" style="margin: 0; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; color: var(--text);">
+            </div>
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 6px;">
+              <strong style="font-size: 15px; color: var(--text);">Interval Period (Hours)</strong>
+              <input type="number" id="tg_forwarder_interval" placeholder="e.g. 6" min="1" class="modal-form-control" style="margin: 0; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; color: var(--text); width: 120px;">
+            </div>
+            <button type="button" id="saveTgForwarderBtn" class="pill-button" style="margin-top: 10px; margin-left: 0;">Save Forwarder Settings</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- CATEGORIES TAB -->
+      <section class="admin-section" id="admin-categories">
+        <div class="admin-topline">
+          <h1>Product Categories</h1>
+        </div>
+        <p style="color: var(--muted); margin-bottom: 20px; font-size: 13.5px;">Manage the categorization filters used across storefront accounts listings.</p>
+        <div class="panel" style="max-width: 600px; padding: 20px; margin: 0 0 20px 0; border: 1px solid var(--line); border-radius: 8px;">
+          <h2>Create Category</h2>
+          <div style="display:flex; gap:10px; margin-top:10px; align-items:center;">
+            <select id="newCategoryIconTab" class="modal-form-control" style="width:160px; height:36px !important; min-height:36px !important; margin:0;"></select>
+            <input type="text" id="newCategoryInputTab" class="modal-form-control" placeholder="Category name..." style="flex:1; height:36px !important; min-height:36px !important; margin:0;">
+            <button type="button" id="addCategoryBtnTab" class="pill-button" style="height:36px !important; min-height:36px !important; max-height:36px !important; margin:0; padding:0 16px !important; font-size:12px !important; display:inline-flex !important; align-items:center !important; justify-content:center !important;">Create</button>
+          </div>
+          <p id="categoryAddStatusTab" style="font-size:12px; margin: 8px 0 0 0; min-height:16px;"></p>
+        </div>
+        <div class="panel" style="max-width: 600px; padding: 20px; margin: 0; border: 1px solid var(--line); border-radius: 8px;">
+          <h2>Active Categories</h2>
+          <div id="categoriesListTab" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:15px;">
+            <div style="color:var(--muted); font-size:12px;">Loading categories...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRANSACTIONS TAB -->
+      <section class="admin-section" id="admin-transactions">
+        <div class="admin-topline">
+          <h1>Unified Accounting Transactions</h1>
+        </div>
+        <div class="admin-search-wrap">
+          <input id="adminTxnSearch" type="search" placeholder="Search by ID, email, method..." class="modal-form-control">
+          <select id="adminTxnTypeFilter" class="modal-form-control">
+            <option value="ALL">All Types</option>
+            <option value="ORDER">Orders</option>
+            <option value="TOPUP">Topups</option>
+          </select>
+          <select id="adminTxnStatusFilter" class="modal-form-control">
+            <option value="ALL">All Statuses</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="PENDING">Pending</option>
+            <option value="FAILED">Failed/Expired</option>
+          </select>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Txn ID</th>
+                <th>Type</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="adminTxnRows">
+              <tr><td colspan="7" class="empty">Loading transactions...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- COUPONS TAB -->
+      <section class="admin-section" id="admin-coupons">
+        <div class="admin-topline">
+          <h1>Discount Coupons</h1>
+          <button id="openNewCouponModalBtn" class="pill-button" type="button">+ New Coupon</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Discount</th>
+                <th>Uses</th>
+                <th>Expires</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminCouponsRows">
+              <tr><td colspan="6" class="empty">Loading coupons...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ANNOUNCEMENTS TAB -->
+      <section class="admin-section" id="admin-announcements">
+        <div class="admin-topline">
+          <h1>Site Announcements</h1>
+          <button id="openNewAnnModalBtn" class="pill-button" type="button">+ New Announcement</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Type</th>
+                <th>Target</th>
+                <th>Created</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminAnnRows">
+              <tr><td colspan="6" class="empty">Loading announcements...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- AUDIT LOG TAB -->
+      <section class="admin-section" id="admin-audit_log">
+        <div class="admin-topline">
+          <h1>System Audit Log</h1>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div class="admin-search-wrap" style="width:240px; margin:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input type="text" id="adminAuditSearch" placeholder="Search audit logs...">
+            </div>
+            <button id="refreshAuditLogBtn" class="pill-button" type="button" style="display:inline-flex; align-items:center; gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Actor</th>
+                <th>Action</th>
+                <th>Details</th>
+                <th>IP Address</th>
+              </tr>
+            </thead>
+            <tbody id="adminAuditLogRows">
+              <tr><td colspan="5" class="empty" style="text-align:center; padding:30px; color:var(--muted);">Loading audit logs...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- MODALS -->
+    <!-- CONFIRM DELETE MODAL -->
+    <div class="modal-overlay" id="confirmDeleteModal">
+      <div class="modal-content" style="max-width: 420px; width: 100%;">
+        <div class="modal-header">
+          <h2 id="confirmDeleteTitle">Confirm Delete</h2>
+          <button class="modal-close-btn" id="closeConfirmDeleteBtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="modal-body">
+          <div style="display:flex; gap:14px; align-items:flex-start; margin-bottom:18px;">
+            <div style="flex-shrink:0; width:42px; height:42px; border-radius:50%; background:rgba(239,68,68,0.12); border:1px solid var(--red); display:grid; place-items:center; color:var(--red);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+            </div>
+            <div style="flex:1; min-width:0;">
+              <p id="confirmDeleteMessage" style="margin:0; color:var(--text); font-size:13.5px; line-height:1.55;">Are you sure?</p>
+              <p id="confirmDeleteSubtext" style="margin:6px 0 0; color:var(--muted); font-size:11.5px;">This action cannot be undone.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; justify-content:flex-end;">
+            <button type="button" id="cancelConfirmDeleteBtn" class="ghost-cta" style="min-height:38px;">Cancel</button>
+            <button type="button" id="acceptConfirmDeleteBtn" class="danger" style="min-height:38px; min-width:120px; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATE NEW BASE MODAL -->
+    <div class="modal-overlay" id="newBaseModalOverlay">
+      <div class="modal-content" style="max-width: 640px; width: 100%;">
+        <div class="modal-header">
+          <h2>Create New Base & Add Stock</h2>
+          <button class="modal-close-btn" id="closeNewBaseModalBtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="modal-body" style="overflow-y:auto; max-height:80vh;">
+          <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:14px;">
+            <div class="modal-form-group">
+              <label>Base Name <span style="color:var(--red);">*</span></label>
+              <input type="text" id="baseNameInput" class="modal-form-control" placeholder="e.g. 12/26 USA TOP SELLER" autocomplete="off">
+            </div>
+            <div class="modal-form-group">
+              <label>Price per Card (GBP £) <span style="color:var(--red);">*</span></label>
+              <input type="number" id="basePriceInput" class="modal-form-control" placeholder="2.00" step="0.10" min="0.01" value="2.00">
+            </div>
+          </div>
+
+          <div style="background:var(--bg-deep); border:1px solid var(--line); border-radius:8px; padding:10px 14px; font-size:11.5px; color:var(--muted); margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>Card scheme, type, tier, bank issuer and country are auto-detected from each card's BIN.</span>
+          </div>
+
+          <div class="refundable-row">
+            <div>
+              <strong>Refundable</strong>
+              <p>Buyers can request a refund if a card in this base is dead. Off = sold as-is.</p>
+            </div>
+            <label class="toggle-switch" title="Toggle refundable">
+              <input type="checkbox" id="baseRefundableInput" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="refund-window-row" id="refundWindowRow">
+            <label class="refund-window-label">Refund window after delivery</label>
+            <div class="refund-window-options">
+              <label class="refund-window-pill"><input type="radio" name="refundWindow" value="1"><span>1 hour</span></label>
+              <label class="refund-window-pill"><input type="radio" name="refundWindow" value="6"><span>6 hours</span></label>
+              <label class="refund-window-pill"><input type="radio" name="refundWindow" value="24" checked><span>24 hours</span></label>
+              <label class="refund-window-pill"><input type="radio" name="refundWindow" value="custom"><span>Custom</span></label>
+            </div>
+            <input type="number" id="customRefundHoursInput" class="modal-form-control" min="1" max="720" step="1" placeholder="Custom hours" style="margin-top:8px; display:none;">
+          </div>
+
+          <div class="modal-form-group" style="margin-top:8px;">
+            <label>Stock Lines <span style="color:var(--red);">*</span></label>
+            <p style="font-size:11px; color:var(--muted); margin:0 0 8px; line-height:1.5;">
+              Format: <code style="color:var(--green); background:var(--bg-deep); padding:2px 6px; border-radius:4px;">PAN | MM | YY | CVV | Name | Address | City | State | Zip | Phone | Email</code><br>
+              One card per line. Full PAN stored server-side.
+            </p>
+            <textarea id="baseStockInput" class="modal-form-control" style="height:170px; font-family:'JetBrains Mono', 'Consolas', monospace; font-size:12px; resize:vertical;" spellcheck="false" placeholder="5129925239913935|03|27|574|Juan Martinez|1234 Elm Street|Los Angeles|CA|90001|2135551234|juanmartinez@yahoo.com"></textarea>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:14px; border-top:1px solid var(--line);">
+            <p id="newBaseStatus" style="font-size:12px; color:var(--muted); margin:0; min-height:18px;"></p>
+            <div style="display:flex; gap:10px;">
+              <button type="button" id="cancelNewBaseBtn" class="ghost-cta" style="min-height:38px;">Cancel</button>
+              <button type="button" id="submitNewBaseBtn" class="pill-button" style="min-height:38px; display:inline-flex; align-items:center; gap:8px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Add Cards to Inventory
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IN-SITE DIALOG MODAL (Alert / Confirm) -->
+    <div class="modal-overlay" id="siteDialogModal">
+      <div class="modal-content" style="max-width: 380px; width: 100%;">
+        <div class="modal-header" style="padding: 12px 18px;">
+          <h2 id="siteDialogTitle" style="font-size:14px; font-weight:700; margin:0;">Notice</h2>
+          <button class="modal-close-btn" id="siteDialogCloseBtn" type="button" aria-label="Close">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 16px 18px 18px;">
+          <p id="siteDialogMessage" style="font-size: 12.5px; color: rgba(255,255,255,0.65); margin: 0 0 16px; line-height: 1.5; font-family: 'Montserrat', sans-serif;"></p>
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" id="siteDialogCancelBtn" class="ghost-cta" style="min-height: 32px; height: 32px; font-size: 12px; padding: 0 14px; display: none;">Cancel</button>
+            <button type="button" id="siteDialogConfirmBtn" class="pill-button" style="min-height: 32px; height: 32px; font-size: 12px; padding: 0 14px;">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IN-SITE PROMPT MODAL (Input / Custom Fields) -->
+    <div class="modal-overlay" id="sitePromptModal">
+      <div class="modal-content" style="max-width: 440px; width: 100%;">
+        <div class="modal-header">
+          <h3 id="sitePromptTitle" style="font-size:16px; font-weight:600; margin:0;">Input Required</h3>
+          <button class="modal-close-btn" id="sitePromptCloseBtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <form id="sitePromptForm" class="modal-body" style="padding-top:14px;">
+          <div id="sitePromptFields"></div>
+          <p id="sitePromptError" style="font-size:12px; color:var(--red); margin:8px 0 0; display:none;"></p>
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+            <button type="button" id="sitePromptCancelBtn" class="ghost-cta" style="min-height:36px;">Cancel</button>
+            <button type="submit" id="sitePromptSubmitBtn" class="pill-button" style="min-height:36px;">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS CONTAINER -->
+    <div id="adminToastContainer" style="position:fixed; bottom:24px; right:24px; z-index:999999; display:flex; flex-direction:column; gap:10px; pointer-events:none;"></div>
+
+    <!-- CATEGORIES MODAL -->
+    <div class="modal-overlay" id="categoriesModalOverlay">
+      <div class="modal-content" style="max-width: 480px; width: 100%;">
+        <div class="modal-header">
+          <h2>Manage Categories</h2>
+          <button class="modal-close-btn" id="closeCategoriesModal" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-form-group" style="display:flex; gap:8px; align-items:center;">
+            <input type="text" id="newCategoryIcon" class="modal-form-control" placeholder="Icon SVG/Emoji" style="width:90px; height:36px !important; min-height:36px !important; margin:0;">
+            <input type="text" id="newCategoryInput" class="modal-form-control" placeholder="New Category Name" style="flex:1; height:36px !important; min-height:36px !important; margin:0;">
+            <button type="button" id="addCategoryBtn" class="pill-button" style="height:36px !important; min-height:36px !important; max-height:36px !important; padding:0 16px !important; font-size:12px !important; margin:0; display:inline-flex !important; align-items:center !important; justify-content:center !important;">Add</button>
+          </div>
+          <p id="categoryAddStatus" style="font-size:12px; color:var(--muted); margin:6px 0 12px; min-height:16px;"></p>
+          <div id="categoriesList" style="max-height:240px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT MODAL (Create / Edit) -->
+    <div class="modal-overlay" id="productModalOverlay">
+      <div class="modal-content" style="max-width: 680px; width: 100%;">
+        <div class="modal-header">
+          <h2 id="productModalTitle">Product Details</h2>
+          <button class="modal-close-btn" id="closeProductModal" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <form id="adminProductForm" class="modal-body" style="overflow-y:auto; max-height:80vh;">
+          <input type="hidden" id="editProductId">
+          <div class="modal-form-group">
+            <label>Product Title <span style="color:var(--red);">*</span></label>
+            <input type="text" id="productTitle" class="modal-form-control" placeholder="e.g. DOMINOS [UK HIGH BALANCE]" autocomplete="off" required>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="modal-form-group">
+              <label>Category <span style="color:var(--red);">*</span></label>
+              <select id="productCategory" class="modal-form-control"></select>
+            </div>
+            <div class="modal-form-group">
+              <label>Country Region</label>
+              <select id="productCountry" class="modal-form-control">
+                <option value="GLOBAL">GLOBAL</option>
+                <option value="US">UNITED STATES</option>
+                <option value="UK">UNITED KINGDOM</option>
+                <option value="CA">CANADA</option>
+                <option value="EU">EUROPE</option>
+                <option value="AU">AUSTRALIA</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-form-group">
+            <label>Product Image / Icon URL</label>
+            <div style="display:flex; gap:10px; align-items:center; width:100%;">
+              <div id="productImagePreviewContainer" style="width:36px; height:36px; min-width:36px; min-height:36px; border-radius:6px; background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0; border:1px solid var(--line);"></div>
+              <input type="text" id="productImage" class="modal-form-control" placeholder="https://example.com/image.png" style="flex:1; height:36px !important; min-height:36px !important; margin:0;">
+              <label class="ghost-cta" style="height:36px !important; min-height:36px !important; max-height:36px !important; cursor:pointer; display:inline-flex !important; align-items:center !important; justify-content:center !important; gap:6px; margin:0; padding:0 14px; flex-shrink:0; box-sizing:border-box;">
+                <span style="display:inline-block; line-height:1; vertical-align:middle;">Upload</span>
+                <input type="file" id="productImageUpload" accept="image/*" style="display:none;">
+              </label>
+            </div>
+          </div>
+          <div class="modal-form-group">
+            <label>Short Description</label>
+            <textarea id="productDescription" class="modal-form-control" style="height:70px; resize:vertical;" placeholder="Enter description..."></textarea>
+          </div>
+          <div class="modal-form-group">
+            <label>Tags (comma separated)</label>
+            <input type="text" id="productTags" class="modal-form-control" placeholder="HOT, POPULAR, FAST">
+          </div>
+
+          <!-- Variants Management Section -->
+          <div id="variantsManagementSection" style="margin-top:20px; padding-top:16px; border-top:1px solid var(--line); display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="margin:0; font-size:14px; font-weight:600;">Product Variants & Accounts</h4>
+              <button type="button" id="addVariantBtn" class="ghost-cta" style="min-height:32px; font-size:12px;">+ Add Variant</button>
+            </div>
+            <div id="adminProductVariantsList" style="display:flex; flex-direction:column; gap:8px;"></div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; padding-top:14px; border-top:1px solid var(--line);">
+            <button type="button" id="cancelProductModalBtn" class="ghost-cta" style="min-height:38px;">Cancel</button>
+            <button type="submit" class="pill-button" style="min-height:38px;">Save Product Details</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- STOCK MANAGEMENT MODAL -->
+    <div class="modal-overlay" id="stockModalOverlay">
+      <div class="modal-content" style="max-width: 640px; width: 100%;">
+        <div class="modal-header">
+          <h2 id="stockModalTitle">Manage Variant Stock</h2>
+          <button class="modal-close-btn" id="closeStockModal" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="modal-body" style="overflow-y:auto; max-height:80vh;">
+          <div style="display:flex; gap:10px; margin-bottom:16px; border-bottom:1px solid var(--line); padding-bottom:10px;">
+            <button type="button" id="tabPasteLogs" class="ghost-cta active" style="min-height:32px; font-size:12px;">Paste Accounts</button>
+            <button type="button" id="tabUploadFile" class="ghost-cta" style="min-height:32px; font-size:12px;">Upload TXT File</button>
+          </div>
+
+          <div id="contentPasteLogs">
+            <label style="font-size:12px; color:var(--muted); display:block; margin-bottom:6px;">Paste account cards/combo lines (one per line):</label>
+            <textarea id="stockPasteInput" class="modal-form-control" style="height:140px; font-family:monospace; font-size:12px;" placeholder="user:pass&#10;user2:pass2"></textarea>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+              <button type="button" id="stockClearAllBtn" class="ghost-cta" style="color:var(--red); min-height:34px; font-size:12px;">Clear All Stock</button>
+              <button type="button" id="stockImportBtn" class="pill-button" style="min-height:34px;">Import Pasted Stock</button>
+            </div>
+          </div>
+
+          <div id="contentUploadFile" style="display:none;">
+            <label style="font-size:12px; color:var(--muted); display:block; margin-bottom:6px;">Select .txt file containing combo lines:</label>
+            <input type="file" id="stockFileInput" accept=".txt" class="modal-form-control">
+            <div style="display:flex; justify-content:flex-end; margin-top:12px;">
+              <button type="button" id="stockUploadBtn" class="pill-button" style="min-height:34px;">Upload & Import</button>
+            </div>
+          </div>
+
+          <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--line);">
+            <h4 style="font-size:13px; font-weight:600; margin:0 0 10px;">Current Stock Items</h4>
+            <div style="max-height:180px; overflow-y:auto;">
+              <table style="width:100%; font-size:12px; border-collapse:collapse;">
+                <thead>
+                  <tr style="text-align:left; border-bottom:1px solid var(--line); color:var(--muted);">
+                    <th style="padding:6px;">#</th>
+                    <th style="padding:6px;">Data Content</th>
+                    <th style="padding:6px; text-align:right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="stockLogsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; margin-top:20px; padding-top:14px; border-top:1px solid var(--line);">
+            <button type="button" id="closeStockModalBottomBtn" class="ghost-cta" style="min-height:38px; width:100%; justify-content:center;">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATE COUPON MODAL -->
+    <div class="modal-overlay" id="couponFormModalOverlay">
+      <div class="modal-content" style="max-width: 460px; width: 100%;">
+        <div class="modal-header">
+          <h2>Create New Discount Coupon</h2>
+          <button class="modal-close-btn" id="closeCouponFormModal" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <form id="createCouponForm" class="modal-body">
+          <div class="modal-form-group">
+            <label>Coupon Code <span style="color:var(--red);">*</span></label>
+            <input type="text" id="couponCodeInputForm" class="modal-form-control" placeholder="e.g. SUMMER25" style="text-transform:uppercase;" required>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="modal-form-group">
+              <label>Discount Type</label>
+              <select id="couponDiscountType" class="modal-form-control">
+                <option value="PERCENT">Percentage (%)</option>
+                <option value="FIXED">Fixed Amount (£)</option>
+              </select>
+            </div>
+            <div class="modal-form-group">
+              <label>Value <span style="color:var(--red);">*</span></label>
+              <input type="number" id="couponDiscountValue" class="modal-form-control" step="0.01" min="0.01" placeholder="10" required>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="modal-form-group">
+              <label>Max Uses (optional)</label>
+              <input type="number" id="couponMaxUses" class="modal-form-control" placeholder="100">
+            </div>
+            <div class="modal-form-group">
+              <label>Expires At (optional)</label>
+              <input type="date" id="couponExpiresAt" class="modal-form-control">
+            </div>
+          </div>
+          <p id="couponFormStatus" style="font-size:12px; color:var(--muted); margin:10px 0 0; min-height:16px;"></p>
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+            <button type="button" id="cancelCouponFormBtn" class="ghost-cta" style="min-height:36px;">Cancel</button>
+            <button type="submit" class="pill-button" style="min-height:36px;">Create Coupon</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- COUPON ANALYTICS MODAL -->
+    <div class="modal-overlay" id="couponAnalyticsModalOverlay">
+      <div class="modal-content" style="max-width: 620px; width: 100%;">
+        <div class="modal-header">
+          <h2 id="couponAnalyticsModalTitle">Coupon Analytics</h2>
+          <button class="modal-close-btn" id="closeCouponAnalyticsModal" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 16px 20px 24px;">
+          <!-- STAT CARDS GRID -->
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px;">
+            <div style="background: rgba(17, 26, 51, 0.6); border: 1px solid rgba(234, 88, 12, 0.2); border-radius: 8px; padding: 14px;">
+              <span style="font-size: 11.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total Redemptions</span>
+              <div id="couponStatRedemptions" style="font-size: 20px; font-weight: 800; color: #f97316; margin-top: 4px;">0</div>
+            </div>
+            <div style="background: rgba(17, 26, 51, 0.6); border: 1px solid rgba(234, 88, 12, 0.2); border-radius: 8px; padding: 14px;">
+              <span style="font-size: 11.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Unique Customers</span>
+              <div id="couponStatUniqueUsers" style="font-size: 20px; font-weight: 800; color: #c084fc; margin-top: 4px;">0</div>
+            </div>
+            <div style="background: rgba(17, 26, 51, 0.6); border: 1px solid rgba(234, 88, 12, 0.2); border-radius: 8px; padding: 14px;">
+              <span style="font-size: 11.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total Money Saved</span>
+              <div id="couponStatMoneySaved" style="font-size: 20px; font-weight: 800; color: #4ade80; margin-top: 4px;">£0.00</div>
+            </div>
+            <div style="background: rgba(17, 26, 51, 0.6); border: 1px solid rgba(234, 88, 12, 0.2); border-radius: 8px; padding: 14px;">
+              <span style="font-size: 11.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Sales Revenue</span>
+              <div id="couponStatSalesRevenue" style="font-size: 20px; font-weight: 800; color: #f59e0b; margin-top: 4px;">£0.00</div>
+            </div>
+          </div>
+
+          <!-- REDEMPTION HISTORY TABLE -->
+          <h3 style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <span>Redemption History</span>
+            <span id="couponHistoryCount" style="font-size: 11.5px; color: var(--muted); font-weight: 500;">0 orders</span>
+          </h3>
+          <div style="max-height: 240px; overflow-y: auto; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px;">
+            <table class="admin-table" style="font-size: 12px;">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Saved</th>
+                  <th style="text-align:right;">Order Total</th>
+                </tr>
+              </thead>
+              <tbody id="couponAnalyticsRows">
+                <tr><td colspan="5" class="empty">Loading analytics...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN REPLACE STOCK MODAL -->
+    <div class="modal-overlay" id="adminReplaceModal">
+      <div class="modal-content" style="max-width: 500px; width: 100%;">
+        <div class="modal-header">
+          <h2>Dispatch Replacement Stock</h2>
+          <button class="modal-close-btn" id="closeAdminReplaceModal" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <form id="adminReplaceForm" class="modal-body">
+          <div class="modal-form-group">
+            <label>Replacement Stock / Credentials</label>
+            <textarea id="adminReplaceTextarea" class="modal-form-control" style="height: 140px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4ade80; background: #04060b; padding: 10px; resize: vertical;" placeholder="Paste new account credentials, keys, or replacement details..." required></textarea>
+          </div>
+          <div style="display:flex; justify-flex:flex-end; gap:10px; margin-top:16px;">
+            <button type="button" id="cancelAdminReplaceBtn" class="ghost-cta" style="min-height:36px;">Cancel</button>
+            <button type="submit" class="pill-button" style="min-height:36px; background:#ea580c; color:#fff;">Dispatch Replacement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- CREATE ANNOUNCEMENT MODAL -->
+    <div class="modal-overlay" id="annFormModalOverlay">
+      <div class="modal-content" style="max-width: 480px; width: 100%;">
+        <div class="modal-header">
+          <h2>Create Announcement</h2>
+          <button class="modal-close-btn" id="closeAnnFormModal" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <form id="createAnnForm" class="modal-body">
+          <div class="modal-form-group">
+            <label>Title <span style="color:var(--red);">*</span></label>
+            <input type="text" id="annTitleInput" class="modal-form-control" placeholder="e.g. New Restock Available!" required>
+          </div>
+          <div class="modal-form-group">
+            <label>Notice Type</label>
+            <select id="annType" class="modal-form-control">
+              <option value="INFO">Information (Blue)</option>
+              <option value="SUCCESS">Success / Restock (Green)</option>
+              <option value="WARNING">Warning / Alert (Yellow)</option>
+            </select>
+          </div>
+          <div class="modal-form-group">
+            <label>Content Message <span style="color:var(--red);">*</span></label>
+            <textarea id="annContentInput" class="modal-form-control" style="height:90px; resize:vertical;" placeholder="Enter details..." required></textarea>
+          </div>
+          <p id="annFormStatus" style="font-size:12px; color:var(--muted); margin:10px 0 0; min-height:16px;"></p>
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+            <button type="button" id="cancelAnnFormBtn" class="ghost-cta" style="min-height:36px;">Cancel</button>
+            <button type="submit" class="pill-button" style="min-height:36px;">Post Announcement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- STAFF MODAL -->
+    <div class="modal-overlay" id="staffFormModalOverlay">
+      <div class="modal-content" style="max-width: 440px; width: 100%;">
+        <div class="modal-header">
+          <h2>Create New Staff Account</h2>
+          <button class="modal-close-btn" id="closeStaffFormModal" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <form id="createStaffForm" class="modal-body">
+          <div class="modal-form-group">
+            <label>Email Address <span style="color:var(--red);">*</span></label>
+            <input type="email" id="staffEmailInput" class="modal-form-control" placeholder="staff@mysterio.cc" autocomplete="off" required>
+          </div>
+          <div class="modal-form-group">
+            <label>Password <span style="color:var(--red);">*</span></label>
+            <input type="password" id="staffPasswordInput" class="modal-form-control" placeholder="••••••••" required>
+          </div>
+          <div class="modal-form-group">
+            <label>Role <span style="color:var(--red);">*</span></label>
+            <select id="smRole" class="modal-form-control">
+              <option value="ADMIN">ADMIN (Full management access)</option>
+              <option value="SUPPORT">SUPPORT (Tickets & Orders only)</option>
+            </select>
+          </div>
+          <p id="staffFormStatus" style="font-size:12px; color:var(--muted); margin:10px 0 0; min-height:16px;"></p>
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+            <button type="button" id="cancelStaffFormBtn" class="ghost-cta" style="min-height:38px;">Cancel</button>
+            <button type="submit" class="pill-button" style="min-height:38px;">Create Staff</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ORDER INFO POPUP MODAL FOR ADMIN -->
+    <div class="modal-overlay" id="orderInfoModalOverlay">
+      <div class="modal-content order-info-modal-card">
+        <div class="modal-header">
+          <h2>Order Info</h2>
+          <button class="modal-close-btn" id="closeOrderInfoModal" type="button" aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <!-- TABS HEADER -->
+        <div class="order-info-tabs-bar" id="orderModalTabsBar">
+          <button type="button" class="order-modal-tab active" id="tabOrderInfo">INFO</button>
+          <button type="button" class="order-modal-tab" id="tabOrderProducts">PRODUCTS</button>
+        </div>
+
+        <div class="modal-body" style="padding: 22px 24px 24px;">
+          <!-- SCREEN 1: INFO TAB -->
+          <div id="orderInfoTabContent" class="order-tab-pane">
+            <div class="order-info-field-group">
+              <div class="order-field-label">ID</div>
+              <div class="order-field-value" style="font-family:'JetBrains Mono',monospace; font-size:12.5px; color:#fdba74;" id="modalOrderId">-</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">User Email</div>
+              <div class="order-field-value" style="font-family:'Montserrat',sans-serif; font-size:13px; color:#ffffff;" id="modalOrderUser">-</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Creation date</div>
+              <div class="order-field-value" id="modalOrderDate">-</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Reason / Method</div>
+              <div class="order-field-value" id="modalOrderReason">cart</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Expected amount</div>
+              <div class="order-field-value" style="font-size: 15px; font-weight: 600;" id="modalOrderExpected">£0.00</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Paid amount</div>
+              <div class="order-field-value" style="font-size: 15px; font-weight: 600;" id="modalOrderPaid">£0.00</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Status</div>
+              <div class="order-field-value" id="modalOrderStatus">fulfilled</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Logs</div>
+              <div class="order-field-value" style="color: rgba(255,255,255,0.6);" id="modalOrderLogs">no log</div>
+            </div>
+
+            <div class="order-info-actions" style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+              <button type="button" class="pill-button" id="modalForceCompleteBtn" style="height: 42px; background: #ea580c !important; color: #ffffff !important; font-weight: 600; font-size: 13.5px; border-radius: 6px !important; border: none !important; cursor: pointer; width: 100%;">Force Complete Order</button>
+              <button type="button" class="pill-button" id="modalCopyOrderIdBtn" style="height: 42px; background: rgba(255, 255, 255, 0.07) !important; color: #e2e8f0 !important; font-weight: 600; font-size: 13.5px; border-radius: 6px !important; border: none !important; cursor: pointer; width: 100%;">Copy Order ID</button>
+            </div>
+          </div>
+
+          <!-- SCREEN 2: PRODUCTS TAB -->
+          <div id="orderProductsTabContent" class="order-tab-pane" style="display: none;">
+            <div id="modalProductsList" style="display: flex; flex-direction: column; gap: 14px;">
+              <!-- Dynamic products -->
+            </div>
+          </div>
+
+          <!-- SCREEN 3: VIEW STOCK SUBVIEW -->
+          <div id="orderStockSubView" class="order-tab-pane" style="display: none;">
+            <div style="margin-bottom: 14px;">
+              <textarea id="modalStockCredentialsBox" readonly class="modal-form-control" style="height: 180px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #fdba74; background: #04060b; border: 1px solid rgba(255, 255, 255, 0.08); resize: vertical; line-height: 1.5; padding: 12px;"></textarea>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" id="modalCopyStockBtn" class="pill-button secondary" style="flex: 1; height: 42px; background: #111a33; border: 1px solid rgba(234, 88, 12, 0.25); color: #fdba74; font-weight: 600; font-size: 13px; border-radius: 6px; cursor: pointer;">Copy Stock</button>
+              <button type="button" id="modalStockBackBtn" class="pill-button" style="flex: 1; height: 42px; background: #ea580c; color: #fff; font-weight: 600; font-size: 13px; border-radius: 6px; border: none; cursor: pointer;">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="admin.js?v=48000"></script>
+  </body>
+</html>

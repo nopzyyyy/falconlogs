@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
+    <link rel="icon" type="image/png" href="/favicon.png?v=999">
+    <link rel="shortcut icon" href="/favicon.ico?v=999">
+    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Add Balance - Falcon Logs</title>
+    
+    <link rel="alternate icon" type="image/png" href="/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+
+    <link rel="stylesheet" href="styles.css?v=820">
+    <style>
+      .deposit-shell {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: 30px 16px 80px;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 13.5px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-bottom: 20px;
+        transition: color 0.15s ease;
+      }
+      .back-link:hover {
+        color: #fb923c;
+      }
+      .deposit-card {
+        background: #111628;
+        border-radius: 8px;
+        padding: 32px 28px;
+        border: none !important;
+        box-shadow: none !important;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .deposit-tag {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .deposit-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 26px;
+        font-weight: 600;
+        color: #ffffff;
+        margin-top: 4px;
+        margin-bottom: 4px;
+      }
+      .deposit-subtitle {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.55);
+        font-weight: 500;
+      }
+      .preset-amounts-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .preset-chip {
+        flex: 1;
+        min-width: 60px;
+        height: 38px;
+        background: #0d1322;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #ffffff;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: background 0.15s ease, border-color 0.15s ease;
+      }
+      .preset-chip:hover {
+        background: #17223b;
+        border-color: rgba(234, 88, 12, 0.4);
+      }
+      .preset-chip.active {
+        background: #1e3a8a;
+        border-color: #ea580c !important;
+        color: #ffffff;
+      }
+      .amount-input-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      .amount-dollar-prefix {
+        position: absolute;
+        left: 14px;
+        font-size: 15px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.5);
+        pointer-events: none;
+      }
+      .amount-input-field {
+        width: 100%;
+        height: 44px;
+        background: #090e1c;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        padding: 0 14px 0 32px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        color: #ffffff;
+        outline: none;
+      }
+      .amount-input-field:focus {
+        border-color: #ea580c;
+      }
+      .deposit-section-label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 8px;
+        display: block;
+      }
+      .deposit-coin-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .deposit-full-coin-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #0d1322;
+        border-radius: 6px;
+        padding: 12px 16px;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: background 0.15s ease, border-color 0.15s ease;
+      }
+      .deposit-full-coin-card:hover {
+        background: #151f38;
+        border-color: rgba(234, 88, 12, 0.4);
+      }
+      .deposit-full-coin-card.active {
+        background: #172554;
+        border-color: #ea580c !important;
+      }
+      .deposit-coin-main-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .deposit-coin-title-text {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14.5px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+      .deposit-coin-sub-text {
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .deposit-submit-btn {
+        width: 100%;
+        height: 46px;
+        background: #ea580c;
+        color: #ffffff;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14.5px;
+        font-weight: 600;
+        border-radius: 6px;
+        border: none !important;
+        box-shadow: none !important;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: background 0.15s ease;
+      }
+      }
+      .deposit-submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div class="site-header-wrap">
+      <header class="store-site-header">
+        <a class="brand" href="/" aria-label="Falcon Logs">
+          <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img">
+        </a>
+        <nav class="header-nav-center" aria-label="Primary">
+          <a href="/" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <span>Logs</span>
+          </a>
+          <a href="/orders.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            <span>Orders</span>
+          </a>
+          <a href="/support.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            <span>Support</span>
+          </a>
+        </nav>
+        <div class="nav-actions">
+          <a class="cart-icon-btn" href="/cart.html" aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+            <span class="cart-badge" data-cart-count>0</span>
+          </a>
+          <span class="nav-divider"></span>
+          <div class="nav-account-dropdown-wrap">
+            <a class="nav-btn" href="/login.html" id="navUserBtn">
+              <svg class="nav-btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span id="navUserText">Log in</span>
+            </a>
+          </div>
+        </div>
+      </header>
+    </div>
+    <main class="deposit-shell">
+      <a href="/dashboard.html" class="back-link">&larr; Back to account</a>
+
+      <div class="deposit-card">
+        <div>
+          <span class="deposit-tag">STORE CREDIT</span>
+          <h1 class="deposit-title">Add balance</h1>
+          <span class="deposit-subtitle" id="userBalanceSubtitle">Current balance £0.00. Pay with crypto.</span>
+        </div>
+
+        <!-- AMOUNT SECTION -->
+        <div>
+          <span class="deposit-section-label">AMOUNT (GBP)</span>
+          <div class="preset-amounts-row" style="margin-bottom: 12px;">
+            <div class="preset-chip" data-amount="5">£5</div>
+            <div class="preset-chip active" data-amount="10">£10</div>
+            <div class="preset-chip" data-amount="25">£25</div>
+            <div class="preset-chip" data-amount="50">£50</div>
+            <div class="preset-chip" data-amount="100">£100</div>
+          </div>
+
+          <div class="amount-input-wrap">
+            <span class="amount-dollar-prefix">£</span>
+            <input type="number" id="depositAmountInput" class="amount-input-field" value="10" min="1" max="5000" step="1">
+          </div>
+          <span style="font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 6px; display: block;">Minimum £1 - Maximum £5,000</span>
+        </div>
+
+        <!-- PAY WITH COINS SECTION -->
+        <div>
+          <span class="deposit-section-label">PAY WITH</span>
+
+          <!-- SEARCH COINS -->
+          <div style="position: relative; margin-bottom: 12px;">
+            <svg style="position: absolute; left: 12px; top: 12px; color: rgba(255,255,255,0.4);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="depositCoinSearch" class="amount-input-field" placeholder="Search coins..." style="padding-left: 36px; height: 40px; font-size: 13.5px; font-weight: 500;">
+          </div>
+
+          <div class="deposit-coin-list" id="depositCoinList">
+
+            <!-- Bitcoin -->
+            <div class="deposit-full-coin-card active" data-coin="btc" data-search="bitcoin btc">
+              <div class="payment-method-icon">
+                <img src="/icons/btc.svg" alt="Bitcoin" width="32" height="32" class="payment-method-coin-img">
+              </div>
+              <div class="deposit-coin-main-info">
+                <span class="deposit-coin-title-text">Bitcoin</span>
+                <span class="deposit-coin-sub-text">BTC · ~30 min</span>
+              </div>
+            </div>
+
+            <!-- Litecoin -->
+            <div class="deposit-full-coin-card" data-coin="ltc" data-search="litecoin ltc">
+              <div class="payment-method-icon">
+                <img src="/icons/ltc.svg" alt="Litecoin" width="32" height="32" class="payment-method-coin-img">
+              </div>
+              <div class="deposit-coin-main-info">
+                <span class="deposit-coin-title-text">Litecoin</span>
+                <span class="deposit-coin-sub-text">LTC · ~5 min</span>
+              </div>
+            </div>
+
+            <!-- Ethereum -->
+            <div class="deposit-full-coin-card" data-coin="eth" data-search="ethereum eth erc20">
+              <div class="payment-method-icon">
+                <img src="/icons/eth.svg" alt="Ethereum" width="32" height="32" class="payment-method-coin-img">
+              </div>
+              <div class="deposit-coin-main-info">
+                <span class="deposit-coin-title-text">Ethereum</span>
+                <span class="deposit-coin-sub-text">ERC20 · ~3 min</span>
+              </div>
+            </div>
+
+            <!-- Solana -->
+            <div class="deposit-full-coin-card" data-coin="sol" data-search="solana sol">
+              <div class="payment-method-icon">
+                <img src="/icons/sol.svg" alt="Solana" width="32" height="32" class="payment-method-coin-img">
+              </div>
+              <div class="deposit-coin-main-info">
+                <span class="deposit-coin-title-text">Solana</span>
+                <span class="deposit-coin-sub-text">SOL · &lt;1 min</span>
+              </div>
+            </div>
+
+            <!-- Tether -->
+            <div class="deposit-full-coin-card" data-coin="usdt" data-search="tether usdt trc20 erc20 sol">
+              <div class="payment-method-icon">
+                <img src="/icons/usdt.svg" alt="Tether" width="32" height="32" class="payment-method-coin-img">
+              </div>
+              <div class="deposit-coin-main-info">
+                <span class="deposit-coin-title-text">Tether</span>
+                <span class="deposit-coin-sub-text">Choose network</span>
+                <div class="network-chips-row" style="display: flex; gap: 6px; margin-top: 6px;">
+                  <span class="network-chip active" data-network="trc20">TRC20</span>
+                  <span class="network-chip" data-network="erc20">ERC20</span>
+                  <span class="network-chip" data-network="sol">SOL</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- USD Coin -->
+            <div class="deposit-full-coin-card" data-coin="usdc" data-search="usd coin usdc erc20 sol">
+              <div class="payment-method-icon">
+                <img src="/icons/usdc.svg" alt="USD Coin" width="32" height="32" class="payment-method-coin-img">
+              </div>
+              <div class="deposit-coin-main-info">
+                <span class="deposit-coin-title-text">USD Coin</span>
+                <span class="deposit-coin-sub-text">Choose network</span>
+                <div class="network-chips-row" style="display: flex; gap: 6px; margin-top: 6px;">
+                  <span class="network-chip active" data-network="erc20">ERC20</span>
+                  <span class="network-chip" data-network="sol">SOL</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tron -->
+            <div class="deposit-full-coin-card" data-coin="trx" data-search="tron trx">
+              <div class="payment-method-icon">
+                <img src="/icons/trx.svg" alt="Tron" width="32" height="32" class="payment-method-coin-img">
+              </div>
+              <div class="deposit-coin-main-info">
+                <span class="deposit-coin-title-text">Tron</span>
+                <span class="deposit-coin-sub-text">TRX · &lt;1 min</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button type="button" class="deposit-submit-btn" id="submitDepositBtn">
+          Continue to payment &rarr;
+        </button>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-nav-links">
+        <a href="/">Home</a>
+        <a href="/cart.html">Cart</a>
+        <a href="/dashboard.html">Account</a>
+        <a href="/orders.html">Orders</a>
+      </div>
+      <a href="https://t.me/mysteriogateway" target="_blank" rel="noopener noreferrer" class="restock-alert-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Get restock alerts
+      </a>
+      <p class="footer-copyright">&copy; 2026 Falcon Logs. All rights reserved.</p>
+      <div class="footer-dev">
+        Developed by <a href="https://t.me/peoze" target="_blank" rel="noopener noreferrer"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Mass</a>
+      </div>
+    </footer>
+
+    <script src="cart-utils.js?v=440"></script>
+    <script>
+      let selectedDepositCoin = "btc";
+      let selectedDepositNetwork = "";
+
+      async function initDepositPage() {
+        try {
+          const res = await fetch("/api/auth/me");
+          const data = await res.json();
+          if (!data || !data.authenticated) {
+            window.location.href = "/login.html";
+            return;
+          }
+          document.querySelector("#userBalanceSubtitle").textContent = `Current balance $${Number(data.balance || 0).toFixed(2)}. Pay with crypto.`;
+        } catch (e) {}
+      }
+
+      // Preset Amount Chips
+      const amountInput = document.querySelector("#depositAmountInput");
+      document.querySelectorAll(".preset-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          amountInput.value = chip.dataset.amount;
+        });
+      });
+
+      amountInput.addEventListener("input", () => {
+        const val = amountInput.value;
+        document.querySelectorAll(".preset-chip").forEach(c => {
+          if (c.dataset.amount === val) {
+            c.classList.add("active");
+          } else {
+            c.classList.remove("active");
+          }
+        });
+      });
+
+      // Coin & Network Selection
+      document.querySelectorAll(".deposit-full-coin-card").forEach(card => {
+        card.addEventListener("click", (e) => {
+          const chip = e.target.closest(".network-chip");
+          if (chip) {
+            const chipRow = chip.closest(".network-chips-row");
+            chipRow.querySelectorAll(".network-chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            selectedDepositNetwork = chip.dataset.network || "";
+          }
+
+          document.querySelectorAll(".deposit-full-coin-card").forEach(c => c.classList.remove("active"));
+          card.classList.add("active");
+          selectedDepositCoin = card.dataset.coin || "btc";
+
+          const activeChip = card.querySelector(".network-chip.active");
+          if (card.dataset.coin === "usdt" || card.dataset.coin === "usdc") {
+            selectedDepositNetwork = activeChip ? activeChip.dataset.network : "";
+          } else {
+            selectedDepositNetwork = "";
+          }
+        });
+      });
+
+      // Live Coin Filter
+      const searchInput = document.querySelector("#depositCoinSearch");
+      if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+          const q = e.target.value.toLowerCase().trim();
+          document.querySelectorAll(".deposit-full-coin-card").forEach(card => {
+            const searchTerms = (card.dataset.search || "").toLowerCase();
+            if (!q || searchTerms.includes(q)) {
+              card.style.display = "flex";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      }
+
+      // Submit Deposit
+      document.querySelector("#submitDepositBtn").addEventListener("click", async () => {
+        const amount = parseFloat(amountInput.value);
+        const submitBtn = document.querySelector("#submitDepositBtn");
+        if (isNaN(amount) || amount < 1) {
+          showMysterioAlert({ message: "Please enter a deposit amount of at least $1.", title: "Invalid Amount" });
+          return;
+        }
+
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="btn-loading-spinner"></span> Generating payment invoice...`;
+
+        try {
+          const res = await fetch("/api/topups/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              amount,
+              paymentMethod: "CRYPTO",
+              coin: selectedDepositCoin,
+              network: selectedDepositNetwork
+            })
+          });
+
+          const data = await res.json();
+          if (res.ok) {
+            if (data.nowpayments) {
+              sessionStorage.setItem("active_crypto_payment", JSON.stringify(data.nowpayments));
+              window.location.href = `/pay.html?paymentId=${data.nowpayments.payment_id}`;
+            } else if (data.redirectUrl) {
+              window.location.href = data.redirectUrl;
+            } else {
+              window.location.href = "/orders.html";
+            }
+          } else {
+            showMysterioAlert({ message: data.error || "Failed to initiate deposit invoice.", title: "Deposit Error" });
+          }
+        } catch (e) {
+          showMysterioAlert({ message: "Network error. Please try again.", title: "Network Error" });
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        initDepositPage();
+        if (typeof window.updateCartBadge === "function") window.updateCartBadge();
+      });
+    </script>
+  </body>
+</html>

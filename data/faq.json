@@ -1,0 +1,16 @@
+[
+  {
+    "id": "faq-1",
+    "question": "How does digital checkout work?",
+    "answer": "Add products or card inventory to your cart, select your payment method (Balance, Crypto, Chime, or Telegram Stars), and check out. Items are delivered instantly.",
+    "order": 1,
+    "isActive": true
+  },
+  {
+    "id": "faq-2",
+    "question": "What is the refund policy?",
+    "answer": "We offer a 24-hour refund window for invalid credentials. You can raise a support ticket or request a refund from your completed orders page.",
+    "order": 2,
+    "isActive": true
+  }
+]

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
+    <link rel="icon" type="image/png" href="/favicon.png?v=999">
+    <link rel="shortcut icon" href="/favicon.ico?v=999">
+    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Cart - Falcon Logs</title>
+    
+    <link rel="alternate icon" type="image/png" href="/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+
+    <link rel="stylesheet" href="styles.css?v=820">
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div class="site-header-wrap">
+      <header class="store-site-header">
+        <a class="brand" href="/" aria-label="Falcon Logs">
+          <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img">
+        </a>
+        <nav class="header-nav-center" aria-label="Primary">
+          <a href="/" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <span>Logs</span>
+          </a>
+          <a href="/orders.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            <span>Orders</span>
+          </a>
+          <a href="/support.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            <span>Support</span>
+          </a>
+        </nav>
+        <div class="nav-actions">
+          <a class="cart-icon-btn" href="/cart.html" aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+            <span class="cart-badge" data-cart-count>0</span>
+          </a>
+          <span class="nav-divider"></span>
+          <div class="nav-account-dropdown-wrap">
+            <a class="nav-btn" href="/login.html" id="navUserBtn">
+              <svg class="nav-btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span id="navUserText">Log in</span>
+            </a>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <!-- CART CONTAINER (HEX LOGS STYLE - SCREENSHOT 4) -->
+    <main class="store-shell">
+      <div class="cart-layout-grid">
+        <!-- LEFT COLUMN: PRODUCTS & PAYMENT METHODS -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <!-- PRODUCTS BOX -->
+          <div class="cart-section-box">
+            <div class="cart-section-title">
+              <span>PRODUCTS</span>
+              <span id="cartItemCountLabel">0 items</span>
+            </div>
+            <div id="cartItemsList" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Dynamic Cart Items -->
+            </div>
+          </div>
+
+          <!-- PAYMENT METHODS BOX -->
+          <div class="cart-section-box">
+            <div class="cart-section-title">
+              <span>SELECT PAYMENT METHOD</span>
+            </div>
+
+            <div class="payment-methods-grid" id="paymentMethodsGrid">
+              <!-- Balance -->
+              <div class="payment-method-card active" data-method="balance">
+                <div class="payment-method-icon">
+                  <img src="/icons/balance.svg" alt="Balance" width="32" height="32" class="payment-method-coin-img">
+                </div>
+                <div class="payment-method-info">
+                  <span class="payment-method-title">Account balance</span>
+                  <span class="payment-method-desc" id="balanceDescLabel">Log in to pay with store credit</span>
+                </div>
+              </div>
+
+              <!-- Search crypto input -->
+              <div class="search-input-wrapper" style="margin: 6px 0;">
+                <svg class="search-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                <input id="cryptoSearch" type="search" class="store-search-input" placeholder="Search coins..." style="height:38px;">
+              </div>
+
+              <!-- Bitcoin -->
+              <div class="payment-method-card" data-method="crypto" data-coin="btc" data-coin-search="bitcoin btc">
+                <div class="payment-method-icon">
+                  <img src="/icons/btc.svg" alt="Bitcoin" width="32" height="32" class="payment-method-coin-img">
+                </div>
+                <div class="payment-method-info">
+                  <span class="payment-method-title">Bitcoin</span>
+                  <span class="payment-method-desc">BTC · ~30 min</span>
+                </div>
+              </div>
+
+              <!-- Litecoin -->
+              <div class="payment-method-card" data-method="crypto" data-coin="ltc" data-coin-search="litecoin ltc">
+                <div class="payment-method-icon">
+                  <img src="/icons/ltc.svg" alt="Litecoin" width="32" height="32" class="payment-method-coin-img">
+                </div>
+                <div class="payment-method-info">
+                  <span class="payment-method-title">Litecoin</span>
+                  <span class="payment-method-desc">LTC · ~5 min</span>
+                </div>
+              </div>
+
+              <!-- Ethereum -->
+              <div class="payment-method-card" data-method="crypto" data-coin="eth" data-coin-search="ethereum eth erc20">
+                <div class="payment-method-icon">
+                  <img src="/icons/eth.svg" alt="Ethereum" width="32" height="32" class="payment-method-coin-img">
+                </div>
+                <div class="payment-method-info">
+                  <span class="payment-method-title">Ethereum</span>
+                  <span class="payment-method-desc">ERC20 · ~3 min</span>
+                </div>
+              </div>
+
+              <!-- Solana -->
+              <div class="payment-method-card" data-method="crypto" data-coin="sol" data-coin-search="solana sol">
+                <div class="payment-method-icon">
+                  <img src="/icons/sol.svg" alt="Solana" width="32" height="32" class="payment-method-coin-img">
+                </div>
+                <div class="payment-method-info">
+                  <span class="payment-method-title">Solana</span>
+                  <span class="payment-method-desc">SOL · &lt;1 min</span>
+                </div>
+              </div>
+
+              <!-- Tether USD -->
+              <div class="payment-method-card" data-method="crypto" data-coin="usdt" data-coin-search="tether usdt trc20 erc20 sol">
+                <div class="payment-method-icon">
+                  <img src="/icons/usdt.svg" alt="Tether" width="32" height="32" class="payment-method-coin-img">
+                </div>
+                <div class="payment-method-info">
+                  <span class="payment-method-title">Tether</span>
+                  <span class="payment-method-desc">Choose network</span>
+                  <div class="network-chips-row">
+                    <span class="network-chip active" data-network="trc20">TRC20</span>
+                    <span class="network-chip" data-network="erc20">ERC20</span>
+                    <span class="network-chip" data-network="sol">SOL</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- USD Coin -->
+              <div class="payment-method-card" data-method="crypto" data-coin="usdc" data-coin-search="usd coin usdc erc20 sol">
+                <div class="payment-method-icon">
+                  <img src="/icons/usdc.svg" alt="USD Coin" width="32" height="32" class="payment-method-coin-img">
+                </div>
+                <div class="payment-method-info">
+                  <span class="payment-method-title">USD Coin</span>
+                  <span class="payment-method-desc">Choose network</span>
+                  <div class="network-chips-row">
+                    <span class="network-chip active" data-network="erc20">ERC20</span>
+                    <span class="network-chip" data-network="sol">SOL</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tron -->
+              <div class="payment-method-card" data-method="crypto" data-coin="trx" data-coin-search="tron trx">
+                <div class="payment-method-icon">
+                  <img src="/icons/trx.svg" alt="Tron" width="32" height="32" class="payment-method-coin-img">
+                </div>
+                <div class="payment-method-info">
+                  <span class="payment-method-title">Tron</span>
+                  <span class="payment-method-desc">TRX · &lt;1 min</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: COUPON & ORDER DETAILS -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <!-- APPLY COUPON -->
+          <div class="cart-section-box">
+            <div class="cart-section-title">
+              <span>APPLY COUPON CODE</span>
+            </div>
+            <div class="cart-coupon-row">
+              <input type="text" id="couponCodeInput" class="cart-coupon-input" placeholder="Coupon code" autocomplete="off" spellcheck="false">
+              <button type="button" id="applyCouponBtn" class="cart-coupon-btn">Apply</button>
+            </div>
+            <span id="couponStatusText" style="font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 6px; display: block;">Applied at purchase.</span>
+          </div>
+
+          <!-- ORDER DETAILS -->
+          <div class="order-summary-card">
+            <div class="cart-section-title" style="margin-bottom: 4px;">
+              <span>ORDER DETAILS</span>
+            </div>
+            <div class="summary-row">
+              <span>Subtotal :</span>
+              <span class="summary-val" id="summarySubtotal">£0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Platform Fee :</span>
+              <span class="summary-val">0%</span>
+            </div>
+            <div class="summary-row">
+              <span>Discount :</span>
+              <span class="summary-val" id="summaryDiscount">£0.00</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total :</span>
+              <span class="summary-val" id="summaryTotal" style="color:var(--accent-light);">£0.00</span>
+            </div>
+
+            <div id="checkoutAuthNotice" style="display: none; background: rgba(234, 88, 12, 0.12); border: 1px solid rgba(234, 88, 12, 0.4); border-radius: 6px; padding: 12px; margin: 16px 0; font-size: 12.5px; color: #ffffff; align-items: center; justify-content: space-between; gap: 8px;">
+              <span style="font-weight: 500;">You must be logged in to checkout.</span>
+              <a href="/login.html" style="background: #ea580c; color: #fff; padding: 5px 12px; border-radius: 5px; text-decoration: none; font-weight: 700; font-size: 11.5px; white-space: nowrap;">Log In &rarr;</a>
+            </div>
+
+            <button type="button" id="checkoutSubmitBtn" class="checkout-pay-btn">Proceed to Payment</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-nav-links">
+        <a href="/">Home</a>
+        <a href="/cart.html">Cart</a>
+        <a href="/dashboard.html">Account</a>
+        <a href="/orders.html">Orders</a>
+      </div>
+      <a href="https://t.me/mysteriogateway" target="_blank" rel="noopener noreferrer" class="restock-alert-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Get restock alerts
+      </a>
+      <p class="footer-copyright">&copy; 2026 Falcon Logs. All rights reserved.</p>
+      <div class="footer-dev">
+        Developed by <a href="https://t.me/peoze" target="_blank" rel="noopener noreferrer"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Mass</a>
+      </div>
+    </footer>
+
+    <script src="cart-utils.js?v=460"></script>
+    <script src="cart.js?v=450"></script>
+  </body>
+</html>

@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
+    <link rel="icon" type="image/png" href="/favicon.png?v=999">
+    <link rel="shortcut icon" href="/favicon.ico?v=999">
+    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Payment - Falcon Logs</title>
+    
+    <link rel="alternate icon" type="image/png" href="/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=820">
+    <style>
+      .pay-page-shell {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 30px 20px 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .pay-breadcrumb {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.45);
+        margin-bottom: 24px;
+        text-align: center;
+        word-break: break-all;
+      }
+      .pay-invoice-card {
+        max-width: 480px;
+        width: 100%;
+        background: #111628;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 24px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        box-shadow: none !important;
+      }
+      .pay-card-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        position: relative;
+      }
+      .pay-coin-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+      .pay-coin-icon svg {
+        width: 44px;
+        height: 44px;
+        display: block;
+      }
+      .pay-head-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .pay-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 19px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+      .pay-subtitle {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.35;
+      }
+      .pay-timer {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #f59e0b;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+      }
+      /* 3-Step Progress Bar — Clean Solid, No Glow */
+      .pay-step-bar {
+        display: flex;
+        gap: 6px;
+        height: 4px;
+        margin: 2px 0;
+      }
+      .pay-step-seg {
+        flex: 1;
+        height: 100%;
+        border-radius: 2px;
+        background: #1a233b;
+        transition: background 0.3s;
+        box-shadow: none !important;
+      }
+      .pay-step-seg.active {
+        background: #ea580c;
+        box-shadow: none !important;
+      }
+      .pay-step-seg.completed {
+        background: #10b981;
+        box-shadow: none !important;
+      }
+
+      .pay-status-box {
+        background: #090e1c;
+        border: none !important;
+        border-radius: 6px !important;
+        padding: 11px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        box-shadow: none !important;
+      }
+
+      /* Non-glowing simple pulse dot */
+      .crypto-status-pulse-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f59e0b;
+        box-shadow: none !important;
+      }
+
+      .pay-tab-toggle-group {
+        display: flex;
+        background: #090e1c;
+        border-radius: 6px !important;
+        padding: 4px;
+        gap: 4px;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .pay-tab-toggle-btn {
+        flex: 1;
+        height: 38px;
+        border-radius: 5px !important;
+        border: none !important;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+        box-shadow: none !important;
+      }
+      .pay-tab-toggle-btn.active {
+        background: #ea580c;
+        color: #ffffff;
+        box-shadow: none !important;
+      }
+
+      .pay-qr-wrap {
+        background: #ffffff;
+        border-radius: 6px !important;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 220px;
+        height: 220px;
+        margin: 4px auto;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .pay-qr-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .pay-field-box {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .pay-field-label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .pay-field-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #090e1c;
+        border: none !important;
+        border-radius: 6px !important;
+        padding: 12px 14px;
+        box-shadow: none !important;
+      }
+      .pay-field-val {
+        flex: 1;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        word-break: break-all;
+      }
+      .pay-copy-btn {
+        height: 34px;
+        padding: 0 14px;
+        border-radius: 5px !important;
+        border: none !important;
+        background: #182035;
+        color: #fdba74;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12.5px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.15s, color 0.15s;
+        flex-shrink: 0;
+        box-shadow: none !important;
+      }
+      .pay-copy-btn:hover {
+        background: #ea580c;
+        color: #ffffff;
+        box-shadow: none !important;
+      }
+
+      .pay-meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .pay-meta-col {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .pay-meta-label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 10.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .pay-meta-val {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .pay-warning-card {
+        background: rgba(245, 158, 11, 0.08);
+        border: none !important;
+        border-radius: 6px !important;
+        padding: 13px 15px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        color: #fbbf24;
+        font-size: 12px;
+        line-height: 1.45;
+        font-weight: 500;
+        box-shadow: none !important;
+      }
+      .pay-warning-icon {
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div class="site-header-wrap">
+      <header class="store-site-header">
+        <a class="brand" href="/" aria-label="Falcon Logs">
+          <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img">
+        </a>
+        <nav class="header-nav-center" aria-label="Primary">
+          <a href="/" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <span>Logs</span>
+          </a>
+          <a href="/orders.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            <span>Orders</span>
+          </a>
+          <a href="/support.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            <span>Support</span>
+          </a>
+        </nav>
+        <div class="nav-actions">
+          <a class="cart-icon-btn" href="/cart.html" aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+            <span class="cart-badge" data-cart-count>0</span>
+          </a>
+          <span class="nav-divider"></span>
+          <div class="nav-account-dropdown-wrap">
+            <a class="nav-btn" href="/login.html" id="navUserBtn">
+              <svg class="nav-btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span id="navUserText">Log in</span>
+            </a>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <!-- MAIN SHELL -->
+    <main class="pay-page-shell">
+      <div class="pay-breadcrumb" id="payBreadcrumb">
+        Order loading...
+      </div>
+
+      <div class="pay-invoice-card" id="payInvoiceCard">
+        <!-- HEADER ROW -->
+        <div class="pay-card-head">
+          <div class="pay-coin-icon" id="payCoinIcon" style="background:#f7931a;">₿</div>
+          <div class="pay-head-info">
+            <div class="pay-title" id="payTitleText">Pay with Bitcoin</div>
+            <div class="pay-subtitle">Send the exact amount. We detect it automatically on this payment address.</div>
+          </div>
+          <div class="pay-timer" id="payTimerLabel">19:59</div>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="pay-step-bar">
+          <div class="pay-step-seg active"></div>
+          <div class="pay-step-seg" id="stepSeg2"></div>
+          <div class="pay-step-seg" id="stepSeg3"></div>
+        </div>
+
+        <!-- STATUS PILL -->
+        <div class="pay-status-box" id="payStatusBox">
+          <span class="crypto-status-pulse-dot"></span>
+          <span id="payStatusText">Waiting for payment</span>
+        </div>
+
+        <!-- TAB TOGGLE -->
+        <div class="pay-tab-toggle-group">
+          <button type="button" class="pay-tab-toggle-btn active" id="tabWithAmountBtn">With amount</button>
+          <button type="button" class="pay-tab-toggle-btn" id="tabWithoutAmountBtn">Without amount</button>
+        </div>
+
+        <!-- QR CODE -->
+        <div class="pay-qr-wrap">
+          <img id="payQrImage" src="" alt="Payment QR Code">
+        </div>
+
+        <!-- AMOUNT TO SEND -->
+        <div class="pay-field-box">
+          <div class="pay-field-label">AMOUNT TO SEND</div>
+          <div class="pay-field-row">
+            <div class="pay-field-val" id="payAmountVal">0.00000000 BTC</div>
+            <button type="button" class="pay-copy-btn" id="copyAmountBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- METADATA GRID -->
+        <div class="pay-meta-grid">
+          <div class="pay-meta-col">
+            <div class="pay-meta-label">NETWORK</div>
+            <div class="pay-meta-val" id="payNetworkVal">Bitcoin · BTC</div>
+          </div>
+          <div class="pay-meta-col">
+            <div class="pay-meta-label">TYPICAL SPEED</div>
+            <div class="pay-meta-val" id="paySpeedVal">~30 min</div>
+          </div>
+        </div>
+
+        <!-- WARNING BOX -->
+        <div class="pay-warning-card">
+          <svg class="pay-warning-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div id="payWarningText">
+            Send the requested amount <strong id="warnAmountText">0.0000 BTC</strong>. Payments of a different amount remain associated with this invoice and may need the remaining balance or manual review.
+          </div>
+        </div>
+
+        <!-- WALLET ADDRESS -->
+        <div class="pay-field-box">
+          <div class="pay-field-label">WALLET ADDRESS</div>
+          <div class="pay-field-row">
+            <div class="pay-field-val" id="payAddressVal" style="font-family:'JetBrains Mono', monospace; font-size:13.5px;">Generating address...</div>
+            <button type="button" class="pay-copy-btn" id="copyAddressBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-nav-links">
+        <a href="/">Home</a>
+        <a href="/cart.html">Cart</a>
+        <a href="/dashboard.html">Account</a>
+        <a href="/orders.html">Orders</a>
+      </div>
+      <a href="https://t.me/mysteriogateway" target="_blank" rel="noopener noreferrer" class="restock-alert-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Get restock alerts
+      </a>
+      <p class="footer-copyright">&copy; 2026 Falcon Logs. All rights reserved.</p>
+      <div class="footer-dev">
+        Developed by <a href="https://t.me/peoze" target="_blank" rel="noopener noreferrer"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Mass</a>
+      </div>
+    </footer>
+
+    <script src="cart-utils.js?v=440"></script>
+    <script>
+      let currentPayment = null;
+      let qrMode = "with"; // "with" or "without"
+      let countdownTimerInterval = null;
+      let statusPollInterval = null;
+
+      const coinMetaMap = {
+        btc: { name: "Bitcoin", symbol: "BTC", bg: "transparent", svg: `<img src="/icons/btc.svg" alt="Bitcoin" width="32" height="32" class="payment-method-coin-img">`, networkName: "Bitcoin · BTC", speed: "~30 min", scheme: "bitcoin" },
+        ltc: { name: "Litecoin", symbol: "LTC", bg: "transparent", svg: `<img src="/icons/ltc.svg" alt="Litecoin" width="32" height="32" class="payment-method-coin-img">`, networkName: "Litecoin · LTC", speed: "~5 min", scheme: "litecoin" },
+        eth: { name: "Ethereum", symbol: "ETH", bg: "transparent", svg: `<img src="/icons/eth.svg" alt="Ethereum" width="32" height="32" class="payment-method-coin-img">`, networkName: "Ethereum · ERC20", speed: "~3 min", scheme: "ethereum" },
+        sol: { name: "Solana", symbol: "SOL", bg: "transparent", svg: `<img src="/icons/sol.svg" alt="Solana" width="32" height="32" class="payment-method-coin-img">`, networkName: "Solana · SOL", speed: "<1 min", scheme: "solana" },
+        usdt: { name: "Tether", symbol: "USDT", bg: "transparent", svg: `<img src="/icons/usdt.svg" alt="Tether" width="32" height="32" class="payment-method-coin-img">`, networkName: "Tether · TRC20", speed: "~3 min", scheme: "ethereum" },
+        usdt_trc20: { name: "Tether", symbol: "USDT", bg: "transparent", svg: `<img src="/icons/usdt.svg" alt="Tether" width="32" height="32" class="payment-method-coin-img">`, networkName: "Tether · TRC20", speed: "~3 min", scheme: "tron" },
+        usdt_erc20: { name: "Tether", symbol: "USDT", bg: "transparent", svg: `<img src="/icons/usdt.svg" alt="Tether" width="32" height="32" class="payment-method-coin-img">`, networkName: "Tether · ERC20", speed: "~3 min", scheme: "ethereum" },
+        usdt_sol: { name: "Tether", symbol: "USDT", bg: "transparent", svg: `<img src="/icons/usdt.svg" alt="Tether" width="32" height="32" class="payment-method-coin-img">`, networkName: "Tether · SOL", speed: "<1 min", scheme: "solana" },
+        usdc: { name: "USD Coin", symbol: "USDC", bg: "transparent", svg: `<img src="/icons/usdc.svg" alt="USD Coin" width="32" height="32" class="payment-method-coin-img">`, networkName: "USD Coin · ERC20", speed: "~3 min", scheme: "ethereum" },
+        usdc_erc20: { name: "USD Coin", symbol: "USDC", bg: "transparent", svg: `<img src="/icons/usdc.svg" alt="USD Coin" width="32" height="32" class="payment-method-coin-img">`, networkName: "USD Coin · ERC20", speed: "~3 min", scheme: "ethereum" },
+        usdc_sol: { name: "USD Coin", symbol: "USDC", bg: "transparent", svg: `<img src="/icons/usdc.svg" alt="USD Coin" width="32" height="32" class="payment-method-coin-img">`, networkName: "USD Coin · SOL", speed: "<1 min", scheme: "solana" },
+        trx: { name: "Tron", symbol: "TRX", bg: "transparent", svg: `<img src="/icons/trx.svg" alt="Tron" width="32" height="32" class="payment-method-coin-img">`, networkName: "Tron · TRX", speed: "<1 min", scheme: "tron" }
+      };
+
+      function getUrlParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      function updateQrCode() {
+        if (!currentPayment) return;
+        const addr = currentPayment.pay_address || "";
+        const amount = currentPayment.pay_amount || 0;
+        const coin = (currentPayment.coin || currentPayment.pay_currency || "btc").toLowerCase();
+        const meta = coinMetaMap[coin] || coinMetaMap.btc;
+        let qrData = addr;
+
+        if (qrMode === "with" && amount > 0) {
+          qrData = `${meta.scheme || 'crypto'}:${addr}?amount=${amount}`;
+        }
+
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrData)}`;
+        document.querySelector("#payQrImage").src = qrUrl;
+      }
+
+      function renderPaymentDetails(p) {
+        currentPayment = p;
+        const coinKey = (p.network ? `${p.coin}_${p.network}` : p.coin || p.pay_currency || "btc").toLowerCase();
+        const meta = coinMetaMap[coinKey] || coinMetaMap[(p.coin || "btc").toLowerCase()] || coinMetaMap.btc;
+
+        // Breadcrumb — show only order number as requested
+        const orderIdText = p.order_id || p.orderId || p.payment_id || "Order";
+        document.querySelector("#payBreadcrumb").textContent = `Order ${orderIdText}`;
+
+        // Card Header
+        const iconEl = document.querySelector("#payCoinIcon");
+        iconEl.style.background = meta.bg || "transparent";
+        if (meta.svg) {
+          iconEl.innerHTML = meta.svg;
+        } else {
+          iconEl.textContent = meta.icon || "₿";
+        }
+        document.querySelector("#payTitleText").textContent = `Pay with ${meta.name}`;
+
+        // Amount & Address
+        const amountStr = `${p.pay_amount} ${meta.symbol}`;
+        document.querySelector("#payAmountVal").textContent = amountStr;
+        document.querySelector("#warnAmountText").textContent = amountStr;
+        document.querySelector("#payAddressVal").textContent = p.pay_address || "Generating address...";
+
+        // Network Grid
+        document.querySelector("#payNetworkVal").textContent = meta.networkName;
+        document.querySelector("#paySpeedVal").textContent = meta.speed;
+
+        updateQrCode();
+
+        // Calculate exact remaining seconds from creation timestamp
+        let remSeconds = 1200;
+        const creationTime = p.created_at || p.createdAt || p.created_at_timestamp;
+        if (creationTime) {
+          const elapsed = Math.floor((Date.now() - Date.parse(creationTime)) / 1000);
+          remSeconds = Math.max(0, 1200 - elapsed);
+        } else if (p.expiration_seconds) {
+          remSeconds = Number(p.expiration_seconds);
+        }
+
+        const isExpired = remSeconds <= 0 || String(p.status || "").toLowerCase() === "expired" || String(p.status || "").toLowerCase() === "failed";
+        if (isExpired) {
+          remSeconds = 0;
+          document.querySelector("#payTimerLabel").textContent = "00:00";
+          const statusBox = document.querySelector("#payStatusBox");
+          statusBox.style.background = "rgba(239, 68, 68, 0.15)";
+          statusBox.style.color = "#ef4444";
+          statusBox.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Invoice Expired`;
+        } else {
+          startTimer(remSeconds);
+        }
+
+        startPolling(p.payment_id || p.paymentId || p.id);
+      }
+
+      function startTimer(seconds) {
+        if (countdownTimerInterval) clearInterval(countdownTimerInterval);
+        let rem = seconds;
+
+        function tick() {
+          if (rem <= 0) {
+            document.querySelector("#payTimerLabel").textContent = "00:00";
+            const statusBox = document.querySelector("#payStatusBox");
+            statusBox.style.background = "rgba(239, 68, 68, 0.15)";
+            statusBox.style.color = "#ef4444";
+            statusBox.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Invoice Expired`;
+            clearInterval(countdownTimerInterval);
+            return;
+          }
+          const m = Math.floor(rem / 60);
+          const s = rem % 60;
+          document.querySelector("#payTimerLabel").textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+          rem--;
+        }
+        tick();
+        countdownTimerInterval = setInterval(tick, 1000);
+      }
+
+      function startPolling(paymentId) {
+        if (statusPollInterval) clearInterval(statusPollInterval);
+        if (!paymentId) return;
+
+        statusPollInterval = setInterval(async () => {
+          try {
+            const res = await fetch(`/api/nowpayments/status/${encodeURIComponent(paymentId)}`);
+            if (res.ok) {
+              const data = await res.json();
+              const statusBox = document.querySelector("#payStatusBox");
+              const step2 = document.querySelector("#stepSeg2");
+              const step3 = document.querySelector("#stepSeg3");
+
+              if (data && (data.isPaid || data.status === "finished" || data.status === "confirmed" || data.status === "completed")) {
+                clearInterval(statusPollInterval);
+                if (countdownTimerInterval) clearInterval(countdownTimerInterval);
+
+                step2.classList.add("completed");
+                step3.classList.add("completed");
+
+                statusBox.style.background = "rgba(16, 185, 129, 0.15)";
+                statusBox.style.color = "#10b981";
+                statusBox.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Payment Confirmed! Processing order...`;
+
+                setTimeout(() => {
+                  if (currentPayment && (currentPayment.order_id || currentPayment.orderId)) {
+                    window.location.href = `/orders.html?orderId=${currentPayment.order_id || currentPayment.orderId}`;
+                  } else {
+                    window.location.href = "/dashboard.html";
+                  }
+                }, 1500);
+              } else if (data && data.status === "confirming") {
+                step2.classList.add("active");
+                statusBox.style.background = "rgba(234, 88, 12, 0.15)";
+                statusBox.style.color = "#fb923c";
+                statusBox.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Payment detected! Confirming on blockchain...`;
+              } else if (data && data.status === "partially_paid") {
+                statusBox.style.background = "rgba(245, 158, 11, 0.15)";
+                statusBox.style.color = "#f59e0b";
+                statusBox.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Partial payment received (${data.actuallyPaid || ''}). Please send remaining amount.`;
+              } else if (data && (data.status === "expired" || data.status === "failed")) {
+                clearInterval(statusPollInterval);
+                if (countdownTimerInterval) clearInterval(countdownTimerInterval);
+                statusBox.style.background = "rgba(239, 68, 68, 0.15)";
+                statusBox.style.color = "#ef4444";
+                statusBox.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Invoice Expired`;
+              }
+            }
+          } catch (e) {}
+        }, 3000);
+      }
+
+      function copyTextToClipboard(text, btnElement, successMsg) {
+        if (!text) return;
+        const valToCopy = String(text).trim();
+
+        function showSuccessUI() {
+          if (btnElement) {
+            const originalContent = btnElement.innerHTML;
+            btnElement.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:#22c55e; font-weight:700;">Copied!</span>`;
+            setTimeout(() => {
+              btnElement.innerHTML = originalContent;
+            }, 2000);
+          }
+          if (typeof showToast === "function") {
+            showToast(successMsg || "Copied to clipboard!");
+          }
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(valToCopy).then(showSuccessUI).catch(() => {
+            execCommandFallback(valToCopy, showSuccessUI);
+          });
+        } else {
+          execCommandFallback(valToCopy, showSuccessUI);
+        }
+      }
+
+      function execCommandFallback(text, cb) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "-9999px";
+        textArea.style.left = "-9999px";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          const success = document.execCommand("copy");
+          if (success && cb) cb();
+        } catch (e) {
+          console.error("execCommand error:", e);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Tab buttons
+        const btnWith = document.querySelector("#tabWithAmountBtn");
+        const btnWithout = document.querySelector("#tabWithoutAmountBtn");
+        btnWith.addEventListener("click", () => {
+          btnWith.classList.add("active");
+          btnWithout.classList.remove("active");
+          qrMode = "with";
+          updateQrCode();
+        });
+        btnWithout.addEventListener("click", () => {
+          btnWithout.classList.add("active");
+          btnWith.classList.remove("active");
+          qrMode = "without";
+          updateQrCode();
+        });
+
+        // Copy buttons
+        const copyAmtBtn = document.querySelector("#copyAmountBtn");
+        if (copyAmtBtn) {
+          copyAmtBtn.addEventListener("click", () => {
+            const amtText = currentPayment && (currentPayment.pay_amount || currentPayment.payAmount)
+              ? (currentPayment.pay_amount || currentPayment.payAmount)
+              : document.querySelector("#payAmountVal").textContent.split(' ')[0];
+            copyTextToClipboard(amtText, copyAmtBtn, "Amount copied to clipboard!");
+          });
+        }
+
+        const copyAddrBtn = document.querySelector("#copyAddressBtn");
+        if (copyAddrBtn) {
+          copyAddrBtn.addEventListener("click", () => {
+            const addrText = currentPayment && (currentPayment.pay_address || currentPayment.payAddress)
+              ? (currentPayment.pay_address || currentPayment.payAddress)
+              : document.querySelector("#payAddressVal").textContent;
+            copyTextToClipboard(addrText, copyAddrBtn, "Wallet address copied to clipboard!");
+          });
+        }
+
+        // Try load payment from URL param or sessionStorage
+        const paymentId = getUrlParam("paymentId") || getUrlParam("payment_id");
+        if (paymentId) {
+          try {
+            const res = await fetch(`/api/nowpayments/invoice/${encodeURIComponent(paymentId)}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && data.nowpayments) {
+                renderPaymentDetails(data.nowpayments);
+                return;
+              }
+            }
+          } catch (e) {}
+        }
+
+        // Fallback to active_crypto_payment in sessionStorage
+        try {
+          const stored = sessionStorage.getItem("active_crypto_payment");
+          if (stored) {
+            const p = JSON.parse(stored);
+            renderPaymentDetails(p);
+            return;
+          }
+        } catch (e) {}
+
+        // Demo fallback if no session payment exists
+        renderPaymentDetails({
+          payment_id: "demo-invoice-101",
+          order_id: "26a99a0181f3b-0000000000092",
+          email: "user@mysterio.cc",
+          pay_amount: "0.00053773",
+          pay_address: "3R1XnXFbkxcWgjeDu6nTn3Ujf1pKm78eDemoAddr",
+          coin: "btc",
+          network: "btc",
+          expiration_seconds: 1200
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "paymentMethods": {
+    "balance": true,
+    "crypto": true,
+    "chime": false,
+    "tg_stars": true
+  }
+}

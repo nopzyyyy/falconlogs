@@ -1,0 +1,9 @@
+[
+  {
+    "code": "MYSTERIO10",
+    "discountPct": 10,
+    "maxUses": 100,
+    "usedCount": 0,
+    "isActive": true
+  }
+]

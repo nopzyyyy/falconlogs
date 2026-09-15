@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
+    <link rel="icon" type="image/png" href="/favicon.png?v=999">
+    <link rel="shortcut icon" href="/favicon.ico?v=999">
+    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Support Tickets - Falcon Logs</title>
+    
+    <link rel="alternate icon" type="image/png" href="/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="styles.css?v=820">
+    <style>
+      .support-tab-nav {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 8px;
+      }
+      .support-tab-btn {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.55);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        padding: 6px 12px;
+        position: relative;
+        transition: color 0.15s ease;
+      }
+      .support-tab-btn.active {
+        color: #f97316;
+      }
+      .support-tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -9px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #f97316;
+      }
+      .instruction-box {
+        background: #111a33;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 5px;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+        color: #e2e8f0;
+      }
+      .instruction-box h2 {
+        font-size: 15px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 4px;
+      }
+      .instruction-box p.subtitle {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 12px;
+      }
+      .instruction-steps {
+        list-style-type: disc;
+        padding-left: 18px;
+        font-size: 12.5px;
+        line-height: 1.75;
+        color: #cbd5e1;
+        font-weight: 400;
+      }
+      .instruction-steps a {
+        color: #f97316;
+        text-decoration: underline;
+        font-weight: 500;
+      }
+      .instruction-agree-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 12.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .ticket-form-group {
+        margin-bottom: 14px;
+      }
+      .ticket-form-group label {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 6px;
+      }
+      .order-lookup-wrap {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+      }
+      .order-lookup-wrap input {
+        flex: 1 1 auto !important;
+        width: 100% !important;
+        height: 38px !important;
+        background: #070b16 !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 5px !important;
+        padding: 0 12px !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 12.5px !important;
+        font-weight: 400 !important;
+        color: #ffffff !important;
+        outline: none !important;
+        box-sizing: border-box !important;
+      }
+      .order-lookup-wrap input:focus {
+        border-color: #ea580c !important;
+      }
+      .order-lookup-btn {
+        flex: 0 0 100px !important;
+        width: 100px !important;
+        height: 38px !important;
+        background: #ea580c !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 5px !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 12.5px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        transition: background 0.15s !important;
+      }
+      .order-lookup-btn:hover {
+        background: #c2410c !important;
+      }
+
+      .custom-select-wrap {
+        position: relative;
+        width: 100%;
+      }
+      .custom-select-wrap select {
+        width: 100%;
+        height: 38px;
+        background: #070b16;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 5px;
+        padding: 0 34px 0 12px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12.5px;
+        font-weight: 500;
+        color: #ffffff;
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+        transition: border-color 0.15s;
+      }
+      .custom-select-wrap select:focus {
+        border-color: #ea580c;
+      }
+      .custom-select-wrap select:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .custom-select-chevron {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 14px;
+        height: 14px;
+        color: rgba(255, 255, 255, 0.5);
+        pointer-events: none;
+      }
+
+      .submit-ticket-btn {
+        width: 100% !important;
+        height: 38px !important;
+        background: #ea580c !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 5px !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: background 0.15s !important;
+        margin-top: 6px;
+      }
+      .submit-ticket-btn:hover {
+        background: #c2410c !important;
+      }
+
+      /* Hide number input spinners */
+      input[type=number]::-webkit-inner-spin-button, 
+      input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+      }
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+
+      /* HISTORY VIEW EXACT MATCH STYLING */
+      .history-filter-bar {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 20px;
+        align-items: center;
+        width: 100%;
+      }
+      .history-search-wrap {
+        display: flex;
+        flex: 1;
+        align-items: center;
+      }
+      .history-search-wrap input {
+        flex: 1;
+        height: 38px;
+        background: #141923;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: none;
+        border-radius: 5px 0 0 5px;
+        padding: 0 12px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12.5px;
+        color: #fff;
+        outline: none;
+      }
+      .history-search-wrap input:focus {
+        border-color: #ea580c;
+      }
+      .history-status-wrap {
+        display: flex;
+        width: 190px;
+        align-items: center;
+      }
+      .history-status-wrap .custom-select-wrap {
+        flex: 1;
+      }
+      .history-status-wrap select {
+        height: 38px;
+        background: #141923;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: none;
+        border-radius: 5px 0 0 5px;
+        font-size: 12px;
+      }
+      .history-badge {
+        background: #1c2230;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #a0aec0;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        height: 38px;
+        padding: 0 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0 5px 5px 0;
+        white-space: nowrap;
+        user-select: none;
+      }
+
+      .history-table-container {
+        background: #111622;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .history-table-container table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12.5px;
+      }
+      .history-table-container th {
+        background: #161d2b;
+        color: #8a99ad;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        padding: 14px 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .history-table-container th,
+      .history-table-container td {
+        white-space: nowrap;
+      }
+      .history-table-container td {
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        color: #e2e8f0;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+      .history-dispute-btn {
+        background: #ea580c !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 5px !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        padding: 6px 16px !important;
+        height: 32px !important;
+        line-height: 20px !important;
+        cursor: pointer !important;
+        text-transform: lowercase !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: background 0.15s !important;
+      }
+      .history-dispute-btn:hover {
+        background: #c2410c !important;
+      }
+
+      .history-pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .pagination-page-active {
+        background: #ea580c;
+        color: #fff;
+        width: 28px;
+        height: 28px;
+        border-radius: 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TOP ANNOUNCEMENT BANNER -->
+    <div id="siteAnnouncementBar" class="site-announcement-bar" style="display: none;">
+      <div id="siteAnnouncementContent" class="site-announcement-content"></div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="site-header-wrap">
+      <header class="store-site-header">
+        <a class="brand" href="/" aria-label="Falcon Logs">
+          <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img">
+        </a>
+        <nav class="header-nav-center" aria-label="Primary">
+          <a href="/" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <span>Logs</span>
+          </a>
+          <a href="/orders.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            <span>Orders</span>
+          </a>
+          <a href="/support.html" class="header-nav-link active">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            <span>Support</span>
+          </a>
+        </nav>
+        <div class="nav-actions">
+          <a class="cart-icon-btn" href="/cart.html" aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+            <span class="cart-badge" data-cart-count>0</span>
+          </a>
+          <span class="nav-divider"></span>
+          <div class="nav-account-dropdown-wrap">
+            <a class="nav-btn" href="/login.html" id="navUserBtn">
+              <svg class="nav-btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span id="navUserText">Log in</span>
+            </a>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <!-- MAIN SUPPORT CONTAINER -->
+    <main class="store-shell" id="supportMainShell" style="max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px; width: 100%;">
+      <!-- TAB NAVIGATION -->
+      <div class="support-tab-nav">
+        <button type="button" class="support-tab-btn active" id="tabSubmitBtn">SUBMIT TICKET</button>
+        <button type="button" class="support-tab-btn" id="tabHistoryBtn">HISTORY</button>
+      </div>
+
+      <!-- VIEW 1: SUBMIT TICKET -->
+      <div id="viewSubmitTicket" style="max-width: 720px; margin: 0 auto;">
+        <!-- INSTRUCTION BOX -->
+        <div class="instruction-box">
+          <h2>How to perform new ticket ?</h2>
+          <p class="subtitle">Follow these steps to perform new ticket to get responded as quickly as possible.</p>
+          <ul class="instruction-steps">
+            <li>Copy order id from <a href="/orders.html">Orders</a> page into your clipboard.</li>
+            <li>(you can't submit support tickets for CHARGE orders)</li>
+            <li>Paste your order id and Click <strong>SUBMIT</strong> button to Insert your order id.</li>
+            <li>Select product in your order which you want replacement for.</li>
+            <li>Select reason why you want replacement for selected product.</li>
+            <li>Provide full message of why you should get replacement.</li>
+            <li>use <strong>imgur</strong> images and include in your message by inserting them in related input and click <strong>ADD</strong> button.</li>
+            <li>Submit order and wait for our staff to review your request.</li>
+          </ul>
+          <div class="instruction-agree-wrap">
+            <input type="checkbox" id="readInstructionsCheck" style="width: 16px; height: 16px; cursor: pointer; accent-color: #ea580c;">
+            <label for="readInstructionsCheck" style="cursor: pointer;">I've Read Instructions and I Fully Understand</label>
+          </div>
+        </div>
+
+        <!-- TICKET FORM (DISABLED UNTIL CHECKED) -->
+        <form id="createTicketForm" style="opacity: 0.5; pointer-events: none; transition: opacity 0.2s ease;">
+          <div class="ticket-form-group">
+            <label>ORDER ID</label>
+            <div class="order-lookup-wrap">
+              <input type="text" id="ticketOrderIdInput" placeholder="click button to paste here or type order id">
+              <button type="button" id="lookupOrderBtn" class="order-lookup-btn">Submit</button>
+            </div>
+            <span id="orderLookupStatus" style="font-size: 11.5px; margin-top: 4px; display: block;"></span>
+          </div>
+
+          <div class="ticket-form-group">
+            <label>PRODUCT</label>
+            <div class="custom-select-wrap">
+              <select id="ticketProductSelect" disabled>
+                <option value="">-- Submit Order ID first --</option>
+              </select>
+              <svg class="custom-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
+
+          <div class="ticket-form-group">
+            <label>ISSUE</label>
+            <div class="custom-select-wrap">
+              <select id="ticketIssueSelect">
+                <option value="Account Invalid / Bad Credentials">Account Invalid / Bad Credentials</option>
+                <option value="Wrong Quantity / Missing Items">Wrong Quantity / Missing Items</option>
+                <option value="Product Expired / Inactive">Product Expired / Inactive</option>
+                <option value="Other Issue">Other Issue</option>
+              </select>
+              <svg class="custom-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
+
+          <div class="ticket-form-group">
+            <label>REPLACEMENTS COUNT</label>
+            <input type="number" id="ticketCountInput" class="auth-input" min="1" max="100" value="1" placeholder="number of replacements" style="height: 38px; border-radius: 5px; font-size: 12.5px;">
+          </div>
+
+          <div class="ticket-form-group">
+            <label>MESSAGE</label>
+            <textarea id="ticketMessageInput" class="auth-input" style="height: 120px; border-radius: 5px; font-size: 12.5px; resize: vertical; padding: 10px;" placeholder="Provide full details about your issue and Imgur image links..."></textarea>
+          </div>
+
+          <button type="submit" id="submitTicketBtn" class="submit-ticket-btn">Submit Ticket</button>
+        </form>
+      </div>
+
+      <!-- VIEW 2: HISTORY (EXACT TARGET DESIGN MATCH) -->
+      <div id="viewHistory" style="display: none; max-width: 1240px; width: 100%; margin: 0 auto;">
+        <div class="history-filter-bar">
+          <div class="history-search-wrap">
+            <input type="text" id="historySearchInput" placeholder="ticket-id1,ticket-id2,ticket-id3,...">
+            <span class="history-badge">TICKET ID</span>
+          </div>
+          <div class="history-status-wrap">
+            <div class="custom-select-wrap">
+              <select id="historyStatusFilter">
+                <option value="ALL">All</option>
+                <option value="PENDING">Pending</option>
+                <option value="RESOLVED">Resolved</option>
+                <option value="REFUNDED">Refunded</option>
+                <option value="DENIED">Denied</option>
+              </select>
+              <svg class="custom-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <span class="history-badge">STATUS</span>
+          </div>
+        </div>
+
+        <div class="history-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 28%;">PRODUCT</th>
+                <th style="width: 16%;">OPTION</th>
+                <th style="width: 8%;">COUNT</th>
+                <th style="width: 20%;">COMMENT</th>
+                <th style="width: 10%;">STATUS</th>
+                <th style="width: 10%;">DATE</th>
+                <th style="width: 8%; text-align: right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="myTicketsRows">
+              <tr><td colspan="7" class="empty" style="text-align: center; padding: 24px;">Loading tickets history...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="history-pagination">
+          <span class="pagination-page-active">1</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- TICKET DETAILS MODAL -->
+    <div class="modal-overlay" id="ticketDetailsModal">
+      <div class="modal-content" style="max-width: 600px; width: 100%; border-radius: 5px;">
+        <div class="modal-header">
+          <h2 id="modalTicketTitle" style="font-size: 14px; font-weight: 600;">Ticket Details</h2>
+          <button class="modal-close-btn" id="closeTicketDetailsModal" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 16px;">
+          <!-- TICKET SUMMARY CARD -->
+          <div id="modalTicketMeta" style="background: rgba(17, 26, 51, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 5px; padding: 12px; margin-bottom: 14px; font-size: 12px; color: #cbd5e1;"></div>
+
+          <!-- REPLACEMENT STOCK DELIVERED BOX (IF RESOLVED BY ADMIN) -->
+          <div id="modalReplacementBox" style="display: none; background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74, 222, 128, 0.2); border-radius: 5px; padding: 12px; margin-bottom: 14px;">
+            <div style="font-size: 11.5px; font-weight: 600; color: #4ade80; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">✓ REPLACEMENT STOCK DELIVERED</div>
+            <textarea id="modalReplacementStockText" readonly class="modal-form-control" style="height: 100px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4ade80; background: #04060b; border: 1px solid rgba(74, 222, 128, 0.25); padding: 8px; resize: vertical; border-radius: 4px;"></textarea>
+          </div>
+
+          <!-- REFUND ISSUED BOX (IF REFUNDED BY ADMIN) -->
+          <div id="modalRefundBox" style="display: none; background: rgba(234, 88, 12, 0.1); border: 1px solid rgba(234, 88, 12, 0.2); border-radius: 5px; padding: 12px; margin-bottom: 14px;">
+            <div style="font-size: 11.5px; font-weight: 600; color: #fb923c; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">✓ REFUND ISSUED TO BALANCE</div>
+            <div id="modalRefundText" style="font-size: 13.5px; font-weight: 600; color: #fff;"></div>
+          </div>
+
+          <!-- CHAT THREAD MESSAGES -->
+          <h3 style="font-size: 12px; font-weight: 600; color: #fff; margin-bottom: 8px;">Messages Thread</h3>
+          <div id="modalChatMessages" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; padding-right: 4px;"></div>
+
+          <!-- USER REPLY BOX -->
+          <form id="userReplyForm" style="display: flex; gap: 8px;">
+            <input type="text" id="userReplyInput" class="auth-input" style="height: 36px; border-radius: 5px; font-size: 12px;" placeholder="Type a message to support staff..." required>
+            <button type="submit" class="order-lookup-btn" style="flex: 0 0 80px !important; width: 80px !important; height: 36px !important;">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-nav-links">
+        <a href="/">Home</a>
+        <a href="/cart.html">Cart</a>
+        <a href="/dashboard.html">Account</a>
+        <a href="/orders.html">Orders</a>
+      </div>
+      <a href="https://t.me/mysteriogateway" target="_blank" rel="noopener noreferrer" class="restock-alert-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Get restock alerts
+      </a>
+      <p class="footer-copyright">&copy; 2026 Falcon Logs. All rights reserved.</p>
+      <div class="footer-dev">
+        Developed by <a href="https://t.me/peoze" target="_blank" rel="noopener noreferrer"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Mass</a>
+      </div>
+    </footer>
+
+    <script src="cart-utils.js?v=460"></script>
+    <script src="support.js?v=130"></script>
+  </body>
+</html>

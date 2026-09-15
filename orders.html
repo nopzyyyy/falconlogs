@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
+    <link rel="icon" type="image/png" href="/favicon.png?v=999">
+    <link rel="shortcut icon" href="/favicon.ico?v=999">
+    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Orders - Falcon Logs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=820">
+      
+    <link rel="alternate icon" type="image/png" href="/logo.png">
+  </head>
+  <body>
+    <!-- HEADER (ENCLOSED CARD) -->
+    <div class="site-header-wrap">
+      <header class="store-site-header">
+        <a class="brand" href="/" aria-label="Falcon Logs">
+          <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img">
+        </a>
+        <nav class="header-nav-center" aria-label="Primary">
+          <a href="/" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <span>Logs</span>
+          </a>
+          <a href="/orders.html" class="header-nav-link active">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            <span>Orders</span>
+          </a>
+          <a href="/support.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            <span>Support</span>
+          </a>
+        </nav>
+        <div class="nav-actions">
+          <a class="cart-icon-btn" href="/cart.html" aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+            <span class="cart-badge" data-cart-count>0</span>
+          </a>
+          <span class="nav-divider"></span>
+          <div class="nav-account-dropdown-wrap">
+            <a class="nav-btn" href="/login.html" id="navUserBtn">
+              <svg class="nav-btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span id="navUserText">Log in</span>
+            </a>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <!-- MAIN ORDERS SHELL -->
+    <main class="store-shell" style="max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px;">
+      <!-- TITLE COUNT -->
+      <div class="orders-head-bar">
+        <h1 class="orders-count-heading">
+          <span id="ordersCountNum" style="color: #fb923c;">0</span> ORDERS FOUND
+        </h1>
+      </div>
+
+      <!-- FILTER CONTROLS -->
+      <div class="orders-filter-row">
+        <div class="orders-search-input-wrap">
+          <input type="text" id="orderSearchInput" class="orders-filter-control" placeholder="order-id1,order-id2,order-id3,...">
+          <span class="orders-filter-label">ORDER ID</span>
+        </div>
+        <div class="orders-status-select-wrap">
+          <select id="orderStatusFilter" class="orders-filter-control orders-status-select">
+            <option value="all">All</option>
+            <option value="fulfilled">Fulfilled</option>
+            <option value="unpaid">Unpaid</option>
+            <option value="processing">Processing</option>
+          </select>
+          <span class="orders-filter-label">STATUS</span>
+        </div>
+      </div>
+
+      <!-- ORDERS DATA TABLE -->
+      <div class="orders-table-wrapper">
+        <table class="orders-data-table">
+          <thead>
+            <tr>
+              <th style="width: 38%;">TITLE</th>
+              <th style="width: 12%;">REASON</th>
+              <th style="width: 12%;">PAID</th>
+              <th style="width: 12%;">EXPECTED</th>
+              <th style="width: 12%;">STATUS</th>
+              <th style="width: 14%;">DATE</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <tr>
+              <td colspan="6" style="padding: 36px 18px; text-align: center; color: rgba(255,255,255,0.45); font-size: 13px;">
+                Loading orders...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION -->
+      <div class="orders-pagination" id="ordersPagination">
+        <button class="orders-page-btn active" type="button">1</button>
+      </div>
+    </main>
+ 
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-nav-links">
+        <a href="/">Home</a>
+        <a href="/cart.html">Cart</a>
+        <a href="/dashboard.html">Account</a>
+        <a href="/orders.html">Orders</a>
+      </div>
+      <a href="https://t.me/mysteriogateway" target="_blank" rel="noopener noreferrer" class="restock-alert-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Get restock alerts
+      </a>
+      <p class="footer-copyright">&copy; 2026 Falcon Logs. All rights reserved.</p>
+      <div class="footer-dev">
+        Developed by <a href="https://t.me/peoze" target="_blank" rel="noopener noreferrer"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Mass</a>
+      </div>
+    </footer>
+
+    <!-- ORDER INFO POPUP MODAL -->
+    <div class="modal-overlay" id="orderInfoModalOverlay">
+      <div class="modal-content order-info-modal-card">
+        <div class="modal-header">
+          <h2>Order Info</h2>
+          <button class="modal-close-btn" id="closeOrderInfoModal" type="button" aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <!-- TABS HEADER -->
+        <div class="order-info-tabs-bar" id="orderModalTabsBar">
+          <button type="button" class="order-modal-tab active" id="tabOrderInfo">INFO</button>
+          <button type="button" class="order-modal-tab" id="tabOrderProducts">PRODUCTS</button>
+        </div>
+
+        <div class="modal-body" style="padding: 22px 24px 24px;">
+          <!-- SCREEN 1: INFO TAB -->
+          <div id="orderInfoTabContent" class="order-tab-pane">
+            <div class="order-info-field-group">
+              <div class="order-field-label">ID</div>
+              <div class="order-field-value" style="font-family:'JetBrains Mono',monospace; font-size:12.5px; color:#fdba74;" id="modalOrderId">-</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Creation date</div>
+              <div class="order-field-value" id="modalOrderDate">-</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Reason</div>
+              <div class="order-field-value" id="modalOrderReason">cart</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Expected amount</div>
+              <div class="order-field-value" style="font-size: 15px; font-weight: 600;" id="modalOrderExpected">£0.00</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Paid amount</div>
+              <div class="order-field-value" style="font-size: 15px; font-weight: 600;" id="modalOrderPaid">£0.00</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Status</div>
+              <div class="order-field-value" id="modalOrderStatus">fulfilled</div>
+            </div>
+            <div class="order-info-field-group">
+              <div class="order-field-label">Logs</div>
+              <div class="order-field-value" style="color: rgba(255,255,255,0.6);" id="modalOrderLogs">no log</div>
+            </div>
+
+            <!-- UNPAID ORDER INVOICE BUTTON IN INFO TAB -->
+            <div id="modalUnpaidCard" style="display: none; flex-direction: column; gap: 8px; margin-top: 14px;">
+              <div style="background: rgba(245, 158, 11, 0.08); border: none !important; padding: 12px 14px; border-radius: 6px !important; color: #fbbf24; font-size: 12px; line-height: 1.45; font-weight: 500; box-shadow: none !important; display: flex; align-items: center; gap: 8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span>Payment pending. Items are delivered automatically upon NOWPayments confirmation.</span>
+              </div>
+              <a id="modalOpenPayBtn" href="#" class="pill-button" style="display: flex; height: 42px; background: #ea580c !important; color: #ffffff !important; font-weight: 600; font-size: 13.5px; border-radius: 6px !important; align-items: center; justify-content: center; text-decoration: none; border: none !important; box-shadow: none !important; width: 100%;">Open Payment Invoice &rarr;</a>
+            </div>
+
+            <div class="order-info-actions" style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
+              <a href="https://t.me/mysteriogateway" target="_blank" rel="noopener noreferrer" class="pill-button" id="modalVouchBtn" style="height: 42px; background: #f59e0b; color: #050811; font-weight: 600; font-size: 13.5px; border-radius: 6px; display: flex; align-items: center; justify-content: center; text-decoration: none; border: none;">Submit Vouch</a>
+              <button type="button" class="pill-button" id="modalOrderUrlBtn" style="height: 42px; background: rgba(255, 255, 255, 0.07) !important; color: #e2e8f0 !important; font-weight: 600; font-size: 13.5px; border-radius: 6px !important; border: none !important; box-shadow: none !important; cursor: pointer; width: 100%;">Order Url</button>
+            </div>
+          </div>
+
+          <!-- SCREEN 2: PRODUCTS TAB -->
+          <div id="orderProductsTabContent" class="order-tab-pane" style="display: none;">
+            <div id="modalProductsList" style="display: flex; flex-direction: column; gap: 14px;">
+              <!-- Dynamic products -->
+            </div>
+          </div>
+
+          <!-- SCREEN 3: VIEW STOCK SUBVIEW -->
+          <div id="orderStockSubView" class="order-tab-pane" style="display: none;">
+            <div style="margin-bottom: 14px;">
+              <textarea id="modalStockCredentialsBox" readonly class="modal-form-control" style="height: 180px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #fdba74; background: #04060b; border: 1px solid rgba(255, 255, 255, 0.08); resize: vertical; line-height: 1.5; padding: 12px;"></textarea>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" id="modalCopyStockBtn" class="pill-button secondary" style="flex: 1; height: 42px; background: #111a33; border: 1px solid rgba(234, 88, 12, 0.25); color: #fdba74; font-weight: 600; font-size: 13px; border-radius: 6px; cursor: pointer;">Copy Stock</button>
+              <button type="button" id="modalStockBackBtn" class="pill-button" style="flex: 1; height: 42px; background: #ea580c; color: #fff; font-weight: 600; font-size: 13px; border-radius: 6px; border: none; cursor: pointer;">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="cart-utils.js?v=460"></script>
+    <script>
+      let userOrders = [];
+      let userTopups = [];
+      let combinedRecords = [];
+      let activeOrderRecord = null;
+
+      function escapeHtml(str) {
+        if (typeof str !== "string") return "";
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
+
+      function formatOrderDate(dateStr) {
+        if (!dateStr) return "-";
+        try {
+          const d = new Date(dateStr);
+          if (isNaN(d.getTime())) return dateStr;
+          return d.toLocaleString("en-US", {
+            month: "numeric",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+          });
+        } catch (e) {
+          return dateStr;
+        }
+      }
+
+      async function loadOrdersData(isInitial = false) {
+        const tableBody = document.querySelector("#ordersTableBody");
+        const countNum = document.querySelector("#ordersCountNum");
+
+        if (isInitial && tableBody && combinedRecords.length === 0) {
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 44px 20px; color: rgba(255,255,255,0.6); font-weight: 600;">
+                <span class="btn-loading-spinner" style="width: 18px; height: 18px; border-width: 2px;"></span> Loading order history...
+              </td>
+            </tr>
+          `;
+        }
+
+        try {
+          const [ordersRes, topupsRes] = await Promise.all([
+            fetch("/api/orders"),
+            fetch("/api/topups")
+          ]);
+
+          if (ordersRes.status === 401) {
+            window.location.href = "/login.html";
+            return;
+          }
+
+          const ordersData = ordersRes.ok ? await ordersRes.json() : { orders: [] };
+          const topupsData = topupsRes.ok ? await topupsRes.json() : { topups: [] };
+
+          userOrders = Array.isArray(ordersData.orders) ? ordersData.orders : [];
+          userTopups = Array.isArray(topupsData.topups) ? topupsData.topups : [];
+
+          // Map Orders to normalized format
+          const formattedOrders = userOrders.map(o => {
+            const firstItem = (o.items && o.items[0]) ? o.items[0] : null;
+            let title = "Order";
+            if (firstItem) {
+              title = firstItem.name || firstItem.productTitle || "Product Item";
+              if (o.items.length > 1) {
+                title += ` (+${o.items.length - 1} more)`;
+              }
+            } else if (o.paymentMethod) {
+              title = `${o.paymentMethod} Order`;
+            }
+
+            const isFulfilled = o.status === "COMPLETED" || o.status === "FULFILLED";
+            const isConfirming = o.status === "CONFIRMING" || o.status === "CONFIRMED";
+            const isPartiallyPaid = o.status === "PARTIALLY_PAID";
+            const isUnpaid = o.status === "WAITING_PAYMENT" || o.status === "UNPAID" || o.status === "PENDING_PAYMENT";
+            const isProcessing = o.status === "PROCESSING" || o.status === "PENDING";
+            const isExpired = o.status === "EXPIRED" || o.status === "TIMED_OUT";
+            const isFailed = o.status === "FAILED" || o.status === "CANCELLED";
+
+            const paidAmount = isFulfilled ? (o.total || o.amount || 0) : (o.actuallyPaid || 0);
+            const expectedAmount = o.total || o.amount || 0;
+
+            let displayStatus = "Fulfilled";
+            let statusClass = "order-status-fulfilled";
+
+            if (isConfirming) {
+              displayStatus = "Confirming";
+              statusClass = "order-status-confirming";
+            } else if (isPartiallyPaid) {
+              displayStatus = "Partially Paid";
+              statusClass = "order-status-partially-paid";
+            } else if (isUnpaid) {
+              displayStatus = "Unpaid";
+              statusClass = "order-status-unpaid";
+            } else if (isProcessing) {
+              displayStatus = "Processing";
+              statusClass = "order-status-processing";
+            } else if (isExpired) {
+              displayStatus = "Expired";
+              statusClass = "order-status-expired";
+            } else if (isFailed) {
+              displayStatus = "Failed";
+              statusClass = "order-status-failed";
+            } else if (isFulfilled) {
+              displayStatus = "Fulfilled";
+              statusClass = "order-status-fulfilled";
+            }
+
+            return {
+              id: o.id,
+              type: "order",
+              title: title,
+              reason: "cart",
+              paid: Number(paidAmount),
+              expected: Number(expectedAmount),
+              status: displayStatus,
+              statusClass: statusClass,
+              date: o.createdAt || o.date,
+              rawObject: o
+            };
+          });
+
+          // Map Topups to normalized format
+          const formattedTopups = userTopups.map(t => {
+            const isCompleted = t.status === "COMPLETED";
+            const isConfirming = t.status === "CONFIRMING";
+            const isPartiallyPaid = t.status === "PARTIALLY_PAID";
+            const isExpired = t.status === "EXPIRED" || t.status === "TIMED_OUT";
+
+            let displayStatus = "Fulfilled";
+            let statusClass = "order-status-fulfilled";
+
+            if (isCompleted) {
+              displayStatus = "Fulfilled";
+              statusClass = "order-status-fulfilled";
+            } else if (isConfirming) {
+              displayStatus = "Confirming";
+              statusClass = "order-status-confirming";
+            } else if (isPartiallyPaid) {
+              displayStatus = "Partially Paid";
+              statusClass = "order-status-partially-paid";
+            } else if (isExpired) {
+              displayStatus = "Expired";
+              statusClass = "order-status-expired";
+            } else {
+              displayStatus = "Unpaid";
+              statusClass = "order-status-unpaid";
+            }
+
+            return {
+              id: t.id,
+              type: "charge",
+              title: "balance charge",
+              reason: "charge",
+              paid: isCompleted ? Number(t.amount || 0) : Number(t.actuallyPaid || 0),
+              expected: Number(t.amount || 0),
+              status: displayStatus,
+              statusClass: statusClass,
+              date: t.createdAt || t.date,
+              rawObject: t
+            };
+          });
+
+          combinedRecords = [...formattedOrders, ...formattedTopups].sort((a, b) => {
+            return new Date(b.date || 0) - new Date(a.date || 0);
+          });
+
+          renderFilteredOrders();
+
+          if (!window._hasAutoOpenedUrlId) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetId = urlParams.get("id") || urlParams.get("orderId");
+            if (targetId) {
+              const match = combinedRecords.find(r => r.id.toLowerCase() === targetId.toLowerCase());
+              if (match) {
+                window._hasAutoOpenedUrlId = true;
+                openOrderInfoModal(match.id);
+              }
+            }
+          }
+        } catch (e) {
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="6" style="padding: 36px 18px; text-align: center; color: #f87171; font-size: 13px;">
+                Failed to load orders. Please refresh or log in again.
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      function renderFilteredOrders() {
+        const tableBody = document.querySelector("#ordersTableBody");
+        const countNum = document.querySelector("#ordersCountNum");
+        const searchVal = document.querySelector("#orderSearchInput").value.trim().toLowerCase();
+        const statusVal = document.querySelector("#orderStatusFilter").value.toLowerCase();
+
+        const filtered = combinedRecords.filter(r => {
+          if (searchVal) {
+            const matchesId = r.id.toLowerCase().includes(searchVal);
+            const matchesTitle = r.title.toLowerCase().includes(searchVal);
+            if (!matchesId && !matchesTitle) return false;
+          }
+          if (statusVal !== "all") {
+            if (r.status.toLowerCase() !== statusVal) return false;
+          }
+          return true;
+        });
+
+        countNum.textContent = filtered.length;
+
+        if (filtered.length === 0) {
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="6" style="padding: 36px 18px; text-align: center; color: rgba(255,255,255,0.45); font-size: 13px;">
+                No orders found.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tableBody.innerHTML = filtered.map(r => `
+          <tr class="orders-row" onclick="openOrderInfoModal('${escapeHtml(r.id)}')">
+            <td style="font-weight: 600; color: #ffffff;">${escapeHtml(r.title)}</td>
+            <td style="color: rgba(255,255,255,0.7);">${escapeHtml(r.reason)}</td>
+            <td style="font-weight: 600; color: #ffffff;">£${r.paid.toFixed(2)}</td>
+            <td style="font-weight: 600; color: #ffffff;">£${r.expected.toFixed(2)}</td>
+            <td class="${r.statusClass}">${escapeHtml(r.status)}</td>
+            <td style="color: rgba(255,255,255,0.55); font-size: 12.5px;">${formatOrderDate(r.date)}</td>
+          </tr>
+        `).join("");
+      }
+
+      function openOrderInfoModal(recordId) {
+        const record = combinedRecords.find(r => r.id === recordId);
+        if (!record) return;
+        activeOrderRecord = record;
+
+        const statusUpper = String(record.rawObject.status || "").toUpperCase();
+        const isUnpaid = statusUpper === "WAITING_PAYMENT" || statusUpper === "UNPAID" || statusUpper === "PENDING_PAYMENT";
+        const isConfirming = statusUpper === "CONFIRMING";
+        const isPartiallyPaid = statusUpper === "PARTIALLY_PAID";
+        const isExpired = statusUpper === "EXPIRED" || statusUpper === "TIMED_OUT";
+
+        const unpaidCard = document.querySelector("#modalUnpaidCard");
+        const openPayBtn = document.querySelector("#modalOpenPayBtn");
+        openPayBtn.href = `/pay.html?paymentId=${record.rawObject.paymentId || record.rawObject.id}`;
+
+        if (isUnpaid || isConfirming || isPartiallyPaid || isExpired) {
+          document.querySelector("#orderModalTabsBar").style.display = "none";
+          unpaidCard.style.display = "flex";
+
+          const bannerBox = unpaidCard.querySelector("div");
+          if (isExpired) {
+            bannerBox.style.background = "rgba(239, 68, 68, 0.12)";
+            bannerBox.style.color = "#ef4444";
+            bannerBox.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Invoice payment window expired.`;
+            openPayBtn.textContent = "View Expired Invoice →";
+          } else if (isConfirming) {
+            bannerBox.style.background = "rgba(234, 88, 12, 0.12)";
+            bannerBox.style.color = "#fb923c";
+            bannerBox.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Payment detected! Confirming on blockchain. Items will be delivered as soon as confirmations complete.`;
+            openPayBtn.textContent = "Open Payment Invoice →";
+          } else if (isPartiallyPaid) {
+            bannerBox.style.background = "rgba(245, 158, 11, 0.12)";
+            bannerBox.style.color = "#f59e0b";
+            bannerBox.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Partial payment received (£${record.paid.toFixed(2)}). Please open payment invoice to send remaining balance.`;
+            openPayBtn.textContent = "Open Payment Invoice →";
+          } else {
+            bannerBox.style.background = "rgba(245, 158, 11, 0.08)";
+            bannerBox.style.color = "#fbbf24";
+            bannerBox.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Payment pending. Items are delivered automatically upon NOWPayments confirmation.`;
+            openPayBtn.textContent = "Open Payment Invoice →";
+          }
+        } else {
+          document.querySelector("#orderModalTabsBar").style.display = "flex";
+          unpaidCard.style.display = "none";
+        }
+
+        // Reset Tab content view to INFO
+        document.querySelector("#tabOrderInfo").classList.add("active");
+        document.querySelector("#tabOrderProducts").classList.remove("active");
+        document.querySelector("#orderInfoTabContent").style.display = "block";
+        document.querySelector("#orderProductsTabContent").style.display = "none";
+        document.querySelector("#orderStockSubView").style.display = "none";
+
+        // Fill INFO Tab
+        document.querySelector("#modalOrderId").textContent = record.id;
+        document.querySelector("#modalOrderDate").textContent = formatOrderDate(record.date);
+        document.querySelector("#modalOrderReason").textContent = record.reason;
+        document.querySelector("#modalOrderExpected").textContent = `£${record.expected.toFixed(2)}`;
+        document.querySelector("#modalOrderPaid").textContent = `£${record.paid.toFixed(2)}`;
+        
+        const statusEl = document.querySelector("#modalOrderStatus");
+        statusEl.textContent = record.status.toLowerCase();
+        statusEl.className = `order-field-value ${record.statusClass}`;
+
+        const items = record.rawObject.items || [];
+        const hasLogs = items.some(i => i.credentials && i.credentials !== "Awaiting custom setup and delivery by administrator.");
+        document.querySelector("#modalOrderLogs").textContent = hasLogs ? `${items.length} items with logs` : "no log";
+
+        // Vouch Button
+        const vouchBtn = document.querySelector("#modalVouchBtn");
+        vouchBtn.style.display = record.status.toLowerCase() === "fulfilled" ? "flex" : "none";
+
+        // Order Url Button
+        const urlBtn = document.querySelector("#modalOrderUrlBtn");
+        urlBtn.onclick = () => {
+          copyToClipboard(window.location.origin + `/orders.html?id=${record.id}`, urlBtn, "Order URL copied to clipboard!");
+        };
+
+        // Render PRODUCTS Tab
+        const productsListEl = document.querySelector("#modalProductsList");
+        if (items.length === 0) {
+          productsListEl.innerHTML = `
+            <div class="order-product-item-card">
+              <div class="order-field-label">Type</div>
+              <div class="order-field-value">${escapeHtml(record.title)}</div>
+              <div class="order-field-label" style="margin-top: 6px;">Amount</div>
+              <div class="order-field-value">£${record.expected.toFixed(2)}</div>
+            </div>
+          `;
+        } else {
+          productsListEl.innerHTML = items.map((item, idx) => {
+            const rawName = item.name || "";
+            const nameParts = rawName.split(" - ");
+            const prodTitle = item.productTitle || nameParts[0] || "Product";
+            const varName = item.variantName || (nameParts.length > 1 ? nameParts.slice(1).join(" - ") : "-");
+            
+            let qty = Number(item.quantity || 0);
+            if (!qty || qty <= 0) {
+              if (item.credentials && typeof item.credentials === "string" && !item.credentials.startsWith("Awaiting")) {
+                const lines = item.credentials.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+                qty = lines.length > 0 ? lines.length : 1;
+              } else {
+                qty = 1;
+              }
+            }
+            
+            const unitPrice = Number(item.price || 0);
+            const totalPrice = unitPrice * qty;
+
+            return `
+              <div class="order-product-item-card">
+                <div>
+                  <div class="order-field-label">Product</div>
+                  <div class="order-field-value">${escapeHtml(prodTitle)}</div>
+                </div>
+                <div>
+                  <div class="order-field-label">Option</div>
+                  <div class="order-field-value">${escapeHtml(varName)}</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; gap: 12px;">
+                  <div>
+                    <div class="order-field-label">Quantity</div>
+                    <div class="order-field-value">${qty}</div>
+                  </div>
+                  <div>
+                    <div class="order-field-label">Unit price</div>
+                    <div class="order-field-value">£${unitPrice.toFixed(2)}</div>
+                  </div>
+                  <div>
+                    <div class="order-field-label">Total</div>
+                    <div class="order-field-value" style="color: #fb923c;">£${totalPrice.toFixed(2)}</div>
+                  </div>
+                </div>
+                ${(record.rawObject.status === "COMPLETED" || record.rawObject.status === "FULFILLED" || record.rawObject.status === "PROCESSING") && item.credentials ? `
+                  <button type="button" class="pill-button" style="height: 38px; background: #ea580c; color: #fff; font-weight: 600; font-size: 12.5px; border-radius: 6px; border: none; cursor: pointer; margin-top: 8px;" onclick="viewItemStock(${idx})">
+                    View stock
+                  </button>
+                ` : ''}
+              </div>
+            `;
+          }).join("");
+        }
+
+        document.querySelector("#orderInfoModalOverlay").classList.add("active");
+      }
+
+      window.openOrderInfoModal = openOrderInfoModal;
+
+      function triggerPaneAnimation(paneEl) {
+        if (!paneEl) return;
+        paneEl.style.animation = 'none';
+        void paneEl.offsetWidth; // Trigger reflow
+        paneEl.style.animation = '';
+      }
+
+      window.viewItemStock = function(itemIdx) {
+        if (!activeOrderRecord || !activeOrderRecord.rawObject.items) return;
+        const item = activeOrderRecord.rawObject.items[itemIdx];
+        if (!item || !item.credentials) return;
+
+        document.querySelector("#orderModalTabsBar").style.display = "none";
+        document.querySelector("#orderInfoTabContent").style.display = "none";
+        document.querySelector("#orderProductsTabContent").style.display = "none";
+        const subView = document.querySelector("#orderStockSubView");
+        subView.style.display = "block";
+        triggerPaneAnimation(subView);
+
+        const credsBox = document.querySelector("#modalStockCredentialsBox");
+        credsBox.value = item.credentials;
+      };
+
+      // Modal Events
+      document.querySelector("#closeOrderInfoModal").addEventListener("click", () => {
+        document.querySelector("#orderInfoModalOverlay").classList.remove("active");
+      });
+
+      document.querySelector("#tabOrderInfo").addEventListener("click", () => {
+        document.querySelector("#tabOrderInfo").classList.add("active");
+        document.querySelector("#tabOrderProducts").classList.remove("active");
+        const infoPane = document.querySelector("#orderInfoTabContent");
+        infoPane.style.display = "block";
+        triggerPaneAnimation(infoPane);
+        document.querySelector("#orderProductsTabContent").style.display = "none";
+        document.querySelector("#orderStockSubView").style.display = "none";
+      });
+
+      document.querySelector("#tabOrderProducts").addEventListener("click", () => {
+        document.querySelector("#tabOrderInfo").classList.remove("active");
+        document.querySelector("#tabOrderProducts").classList.add("active");
+        document.querySelector("#orderInfoTabContent").style.display = "none";
+        const prodPane = document.querySelector("#orderProductsTabContent");
+        prodPane.style.display = "block";
+        triggerPaneAnimation(prodPane);
+        document.querySelector("#orderStockSubView").style.display = "none";
+      });
+
+      document.querySelector("#modalStockBackBtn").addEventListener("click", () => {
+        document.querySelector("#orderModalTabsBar").style.display = "flex";
+        document.querySelector("#tabOrderProducts").click();
+      });
+
+      const copyStockBtn = document.querySelector("#modalCopyStockBtn");
+      copyStockBtn.addEventListener("click", () => {
+        const credsBox = document.querySelector("#modalStockCredentialsBox");
+        copyToClipboard(credsBox.value, copyStockBtn, "Stock credentials copied to clipboard!");
+      });
+
+      // Filter events
+      document.querySelector("#orderSearchInput").addEventListener("input", renderFilteredOrders);
+      document.querySelector("#orderStatusFilter").addEventListener("change", renderFilteredOrders);
+
+      // Close modal on overlay click
+      document.querySelector("#orderInfoModalOverlay").addEventListener("click", (e) => {
+        if (e.target.id === "orderInfoModalOverlay") {
+          document.querySelector("#orderInfoModalOverlay").classList.remove("active");
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadOrdersData(true);
+        // Live poll active orders every 5s silently without flickering the UI
+        setInterval(() => loadOrdersData(false), 5000);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,597 @@
+================================================================================
+          MYSTERIO.CC — COMPLETE ARCHITECTURE & STEP-BY-STEP GUIDE
+================================================================================
+Project Name  : Mysterio (mysterio.cc)
+Architecture  : Node.js (Express-style native HTTP/HTTPS) + JSON Flat-File DB + 
+                Telegram Bot Suite + Python Daemons + Nginx Reverse Proxy + PM2
+Version       : 2.0.0 Production Edition
+================================================================================
+
+TABLE OF CONTENTS:
+--------------------------------------------------------------------------------
+1. SYSTEM OVERVIEW & ARCHITECTURE
+2. DIRECTORY & FILE STRUCTURE MAP
+3. CONFIGURATION & API KEYS GUIDE (Where everything goes)
+4. TELEGRAM BOT SUITE (Deep-dive into every bot)
+   - 4.1 Gateway Bot (gateway_bot.js)
+   - 4.2 Payments Bot (payments_bot.js — Telegram Stars)
+   - 4.3 Dashboard Bot (dashboard_bot.js — Login & Alerts)
+   - 4.4 Replacement Bot (replacement_bot.js — Auto-Warranty)
+   - 4.5 Success Bot (success_bot.js — Voucher / Proof Feed)
+5. PYTHON DAEMONS & BACKGROUND SERVICES
+   - 5.1 Chime Automated Email Matching (chime_daemon.py & email_checker.py)
+   - 5.2 Telegram Userbot Forwarder (telegram_daemon.py)
+   - 5.3 Webhook Receiver & Gateway Deployer
+6. ORDER, INVENTORY & BALANCE LIFECYCLE
+7. ADMIN & GOD MODE CAPABILITIES
+8. STEP-BY-STEP DEPLOYMENT & HOSTING GUIDE (Ubuntu VPS)
+9. TROUBLESHOOTING & MAINTENANCE CHEAT SHEET
+================================================================================
+
+
+================================================================================
+1. SYSTEM OVERVIEW & ARCHITECTURE
+================================================================================
+
+Mysterio is a high-performance, automated digital marketplace and service 
+platform designed for instant delivery of digital products, accounts, software, 
+and card inventory. 
+
+The entire system is decoupled into modular components:
+
+       +-------------------------------------------------------------+
+       |                         END USERS                           |
+       +-------------------------------------------------------------+
+              |                                            |
+              v (Web Browser: HTTPS)                       v (Telegram App)
+       +--------------------+                     +------------------+
+       |   Nginx Proxy      |                     |  Telegram Bots   |
+       | (Port 80/443 SSL)  |                     | (Gateway/Stars/  |
+       +--------------------+                     |  Dashboard/etc.) |
+              |                                   +------------------+
+              v (Port 3001)                                |
+       +---------------------------------------------------+---------+
+       |                  MYSTERIO WEB BACKEND                       |
+       |                      (server.js)                            |
+       +-------------------------------------------------------------+
+              |                      |                      |
+              v                      v                      v
+       +-------------+        +-------------+        +---------------+
+       |  JSON DATA  |        | NOWPayments |        | Chime Daemons |
+       |  (data/*.json)       | Crypto API  |        | & IMAP Parser |
+       +-------------+        +-------------+        +---------------+
+
+
+Core Technologies:
+- Web Engine: Node.js with native HTTP routing, session authentication, 
+  and strict static file allowlisting.
+- Frontend: Vanilla JavaScript, HTML5, CSS3 with responsive glassmorphism.
+- Database: Atomic JSON flat-file storage in `/data` with automated schemas.
+- Payment Methods: Account Balance, Crypto (NOWPayments), Chime (Automated 
+  Email Matching), and Telegram Stars (Apple Pay & Google Pay).
+- Process Manager: PM2 with unified `ecosystem.config.js`.
+
+
+================================================================================
+2. DIRECTORY & FILE STRUCTURE MAP
+================================================================================
+
+.
+|-- .env                     <- Active environment configuration file
+|-- .env.example             <- Template environment file for deployment
+|-- package.json             <- NPM project definition & startup scripts
+|-- ecosystem.config.js      <- PM2 process configuration for all bots & server
+|-- mysterio.nginx.conf      <- Production Nginx reverse proxy configuration
+|-- EXPLANATION.txt          <- This complete architecture guide
+|
+|-- server.js                <- Main Web Server, REST API & Order Engine
+|
+|-- FRONTEND PAGES & SCRIPTS:
+|   |-- index.html & main.js     <- Storefront product catalog & quick-buy modal
+|   |-- cards.html               <- Credit/Debit Card inventory browser with filters
+|   |-- cart.html & cart.js      <- Shopping cart & multi-method checkout
+|   |-- cart-utils.js            <- Client-side cart state & localStorage helpers
+|   |-- orders.html              <- Customer order history & instant credentials viewer
+|   |-- balance.html & balance.js<- Account balance dashboard & crypto/stars top-ups
+|   |-- login.html & login.js    <- User authentication & Telegram OTP login
+|   |-- admin.html & admin.js    <- Store management (Products, Inventory, Orders)
+|   |-- god.html & god.js        <- Master system control (Users, Balances, Raw Logs)
+|   |-- logs.html & logs.js      <- System activity and audit trail viewer
+|   |-- faq.html & faq.js        <- Frequently Asked Questions page
+|   |-- privacy.html & privacy.js<- Privacy Policy page
+|   |-- tos.html & tos.js        <- Terms of Service page
+|   |-- styles.css               <- Master design system & Cyber Blue theme
+|   |-- logo.png / banner.png    <- Brand visual assets
+|
+|-- TELEGRAM BOT SUITE:
+|   |-- gateway_bot.js       <- Channel access gating & math captcha verification
+|   |-- payments_bot.js      <- Telegram Stars in-app payments (Apple/Google Pay)
+|   |-- dashboard_bot.js     <- Telegram user login tokens & order status alerts
+|   |-- replacement_bot.js   <- Automated 24h warranty replacement engine
+|   |-- success_bot.js       <- Automated purchase vouchers & channel feed
+|
+|-- PYTHON DAEMONS & SERVICES:
+|   |-- chime_daemon.py      <- Gmail IMAP listener & Chime payment matcher
+|   |-- email_checker.py     <- Standalone email parsing & diagnostic tool
+|   |-- telegram_daemon.py   <- Telethon MTProto userbot for channel restocks
+|   |-- webhook_server.py    <- Standalone HTTP webhook receiver
+|   |-- deploy_gateway.py    <- Remote SSH deployer script for gateway bot
+|
+|-- DATA DIRECTORY (data/):
+|   |-- users.json           <- Registered users, balances, and role mappings
+|   |-- sessions.json        <- Active authentication sessions (session cookies)
+|   |-- products.json        <- Digital products catalog & variants
+|   |-- inventory.json       <- Card inventory (BIN, issuer, price, billing info)
+|   |-- orders.json          <- All completed and pending order records
+|   |-- topups.json          <- Account balance top-up transactions
+|   |-- refunds.json         <- Refund tickets and dispute logs
+|   |-- replacements.json    <- Replacement claim records
+|   |-- coupons.json         <- Active discount coupon codes
+|   |-- categories.json      <- Product categories and navigation icons
+|   |-- announcements.json   <- Store announcement banners
+|   |-- faq.json             <- FAQ question and answer entries
+|   |-- pages.json           <- Dynamic TOS and Privacy policy content
+|   |-- settings.json        <- Payment method toggles & platform switches
+|   |-- audit_logs.json      <- System security & administrative action log
+|   `-- gateway_sessions.json<- Gateway bot state, channel links & verified users
+|
+|-- screenshots/             <- Storage for user refund proof screenshots
+`-- uploads/                 <- Storage for product images and banner uploads
+
+
+================================================================================
+3. CONFIGURATION & API KEYS GUIDE (Where everything goes)
+================================================================================
+
+All sensitive configuration is centralized in the `.env` file at the project root.
+When `server.js` and bot scripts start, they automatically load values from `.env`.
+
+Below is the complete reference of where to obtain and place each key:
+
+--------------------------------------------------------------------------------
+A. SERVER & DOMAIN CONFIGURATION
+--------------------------------------------------------------------------------
+PORT=3001
+  - The local internal port the Node server listens on.
+  - Default: 3001 (Proxied by Nginx).
+
+PUBLIC_BASE_URL=https://mysterio.cc
+  - The public HTTPS URL of your website.
+  - Used when generating payment return URLs and webhook callbacks.
+
+--------------------------------------------------------------------------------
+B. ADMIN & MASTER CREDENTIALS
+--------------------------------------------------------------------------------
+ADMIN_EMAIL=admin@mysterio.cc
+ADMIN_PASSWORD=YourSecureAdminPasswordHere!
+  - Used to log into the Admin Control Panel at `https://mysterio.cc/admin`.
+  - Automatically seeded into `data/users.json` with the role "ADMIN".
+
+GOD_EMAIL=god@mysterio.cc
+GOD_PASSWORD=YourSecureGodPasswordHere!
+  - Used to log into the God Mode Control Panel at `https://mysterio.cc/god`.
+  - Automatically seeded into `data/users.json` with the role "GOD".
+
+--------------------------------------------------------------------------------
+C. TELEGRAM BOT TOKENS & CHAT IDS
+--------------------------------------------------------------------------------
+1. Main Admin Bot Token & Admin Chat IDs:
+   TELEGRAM_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
+   TELEGRAM_ADMIN_IDS=6926823977,123456789
+   - Create via @BotFather on Telegram.
+   - This bot sends instant Telegram alerts to administrators whenever:
+     * A new order is placed
+     * An account balance top-up occurs
+     * A customer requests a refund or replacement
+   - `TELEGRAM_ADMIN_IDS` is a comma-separated list of numeric Telegram User IDs.
+     (You can find your numeric ID by messaging @userinfobot on Telegram).
+
+2. Restock Channel Bot:
+   TELEGRAM_RESTOCK_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
+   RESTOCK_STORE_URL=mysterio.cc
+   - Create via @BotFather on Telegram.
+   - Add this bot as an ADMIN to your Telegram Restock/Announcement channel.
+   - Whenever an administrator restocks products or cards in the Admin panel,
+     this bot automatically formats and broadcasts a rich restock post.
+
+3. Dashboard & Customer Login Bot:
+   DASHBOARD_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
+   - Create via @BotFather on Telegram.
+   - Customers use this bot to link their Telegram account and receive:
+     * Unique one-time Login Tokens (`TG-XXXXXX`)
+     * OTP verification codes for fast web logins
+     * Personal purchase delivery notifications
+
+4. Gateway Channel Verification Bot:
+   GATEWAY_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
+   GATEWAY_NAME=mysteriogateway
+   - Create via @BotFather on Telegram.
+   - Protects your private Telegram channels against bots and raids.
+   - Solves math captchas before auto-approving channel join requests.
+
+5. Telegram Stars Payments Bot:
+   PAYMENTS_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
+   STARS_SECRET=MysterioStarsSecret2026
+   - Create via @BotFather on Telegram.
+   - In @BotFather, enable Payments for this bot and select "Telegram Stars".
+   - Handles Apple Pay & Google Pay transactions natively inside Telegram.
+
+6. Automated Replacement Bot:
+   REPLACEMENT_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
+   REPLACEMENT_BOT_USERNAME=mysterio_replacement_bot
+   REPLACEMENT_SECRET=MysterioReplacementSecret2026
+   - Dedicated support bot where customers can submit replacement claims.
+
+7. Success & Proof Feed Bot:
+   SUCCESS_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
+   - Broadcasts anonymized purchase vouchers to your public proof channel.
+
+--------------------------------------------------------------------------------
+D. PAYMENT GATEWAY APIS
+--------------------------------------------------------------------------------
+1. NOWPayments (Cryptocurrency Checkout & Topups):
+   NOWPAYMENTS_TOPUP_API_KEY=YOUR_NOWPAYMENTS_TOPUP_KEY
+   NOWPAYMENTS_ORDER_API_KEY=YOUR_NOWPAYMENTS_ORDER_KEY
+   NOWPAYMENTS_IPN_SECRET=YOUR_NOWPAYMENTS_IPN_SECRET
+   NOWPAYMENTS_URL=https://api.nowpayments.io/v1
+   - Sign up at https://nowpayments.io
+   - In Account Settings -> API Keys:
+     * Generate an API Key for Topups and Orders.
+     * Set IPN Callback URL to `https://mysterio.cc/api/payments/nowpayments-ipn`
+     * Generate your IPN Secret Key (used for cryptographic HMAC-SHA512 verification).
+
+2. Chime Automated Verification (Email IMAP):
+   CHIME_EMAIL=mysterio.payments@gmail.com
+   CHIME_EMAIL_PASSWORD=your_16_char_app_password
+   CHIME_IMAP_SERVER=imap.gmail.com
+   CHIME_IMAP_PORT=993
+   CHIME_WEBHOOK_URL=http://localhost:3001/api/payments/chime-webhook
+   CHIME_WEBHOOK_TOKEN=mysterio_chime_secure_token_2026
+   - If accepting Chime payments, create a dedicated Gmail or Outlook account.
+   - In Google Account -> Security -> 2-Step Verification -> Generate "App Password".
+   - Put the 16-character App Password in `CHIME_EMAIL_PASSWORD`.
+
+--------------------------------------------------------------------------------
+E. BANK IDENTIFICATION NUMBER (BIN) LOOKUP API
+--------------------------------------------------------------------------------
+HANDYAPI_KEY=YOUR_HANDYAPI_KEY
+  - Sign up at https://handyapi.com
+  - When administrators paste raw card numbers into the card generator, the server 
+    queries HandyAPI with the 6-digit BIN (e.g., 483312) to automatically identify:
+    * Card Scheme (Visa, MasterCard, Amex, Discover)
+    * Card Type (DEBIT, CREDIT, PREPAID)
+    * Card Tier (CLASSIC, PLATINUM, SIGNATURE, WORLD ELITE)
+    * Bank Issuer (JPMorgan Chase, Wells Fargo, Bank of America, etc.)
+    * Country and State
+  - Results are cached locally in `data/bin-cache.json` so the same BIN is never 
+    queried twice.
+
+
+================================================================================
+4. TELEGRAM BOT SUITE (Deep-Dive into Every Bot)
+================================================================================
+
+--------------------------------------------------------------------------------
+4.1 GATEWAY BOT (`gateway_bot.js`)
+--------------------------------------------------------------------------------
+Purpose: 
+Protects your official Telegram group/channel from spam, bots, and unauthorized 
+users by acting as an automated gatekeeper.
+
+How it works:
+1. When a user requests to join your private Telegram channel, Telegram fires a 
+   `chat_join_request` update.
+2. The Gateway Bot catches this event, stores the user's pending request in 
+   `data/gateway_sessions.json`, and sends the user a private message with an 
+   interactive math captcha (e.g., "What is 7 + 5?").
+3. When the user selects the correct inline button:
+   - The bot approves the join request via Telegram API (`approveChatJoinRequest`).
+   - The user is automatically admitted to the channel.
+   - The user receives a welcome message with a link to `mysterio.cc`.
+4. Admin features inside Gateway Bot:
+   - `/admin` or `/stats`: Shows total verified users and active channels.
+   - `/broadcast <HTML message>`: Mass-broadcasts an update to all verified users.
+
+--------------------------------------------------------------------------------
+4.2 PAYMENTS BOT (`payments_bot.js` — Telegram Stars)
+--------------------------------------------------------------------------------
+Purpose:
+Allows customers to pay with Telegram Stars (funded directly via Apple Pay or 
+Google Pay inside Telegram) for checkout or balance topups.
+
+How it works:
+1. On the Mysterio storefront (`cart.html` or `balance.html`), the customer 
+   selects "Apple Pay / GPay (Telegram Stars)".
+2. The website generates a unique order reference and opens a Telegram deep-link:
+   `https://t.me/YourPaymentsBot?start=order_ORD-12345`
+3. In `payments_bot.js`:
+   - The bot queries the local store API (`/api/orders/details-stars?orderId=...`) 
+     to retrieve the exact USD total and items list.
+   - Calculates the required Telegram Stars amount (1 Star ≈ $0.02 USD).
+   - Generates an official Telegram Invoice using `sendInvoice`.
+4. The user completes the payment with 1-click Apple Pay / Google Pay.
+5. Telegram sends `pre_checkout_query` (which the bot auto-approves) followed 
+   by `successful_payment`.
+6. The bot calls `server.js` (`/api/orders/complete-stars`) with `STARS_SECRET`.
+7. `server.js` marks the order `COMPLETED`, allocates the digital credentials, 
+   and displays them instantly on the user's screen.
+
+--------------------------------------------------------------------------------
+4.3 DASHBOARD BOT (`dashboard_bot.js` — Login & Real-Time Alerts)
+--------------------------------------------------------------------------------
+Purpose:
+Connects the web account with Telegram for passwordless OTP logins and order alerts.
+
+How it works:
+1. Connecting Account:
+   - User messages `/start` to Dashboard Bot.
+   - The bot creates a unique token `TG-XXXXXXXX` in `data/users.json`.
+   - The user enters this token on `mysterio.cc/login.html` under "Sign in with Telegram".
+   - The bot immediately sends a 6-digit one-time code (OTP).
+   - The user enters the 6-digit code on the website and is instantly logged in.
+2. Real-Time Order Notifications:
+   - When a purchase is completed, `server.js` calls `sendDashboardBotNotification()`.
+   - The user gets an immediate receipt in Telegram with full credentials.
+3. Administrator Remote Fulfillment:
+   - For products marked as "Manual Delivery" (e.g. custom setups), admins can 
+     complete the order directly inside Telegram by replying:
+     `/complete ORD-XXXXXX <login details>` or `/done ORD-XXXXXX`
+
+--------------------------------------------------------------------------------
+4.4 REPLACEMENT BOT (`replacement_bot.js` — 24h Auto-Warranty)
+--------------------------------------------------------------------------------
+Purpose:
+Automates customer warranty claims without requiring manual support staff.
+
+How it works:
+1. Customers have a 24-hour replacement window on eligible digital products and cards.
+2. If an account or card is invalid, the customer clicks "Replace" in their 
+   Orders page (`orders.html`), opening `https://t.me/mysterio_replacement_bot?start=replace_ORD123_0`.
+3. The Replacement Bot:
+   - Queries `server.js` (`/api/bot/order?orderId=...&secret=...`).
+   - Verifies the order is within the 24-hour window and has not been replaced yet.
+   - Prompts the user with confirmation buttons.
+4. Auto-Swap:
+   - The bot calls `/api/bot/replace-item`.
+   - `server.js` automatically searches `inventory.json` / `products.json` for 
+     an unsold item matching the exact same category, BIN, or variant.
+   - Swaps the dead credential with fresh working credentials.
+5. Auto-Refund Fallback:
+   - If no replacement stock is available, the bot automatically credits the full 
+     purchase amount back to the user's Mysterio balance via `/api/bot/refund-balance`.
+
+--------------------------------------------------------------------------------
+4.5 SUCCESS BOT (`success_bot.js` — Public Vouchers Feed)
+--------------------------------------------------------------------------------
+Purpose:
+Builds buyer trust by automatically publishing anonymized purchase proofs to a 
+public Telegram "Vouches / Proof" channel whenever an order is completed.
+
+How it works:
+- Polls `data/orders.json` for new `COMPLETED` orders.
+- Masks sensitive details (e.g., "User J*** purchased 1x Spotify Premium for $4.00").
+- Posts the proof receipt directly to the configured Telegram channel.
+
+
+================================================================================
+5. PYTHON DAEMONS & BACKGROUND SERVICES
+================================================================================
+
+--------------------------------------------------------------------------------
+5.1 CHIME AUTOMATED MATCHING ENGINE (`chime_daemon.py` & `email_checker.py`)
+--------------------------------------------------------------------------------
+Chime offers zero-fee deposits, but lacks a public API. Mysterio overcomes this 
+with an automated email parsing daemon:
+
+1. Invoice Creation:
+   - User selects "Chime" on `cart.html` or `balance.html`.
+   - The site shows the store's Chime tag and creates a pending invoice with 
+     the exact dollar amount in `orders.json` or `topups.json`.
+2. Email Detection:
+   - When the user sends money via Chime, Chime sends a notification email to 
+     your Gmail address ("You received $25.00 from Jane Doe").
+   - `chime_daemon.py` connects via IMAP (SSL Port 993) every 5 seconds.
+   - Fetches unread emails from `notifications@chime.com`.
+3. Extraction & Webhook Delivery:
+   - Uses regex to extract: Sender Name, Sender Tag, Amount, Timestamp.
+   - Sends an authenticated POST request to:
+     `http://localhost:3001/api/payments/chime-webhook`
+4. Server Matching:
+   - `server.js` scans pending Chime invoices.
+   - Matches the transaction by exact amount and sender tag (or 10-minute timestamp window).
+   - Instantly marks the order `COMPLETED` or credits the user's balance.
+
+--------------------------------------------------------------------------------
+5.2 TELEGRAM USERBOT FORWARDER (`telegram_daemon.py`)
+--------------------------------------------------------------------------------
+- Powered by Python Telethon (MTProto).
+- Monitors private supplier channels for product restocks and auto-forwards 
+  them into your Mysterio announcement feed.
+
+--------------------------------------------------------------------------------
+5.3 GATEWAY DEPLOYER (`deploy_gateway.py`)
+--------------------------------------------------------------------------------
+- Automated Paramiko SSH/SFTP deployment script to install and restart the Gateway 
+  bot on any isolated remote VPS with a single command.
+
+
+================================================================================
+6. ORDER, INVENTORY & BALANCE LIFECYCLE
+================================================================================
+
+Step 1: Browsing & Cart Addition
+- Users can browse Products (`index.html`) or Card Inventory (`cards.html`).
+- Products have customizable variants (e.g., 1 Month vs 6 Months) with separate 
+  prices and stocks.
+- When an item is added to the cart, client-side helper `cart-utils.js` maintains 
+  the cart in `localStorage`.
+
+Step 2: Checkout & Stock Reservation
+- When checkout starts, `server.js` places a temporary lock on the items 
+  (`PAYMENT_EXPIRY_MS` = 1 hour) to prevent double-selling.
+- Supported Payment Methods:
+  1. Balance: Deducts directly from user's `balance` in `data/users.json`.
+  2. Crypto (NOWPayments): Creates an invoice for BTC, LTC, ETH, USDT, SOL, etc. 
+     (includes automatic 10% crypto discount).
+  3. Chime: Automated email matching.
+  4. Telegram Stars: 1-click in-app Apple Pay / Google Pay.
+
+Step 3: Instant Fulfillment & Delivery
+- Once payment is confirmed:
+  * For Instant Items: The line item credentials (e.g. `user:pass` or `CC|MM|YY|CVV`) 
+    are extracted, attached to the order record in `data/orders.json`, and displayed 
+    immediately on-screen.
+  * For Manual Items: The order is marked `MANUAL_PENDING`, and admin bots are alerted.
+- The user can view past purchases anytime under `mysterio.cc/orders.html`.
+
+Step 4: Balance Top-Up Mechanism
+- Users can pre-fund their account via `balance.html`.
+- Crypto top-ups automatically receive a 10% bonus credit (e.g. deposit $100 -> credit $110).
+
+
+================================================================================
+7. ADMIN & GOD MODE CAPABILITIES
+================================================================================
+
+--------------------------------------------------------------------------------
+A. ADMIN DASHBOARD (`/admin.html`)
+--------------------------------------------------------------------------------
+- Category Management: Create, edit, and reorder categories with custom Material icons.
+- Product Catalog Manager:
+  * Add products with image uploads, descriptions, tags, and multi-tier variants.
+  * Toggle "Manual Delivery" vs "Instant Delivery".
+  * Set Custom input requirements (e.g. ask for customer email/password on checkout).
+  * Bulk stock upload (paste lines of credentials).
+- Card Generator & Bulk Uploader:
+  * Paste raw card formats: `CARDNUMBER|MM|YY|CVV|NAME|STREET|CITY|STATE|ZIP`
+  * HandyAPI automatically detects card scheme, tier, level, and issuing bank.
+- Order & Replacement Management: Inspect all orders, issue refunds, and trigger manual delivery.
+- Coupon & Announcement Engine: Create promo discount codes and sticky site banners.
+- Settings: Toggle individual payment methods (Balance, Crypto, Chime, Telegram Stars).
+
+--------------------------------------------------------------------------------
+B. GOD MODE DASHBOARD (`/god.html`)
+--------------------------------------------------------------------------------
+- Master User Management: View all registered users, search by email or Telegram ID, 
+  and edit account balances with 1 click.
+- Role Escalation: Promote users to `ADMIN` or demote accounts.
+- Audit Trail: Real-time inspection of `audit_logs.json` tracking IP addresses, logins, 
+  price modifications, and balance adjustments.
+
+
+================================================================================
+8. STEP-BY-STEP DEPLOYMENT & HOSTING GUIDE (Ubuntu VPS)
+================================================================================
+
+Follow these steps to deploy Mysterio on a clean Ubuntu 22.04 or 24.04 VPS:
+
+--------------------------------------------------------------------------------
+STEP 1: Server Preparation & Dependencies
+--------------------------------------------------------------------------------
+Log into your VPS via SSH:
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y curl git nginx certbot python3-certbot-nginx python3-pip
+```
+
+Install Node.js (Version 20 or 22 LTS):
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install -y nodejs
+sudo npm install -g pm2
+```
+
+--------------------------------------------------------------------------------
+STEP 2: Deploy Mysterio Files
+--------------------------------------------------------------------------------
+Create the destination directory and copy your project files:
+```bash
+sudo mkdir -p /var/www/mysterio
+sudo chown -R ubuntu:ubuntu /var/www/mysterio
+cd /var/www/mysterio
+```
+(Upload your local Mysterio folder contents here using SCP, SFTP, or Git).
+
+Install dependencies:
+```bash
+npm install
+```
+
+--------------------------------------------------------------------------------
+STEP 3: Configure Environment Variables (.env)
+--------------------------------------------------------------------------------
+Edit your `.env` file with your real bot tokens, domain, and API keys:
+```bash
+nano /var/www/mysterio/.env
+```
+Fill in:
+- `ADMIN_EMAIL` & `ADMIN_PASSWORD`
+- `TELEGRAM_BOT_TOKEN` & `TELEGRAM_ADMIN_IDS`
+- `NOWPAYMENTS_TOPUP_API_KEY` & `NOWPAYMENTS_ORDER_API_KEY`
+- `PAYMENTS_BOT_TOKEN`, `GATEWAY_BOT_TOKEN`, `DASHBOARD_BOT_TOKEN`, `REPLACEMENT_BOT_TOKEN`
+
+--------------------------------------------------------------------------------
+STEP 4: Start Applications with PM2
+--------------------------------------------------------------------------------
+Start the entire ecosystem (storefront + all 5 bots) in one command:
+```bash
+cd /var/www/mysterio
+pm2 start ecosystem.config.js
+pm2 save
+pm2 startup
+```
+(Follow the on-screen command generated by `pm2 startup` to enable auto-reboot).
+
+Check status:
+```bash
+pm2 status
+pm2 logs mysterio-storefront
+```
+
+--------------------------------------------------------------------------------
+STEP 5: Configure Nginx & SSL Certificate
+--------------------------------------------------------------------------------
+Copy the Nginx configuration file:
+```bash
+sudo cp /var/www/mysterio/mysterio.nginx.conf /etc/nginx/sites-available/mysterio.cc
+sudo ln -s /etc/nginx/sites-available/mysterio.cc /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+Obtain a free SSL Certificate via Certbot:
+```bash
+sudo certbot --nginx -d mysterio.cc -d www.mysterio.cc
+```
+Certbot will automatically configure HTTPS, HTTP->HTTPS redirect, and auto-renewal.
+
+Your site is now live at `https://mysterio.cc`!
+
+
+================================================================================
+9. TROUBLESHOOTING & MAINTENANCE CHEAT SHEET
+================================================================================
+
+1. Check Running Services:
+   `pm2 status`
+
+2. View Live Logs:
+   `pm2 logs`                           # All processes
+   `pm2 logs mysterio-storefront`       # Web server only
+   `pm2 logs mysterio-payments-bot`     # Stars payments bot only
+
+3. Restarting After Code Changes:
+   `pm2 restart ecosystem.config.js`
+
+4. Resetting Admin Password:
+   Update `ADMIN_PASSWORD` in `.env` and restart `pm2 restart mysterio-storefront`.
+   The server automatically syncs system credentials on startup.
+
+5. Database Backups:
+   All data lives in `/var/www/mysterio/data/`.
+   To create an instant backup archive:
+   `tar -czvf /home/ubuntu/mysterio_backup_$(date +%F).tar.gz /var/www/mysterio/data`
+
+================================================================================
+                    END OF MYSTERIO.CC MASTER GUIDE
+================================================================================

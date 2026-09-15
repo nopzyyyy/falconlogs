@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
+    <link rel="icon" type="image/png" href="/favicon.png?v=999">
+    <link rel="shortcut icon" href="/favicon.ico?v=999">
+    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Dashboard - Falcon Logs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=820">
+      
+    <link rel="alternate icon" type="image/png" href="/logo.png">
+  </head>
+  <body>
+    <!-- HEADER (ENCLOSED CARD) -->
+    <div class="site-header-wrap">
+      <header class="store-site-header">
+        <a class="brand" href="/" aria-label="Falcon Logs">
+          <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img">
+        </a>
+        <nav class="header-nav-center" aria-label="Primary">
+          <a href="/" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <span>Logs</span>
+          </a>
+          <a href="/orders.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            <span>Orders</span>
+          </a>
+          <a href="/support.html" class="header-nav-link ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            <span>Support</span>
+          </a>
+        </nav>
+        <div class="nav-actions">
+          <a class="cart-icon-btn" href="/cart.html" aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+            <span class="cart-badge" data-cart-count>0</span>
+          </a>
+          <span class="nav-divider"></span>
+          <div class="nav-account-dropdown-wrap">
+            <a class="nav-btn" href="/login.html" id="navUserBtn">
+              <svg class="nav-btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span id="navUserText">Log in</span>
+            </a>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <!-- MAIN DASHBOARD SHELL -->
+    <main class="dashboard-shell">
+      <!-- HEADER ROW -->
+      <div class="dashboard-header-row">
+        <div class="dashboard-title-group">
+          <span class="dashboard-tag">ACCOUNT SETTINGS</span>
+          <h1 class="dashboard-title">Your account</h1>
+          <span class="dashboard-email" id="dashboardUserEmail">loading...</span>
+          <div style="margin-top: 6px; font-size: 13px;">
+            <a href="/deposit.html" style="color: #ea580c; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+              <span>Looking to manage balance or top up? Go to Deposit Page</span> &rarr;
+            </a>
+          </div>
+        </div>
+        <button type="button" class="dashboard-signout-btn" id="dashboardSignOutBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Sign out
+        </button>
+      </div>
+
+      <!-- CARD 1: CHANGE PASSWORD -->
+      <div class="dashboard-card">
+        <div class="dashboard-card-head">
+          CHANGE PASSWORD
+        </div>
+        <form id="changePasswordForm">
+          <div class="dashboard-form-group">
+            <label class="dashboard-form-label" for="currentPasswordInput">CURRENT PASSWORD</label>
+            <div class="dashboard-input-wrapper">
+              <input type="password" id="currentPasswordInput" class="dashboard-input" required autocomplete="current-password">
+              <button type="button" class="password-toggle-btn" id="toggleCurrentPassBtn" aria-label="Toggle password visibility">
+                <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="dashboard-form-group">
+            <label class="dashboard-form-label" for="newPasswordInput">NEW PASSWORD</label>
+            <div class="dashboard-input-wrapper">
+              <input type="password" id="newPasswordInput" class="dashboard-input" required minlength="8" autocomplete="new-password">
+              <button type="button" class="password-toggle-btn" id="toggleNewPassBtn" aria-label="Toggle new password visibility">
+                <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="dashboard-form-group">
+            <label class="dashboard-form-label" for="confirmPasswordInput">CONFIRM NEW PASSWORD</label>
+            <div class="dashboard-input-wrapper">
+              <input type="password" id="confirmPasswordInput" class="dashboard-input" required minlength="8" autocomplete="new-password">
+              <button type="button" class="password-toggle-btn" id="toggleConfirmPassBtn" aria-label="Toggle confirm password visibility">
+                <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="dashboard-submit-btn" id="updatePasswordBtn">Update password</button>
+        </form>
+      </div>
+    </main>
+ 
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-nav-links">
+        <a href="/">Home</a>
+        <a href="/cart.html">Cart</a>
+        <a href="/dashboard.html">Account</a>
+        <a href="/orders.html">Orders</a>
+      </div>
+      <a href="https://t.me/mysteriogateway" target="_blank" rel="noopener noreferrer" class="restock-alert-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Get restock alerts
+      </a>
+      <p class="footer-copyright">&copy; 2026 Falcon Logs. All rights reserved.</p>
+      <div class="footer-dev">
+        Developed by <a href="https://t.me/peoze" target="_blank" rel="noopener noreferrer"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Mass</a>
+      </div>
+    </footer>
+
+    <script src="cart-utils.js?v=440"></script>
+    <script>
+      function timeAgo(dateString) {
+        const d = new Date(dateString);
+        const now = new Date();
+        const diffMs = now - d;
+        if (isNaN(diffMs)) return "Recent";
+        const mins = Math.floor(diffMs / 60000);
+        if (mins < 1) return "Just now";
+        if (mins < 60) return `${mins} min${mins === 1 ? '' : 's'} ago`;
+        const hours = Math.floor(mins / 60);
+        if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+        const days = Math.floor(hours / 24);
+        if (days < 30) return `${days} day${days === 1 ? '' : 's'} ago`;
+        const months = Math.floor(days / 30);
+        return `${months} month${months === 1 ? '' : 's'} ago`;
+      }
+
+      function formatDateSub(dateString) {
+        const d = new Date(dateString);
+        if (isNaN(d.getTime())) return "";
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const day = d.getDate();
+        const month = months[d.getMonth()];
+        const hours = String(d.getHours()).padStart(2, '0');
+        const mins = String(d.getMinutes()).padStart(2, '0');
+        return `${day} ${month}, ${hours}:${mins}`;
+      }
+
+      function getStatusDisplay(statusStr) {
+        const st = String(statusStr || "").toUpperCase();
+        if (st === "PAID" || st === "COMPLETED" || st === "FULFILLED" || st === "DELIVERED") {
+          return { label: "Fulfilled", color: "#22c55e" };
+        }
+        if (st === "EXPIRED" || st === "TIMED_OUT") {
+          return { label: "Expired", color: "#f97316" };
+        }
+        if (st === "CONFIRMING" || st === "PROCESSING") {
+          return { label: "Processing", color: "#f97316" };
+        }
+        if (st === "FAILED" || st === "CANCELLED") {
+          return { label: "Failed", color: "#ef4444" };
+        }
+        return { label: "Unpaid", color: "#eab308" };
+      }
+
+      async function loadDashboardData() {
+        try {
+          // 1. Fetch authenticated user data & balance
+          const res = await fetch("/api/auth/me");
+          const data = await res.json();
+          if (!data || !data.authenticated) {
+            window.location.href = "/login.html";
+            return;
+          }
+
+          const emailEl = document.querySelector("#dashboardUserEmail");
+          const balanceEl = document.querySelector("#dashboardBalanceAmount");
+          if (emailEl) emailEl.textContent = (data.name && data.name.trim()) ? `${data.name.trim()} (${data.email})` : (data.email || "Account");
+          if (balanceEl) balanceEl.textContent = `£${Number(data.balance || 0).toFixed(2)}`;
+
+          // 2. Fetch both orders and topups
+          const [ordersRes, topupsRes] = await Promise.all([
+            fetch("/api/orders").catch(() => null),
+            fetch("/api/topups").catch(() => null)
+          ]);
+
+          const rawOrders = ordersRes && ordersRes.ok ? (await ordersRes.json()).orders || [] : [];
+          const rawTopups = topupsRes && topupsRes.ok ? (await topupsRes.json()).topups || [] : [];
+
+          // Format items for unified list
+          const formattedItems = [];
+
+          rawOrders.forEach(o => {
+            let title = "Order";
+            if (o.items && o.items.length > 0) {
+              title = o.items.map(it => it.name || "Item").join(", ");
+            } else if (o.title) {
+              title = o.title;
+            }
+
+            formattedItems.push({
+              id: o.id,
+              title: title,
+              amount: Number(o.total || o.paid || 0),
+              status: o.status,
+              createdAt: o.createdAt,
+              link: `/orders.html?id=${encodeURIComponent(o.id)}`
+            });
+          });
+
+          rawTopups.forEach(t => {
+            formattedItems.push({
+              id: t.id,
+              title: "Balance deposit",
+              amount: Number(t.amount || 0),
+              status: t.status,
+              createdAt: t.createdAt,
+              link: `/pay.html?paymentId=${encodeURIComponent(t.id)}`
+            });
+          });
+
+          // Sort by date descending (newest first)
+          formattedItems.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+          const ordersContainer = document.querySelector("#dashboardOrdersContainer");
+          if (!ordersContainer) return;
+
+          if (formattedItems.length === 0) {
+            ordersContainer.innerHTML = `
+              <div style="font-size: 13.5px; color: rgba(255,255,255,0.7); font-weight: 500; padding: 4px 0;">
+                No orders yet. <a href="/" style="color: #fb923c; text-decoration: none; font-weight: 600; margin-left: 4px;">Browse products</a>
+              </div>
+            `;
+            return;
+          }
+
+          // Show only the 5 most recent orders
+          const recentItems = formattedItems.slice(0, 5);
+
+          let html = '<div class="dashboard-orders-list" style="display: flex; flex-direction: column; width: 100%;">';
+          recentItems.forEach((item, idx) => {
+            const relTime = timeAgo(item.createdAt);
+            const dateFmt = formatDateSub(item.createdAt);
+            const statusInfo = getStatusDisplay(item.status);
+            const priceStr = `£${item.amount.toFixed(2)}`;
+            const isLast = idx === recentItems.length - 1;
+
+            html += `
+              <div class="dashboard-order-item" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 0; ${isLast ? '' : 'border-bottom: 1px solid rgba(255, 255, 255, 0.08);'} gap: 14px; width: 100%; box-sizing: border-box;">
+                <div class="dashboard-order-info" style="display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1;">
+                  <div class="dashboard-order-title" style="font-family: 'Montserrat', sans-serif; font-size: 13.5px; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
+                  <div class="dashboard-order-sub" style="font-family: 'Montserrat', sans-serif; font-size: 12px; color: rgba(255, 255, 255, 0.5); font-weight: 500;">
+                    ${relTime}${dateFmt ? ' - ' + dateFmt : ''} - <span style="color: ${statusInfo.color}; font-weight: 600;">${statusInfo.label}</span>
+                  </div>
+                </div>
+                <div class="dashboard-order-action" style="display: flex; align-items: center; gap: 14px; flex-shrink: 0;">
+                  <div class="dashboard-order-amount" style="font-family: 'Montserrat', sans-serif; font-size: 13.5px; font-weight: 600; color: #ffffff;">${priceStr}</div>
+                  <a href="${item.link}" class="dashboard-order-view-btn" style="background: #182035; color: #ffffff; border: none; border-radius: 6px; padding: 6px 14px; font-family: 'Montserrat', sans-serif; font-size: 12.5px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; box-sizing: border-box; transition: background 0.15s, color 0.15s;">View</a>
+                </div>
+              </div>
+            `;
+          });
+          html += '</div>';
+
+          // Borderless View All Orders button
+          html += `
+            <div style="margin-top: 14px; padding-top: 6px; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
+              <a href="/orders.html" style="background: transparent; border: none; color: #fb923c; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 16px; transition: color 0.15s;">
+                View all orders &rarr;
+              </a>
+            </div>
+          `;
+
+          ordersContainer.innerHTML = html;
+
+        } catch (e) {
+          console.error("Failed to load dashboard data:", e);
+          const emailEl = document.querySelector("#dashboardUserEmail");
+          if (emailEl && emailEl.textContent === "loading...") {
+            emailEl.textContent = "Error loading";
+          }
+        }
+      }
+
+      // Sign out button
+      const signOutBtn = document.querySelector("#dashboardSignOutBtn");
+      if (signOutBtn) {
+        signOutBtn.addEventListener("click", async () => {
+          try {
+            await fetch("/api/auth/logout", { method: "POST" });
+            window.location.href = "/";
+          } catch (e) {
+            window.location.reload();
+          }
+        });
+      }
+
+      // Change Password form
+      const changePassForm = document.querySelector("#changePasswordForm");
+      if (changePassForm) {
+        changePassForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const currentPassword = document.querySelector("#currentPasswordInput").value;
+          const newPassword = document.querySelector("#newPasswordInput").value;
+          const confirmPassword = document.querySelector("#confirmPasswordInput").value;
+          const submitBtn = document.querySelector("#updatePasswordBtn");
+
+          if (newPassword !== confirmPassword) {
+            showToast("New passwords do not match.");
+            return;
+          }
+
+          const originalText = submitBtn.textContent;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<span class="btn-loading-spinner"></span> Updating...`;
+
+          try {
+            const res = await fetch("/api/auth/change-password", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ currentPassword, newPassword })
+            });
+            const data = await res.json();
+            if (res.ok) {
+              showToast("Password updated successfully!");
+              changePassForm.reset();
+            } else {
+              showToast(data.error || "Failed to update password.");
+            }
+          } catch (err) {
+            showToast("Network error. Please try again.");
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
+        });
+      }
+
+      // Password Eye Visibility Toggles
+      const eyeOpenSvg = '<svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+      const eyeOffSvg = '<svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>';
+
+      function bindPasswordToggle(btnId, inputId) {
+        const btn = document.getElementById(btnId);
+        const input = document.getElementById(inputId);
+        if (!btn || !input) return;
+        btn.addEventListener("click", () => {
+          const isPass = input.type === "password";
+          input.type = isPass ? "text" : "password";
+          btn.innerHTML = isPass ? eyeOffSvg : eyeOpenSvg;
+          btn.style.color = isPass ? "#fb923c" : "rgba(255,255,255,0.4)";
+        });
+      }
+
+      bindPasswordToggle("toggleCurrentPassBtn", "currentPasswordInput");
+      bindPasswordToggle("toggleNewPassBtn", "newPasswordInput");
+      bindPasswordToggle("toggleConfirmPassBtn", "confirmPasswordInput");
+
+      // Execute on DOM and window load
+      loadDashboardData();
+      document.addEventListener("DOMContentLoaded", loadDashboardData);
+    </script>
+  </body>
+</html>

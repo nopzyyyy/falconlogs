@@ -1,0 +1,178 @@
+================================================================================
+          MYSTERIO.CC — COMPREHENSIVE ARCHITECTURE & OPERATIONS MANUAL
+================================================================================
+
+This document explains exactly how the Mysterio digital storefront, database,
+payment gateways, Telegram bots, and emergency security systems work, along with
+step-by-step instructions to redeploy or rehost the site at any time.
+
+================================================================================
+1. ARCHITECTURAL OVERVIEW
+================================================================================
+
+Mysterio is built as a high-performance, lightweight Node.js digital marketplace
+designed for speed, resilience, and privacy.
+
+- Core Web Engine: Node.js HTTP server (`server.js`) listening on port 3001.
+- Reverse Proxy & SSL: Nginx handling ports 80/443 with Let's Encrypt TLS.
+- Database Model: Flat-file JSON architecture in the `data/` directory.
+  - `data/users.json`       -> Registered user profiles, hashed passwords, roles, balances.
+  - `data/inventory.json`   -> Unique card stock inventory (PANs, CVVs, BIN metadata).
+  - `data/products.json`    -> Digital catalog products, variant trees, custom products.
+  - `data/orders.json`      -> Customer order records, fulfillment credentials, order states.
+  - `data/topups.json`      -> Balance deposit invoices (Crypto, Chime, Telegram Stars).
+  - `data/refunds.json`     -> Customer refund tickets, auto-checked validity, admin approvals.
+  - `data/settings.json`    -> Dynamic payment method toggles, system settings.
+  - `data/coupons.json`     -> Store discount codes and usage limits.
+  - `data/announcements.json`-> Store banner announcements and alerts.
+  - `data/faq.json`         -> Knowledgebase and FAQ questions.
+  - `data/audit_logs.json`  -> Administrative action logs and timestamps.
+  - `data/lockdown.json`    -> Site-wide Emergency Lockdown state.
+
+* SQL Injection Immunity: Because there is no SQL database engine (no MySQL/Postgres/SQLite),
+  SQL injection attacks are structurally impossible.
+
+================================================================================
+2. SYSTEM ROLES & ACCESS CREDENTIALS
+================================================================================
+
+The platform uses three distinct permission levels:
+
+1. CUSTOMER (Role: "USER"):
+   - Can register, login, top up balance, browse catalog, add to cart, and purchase.
+   - Receives delivered digital credentials instantly in their Order History.
+
+2. STORE ADMINISTRATOR (Role: "ADMIN"):
+   - Primary operations management panel (`/admin.html`).
+   - Manage card inventory, add/edit/delete products and variants, manage stock.
+   - Adjust customer balances (+/- amount).
+   - Review and approve/deny refund tickets.
+   - Configure active payment methods, coupons, announcements, and FAQs.
+   - Current Login:
+     * Email:    admin_ops_d0c2c93f@mysterio.cc
+     * Password: h@!rTKFj(J&p4N@Kyl==v%PaBM)nyEJR
+
+3. GOD SUPER-ADMIN (Role: "GOD"):
+   - Hidden super-admin view (`/god.html`).
+   - High-level analytics, complete inventory inspection, revenue tracking.
+   - Contains the Master Emergency Lockdown Control.
+   - Current Login:
+     * Email:    god_root_0674f78e@mysterio.cc
+     * Password: wjnDHESfjR$*qH)Z4epNsW35!EZbFUwo
+
+4. MASTER EMERGENCY LOCKDOWN KEY:
+   - Required to activate or unlock the site in emergency mode.
+   - Master Password: LOCKDOWN-QOubekuab5xjZD$QAYJBKFiWVFQ5
+
+================================================================================
+3. PAYMENT PROCESSING SYSTEMS
+================================================================================
+
+A. NOWPAYMENTS (CRYPTOCURRENCY GATEWAY)
+---------------------------------------
+The store supports 10+ cryptocurrencies (BTC, LTC, ETH, SOL, USDT-TRC20, TRX, etc.).
+- Direct Store Checkout: Uses `NOWPAYMENTS_ORDER_API_KEY`.
+- Balance Deposit Checkout: Uses `NOWPAYMENTS_TOPUP_API_KEY` (gives +10% bonus credit).
+- IPN Webhook Receiver: `https://mysterio.cc/api/payments/webhook`
+- Webhook Security: Incoming webhook calls from NOWPayments are cryptographically
+  verified using HMAC-SHA512 with `NOWPAYMENTS_IPN_SECRET` over canonically sorted JSON keys.
+- Real-Time Dual Checking: In addition to instant webhook delivery, the customer's
+  browser polls `/api/nowpayments/status/:paymentId` directly against the NOWPayments API,
+  guaranteeing instant order delivery or balance crediting the second the transaction confirms.
+- Configured Keys:
+  * Direct Order API Key:  FN9YNAF-DZX4N7B-KRT4ZCV-JYSGGAT
+  * Balance Topup API Key: 57A2JR9-1WK4G4V-MZZEX3B-N3T5FH9
+  * IPN Secret Key:        YYKKTZ0fGAgebjKwbhvw4iGaFCd401oc
+
+B. CHIME AUTOMATED MATCHING SYSTEM
+-----------------------------------
+- Daemon (`email_checker.py` & `chime_daemon.py`):
+  1. User initiates a Chime invoice and sends funds to the designated store Chime email.
+  2. The background email checker polls the store inbox via IMAP for transaction emails from Chime.
+  3. The parser extracts the sender tag, amount, and timestamp.
+  4. The matching engine matches the transaction against pending records in `orders.json` or `topups.json`.
+  5. Upon a match, the invoice is set to COMPLETED and credentials are auto-delivered.
+
+C. TELEGRAM STARS
+------------------
+- Allows customers to pay with Telegram Stars via the Telegram Payments API.
+- Verified on `/api/orders/complete-stars` using HMAC hash validation with `STARS_SECRET`.
+
+================================================================================
+4. TELEGRAM BOT ECOSYSTEM
+================================================================================
+
+1. Admin Notification Bot (`server.js`):
+   - Fires real-time alerts to configured Telegram Admin IDs whenever a new order
+     is placed, balance is topped up, or a refund request is opened.
+2. Restock Channel Bot (`server.js`):
+   - Broadcasts restock announcements automatically to your Telegram channel when admins
+     add new card inventory or products.
+3. Replacement & Support Desk Bot (`replacement_bot.js`):
+   - Connects customers to a live replacement ticket chat with administrators.
+4. Verification Gateway Bot (`gateway_bot.js`):
+   - Captcha verification bot that generates one-time access links for users entering
+     your private Telegram communities.
+
+================================================================================
+5. EMERGENCY LOCKDOWN (SELF-DESTRUCT) MODE
+================================================================================
+
+- What it is: A full-site freeze designed to instantly lock the entire platform.
+- Zero Data Loss: No user accounts, cards, orders, or database files are deleted.
+- Activation:
+  1. Log into `/god.html`.
+  2. Click the "Emergency Lock" tab in the left sidebar.
+  3. Click "Activate Emergency Lockdown" and enter the Master Password:
+     `LOCKDOWN-QOubekuab5xjZD$QAYJBKFiWVFQ5`
+- What happens:
+  - All public and admin pages immediately display: "LOCKED BY OWNER".
+  - All APIs (login, checkout, items) return `423 Locked`.
+  - Even admins cannot log in while locked.
+- How to Unlock:
+  - Option A: At the bottom of the "LOCKED BY OWNER" screen, click the tiny subtle
+    "enter password to unlock" text, type the Master Password, and click Unlock.
+  - Option B: In `/god.html`, click "Deactivate Lockdown" and enter the Master Password.
+
+================================================================================
+6. HOW TO REHOST / REDEPLOY THIS SITE ON ANY SERVER
+================================================================================
+
+To start this website on a new Ubuntu/Debian VPS:
+
+1. INSTALL PREREQUISITES:
+   sudo apt update && sudo apt install -y nodejs npm nginx certbot python3-certbot-nginx
+
+2. INSTALL PM2 PROCESS MANAGER:
+   sudo npm install -g pm2
+
+3. UPLOAD FILES:
+   Extract this entire folder into `/var/www/mysterio/`
+
+4. INSTALL DEPENDENCIES:
+   cd /var/www/mysterio && npm install
+
+5. CONFIGURE ENVIRONMENT (.env):
+   Verify `.env` has the correct `PORT=3001` and your API keys.
+
+6. START WITH PM2:
+   pm2 start server.js --name "mysterio"
+   pm2 save
+   pm2 startup
+
+7. CONFIGURE NGINX:
+   Copy `mysterio.nginx.conf` to `/etc/nginx/sites-available/default`:
+   sudo cp mysterio.nginx.conf /etc/nginx/sites-available/default
+   sudo systemctl restart nginx
+
+8. ENABLE SSL (HTTPS):
+   sudo certbot --nginx -d yourdomain.cc -d www.yourdomain.cc
+
+9. TO STOP HOSTING AT ANY TIME:
+   pm2 stop all
+   sudo systemctl stop nginx
+
+10. TO RESUME HOSTING:
+   pm2 start all
+   sudo systemctl start nginx
+================================================================================

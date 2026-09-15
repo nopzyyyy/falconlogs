@@ -1,0 +1,2479 @@
+[
+  {
+    "id": "TCK-8777F62E",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-9E5CFD37",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "nataliewhtny@yahoo.co.uk:Geofft14/4 | Cards = [VISA - 07/29]\nWRONG PASSWORD\n\nbillypassmore@hotmail.co.uk:Gollop77 | Cards = [VISA_DEBIT - 02/24, MASTERCARD - 03/30, MASTERCARD - 06/31, VISA_DEBIT - 05/22]\nNO PAYMENT METHOD \n\nvickivikin@yahoo.co.uk:Donkey19 | Cards = [MASTERCARD - 12/30]\nNO PAYMENT METHOD",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "nataliewhtny@yahoo.co.uk:Geofft14/4 | Cards = [VISA - 07/29]\nWRONG PASSWORD\n\nbillypassmore@hotmail.co.uk:Gollop77 | Cards = [VISA_DEBIT - 02/24, MASTERCARD - 03/30, MASTERCARD - 06/31, VISA_DEBIT - 05/22]\nNO PAYMENT METHOD \n\nvickivikin@yahoo.co.uk:Donkey19 | Cards = [MASTERCARD - 12/30]\nNO PAYMENT METHOD",
+        "createdAt": "2026-09-07T11:27:01.943Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.50 issued to user balance.",
+        "createdAt": "2026-09-07T15:35:11.214Z"
+      }
+    ],
+    "createdAt": "2026-09-07T11:27:01.943Z",
+    "updatedAt": "2026-09-07T15:35:11.214Z"
+  },
+  {
+    "id": "TCK-45DC2813",
+    "userId": "8410a95e-b5c7-485e-a5bd-7067659a6a7a",
+    "userEmail": "gcsewizpop@gmail.com",
+    "orderId": "ORD-FDBD4A28",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "https://imgur.com/a/R5fxHOg",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "https://imgur.com/a/R5fxHOg",
+        "createdAt": "2026-09-06T13:41:52.404Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £5.00 issued to user balance.",
+        "createdAt": "2026-09-07T15:35:14.296Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £5.00 issued to user balance.",
+        "createdAt": "2026-09-07T15:35:16.054Z"
+      }
+    ],
+    "createdAt": "2026-09-06T13:41:52.404Z",
+    "updatedAt": "2026-09-07T15:35:16.054Z"
+  },
+  {
+    "id": "TCK-4FD4AC27",
+    "userId": "71e7f6d5-f874-4788-8cdd-16aedbd8a886",
+    "userEmail": "jennejai44@gmail.com",
+    "orderId": "ORD-B9860EF6",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "My £25 blanace has disappeared???\n\nWas refunded for argos pays",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 10,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "My £25 blanace has disappeared???\n\nWas refunded for argos pays",
+        "createdAt": "2026-09-04T10:35:16.172Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £10.00 issued to user balance.",
+        "createdAt": "2026-09-07T15:27:19.397Z"
+      }
+    ],
+    "createdAt": "2026-09-04T10:35:16.172Z",
+    "updatedAt": "2026-09-07T15:27:19.397Z"
+  },
+  {
+    "id": "TCK-F5E9797B",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-A184ACF7",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "annaagnesscott@gmail.com:lylagabi01 | Cards = [VISA - 06/29, VISA - 08/28, VISA - 7/2026]\n\nNO PAYMENT METHOD \n\ncazbradleywinnett@outlook.com:Cazcazcaz01 | Cards = [VISA - 07/28]\n\nNO PAYMENT METHOD",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "annaagnesscott@gmail.com:lylagabi01 | Cards = [VISA - 06/29, VISA - 08/28, VISA - 7/2026]\n\nNO PAYMENT METHOD \n\ncazbradleywinnett@outlook.com:Cazcazcaz01 | Cards = [VISA - 07/28]\n\nNO PAYMENT METHOD",
+        "createdAt": "2026-09-04T02:36:52.739Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.00 issued to user balance.",
+        "createdAt": "2026-09-07T15:35:20.317Z"
+      }
+    ],
+    "createdAt": "2026-09-04T02:36:52.739Z",
+    "updatedAt": "2026-09-07T15:35:20.317Z"
+  },
+  {
+    "id": "TCK-E63C0102",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-DCB45929",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Edwardsdores@gmail.com:LolaRose123 | Cards = [VISA - 01/30, VISA_DEBIT - 10/22, MASTERCARD_DEBIT - 06/24, VISA - 10/27]\nNo payment method",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 0.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Edwardsdores@gmail.com:LolaRose123 | Cards = [VISA - 01/30, VISA_DEBIT - 10/22, MASTERCARD_DEBIT - 06/24, VISA - 10/27]\nNo payment method",
+        "createdAt": "2026-09-04T02:30:20.381Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £0.50 issued to user balance.",
+        "createdAt": "2026-09-07T15:35:23.323Z"
+      }
+    ],
+    "createdAt": "2026-09-04T02:30:20.381Z",
+    "updatedAt": "2026-09-07T15:35:23.323Z"
+  },
+  {
+    "id": "TCK-76C7E04C",
+    "userId": "213131f1-160e-4552-b1d5-2f3f837042c0",
+    "userEmail": "wgshs8841@gmail.com",
+    "orderId": "ORD-2DA17A49",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "account locked",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 40,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "account locked",
+        "createdAt": "2026-09-03T19:00:30.389Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £40.00 issued to user balance.",
+        "createdAt": "2026-09-07T15:35:26.030Z"
+      }
+    ],
+    "createdAt": "2026-09-03T19:00:30.389Z",
+    "updatedAt": "2026-09-07T15:35:26.030Z"
+  },
+  {
+    "id": "TCK-DCCB0E6F",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-A184ACF7",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "annaagnesscott@gmail.com:lylagabi01 | Cards = [VISA - 06/29, VISA - 08/28, VISA - 7/2026]\nWRONGPASSWORD\n\ncazbradleywinnett@outlook.com:Cazcazcaz01 | Cards = [VISA - 07/28]\nNO PAYMENT METHOD",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "annaagnesscott@gmail.com:lylagabi01 | Cards = [VISA - 06/29, VISA - 08/28, VISA - 7/2026]\nWRONGPASSWORD\n\ncazbradleywinnett@outlook.com:Cazcazcaz01 | Cards = [VISA - 07/28]\nNO PAYMENT METHOD",
+        "createdAt": "2026-09-03T17:53:25.543Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-09-03T18:12:34.402Z"
+      }
+    ],
+    "createdAt": "2026-09-03T17:53:25.543Z",
+    "updatedAt": "2026-09-03T18:12:34.402Z"
+  },
+  {
+    "id": "TCK-52794AE4",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-A2E83295",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "Both flagged accounts that didn’t work",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Both flagged accounts that didn’t work",
+        "createdAt": "2026-09-03T16:20:18.384Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-09-03T16:30:54.443Z"
+      }
+    ],
+    "createdAt": "2026-09-03T16:20:18.384Z",
+    "updatedAt": "2026-09-03T16:30:54.443Z"
+  },
+  {
+    "id": "TCK-EBB923B7",
+    "userId": "213131f1-160e-4552-b1d5-2f3f837042c0",
+    "userEmail": "wgshs8841@gmail.com",
+    "orderId": "ORD-DC17C8F0",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "Locked account : kazterry@sky.com",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Locked account : kazterry@sky.com",
+        "createdAt": "2026-09-03T14:37:28.013Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-09-03T15:18:53.606Z"
+      }
+    ],
+    "createdAt": "2026-09-03T14:37:28.013Z",
+    "updatedAt": "2026-09-03T15:18:53.606Z"
+  },
+  {
+    "id": "TCK-9601E661",
+    "userId": "3493c9e1-5e34-44da-a746-214a2c9ea682",
+    "userEmail": "lewisvanel@gmail.com",
+    "orderId": "ORD-A155A907",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Wrong pin",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Wrong pin",
+        "createdAt": "2026-09-03T14:14:12.186Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-09-03T15:26:11.651Z"
+      }
+    ],
+    "createdAt": "2026-09-03T14:14:12.186Z",
+    "updatedAt": "2026-09-03T15:26:11.651Z"
+  },
+  {
+    "id": "TCK-99BEFD46",
+    "userId": "d5df56d0-a579-4f40-86b8-be6d041f5965",
+    "userEmail": "z984510@gmail.com",
+    "orderId": "ORD-A070E66B",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "No credit in the account",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "No credit in the account",
+        "createdAt": "2026-09-03T13:04:10.559Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-09-03T13:34:59.829Z"
+      }
+    ],
+    "createdAt": "2026-09-03T13:04:10.559Z",
+    "updatedAt": "2026-09-03T13:34:59.829Z"
+  },
+  {
+    "id": "TCK-0E8BB200",
+    "userId": "8d8addb9-142e-44f8-894a-3b1d4fc15f46",
+    "userEmail": "aidfoezip@usako.net",
+    "orderId": "ORD-05522947",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 4,
+    "message": "Bro why are you reselling logs. These logs are on my other account and I have bought them and they are all fraud alert. Man said you reselling logs that’s crazy.",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 40,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Bro why are you reselling logs. These logs are on my other account and I have bought them and they are all fraud alert. Man said you reselling logs that’s crazy.",
+        "createdAt": "2026-09-02T17:01:57.285Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £40.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:02:53.093Z"
+      }
+    ],
+    "createdAt": "2026-09-02T17:01:57.285Z",
+    "updatedAt": "2026-09-03T09:02:53.094Z"
+  },
+  {
+    "id": "TCK-78A47DAC",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-1526006A",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "https://postimg.cc/Z0bmnBHm \nFirst one locked off",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 20,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "https://postimg.cc/Z0bmnBHm \nFirst one locked off",
+        "createdAt": "2026-09-01T16:08:50.436Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £20.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:02:57.567Z"
+      }
+    ],
+    "createdAt": "2026-09-01T16:08:50.436Z",
+    "updatedAt": "2026-09-03T09:02:57.567Z"
+  },
+  {
+    "id": "TCK-B4F967DD",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-ED6F064E",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "https://postimg.cc/gallery/NfHgg5v\nThe two that had credit didn’t work. Not a good batch. Bro I sent you so many tickets of bad accounts and you still haven’t responded to any even though you said you would on channel. You sold me the same log twice as well",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 50,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "https://postimg.cc/gallery/NfHgg5v\nThe two that had credit didn’t work. Not a good batch. Bro I sent you so many tickets of bad accounts and you still haven’t responded to any even though you said you would on channel. You sold me the same log twice as well",
+        "createdAt": "2026-09-01T15:53:30.978Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £50.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:05.657Z"
+      }
+    ],
+    "createdAt": "2026-09-01T15:53:30.978Z",
+    "updatedAt": "2026-09-03T09:03:05.657Z"
+  },
+  {
+    "id": "TCK-114B94BF",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-A6960400",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "bunfox77@hotmail.co.uk:cheese | Cards = [VISA - 11/29, VISA - 11/2025]\nEXPIREDCARD\n\nnround7@gmail.com:Latham24 | Cards = [VISA - 02/28, MASTERCARD - 06/27, \nWRONG PASS",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "bunfox77@hotmail.co.uk:cheese | Cards = [VISA - 11/29, VISA - 11/2025]\nEXPIREDCARD\n\nnround7@gmail.com:Latham24 | Cards = [VISA - 02/28, MASTERCARD - 06/27, \nWRONG PASS",
+        "createdAt": "2026-09-01T12:01:11.909Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.50 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:12.337Z"
+      }
+    ],
+    "createdAt": "2026-09-01T12:01:11.909Z",
+    "updatedAt": "2026-09-03T09:03:12.337Z"
+  },
+  {
+    "id": "TCK-648B3F0D",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-EBF3D579",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "cazbradleywinnett@outlook.com:Cazcazcaz01 | Cards = [VISA - 07/28]\nNO PAYMENT\n\njacquelinetoon@hotmail.co.uk:Shopping1* | Cards = [VISA - 05/26, VISA - 03/31, VISA_DEBIT - 01/26, VISA - 06/27]\nWRONG PASS",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "cazbradleywinnett@outlook.com:Cazcazcaz01 | Cards = [VISA - 07/28]\nNO PAYMENT\n\njacquelinetoon@hotmail.co.uk:Shopping1* | Cards = [VISA - 05/26, VISA - 03/31, VISA_DEBIT - 01/26, VISA - 06/27]\nWRONG PASS",
+        "createdAt": "2026-09-01T12:00:49.221Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:15.805Z"
+      }
+    ],
+    "createdAt": "2026-09-01T12:00:49.221Z",
+    "updatedAt": "2026-09-03T09:03:15.805Z"
+  },
+  {
+    "id": "TCK-0B78BC17",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-30FECB6F",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "amygale@hotmail.co.uk:Nuff1eld | Cards = [VISA - 01/29, VISA - 03/23, VISA - 03/28]\nNO PAYMENT \n \ncarterchris1977@hotmail.com:Amyliz05 | Cards = [VISA - 05/25, VISA - 05/29, VISA - 09/28]\nNO PAYMENT METHOD",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "amygale@hotmail.co.uk:Nuff1eld | Cards = [VISA - 01/29, VISA - 03/23, VISA - 03/28]\nNO PAYMENT \n \ncarterchris1977@hotmail.com:Amyliz05 | Cards = [VISA - 05/25, VISA - 05/29, VISA - 09/28]\nNO PAYMENT METHOD",
+        "createdAt": "2026-09-01T11:59:59.007Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.50 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:20.966Z"
+      }
+    ],
+    "createdAt": "2026-09-01T11:59:59.007Z",
+    "updatedAt": "2026-09-03T09:03:20.966Z"
+  },
+  {
+    "id": "TCK-FA61C36B",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-D88C8DDF",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Bro I got sold the same log twice . This log is also given in my next order.",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 10,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Bro I got sold the same log twice . This log is also given in my next order.",
+        "createdAt": "2026-09-01T11:57:52.051Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £10.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:27.425Z"
+      }
+    ],
+    "createdAt": "2026-09-01T11:57:52.051Z",
+    "updatedAt": "2026-09-03T09:03:27.425Z"
+  },
+  {
+    "id": "TCK-98FB9E89",
+    "userId": "8410a95e-b5c7-485e-a5bd-7067659a6a7a",
+    "userEmail": "gcsewizpop@gmail.com",
+    "orderId": "ORD-790602E9",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "locked account https://imgur.com/a/kCEtNwO",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 11,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "locked account https://imgur.com/a/kCEtNwO",
+        "createdAt": "2026-09-01T11:10:56.791Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £11.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:31.105Z"
+      }
+    ],
+    "createdAt": "2026-09-01T11:10:56.791Z",
+    "updatedAt": "2026-09-03T09:03:31.105Z"
+  },
+  {
+    "id": "TCK-C6BBB999",
+    "userId": "71e7f6d5-f874-4788-8cdd-16aedbd8a886",
+    "userEmail": "jennejai44@gmail.com",
+    "orderId": "ORD-97F6DF28",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Account is locked again , bro please do both my tickets !! Plssss",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 10,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Account is locked again , bro please do both my tickets !! Plssss",
+        "createdAt": "2026-09-01T11:05:08.288Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £10.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:37.501Z"
+      }
+    ],
+    "createdAt": "2026-09-01T11:05:08.288Z",
+    "updatedAt": "2026-09-03T09:03:37.501Z"
+  },
+  {
+    "id": "TCK-685250AA",
+    "userId": "d5df56d0-a579-4f40-86b8-be6d041f5965",
+    "userEmail": "z984510@gmail.com",
+    "orderId": "ORD-824BB35E",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "One of my logs was invalid credentials and the other one the account was locked when I logged into it",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 50,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "One of my logs was invalid credentials and the other one the account was locked when I logged into it",
+        "createdAt": "2026-08-31T14:07:21.348Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £50.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:41.849Z"
+      }
+    ],
+    "createdAt": "2026-08-31T14:07:21.348Z",
+    "updatedAt": "2026-09-03T09:03:41.849Z"
+  },
+  {
+    "id": "TCK-08A2A6AF",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-6DFDDBFA",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "No Bala/used \nhttps://postimg.cc/0MLxr9fm\nBro please answer my tickets. A lot of these accounts are locked and stuff but I’m still buying. Would appreciate if you could answer my tickets",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 20,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "No Bala/used \nhttps://postimg.cc/0MLxr9fm\nBro please answer my tickets. A lot of these accounts are locked and stuff but I’m still buying. Would appreciate if you could answer my tickets",
+        "createdAt": "2026-08-31T13:30:57.180Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £20.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:47.008Z"
+      }
+    ],
+    "createdAt": "2026-08-31T13:30:57.180Z",
+    "updatedAt": "2026-09-03T09:03:47.008Z"
+  },
+  {
+    "id": "TCK-1299F81A",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-135332FD",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "sazharris46@hotmail.com:Frst99659 | Cards = [VISA - 08/29, VISA_DEBIT - 10/25, VISA_DEBIT - 01/24]\nExpired Payment \n\nsandrasaunders84@hotmail.com:Campino1 | Cards = [VISA - 01/29]\nEXPIRED PAYMENT\n\nlornacarr@sky.com:August28th | Cards = [VISA - 05/28]\nNO PAYMENT",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "sazharris46@hotmail.com:Frst99659 | Cards = [VISA - 08/29, VISA_DEBIT - 10/25, VISA_DEBIT - 01/24]\nExpired Payment \n\nsandrasaunders84@hotmail.com:Campino1 | Cards = [VISA - 01/29]\nEXPIRED PAYMENT\n\nlornacarr@sky.com:August28th | Cards = [VISA - 05/28]\nNO PAYMENT",
+        "createdAt": "2026-08-31T13:06:48.018Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:53.146Z"
+      }
+    ],
+    "createdAt": "2026-08-31T13:06:48.018Z",
+    "updatedAt": "2026-09-03T09:03:53.146Z"
+  },
+  {
+    "id": "TCK-17437D23",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-6940C5CB",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "https://postimg.cc/gallery/rR4MxCb\n\n2 worked, 3 invalid",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 50,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "https://postimg.cc/gallery/rR4MxCb\n\n2 worked, 3 invalid",
+        "createdAt": "2026-08-31T12:34:49.244Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £50.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:05:16.197Z"
+      }
+    ],
+    "createdAt": "2026-08-31T12:34:49.244Z",
+    "updatedAt": "2026-09-03T09:05:16.197Z"
+  },
+  {
+    "id": "TCK-4B6CBA95",
+    "userId": "213131f1-160e-4552-b1d5-2f3f837042c0",
+    "userEmail": "wgshs8841@gmail.com",
+    "orderId": "ORD-A13A84A9",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "Account locked",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Account locked",
+        "createdAt": "2026-08-31T10:34:39.760Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:05:18.869Z"
+      }
+    ],
+    "createdAt": "2026-08-31T10:34:39.760Z",
+    "updatedAt": "2026-09-03T09:05:18.869Z"
+  },
+  {
+    "id": "TCK-05447E28",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-919F613A",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "sianh2@me.com:Maddie123! | Cards = [MASTERCARD - 03/31, VISA - 10/27]\nWRONG PASS\n\njanecarrington37@gmail.com:Ersatz57 | Cards = [VISA - 01/31]\nNO PAYMENT METHOD \n\nlauraalexandraanderson@googlemail.com:Minnie1596 | Cards = [VISA - 08/29, VISA_DEBIT - 06/23, VISA_DEBIT - 01/23, VISA - 08/27]\nNO PAYMENT METHOD",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "sianh2@me.com:Maddie123! | Cards = [MASTERCARD - 03/31, VISA - 10/27]\nWRONG PASS\n\njanecarrington37@gmail.com:Ersatz57 | Cards = [VISA - 01/31]\nNO PAYMENT METHOD \n\nlauraalexandraanderson@googlemail.com:Minnie1596 | Cards = [VISA - 08/29, VISA_DEBIT - 06/23, VISA_DEBIT - 01/23, VISA - 08/27]\nNO PAYMENT METHOD",
+        "createdAt": "2026-08-31T10:19:09.291Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:03:57.541Z"
+      }
+    ],
+    "createdAt": "2026-08-31T10:19:09.291Z",
+    "updatedAt": "2026-09-03T09:03:57.541Z"
+  },
+  {
+    "id": "TCK-F939CD3F",
+    "userId": "213131f1-160e-4552-b1d5-2f3f837042c0",
+    "userEmail": "wgshs8841@gmail.com",
+    "orderId": "ORD-32D45A3B",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 4,
+    "message": "4/8 accounts are locked",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 120,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "4/8 accounts are locked",
+        "createdAt": "2026-08-31T09:49:51.276Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £120.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:05:12.901Z"
+      }
+    ],
+    "createdAt": "2026-08-31T09:49:51.276Z",
+    "updatedAt": "2026-09-03T09:05:12.901Z"
+  },
+  {
+    "id": "TCK-E8E6C41E",
+    "userId": "71e7f6d5-f874-4788-8cdd-16aedbd8a886",
+    "userEmail": "jennejai44@gmail.com",
+    "orderId": "ORD-2114263C",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Says you cant use this account right now , replace pls and you can even chevk bro idk how to add pic or text me on telegram @choppaxp",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Says you cant use this account right now , replace pls and you can even chevk bro idk how to add pic or text me on telegram @choppaxp",
+        "createdAt": "2026-08-31T00:52:17.693Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:05:08.929Z"
+      }
+    ],
+    "createdAt": "2026-08-31T00:52:17.693Z",
+    "updatedAt": "2026-09-03T09:05:08.929Z"
+  },
+  {
+    "id": "TCK-99FB0768",
+    "userId": "213131f1-160e-4552-b1d5-2f3f837042c0",
+    "userEmail": "wgshs8841@gmail.com",
+    "orderId": "ORD-B098AD41",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Other Issue",
+    "replacementCount": 2,
+    "message": "2/6 locked",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 90,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "2/6 locked",
+        "createdAt": "2026-08-30T14:01:37.142Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £90.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:05:03.140Z"
+      }
+    ],
+    "createdAt": "2026-08-30T14:01:37.142Z",
+    "updatedAt": "2026-09-03T09:05:03.140Z"
+  },
+  {
+    "id": "TCK-29E70557",
+    "userId": "a986534c-af69-47e6-8ab8-feff4b59d0a3",
+    "userEmail": "a@beezo.co.uk",
+    "orderId": "ORD-6F092C4D",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "low bala idk how to send images here but pm me on tele @missile",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 45,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "low bala idk how to send images here but pm me on tele @missile",
+        "createdAt": "2026-08-30T13:27:09.019Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £45.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:05:05.923Z"
+      }
+    ],
+    "createdAt": "2026-08-30T13:27:09.019Z",
+    "updatedAt": "2026-09-03T09:05:05.923Z"
+  },
+  {
+    "id": "TCK-1AD28D21",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-CFC9D765",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "https://postimg.cc/21LgHxcM\nOne had no credit and other one worked. Will send on vouched bot",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 30,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "https://postimg.cc/21LgHxcM\nOne had no credit and other one worked. Will send on vouched bot",
+        "createdAt": "2026-08-30T13:00:33.217Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £30.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:04:46.158Z"
+      }
+    ],
+    "createdAt": "2026-08-30T13:00:33.217Z",
+    "updatedAt": "2026-09-03T09:04:46.158Z"
+  },
+  {
+    "id": "TCK-C83856E6",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-7F0C8097",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Come on bro. The last 7 logs ain’t run. Please answer my last 2 tickets and this one \nhttps://postimg.cc/fkfjDhdp",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Come on bro. The last 7 logs ain’t run. Please answer my last 2 tickets and this one \nhttps://postimg.cc/fkfjDhdp",
+        "createdAt": "2026-08-30T11:47:24.196Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:04:49.921Z"
+      }
+    ],
+    "createdAt": "2026-08-30T11:47:24.196Z",
+    "updatedAt": "2026-09-03T09:04:49.921Z"
+  },
+  {
+    "id": "TCK-CEDCD86C",
+    "userId": "3493c9e1-5e34-44da-a746-214a2c9ea682",
+    "userEmail": "lewisvanel@gmail.com",
+    "orderId": "ORD-3E2E39F7",
+    "productName": "Argos / ArgosPay [2FA/NFA]",
+    "variantName": "Standard",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "Sent £30 and it says invalid session time out !!??? But payments confirmed?? I cant add pic im not sure how bro",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 30,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Sent £30 and it says invalid session time out !!??? But payments confirmed?? I cant add pic im not sure how bro",
+        "createdAt": "2026-08-30T11:28:24.480Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £30.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:04:53.927Z"
+      }
+    ],
+    "createdAt": "2026-08-30T11:28:24.480Z",
+    "updatedAt": "2026-09-03T09:04:53.927Z"
+  },
+  {
+    "id": "TCK-0606D85E",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-FD0FE83C",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Reloading basket. Not a good batch of logs bro. Please refund this and other ticket as well.",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Reloading basket. Not a good batch of logs bro. Please refund this and other ticket as well.",
+        "createdAt": "2026-08-30T09:09:24.273Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-08-30T11:23:09.511Z"
+      }
+    ],
+    "createdAt": "2026-08-30T09:09:24.273Z",
+    "updatedAt": "2026-08-30T11:23:09.511Z"
+  },
+  {
+    "id": "TCK-D65F4403",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-435A63DC",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 5,
+    "message": "2 logs didn’t log in. 1 log has no credit. 1 log was already used and the last one did basket reload. \nhttps://postimg.cc/gallery/gh3MQjc",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 75,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "2 logs didn’t log in. 1 log has no credit. 1 log was already used and the last one did basket reload. \nhttps://postimg.cc/gallery/gh3MQjc",
+        "createdAt": "2026-08-30T09:03:43.756Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £75.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:04:31.779Z"
+      }
+    ],
+    "createdAt": "2026-08-30T09:03:43.756Z",
+    "updatedAt": "2026-09-03T09:04:31.779Z"
+  },
+  {
+    "id": "TCK-545A485E",
+    "userId": "71e7f6d5-f874-4788-8cdd-16aedbd8a886",
+    "userEmail": "jennejai44@gmail.com",
+    "orderId": "ORD-F7535FD5",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Doesnt even have enough credit to mash £119 airpods , you can check yourself",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Doesnt even have enough credit to mash £119 airpods , you can check yourself",
+        "createdAt": "2026-08-30T02:49:11.529Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-08-30T11:23:27.789Z"
+      }
+    ],
+    "createdAt": "2026-08-30T02:49:11.529Z",
+    "updatedAt": "2026-08-30T11:23:27.789Z"
+  },
+  {
+    "id": "TCK-E54488F9",
+    "userId": "a45d6ae5-9568-4807-a132-6429e46a2a96",
+    "userEmail": "jamesben102110@gmail.com",
+    "orderId": "ORD-E51FD2BB",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Wrong code on top log",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 30,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Wrong code on top log",
+        "createdAt": "2026-08-29T21:32:19.388Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £30.00 issued to user balance.",
+        "createdAt": "2026-09-03T09:04:37.950Z"
+      }
+    ],
+    "createdAt": "2026-08-29T21:32:19.388Z",
+    "updatedAt": "2026-09-03T09:04:37.950Z"
+  },
+  {
+    "id": "TCK-E444E213",
+    "userId": "6a35a480-99c1-4ead-a8c4-5c38ab54ca69",
+    "userEmail": "bavachorr9@gmail.com",
+    "orderId": "ORD-A1F8EFAB",
+    "productName": "Morrisons [NFA] - Morrisons [MASTER]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Incorrect password: clairelouise.clp@gmail.com:Megan2005",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Incorrect password: clairelouise.clp@gmail.com:Megan2005",
+        "createdAt": "2026-08-29T09:52:40.770Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.00 issued to user balance.",
+        "createdAt": "2026-08-29T21:17:07.438Z"
+      }
+    ],
+    "createdAt": "2026-08-29T09:52:40.770Z",
+    "updatedAt": "2026-08-29T21:17:07.438Z"
+  },
+  {
+    "id": "TCK-8AACDAB7",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-C9476A38",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "https://postimg.cc/gallery/VCfNnL0\n\n2 logs that are invalid. Please replace or refund or can buy more. Last 3 logs I bought didnt get replaced either and were invalid.",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 47,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "https://postimg.cc/gallery/VCfNnL0\n\n2 logs that are invalid. Please replace or refund or can buy more. Last 3 logs I bought didnt get replaced either and were invalid.",
+        "createdAt": "2026-08-28T10:49:02.415Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £47.00 issued to user balance.",
+        "createdAt": "2026-08-28T10:53:43.336Z"
+      }
+    ],
+    "createdAt": "2026-08-28T10:49:02.415Z",
+    "updatedAt": "2026-08-28T10:53:43.336Z"
+  },
+  {
+    "id": "TCK-485882AE",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-92DA78B8",
+    "productName": "Morrisons [NFA] - Morrisons [MASTER]",
+    "variantName": "Morrisons [MASTER]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "p.brimmer@hotmail.co.uk:dalgleish1 | Cards = [MASTERCARD_DEBIT - 07/25, MASTERCARD - 07/30, MASTERCARD_DEBIT - 07/25, MASTERCARD - 7/2025]\nWRONG PASS\n\nchelseypardoe11@icloud.com:Charlie/1230 | Cards = [MASTERCARD - 04/27]\nNO PAYMENT METHOD",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "p.brimmer@hotmail.co.uk:dalgleish1 | Cards = [MASTERCARD_DEBIT - 07/25, MASTERCARD - 07/30, MASTERCARD_DEBIT - 07/25, MASTERCARD - 7/2025]\nWRONG PASS\n\nchelseypardoe11@icloud.com:Charlie/1230 | Cards = [MASTERCARD - 04/27]\nNO PAYMENT METHOD",
+        "createdAt": "2026-08-28T09:11:29.294Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.00 issued to user balance.",
+        "createdAt": "2026-08-28T10:53:30.844Z"
+      }
+    ],
+    "createdAt": "2026-08-28T09:11:29.294Z",
+    "updatedAt": "2026-08-28T10:53:30.844Z"
+  },
+  {
+    "id": "TCK-F4B02E3A",
+    "userId": "8410a95e-b5c7-485e-a5bd-7067659a6a7a",
+    "userEmail": "gcsewizpop@gmail.com",
+    "orderId": "ORD-26BD267D",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Locked log: https://imgur.com/a/AIEi3cG",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 20,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Locked log: https://imgur.com/a/AIEi3cG",
+        "createdAt": "2026-08-27T14:37:14.489Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £20.00 issued to user balance.",
+        "createdAt": "2026-08-28T10:57:35.162Z"
+      }
+    ],
+    "createdAt": "2026-08-27T14:37:14.489Z",
+    "updatedAt": "2026-08-28T10:57:35.162Z"
+  },
+  {
+    "id": "TCK-30CB7FCF",
+    "userId": "213131f1-160e-4552-b1d5-2f3f837042c0",
+    "userEmail": "wgshs8841@gmail.com",
+    "orderId": "ORD-4CCF08CC",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Other Issue",
+    "replacementCount": 7,
+    "message": "Every single log comes with the issue of “you can’t use your account right now”\nhttps://imgur.com/a/lrfpT10\n\nPlease restock your logs sexy asf i’ve mashed over 3k, Please get in contact with me @wojtekipg on telegram, interested in bulk buy 20-30+ logs.",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 105,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Every single log comes with the issue of “you can’t use your account right now”\nhttps://imgur.com/a/lrfpT10\n\nPlease restock your logs sexy asf i’ve mashed over 3k, Please get in contact with me @wojtekipg on telegram, interested in bulk buy 20-30+ logs.",
+        "createdAt": "2026-08-27T13:43:05.708Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £105.00 issued to user balance.",
+        "createdAt": "2026-08-28T10:57:41.492Z"
+      }
+    ],
+    "createdAt": "2026-08-27T13:43:05.708Z",
+    "updatedAt": "2026-08-28T10:57:41.492Z"
+  },
+  {
+    "id": "TCK-2F12E74A",
+    "userId": "51e3d35f-45de-448c-bc11-a18a57d7c6f3",
+    "userEmail": "yusufjake40@gmail.com",
+    "orderId": "ORD-44A54411",
+    "productName": "Morrisons [NFA] - Morrisons [MASTER]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 12,
+    "message": "Used logs and raped",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 6,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Used logs and raped",
+        "createdAt": "2026-08-27T12:17:32.193Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £6.00 issued to user balance.",
+        "createdAt": "2026-08-28T10:58:02.724Z"
+      }
+    ],
+    "createdAt": "2026-08-27T12:17:32.193Z",
+    "updatedAt": "2026-08-28T10:58:02.724Z"
+  },
+  {
+    "id": "TCK-ADA57BBE",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-D445E878",
+    "productName": "Morrisons [NFA] - Morrisons [MASTER]",
+    "variantName": "Morrisons [MASTER]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "tracychapman3@gmail.com:London@223 | Cards = [MASTERCARD - 04/31]\nNO PAYMENT\n\nmichelle_walker100@hotmail.com:C3unte3n | Cards = [MASTERCARD - 08/26]\nNO PAYMENT",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "tracychapman3@gmail.com:London@223 | Cards = [MASTERCARD - 04/31]\nNO PAYMENT\n\nmichelle_walker100@hotmail.com:C3unte3n | Cards = [MASTERCARD - 08/26]\nNO PAYMENT",
+        "createdAt": "2026-08-27T12:00:07.744Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.00 issued to user balance.",
+        "createdAt": "2026-08-28T10:58:47.734Z"
+      }
+    ],
+    "createdAt": "2026-08-27T12:00:07.744Z",
+    "updatedAt": "2026-08-28T10:58:47.734Z"
+  },
+  {
+    "id": "TCK-2503A499",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-20A9FFE0",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "benfa1rhurst_@hotmail.com:P0ppysunny | Cards = [VISA - 02/28]\nNO PAYMENT METHOD\n\njoannamase@gmail.com:Sunsh1ne | Cards = [MASTERCARD - 01/30, MASTERCARD - 01/30]\nNO CARDS \n\njimlau78@msn.com:cocacola | Cards = [MASTERCARD - 12/27, MASTERCARD - 12/28]\nNO CARDS",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "benfa1rhurst_@hotmail.com:P0ppysunny | Cards = [VISA - 02/28]\nNO PAYMENT METHOD\n\njoannamase@gmail.com:Sunsh1ne | Cards = [MASTERCARD - 01/30, MASTERCARD - 01/30]\nNO CARDS \n\njimlau78@msn.com:cocacola | Cards = [MASTERCARD - 12/27, MASTERCARD - 12/28]\nNO CARDS",
+        "createdAt": "2026-08-27T11:05:38.585Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.50 issued to user balance.",
+        "createdAt": "2026-08-28T10:58:51.061Z"
+      }
+    ],
+    "createdAt": "2026-08-27T11:05:38.585Z",
+    "updatedAt": "2026-08-28T10:58:51.061Z"
+  },
+  {
+    "id": "TCK-C9233333",
+    "userId": "ac255653-d488-4f53-bb8b-03c47ee3164c",
+    "userEmail": "rayebennett1@outlook.com",
+    "orderId": "ORD-9901EEC6",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "“You can’t use your account right now”",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 30,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "“You can’t use your account right now”",
+        "createdAt": "2026-08-27T08:14:42.410Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £30.00 issued to user balance.",
+        "createdAt": "2026-08-28T10:58:59.080Z"
+      }
+    ],
+    "createdAt": "2026-08-27T08:14:42.410Z",
+    "updatedAt": "2026-08-28T10:58:59.080Z"
+  },
+  {
+    "id": "TCK-6076A3DF",
+    "userId": "ac255653-d488-4f53-bb8b-03c47ee3164c",
+    "userEmail": "rayebennett1@outlook.com",
+    "orderId": "ORD-9901EEC6",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "“Incorrect credentials” at checkout",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 30,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "“Incorrect credentials” at checkout",
+        "createdAt": "2026-08-27T08:05:51.008Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £30.00 issued to user balance.",
+        "createdAt": "2026-08-28T10:59:04.520Z"
+      }
+    ],
+    "createdAt": "2026-08-27T08:05:51.008Z",
+    "updatedAt": "2026-08-28T10:59:04.520Z"
+  },
+  {
+    "id": "TCK-7AFC8DBB",
+    "userId": "71e7f6d5-f874-4788-8cdd-16aedbd8a886",
+    "userEmail": "jennejai44@gmail.com",
+    "orderId": "ORD-322567DF",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Account is locked , you can check , i dont know how to add photo",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Account is locked , you can check , i dont know how to add photo",
+        "createdAt": "2026-08-26T16:38:59.181Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-08-26T17:35:16.045Z"
+      }
+    ],
+    "createdAt": "2026-08-26T16:38:59.181Z",
+    "updatedAt": "2026-08-26T17:35:16.045Z"
+  },
+  {
+    "id": "TCK-0910DC12",
+    "userId": "a65a169e-e5ca-42ff-85c5-c190d6f24d9b",
+    "userEmail": "btom34519@gmail.com",
+    "orderId": "ORD-55FCBE4A",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Product Expired / Inactive",
+    "replacementCount": 1,
+    "message": "Unusable account, please check",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Unusable account, please check",
+        "createdAt": "2026-08-26T15:37:06.056Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-08-26T17:35:19.214Z"
+      }
+    ],
+    "createdAt": "2026-08-26T15:37:06.056Z",
+    "updatedAt": "2026-08-26T17:35:19.214Z"
+  },
+  {
+    "id": "TCK-BAC37792",
+    "userId": "71e7f6d5-f874-4788-8cdd-16aedbd8a886",
+    "userEmail": "jennejai44@gmail.com",
+    "orderId": "ORD-D1C568BA",
+    "productName": "Argos / ArgosPay [2FA/NFA]",
+    "variantName": "Standard",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "Ive sent the money its been processed and it says invalid",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Ive sent the money its been processed and it says invalid",
+        "createdAt": "2026-08-26T14:42:43.052Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-08-26T17:35:24.916Z"
+      }
+    ],
+    "createdAt": "2026-08-26T14:42:43.052Z",
+    "updatedAt": "2026-08-26T17:35:24.916Z"
+  },
+  {
+    "id": "TCK-68F1D8A4",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-20A9FFE0",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "No payment method for first two and last one wrong password",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "No payment method for first two and last one wrong password",
+        "createdAt": "2026-08-26T13:04:33.520Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-08-26T14:29:16.868Z"
+      }
+    ],
+    "createdAt": "2026-08-26T13:04:33.520Z",
+    "updatedAt": "2026-08-26T14:29:16.868Z"
+  },
+  {
+    "id": "TCK-3216BC7A",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-97C664A9",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Kieran.trevor99@gmail.com:Ct03kt99 | Cards = [VISA - 03/27]\nEXPIRED PAYMENT METHOD \n\nnatasha.straw@btinternet.com:Tasha99nms | Cards = [VISA - 11/29, VISA_DEBIT - 02/25]\nEXPURED PAYMENT \n\nmeejenner@gmail.com:Dotty1315 | Cards = [VISA - 10/26]\nNO PAYMENY METHOD \n\njemma.kremzer@hotmail.co.uk:Pogger3000 | Cards = [VISA - 01/29, MASTERCARD - 01/28]\nWrong pass",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Kieran.trevor99@gmail.com:Ct03kt99 | Cards = [VISA - 03/27]\nEXPIRED PAYMENT METHOD \n\nnatasha.straw@btinternet.com:Tasha99nms | Cards = [VISA - 11/29, VISA_DEBIT - 02/25]\nEXPURED PAYMENT \n\nmeejenner@gmail.com:Dotty1315 | Cards = [VISA - 10/26]\nNO PAYMENY METHOD \n\njemma.kremzer@hotmail.co.uk:Pogger3000 | Cards = [VISA - 01/29, MASTERCARD - 01/28]\nWrong pass",
+        "createdAt": "2026-08-26T12:45:01.661Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.50 issued to user balance.",
+        "createdAt": "2026-08-26T14:29:10.848Z"
+      }
+    ],
+    "createdAt": "2026-08-26T12:45:01.661Z",
+    "updatedAt": "2026-08-26T14:29:10.848Z"
+  },
+  {
+    "id": "TCK-49AC6CE1",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-75383A43",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "jc202489@aol.co.uk:Mottram1 | Cards = [VISA - 03/27]\nWrong pass \n\njennaj2308@gmail.com:Bubbles84 | Cards = [VISA - 08/30, VISA - 09/29]\nWrong pass \n\nmandyhensbygreen@gmail.com:Brian1943 | Cards = [VISA - 02/29]\nno orders\nNO PAYMENT",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "jc202489@aol.co.uk:Mottram1 | Cards = [VISA - 03/27]\nWrong pass \n\njennaj2308@gmail.com:Bubbles84 | Cards = [VISA - 08/30, VISA - 09/29]\nWrong pass \n\nmandyhensbygreen@gmail.com:Brian1943 | Cards = [VISA - 02/29]\nno orders\nNO PAYMENT",
+        "createdAt": "2026-08-26T11:11:43.255Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.00 issued to user balance.",
+        "createdAt": "2026-08-26T11:26:46.404Z"
+      }
+    ],
+    "createdAt": "2026-08-26T11:11:43.255Z",
+    "updatedAt": "2026-08-26T11:26:46.404Z"
+  },
+  {
+    "id": "TCK-70BD2635",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-83838C2E",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 3,
+    "message": "aimee.bridge@icloud.com:Kiss@2009 | Cards = [MASTERCARD - 7/2027, MASTERCARD - 07/28, VISA - 3/2026, VISA - 01/30, MASTERCARD - 12/29]\nPassword \n\njuliewhite784@googlemail.com:Canal632 | Cards = [VISA - 09/28, VISA_DEBIT - 08/22]\nNO PAYMENT METHOD\n\nmusical.gina@icloud.com:Doctorwho001! | Cards = [VISA - 10/30, VISA - 09/30]\nNO PAYMENT METHOD",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "aimee.bridge@icloud.com:Kiss@2009 | Cards = [MASTERCARD - 7/2027, MASTERCARD - 07/28, VISA - 3/2026, VISA - 01/30, MASTERCARD - 12/29]\nPassword \n\njuliewhite784@googlemail.com:Canal632 | Cards = [VISA - 09/28, VISA_DEBIT - 08/22]\nNO PAYMENT METHOD\n\nmusical.gina@icloud.com:Doctorwho001! | Cards = [VISA - 10/30, VISA - 09/30]\nNO PAYMENT METHOD",
+        "createdAt": "2026-08-26T10:37:39.494Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.00 issued to user balance.",
+        "createdAt": "2026-08-26T11:26:39.095Z"
+      }
+    ],
+    "createdAt": "2026-08-26T10:37:39.494Z",
+    "updatedAt": "2026-08-26T11:26:39.095Z"
+  },
+  {
+    "id": "TCK-88AC2C5C",
+    "userId": "8410a95e-b5c7-485e-a5bd-7067659a6a7a",
+    "userEmail": "gcsewizpop@gmail.com",
+    "orderId": "ORD-CA4B27DD",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "Fresh IP and Fresh account. Locked log https://imgur.com/a/2NmizGW",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Fresh IP and Fresh account. Locked log https://imgur.com/a/2NmizGW",
+        "createdAt": "2026-08-26T01:36:40.534Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-08-26T08:38:37.319Z"
+      }
+    ],
+    "createdAt": "2026-08-26T01:36:40.534Z",
+    "updatedAt": "2026-08-26T08:38:37.319Z"
+  },
+  {
+    "id": "TCK-3EA07F45",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-614161E3",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "2 accounts locked saying “you can’t use your account right now “ and the other one doing reload basket thing",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 45,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "2 accounts locked saying “you can’t use your account right now “ and the other one doing reload basket thing",
+        "createdAt": "2026-08-25T17:05:42.154Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £45.00 issued to user balance.",
+        "createdAt": "2026-08-28T11:01:42.891Z"
+      }
+    ],
+    "createdAt": "2026-08-25T17:05:42.154Z",
+    "updatedAt": "2026-08-28T11:01:42.891Z"
+  },
+  {
+    "id": "TCK-D30CA6DE",
+    "userId": "8410a95e-b5c7-485e-a5bd-7067659a6a7a",
+    "userEmail": "gcsewizpop@gmail.com",
+    "orderId": "ORD-F62F981C",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "bugged account? https://imgur.com/a/OT7d3Vr",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 20,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "bugged account? https://imgur.com/a/OT7d3Vr",
+        "createdAt": "2026-08-25T13:49:07.610Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £20.00 issued to user balance.",
+        "createdAt": "2026-08-25T14:42:38.247Z"
+      }
+    ],
+    "createdAt": "2026-08-25T13:49:07.610Z",
+    "updatedAt": "2026-08-25T14:42:38.247Z"
+  },
+  {
+    "id": "TCK-34BF4321",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-8BC4E346",
+    "productName": "Waitrose [NFA] - Waitrose [VISA]",
+    "variantName": "Waitrose [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Can’t login, password incorrect",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 0.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Can’t login, password incorrect",
+        "createdAt": "2026-08-24T21:39:18.291Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £0.50 issued to user balance.",
+        "createdAt": "2026-08-25T13:03:29.192Z"
+      }
+    ],
+    "createdAt": "2026-08-24T21:39:18.291Z",
+    "updatedAt": "2026-08-25T13:03:29.192Z"
+  },
+  {
+    "id": "TCK-7D93B6A2",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-06E60F61",
+    "productName": "Waitrose [NFA] - Waitrose [VISA]",
+    "variantName": "Waitrose [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "No payment method.",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 0.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "No payment method.",
+        "createdAt": "2026-08-24T21:34:36.937Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £0.50 issued to user balance.",
+        "createdAt": "2026-08-25T13:03:36.732Z"
+      }
+    ],
+    "createdAt": "2026-08-24T21:34:36.937Z",
+    "updatedAt": "2026-08-25T13:03:36.732Z"
+  },
+  {
+    "id": "TCK-63812A53",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-DA016C14",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "across2490@gmail.com:249024\ntattyjayne@yahoo.co.uk:841091\n\nThese two accounts both locked off. Sign in says there is a problem with account cause they locked off completely. Also I sent u a vouch pic for the one that worked but didn’t get my store Bala but I would rather just have these replaced please",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 45,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "across2490@gmail.com:249024\ntattyjayne@yahoo.co.uk:841091\n\nThese two accounts both locked off. Sign in says there is a problem with account cause they locked off completely. Also I sent u a vouch pic for the one that worked but didn’t get my store Bala but I would rather just have these replaced please",
+        "createdAt": "2026-08-24T10:15:47.488Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £45.00 issued to user balance.",
+        "createdAt": "2026-08-25T14:42:51.290Z"
+      }
+    ],
+    "createdAt": "2026-08-24T10:15:47.488Z",
+    "updatedAt": "2026-08-25T14:42:51.290Z"
+  },
+  {
+    "id": "TCK-5EBC707F",
+    "userId": "620699cc-d847-4665-88aa-114b4835d995",
+    "userEmail": "betamalebnksy@proton.me",
+    "orderId": "ORD-02FEDE92",
+    "productName": "Argos / ArgosPay [2FA/NFA]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Behdbxnxnxj",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Behdbxnxnxj",
+        "createdAt": "2026-08-23T19:14:42.322Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-08-23T19:15:04.745Z"
+      }
+    ],
+    "createdAt": "2026-08-23T19:14:42.322Z",
+    "updatedAt": "2026-08-23T19:15:04.745Z"
+  },
+  {
+    "id": "TCK-1A36B6C1",
+    "userId": "9a34c53f-ad7c-45f6-b131-5e81d488960d",
+    "userEmail": "xyrohell@gmail.com",
+    "orderId": "ORD-E4A65181",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Had this log before on Thursday message my tele for the proof @aegisbnb",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 15,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Had this log before on Thursday message my tele for the proof @aegisbnb",
+        "createdAt": "2026-08-23T18:51:54.768Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £15.00 issued to user balance.",
+        "createdAt": "2026-08-25T14:43:01.990Z"
+      }
+    ],
+    "createdAt": "2026-08-23T18:51:54.768Z",
+    "updatedAt": "2026-08-25T14:43:01.990Z"
+  },
+  {
+    "id": "TCK-7D5E7DB3",
+    "userId": "f5e3d2f8-5007-46f3-998c-5ef2a6dbd199",
+    "userEmail": "adzfundzo@gmail.com",
+    "orderId": "ORD-D129A7CE",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Log in don’t work dead log replace asap pls",
+    "status": "PENDING",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Log in don’t work dead log replace asap pls",
+        "createdAt": "2026-08-23T17:50:39.554Z"
+      }
+    ],
+    "createdAt": "2026-08-23T17:50:39.554Z",
+    "updatedAt": "2026-08-23T17:50:39.554Z"
+  },
+  {
+    "id": "TCK-80CAAE2E",
+    "userId": "856ad26d-1bbd-42df-95c8-69eaa06f3ce1",
+    "userEmail": "igorsty22@icloud.com",
+    "orderId": "ORD-250B1578",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Not full details",
+    "status": "PENDING",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Not full details",
+        "createdAt": "2026-08-23T17:42:25.187Z"
+      }
+    ],
+    "createdAt": "2026-08-23T17:42:25.187Z",
+    "updatedAt": "2026-08-23T17:42:25.187Z"
+  },
+  {
+    "id": "TCK-D291659C",
+    "userId": "6a35a480-99c1-4ead-a8c4-5c38ab54ca69",
+    "userEmail": "bavachorr9@gmail.com",
+    "orderId": "ORD-535DB3AE",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "serena4n@googlemail.com:Hennessy10 Incorrect Password",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 2,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "serena4n@googlemail.com:Hennessy10 Incorrect Password",
+        "createdAt": "2026-08-22T21:43:45.064Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £2.00 issued to user balance.",
+        "createdAt": "2026-08-23T11:37:16.381Z"
+      }
+    ],
+    "createdAt": "2026-08-22T21:43:45.064Z",
+    "updatedAt": "2026-08-23T11:37:16.381Z"
+  },
+  {
+    "id": "TCK-3D4F3B87",
+    "userId": "7a69b948-f917-4a05-99e2-b36c1633ea84",
+    "userEmail": "aron113n@gmail.com",
+    "orderId": "ORD-D5B4CFEB",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 20,
+    "message": "I meant this one\nIt has all the old logs I alr bought of u they all have the name and address",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 12.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "I meant this one\nIt has all the old logs I alr bought of u they all have the name and address",
+        "createdAt": "2026-08-22T16:31:38.867Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £12.50 issued to user balance.",
+        "createdAt": "2026-08-23T11:37:30.368Z"
+      }
+    ],
+    "createdAt": "2026-08-22T16:31:38.867Z",
+    "updatedAt": "2026-08-23T11:37:30.368Z"
+  },
+  {
+    "id": "TCK-AE11C9FE",
+    "userId": "7a69b948-f917-4a05-99e2-b36c1633ea84",
+    "userEmail": "aron113n@gmail.com",
+    "orderId": "ORD-8FA899E7",
+    "productName": "Morrisons [NFA] - Morrisons [AMEX]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 20,
+    "message": "All the logs are used bc I have the old logs I bought and they all match name and are the same log in details give me fresh logs",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "All the logs are used bc I have the old logs I bought and they all match name and are the same log in details give me fresh logs",
+        "createdAt": "2026-08-22T16:30:36.166Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.50 issued to user balance.",
+        "createdAt": "2026-08-23T11:37:38.887Z"
+      }
+    ],
+    "createdAt": "2026-08-22T16:30:36.166Z",
+    "updatedAt": "2026-08-23T11:37:38.887Z"
+  },
+  {
+    "id": "TCK-9D9BC8D5",
+    "userId": "ca9a79d4-ba7d-4c2e-b3b2-a6cce47c7a7b",
+    "userEmail": "ovchopped@gmail.com",
+    "orderId": "ORD-64850069",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 17,
+    "message": "sandrasaunders84@hotmail.com:Campino1 | Cards = [VISA - 01/29]\nvesilegokhan@me.com:Gokhanokudan20 | Cards = [VISA - 10/30, VISA - 05/28]\nlottielou2507@hotmail.co.uk:Eliza2809 | Cards = [VISA - 08/29]\nlornacarr@sky.com:August28th | Cards = [VISA - 05/28]\ncazbradleywinnett@outlook.com:Cazcazcaz01 | Cards = [VISA - 07/28]\ncatherineanncarroll@icloud.com:Wiggleywoo1982 | Cards = [VISA - 03/30, VISA - 11/27, VISA - 08/26, MASTERCARD - 11/26, VISA - 11/26, VISA - 11/27]\nannaagnesscott@gmail.com:lylagabi01 | Cards = [VISA - 06/29, VISA - 08/28, VISA - 7/2026]\njacquelinetoon@hotmail.co.uk:Shopping1* | Cards = [VISA - 05/26, VISA - 03/31, VISA_DEBIT - 01/26, VISA - 06/27]\nc-h-breeze@hotmail.co.uk:Harvey2010 | Cards = [MASTERCARD - 05/27, VISA_DEBIT - 10/22, VISA - 03/28, MASTERCARD - 06/27]\nLesley.allass@yahoo.co.uk:ll220288 | Cards = [VISA - 4/2025, VISA - 04/29]\ndeb_applegate@yahoo.co.uk:Benjam1n | Cards = [MASTERCARD - 08/28, VISA - 11/28, MASTERCARD_DEBIT - 06/24, MASTERCARD - 01/28]\nnround7@gmail.com:Latham24 | Cards = [VISA - 02/28, MASTERCARD - 06/27, MASTERCARD - 08/24, MASTERCARD - 02/29, VISA - 09/28]\nJess_905@hotmail.com:Lucasamuel15 | Cards = [VISA - 09/29, VISA_DEBIT - 02/23, VISA - 12/2027]\nbunfox77@hotmail.co.uk:cheese | Cards = [VISA - 11/29, VISA - 11/2025]\nEdwardsdores@gmail.com:LolaRose123 | Cards = [VISA - 01/30, VISA_DEBIT - 10/22, MASTERCARD_DEBIT - 06/24, VISA - 10/27]\navgibbo@gmail.com:Harrington123 | Cards = [MASTERCARD - 08/30, VISA - 09/23, VISA - 06/28]",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 8,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "sandrasaunders84@hotmail.com:Campino1 | Cards = [VISA - 01/29]\nvesilegokhan@me.com:Gokhanokudan20 | Cards = [VISA - 10/30, VISA - 05/28]\nlottielou2507@hotmail.co.uk:Eliza2809 | Cards = [VISA - 08/29]\nlornacarr@sky.com:August28th | Cards = [VISA - 05/28]\ncazbradleywinnett@outlook.com:Cazcazcaz01 | Cards = [VISA - 07/28]\ncatherineanncarroll@icloud.com:Wiggleywoo1982 | Cards = [VISA - 03/30, VISA - 11/27, VISA - 08/26, MASTERCARD - 11/26, VISA - 11/26, VISA - 11/27]\nannaagnesscott@gmail.com:lylagabi01 | Cards = [VISA - 06/29, VISA - 08/28, VISA - 7/2026]\njacquelinetoon@hotmail.co.uk:Shopping1* | Cards = [VISA - 05/26, VISA - 03/31, VISA_DEBIT - 01/26, VISA - 06/27]\nc-h-breeze@hotmail.co.uk:Harvey2010 | Cards = [MASTERCARD - 05/27, VISA_DEBIT - 10/22, VISA - 03/28, MASTERCARD - 06/27]\nLesley.allass@yahoo.co.uk:ll220288 | Cards = [VISA - 4/2025, VISA - 04/29]\ndeb_applegate@yahoo.co.uk:Benjam1n | Cards = [MASTERCARD - 08/28, VISA - 11/28, MASTERCARD_DEBIT - 06/24, MASTERCARD - 01/28]\nnround7@gmail.com:Latham24 | Cards = [VISA - 02/28, MASTERCARD - 06/27, MASTERCARD - 08/24, MASTERCARD - 02/29, VISA - 09/28]\nJess_905@hotmail.com:Lucasamuel15 | Cards = [VISA - 09/29, VISA_DEBIT - 02/23, VISA - 12/2027]\nbunfox77@hotmail.co.uk:cheese | Cards = [VISA - 11/29, VISA - 11/2025]\nEdwardsdores@gmail.com:LolaRose123 | Cards = [VISA - 01/30, VISA_DEBIT - 10/22, MASTERCARD_DEBIT - 06/24, VISA - 10/27]\navgibbo@gmail.com:Harrington123 | Cards = [MASTERCARD - 08/30, VISA - 09/23, VISA - 06/28]",
+        "createdAt": "2026-08-22T16:06:26.431Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £8.00 issued to user balance.",
+        "createdAt": "2026-08-22T16:30:11.573Z"
+      }
+    ],
+    "createdAt": "2026-08-22T16:06:26.431Z",
+    "updatedAt": "2026-08-22T16:30:11.573Z"
+  },
+  {
+    "id": "TCK-82CF318A",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-CCCBAA74",
+    "productName": "Morrisons [NFA] - Morrisons [MASTER]",
+    "variantName": "Morrisons [MASTER]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Expired card",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 0.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Expired card",
+        "createdAt": "2026-08-21T17:28:48.122Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £0.50 issued to user balance.",
+        "createdAt": "2026-08-21T19:25:15.040Z"
+      }
+    ],
+    "createdAt": "2026-08-21T17:28:48.122Z",
+    "updatedAt": "2026-08-21T19:25:15.040Z"
+  },
+  {
+    "id": "TCK-42658E85",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-8999E455",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Wrong Pass",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 0.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Wrong Pass",
+        "createdAt": "2026-08-20T16:49:53.400Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £0.50 issued to user balance.",
+        "createdAt": "2026-08-20T16:58:40.908Z"
+      }
+    ],
+    "createdAt": "2026-08-20T16:49:53.400Z",
+    "updatedAt": "2026-08-20T16:58:40.908Z"
+  },
+  {
+    "id": "TCK-1CE0539E",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-42775953",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Product Expired / Inactive",
+    "replacementCount": 2,
+    "message": "manda8182@aol.com:Teddy2208 | Cards = [VISA - 07/27]\nNO PAYMENT METHOD \n\njosephinewalker10@ymail.com:acpjg43aa | Cards = [VISA - 07/30]\nNO Card",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1.5,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "manda8182@aol.com:Teddy2208 | Cards = [VISA - 07/27]\nNO PAYMENT METHOD \n\njosephinewalker10@ymail.com:acpjg43aa | Cards = [VISA - 07/30]\nNO Card",
+        "createdAt": "2026-08-19T18:50:37.744Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.50 issued to user balance.",
+        "createdAt": "2026-08-20T05:47:50.575Z"
+      }
+    ],
+    "createdAt": "2026-08-19T18:50:37.744Z",
+    "updatedAt": "2026-08-20T05:47:50.575Z"
+  },
+  {
+    "id": "TCK-2C70AF2C",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-183B60C4",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "amy.paul2013@hotmail.co.uk:Jadekyejack12 | Cards = [VISA - 10/28]\nNO PAYMENT METHOD\n\nnicnicchic@gmail.com:Cala2412 | Cards = [VISA - 1/2029]\nNO PAYMENT METHOD",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 3,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "amy.paul2013@hotmail.co.uk:Jadekyejack12 | Cards = [VISA - 10/28]\nNO PAYMENT METHOD\n\nnicnicchic@gmail.com:Cala2412 | Cards = [VISA - 1/2029]\nNO PAYMENT METHOD",
+        "createdAt": "2026-08-19T09:29:22.846Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £3.00 issued to user balance.",
+        "createdAt": "2026-08-20T05:47:44.080Z"
+      }
+    ],
+    "createdAt": "2026-08-19T09:29:22.846Z",
+    "updatedAt": "2026-08-20T05:47:44.080Z"
+  },
+  {
+    "id": "TCK-30105446",
+    "userId": "f905b0dd-1266-4825-8498-3e5227171554",
+    "userEmail": "elsatonge123@gmail.com",
+    "orderId": "ORD-34D33E68",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "missnatalieee_x@live.co.uk:Ricardo1 | Cards = [VISA - 02/28]\nNO CARDS\n\nizzyali51@gmail.com:Rana.7400 | Cards = [VISA - 5/2028]\nWRONG PASSWORD",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 3,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "missnatalieee_x@live.co.uk:Ricardo1 | Cards = [VISA - 02/28]\nNO CARDS\n\nizzyali51@gmail.com:Rana.7400 | Cards = [VISA - 5/2028]\nWRONG PASSWORD",
+        "createdAt": "2026-08-19T09:28:44.113Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £3.00 issued to user balance.",
+        "createdAt": "2026-08-20T05:47:26.523Z"
+      }
+    ],
+    "createdAt": "2026-08-19T09:28:44.113Z",
+    "updatedAt": "2026-08-20T05:47:26.523Z"
+  },
+  {
+    "id": "TCK-FC52C277",
+    "userId": "54fbc842-a195-40e6-9359-8d90f1cf5a00",
+    "userEmail": "funnet278@mirai.re",
+    "orderId": "ORD-FF0DABEE",
+    "productName": "Morrisons [NFA] - Morrisons [VISA]",
+    "variantName": "Morrisons [VISA]",
+    "issueReason": "Product Expired / Inactive",
+    "replacementCount": 3,
+    "message": "All 3 logs bucking red error and someone was in log fighting me for basket want replacement on all 3 please",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "All 3 logs bucking red error and someone was in log fighting me for basket want replacement on all 3 please",
+        "createdAt": "2026-08-18T10:18:01.914Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-08-19T09:09:58.054Z"
+      }
+    ],
+    "createdAt": "2026-08-18T10:18:01.914Z",
+    "updatedAt": "2026-08-19T09:09:58.054Z"
+  },
+  {
+    "id": "TCK-B083A1CC",
+    "userId": "f5e3d2f8-5007-46f3-998c-5ef2a6dbd199",
+    "userEmail": "adzfundzo@gmail.com",
+    "orderId": "ORD-95A5625C",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "ArgosPay [Pin Captured]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Account invalid",
+    "status": "PENDING",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Account invalid",
+        "createdAt": "2026-08-18T00:57:42.187Z"
+      }
+    ],
+    "createdAt": "2026-08-18T00:57:42.187Z",
+    "updatedAt": "2026-08-18T00:57:42.187Z"
+  },
+  {
+    "id": "TCK-1CAC1EEA",
+    "userId": "f5e3d2f8-5007-46f3-998c-5ef2a6dbd199",
+    "userEmail": "adzfundzo@gmail.com",
+    "orderId": "ORD-8D9044DE",
+    "productName": "Waitrose [NFA] - Waitrose [VISA]",
+    "variantName": "Waitrose [VISA]",
+    "issueReason": "Product Expired / Inactive",
+    "replacementCount": 1,
+    "message": "Card expired",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Card expired",
+        "createdAt": "2026-08-18T00:56:34.531Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.00 issued to user balance.",
+        "createdAt": "2026-08-18T08:09:32.204Z"
+      }
+    ],
+    "createdAt": "2026-08-18T00:56:34.531Z",
+    "updatedAt": "2026-08-18T08:09:32.204Z"
+  },
+  {
+    "id": "TCK-D6350D7B",
+    "userId": "cd0d98e4-3e14-4a4d-b48e-b750bc6a877f",
+    "userEmail": "yxngidrz@gmail.com",
+    "orderId": "ORD-25773D0B",
+    "productName": "Waitrose [NFA] - Waitrose [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Product Expired / Inactive",
+    "replacementCount": 1,
+    "message": "Expired card on the account",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Expired card on the account",
+        "createdAt": "2026-08-17T17:35:26.479Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.00 issued to user balance.",
+        "createdAt": "2026-08-18T08:10:23.461Z"
+      }
+    ],
+    "createdAt": "2026-08-17T17:35:26.479Z",
+    "updatedAt": "2026-08-18T08:10:23.461Z"
+  },
+  {
+    "id": "TCK-319D1E45",
+    "userId": "51e3d35f-45de-448c-bc11-a18a57d7c6f3",
+    "userEmail": "yusufjake40@gmail.com",
+    "orderId": "ORD-930B4DEE",
+    "productName": "Waitrose [NFA] - Waitrose [VISA]",
+    "variantName": "Waitrose [VISA]",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Expired credit card details",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Expired credit card details",
+        "createdAt": "2026-08-17T16:01:44.783Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.00 issued to user balance.",
+        "createdAt": "2026-08-18T08:09:54.334Z"
+      }
+    ],
+    "createdAt": "2026-08-17T16:01:44.783Z",
+    "updatedAt": "2026-08-18T08:09:54.334Z"
+  },
+  {
+    "id": "TCK-BE4E8877",
+    "userId": "51e3d35f-45de-448c-bc11-a18a57d7c6f3",
+    "userEmail": "yusufjake40@gmail.com",
+    "orderId": "ORD-83AAF1B8",
+    "productName": "Waitrose [NFA] - Waitrose [AMEX]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "My waitrose log came with an expired cc",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 1,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "My waitrose log came with an expired cc",
+        "createdAt": "2026-08-17T15:53:17.790Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £1.00 issued to user balance.",
+        "createdAt": "2026-08-17T15:55:18.297Z"
+      }
+    ],
+    "createdAt": "2026-08-17T15:53:17.790Z",
+    "updatedAt": "2026-08-17T15:55:18.297Z"
+  },
+  {
+    "id": "TCK-6C93620C",
+    "userId": "a65a169e-e5ca-42ff-85c5-c190d6f24d9b",
+    "userEmail": "btom34519@gmail.com",
+    "orderId": "ORD-050717E8",
+    "productName": "Waitrose [NFA] - Waitrose [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Expired card attached",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 3,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Expired card attached",
+        "createdAt": "2026-08-17T13:26:57.986Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £3.00 issued to user balance.",
+        "createdAt": "2026-08-17T15:57:15.330Z"
+      }
+    ],
+    "createdAt": "2026-08-17T13:26:57.986Z",
+    "updatedAt": "2026-08-17T15:57:15.330Z"
+  },
+  {
+    "id": "TCK-C5F81C26",
+    "userId": "a65a169e-e5ca-42ff-85c5-c190d6f24d9b",
+    "userEmail": "btom34519@gmail.com",
+    "orderId": "ORD-D90D8099",
+    "productName": "Waitrose [NFA] - Waitrose [VISA]",
+    "variantName": "Standard",
+    "issueReason": "Product Expired / Inactive",
+    "replacementCount": 1,
+    "message": "Expired card, please check",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 3,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Expired card, please check",
+        "createdAt": "2026-08-17T13:18:40.489Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £3.00 issued to user balance.",
+        "createdAt": "2026-08-17T15:57:30.786Z"
+      }
+    ],
+    "createdAt": "2026-08-17T13:18:40.489Z",
+    "updatedAt": "2026-08-17T15:57:30.786Z"
+  },
+  {
+    "id": "TCK-5ACA13DC",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-79241F38",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Both logs do reload to checkout page. I used fresh aged account for both",
+    "status": "PENDING",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Both logs do reload to checkout page. I used fresh aged account for both",
+        "createdAt": "2026-08-16T15:41:06.457Z"
+      }
+    ],
+    "createdAt": "2026-08-16T15:41:06.457Z",
+    "updatedAt": "2026-08-16T15:41:06.457Z"
+  },
+  {
+    "id": "TCK-D43BDD78",
+    "userId": "463f3366-9590-4148-81a1-bc42a924a69a",
+    "userEmail": "sunoldtax@f5.si",
+    "orderId": "ORD-79241F38",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Matt@copemail.com\nUsed log does reload after basket",
+    "status": "PENDING",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Matt@copemail.com\nUsed log does reload after basket",
+        "createdAt": "2026-08-16T15:34:22.044Z"
+      }
+    ],
+    "createdAt": "2026-08-16T15:34:22.044Z",
+    "updatedAt": "2026-08-16T15:34:22.044Z"
+  },
+  {
+    "id": "TCK-8C4080FB",
+    "userId": "1058888e-ae89-40e8-b30c-a1d99ea8d3be",
+    "userEmail": "jugjugxav@gmail.com",
+    "orderId": "ORD-6D8537C1",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Account was locked i used an aged and all so it has to be a log issue",
+    "status": "PENDING",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Account was locked i used an aged and all so it has to be a log issue",
+        "createdAt": "2026-08-16T11:01:35.311Z"
+      }
+    ],
+    "createdAt": "2026-08-16T11:01:35.311Z",
+    "updatedAt": "2026-08-16T11:01:35.311Z"
+  },
+  {
+    "id": "TCK-F7821D12",
+    "userId": "bdb40d95-3022-42f3-83af-76f0f442fab1",
+    "userEmail": "yunacoopa@gmail.com",
+    "orderId": "ORD-01225633",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Bad deet no credit very brass need replacement ty ❤️",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Bad deet no credit very brass need replacement ty ❤️",
+        "createdAt": "2026-08-16T01:42:02.770Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-08-17T15:58:29.964Z"
+      }
+    ],
+    "createdAt": "2026-08-16T01:42:02.770Z",
+    "updatedAt": "2026-08-17T15:58:29.964Z"
+  },
+  {
+    "id": "TCK-4507CB49",
+    "userId": "335ff3a0-3f1b-4902-ac82-171ad1ad883a",
+    "userEmail": "jamesmith7623@gmail.com",
+    "orderId": "ORD-CE2F9E16",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 2,
+    "message": "Both of them didn’t work reason why didn’t create ticket sooner for both of my issue as I didn’t know there was a support",
+    "status": "PENDING",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Both of them didn’t work reason why didn’t create ticket sooner for both of my issue as I didn’t know there was a support",
+        "createdAt": "2026-08-15T23:45:03.334Z"
+      }
+    ],
+    "createdAt": "2026-08-15T23:45:03.334Z",
+    "updatedAt": "2026-08-15T23:45:03.334Z"
+  },
+  {
+    "id": "TCK-4ECCF306",
+    "userId": "335ff3a0-3f1b-4902-ac82-171ad1ad883a",
+    "userEmail": "jamesmith7623@gmail.com",
+    "orderId": "ORD-EA6E8222",
+    "productName": "Argos / ArgosPay [2FA/NFA] - ArgosPay [Pin Captured]",
+    "variantName": "Standard",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Only one of the logs was working",
+    "status": "PENDING",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Only one of the logs was working",
+        "createdAt": "2026-08-15T23:44:03.370Z"
+      }
+    ],
+    "createdAt": "2026-08-15T23:44:03.370Z",
+    "updatedAt": "2026-08-15T23:44:03.370Z"
+  },
+  {
+    "id": "TCK-09785C29",
+    "userId": "963051b3-a5ea-4aa2-9e80-b388e8e09ead",
+    "userEmail": "sbds@2.com",
+    "orderId": "ORD-FF4B1593",
+    "productName": "Argos / ArgosPay [2FA/NFA] - 15$",
+    "variantName": "15$",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "Doesnt work",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "Doesnt work",
+        "createdAt": "2026-08-11T04:06:26.888Z"
+      },
+      {
+        "senderRole": "USER",
+        "message": "hi",
+        "createdAt": "2026-08-11T04:06:41.705Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "Hello",
+        "createdAt": "2026-08-11T04:06:51.138Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-08-11T18:22:01.264Z"
+      }
+    ],
+    "createdAt": "2026-08-11T04:06:26.888Z",
+    "updatedAt": "2026-08-11T18:22:01.264Z"
+  },
+  {
+    "id": "TCK-37BBE6C1",
+    "userId": "e46f310b-dfa4-4836-b82d-ecd78ac80eef",
+    "userEmail": "admin@mysterio.cc",
+    "orderId": "ORD-C9277D51",
+    "productName": "Argos / ArgosPay [2FA/NFA] - 15$",
+    "variantName": "15$",
+    "issueReason": "Account Invalid / Bad Credentials",
+    "replacementCount": 1,
+    "message": "HI doesnt work",
+    "status": "DENIED",
+    "replacementCredentials": null,
+    "refundAmount": 0,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "HI doesnt work",
+        "createdAt": "2026-08-11T02:43:48.701Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "hi",
+        "createdAt": "2026-08-11T03:08:51.066Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "hi",
+        "createdAt": "2026-08-11T03:18:21.447Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "❌ Support ticket request denied by staff.",
+        "createdAt": "2026-08-15T20:22:27.017Z"
+      }
+    ],
+    "createdAt": "2026-08-11T02:43:48.701Z",
+    "updatedAt": "2026-08-15T20:22:27.017Z"
+  }
+]
