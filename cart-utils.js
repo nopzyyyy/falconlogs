@@ -49,33 +49,36 @@ function startPageLoading() {
   const bar = ensureLoadingBar();
   bar.style.transition = "none";
   bar.style.width = "0%";
+  bar.style.opacity = "1";
   bar.style.display = "block";
   void bar.offsetWidth;
-  bar.style.transition = "width 0.22s cubic-bezier(0.1, 0.9, 0.2, 1)";
-  bar.style.width = "40%";
+  bar.style.transition = "width 0.26s cubic-bezier(0.1, 0.9, 0.2, 1)";
+  bar.style.width = "72%";
   setTimeout(() => {
-    if (bar.style.width === "40%") {
-      bar.style.transition = "width 0.5s ease";
-      bar.style.width = "85%";
+    if (bar && parseFloat(bar.style.width) >= 70 && parseFloat(bar.style.width) < 95) {
+      bar.style.transition = "width 0.6s ease";
+      bar.style.width = "88%";
     }
-  }, 180);
+  }, 240);
 }
 
 function finishPageLoading() {
   const bar = document.querySelector("#pageLoadingBar");
   if (!bar) return;
-  bar.style.transition = "width 0.15s ease";
+  bar.style.transition = "width 0.15s ease, opacity 0.22s ease 0.08s";
   bar.style.width = "100%";
+  bar.style.opacity = "0";
   setTimeout(() => {
     bar.style.display = "none";
     bar.style.width = "0%";
-  }, 220);
+    bar.style.opacity = "1";
+  }, 320);
 }
 
 window.startPageLoading = startPageLoading;
 window.finishPageLoading = finishPageLoading;
 
-// Trigger progress bar on link navigation
+// Trigger progress bar on link navigation and page loads
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initPageLoader);
 } else {
@@ -84,22 +87,38 @@ if (document.readyState === "loading") {
 
 function initPageLoader() {
   const bar = ensureLoadingBar();
-  bar.style.width = "65%";
+  bar.style.transition = "none";
+  bar.style.width = "40%";
+  bar.style.opacity = "1";
+  bar.style.display = "block";
   void bar.offsetWidth;
-  bar.style.transition = "width 0.18s ease";
+  bar.style.transition = "width 0.2s ease, opacity 0.22s ease 0.06s";
   bar.style.width = "100%";
+  bar.style.opacity = "0";
   setTimeout(() => {
     bar.style.display = "none";
     bar.style.width = "0%";
-  }, 200);
+    bar.style.opacity = "1";
+  }, 300);
 
+  // Catch ALL internal page navigation links (header, footer, drawer, dropdown, cards, etc.)
   document.addEventListener("click", (e) => {
     const link = e.target.closest("a");
     if (!link) return;
     const href = link.getAttribute("href");
     if (!href || href.startsWith("#") || href.startsWith("javascript:") || link.target === "_blank") return;
-    if (link.closest(".site-header-wrap") || link.closest(".header-nav-center") || link.closest(".nav-actions") || link.classList.contains("header-nav-link")) {
-      startPageLoading();
+
+    try {
+      const url = new URL(link.href, window.location.origin);
+      if (url.origin === window.location.origin && (url.pathname !== window.location.pathname || url.search !== window.location.search)) {
+        startPageLoading();
+      }
+    } catch (err) {}
+  });
+
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) {
+      finishPageLoading();
     }
   });
 }
@@ -115,7 +134,7 @@ function showToast(message, viewCart = false) {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    background: #0d1220;
+    background: #110e0a;
     border: 1px solid rgba(234, 88, 12, 0.45);
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
@@ -205,8 +224,8 @@ function initMobileDrawer() {
         <span>Support</span>
       </a>
       <a href="/deposit.html" class="mobile-drawer-link ${isDeposit ? 'active' : ''}">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        <span>Add Balance</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+        <span id="mobileDrawerBalanceText">Balance</span>
       </a>
       <a href="/dashboard.html" class="mobile-drawer-link ${isDashboard ? 'active' : ''}" id="mobileDrawerAccountLink">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -237,6 +256,17 @@ function initMobileDrawer() {
   backdrop.onclick = closeDrawer;
   const closeBtn = drawer.querySelector("#closeMobileDrawerBtn");
   if (closeBtn) closeBtn.onclick = closeDrawer;
+
+  const mobAccLink = drawer.querySelector("#mobileDrawerAccountLink");
+  if (mobAccLink) {
+    mobAccLink.onclick = (e) => {
+      e.preventDefault();
+      closeDrawer();
+      if (typeof window.openAccountDrawer === "function") {
+        window.openAccountDrawer();
+      }
+    };
+  }
 }
 
 function copyToClipboard(text, btnElement, successMsg) {
@@ -344,119 +374,220 @@ async function initGlobalAccountHeader() {
   try { initMobileDrawer(); } catch (e) {}
 
   const navUserBtn = document.querySelector("#navUserBtn");
-  const navUserText = document.querySelector("#navUserText");
   if (!navUserBtn) return;
 
+  navUserBtn.removeAttribute("href");
+  navUserBtn.style.cursor = "pointer";
+
+  // Backdrop for slide-in Account Drawer
+  let backdrop = document.querySelector("#accountDrawerBackdrop");
+  if (!backdrop) {
+    backdrop = document.createElement("div");
+    backdrop.id = "accountDrawerBackdrop";
+    backdrop.className = "account-drawer-backdrop";
+    document.body.appendChild(backdrop);
+  }
+
+  // Side-in Account Drawer container
+  let drawer = document.querySelector("#accountSideDrawer");
+  if (!drawer) {
+    drawer = document.createElement("div");
+    drawer.id = "accountSideDrawer";
+    drawer.className = "account-side-drawer";
+    document.body.appendChild(drawer);
+  }
+
+  function openAccountDrawer() {
+    drawer.classList.add("active", "open");
+    backdrop.classList.add("active", "open");
+    navUserBtn.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeAccountDrawer() {
+    drawer.classList.remove("active", "open");
+    backdrop.classList.remove("active", "open");
+    navUserBtn.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  window.openAccountDrawer = openAccountDrawer;
+  window.closeAccountDrawer = closeAccountDrawer;
+
+  navUserBtn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (drawer.classList.contains("active")) {
+      closeAccountDrawer();
+    } else {
+      openAccountDrawer();
+    }
+  };
+
+  backdrop.onclick = closeAccountDrawer;
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer.classList.contains("active")) {
+      closeAccountDrawer();
+    }
+  });
+
+  let authData = null;
   try {
     const res = await fetch("/api/auth/me");
-    const data = await res.json();
-    if (data && data.authenticated) {
-      const displayName = (data.name && data.name.trim()) ? data.name.trim() : data.email.split("@")[0];
-      const balanceStr = `£${Number(data.balance || 0).toFixed(2)}`;
-      if (navUserText) {
-        navUserText.textContent = `${displayName} [${balanceStr}]`;
-      }
-      const mobAccText = document.querySelector("#mobileDrawerAccountText");
-      if (mobAccText) {
-        mobAccText.textContent = `${displayName} [${balanceStr}]`;
-      }
-
-      navUserBtn.removeAttribute("href");
-      navUserBtn.style.cursor = "pointer";
-
-      let parentWrap = navUserBtn.closest(".nav-account-dropdown-wrap");
-      if (!parentWrap) {
-        parentWrap = document.createElement("div");
-        parentWrap.className = "nav-account-dropdown-wrap";
-        navUserBtn.parentNode.insertBefore(parentWrap, navUserBtn);
-        parentWrap.appendChild(navUserBtn);
-      }
-
-      let dropdown = document.querySelector("#accountDropdownCard");
-      if (!dropdown) {
-        dropdown = document.createElement("div");
-        dropdown.id = "accountDropdownCard";
-        dropdown.className = "account-dropdown-card";
-        parentWrap.appendChild(dropdown);
-      }
-
-      const isStaffOrAdmin = data.role === "ADMIN" || data.role === "GOD" || data.role === "STAFF";
-
-      dropdown.innerHTML = `
-        <div class="account-dropdown-header">
-          <span class="account-dropdown-title">Account</span>
-          <button type="button" class="account-dropdown-close" id="closeAccountDropdown" aria-label="Close">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-        </div>
-        <div class="account-user-info">
-          <div class="account-user-email">${(data.name && data.name.trim()) ? escapeHtml(data.name.trim()) + '<br><span style="font-size:11px; opacity:0.6;">' + escapeHtml(data.email) + '</span>' : escapeHtml(data.email)}</div>
-          <div class="account-user-balance">[${balanceStr}]</div>
-        </div>
-        <div class="account-dropdown-actions">
-          ${isStaffOrAdmin ? `
-            <a href="/admin.html" class="account-dropdown-btn secondary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-              Dashboard
-            </a>
-          ` : `
-            <a href="/dashboard.html" class="account-dropdown-btn secondary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              Dashboard
-            </a>
-          `}
-          <a href="/orders.html" class="account-dropdown-btn secondary">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-            Orders
-          </a>
-          <a href="/support.html" class="account-dropdown-btn secondary">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            Support
-          </a>
-          <button type="button" class="account-dropdown-btn danger" id="accountDropdownLogoutBtn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            Log out
-          </button>
-        </div>
-      `;
-
-      navUserBtn.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        dropdown.classList.toggle("active");
-      };
-
-      const closeBtn = dropdown.querySelector("#closeAccountDropdown");
-      if (closeBtn) {
-        closeBtn.onclick = (e) => {
-          e.stopPropagation();
-          dropdown.classList.remove("active");
-        };
-      }
-
-      const logoutBtn = dropdown.querySelector("#accountDropdownLogoutBtn");
-      if (logoutBtn) {
-        logoutBtn.onclick = async (e) => {
-          e.stopPropagation();
-          logoutBtn.disabled = true;
-          try {
-            await fetch("/api/auth/logout", { method: "POST" });
-            window.location.href = "/";
-          } catch (err) {
-            window.location.reload();
-          }
-        };
-      }
-
-      document.addEventListener("click", (e) => {
-        if (!parentWrap.contains(e.target)) {
-          dropdown.classList.remove("active");
-        }
-      });
+    if (res.ok) {
+      authData = await res.json();
     }
-  } catch (e) {
-    // Guest
+  } catch (err) {
+    console.warn("Auth check error:", err);
   }
+
+  if (authData && authData.authenticated) {
+    const displayName = (authData.name && authData.name.trim()) ? authData.name.trim() : authData.email.split("@")[0];
+    const balanceStr = `£${Number(authData.balance || 0).toFixed(2)}`;
+    const initialLetter = (displayName[0] || "U").toUpperCase();
+    const isStaffOrAdmin = authData.role === "ADMIN" || authData.role === "GOD" || authData.role === "STAFF";
+    const roleText = isStaffOrAdmin ? "Admin" : "Member";
+
+    const mobAccText = document.querySelector("#mobileDrawerAccountText");
+    if (mobAccText) mobAccText.textContent = displayName;
+    const mobBalText = document.querySelector("#mobileDrawerBalanceText");
+    if (mobBalText) mobBalText.textContent = `Balance [${balanceStr}]`;
+
+    drawer.innerHTML = `
+      <div class="account-drawer-header">
+        <h3 class="account-drawer-title">My Account</h3>
+        <button type="button" class="account-drawer-close-btn" id="closeAccountDrawerBtn" aria-label="Close account menu">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="account-drawer-profile">
+        <div class="account-drawer-avatar">${escapeHtml(initialLetter)}</div>
+        <div class="account-drawer-profile-info">
+          <div class="account-drawer-username">${escapeHtml(displayName)}</div>
+          ${authData.name && authData.name.trim() ? `<div class="account-drawer-email-sub">${escapeHtml(authData.email)}</div>` : ''}
+          <div class="account-drawer-role-badge">${roleText}</div>
+        </div>
+      </div>
+
+      <div class="account-drawer-balance-card">
+        <div class="account-drawer-balance-left">
+          <div class="account-drawer-balance-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><circle cx="12" cy="14" r="1.5"/></svg>
+          </div>
+          <div class="account-drawer-balance-meta">
+            <span class="account-drawer-balance-tag">BALANCE</span>
+            <span class="account-drawer-balance-amount">${balanceStr}</span>
+          </div>
+        </div>
+        <a href="/deposit.html" class="account-drawer-topup-btn">+ Top Up</a>
+      </div>
+
+      <div class="account-drawer-divider"></div>
+
+      <nav class="account-drawer-nav">
+        ${isStaffOrAdmin ? `
+          <a href="/admin.html" class="account-drawer-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Dashboard</span>
+          </a>
+        ` : `
+          <a href="/dashboard.html" class="account-drawer-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Dashboard</span>
+          </a>
+        `}
+        <a href="/orders.html" class="account-drawer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>My Orders</span>
+        </a>
+        <a href="/deposit.html" class="account-drawer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+          <span>Balance &amp; Top Up</span>
+        </a>
+        <a href="/support.html" class="account-drawer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>Support</span>
+        </a>
+        <a href="/cart.html" class="account-drawer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span>Cart</span>
+          <span class="account-drawer-cart-badge" data-cart-count>0</span>
+        </a>
+      </nav>
+
+      <div class="account-drawer-footer">
+        <button type="button" class="account-drawer-logout-btn" id="accountDrawerLogoutBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Log out</span>
+        </button>
+      </div>
+    `;
+
+    const closeBtn = drawer.querySelector("#closeAccountDrawerBtn");
+    if (closeBtn) closeBtn.onclick = closeAccountDrawer;
+
+    const logoutBtn = drawer.querySelector("#accountDrawerLogoutBtn");
+    if (logoutBtn) {
+      logoutBtn.onclick = async () => {
+        logoutBtn.disabled = true;
+        try {
+          await fetch("/api/auth/logout", { method: "POST" });
+          window.location.href = "/";
+        } catch (err) {
+          window.location.reload();
+        }
+      };
+    }
+  } else {
+    // Guest state
+    drawer.innerHTML = `
+      <div class="account-drawer-header">
+        <h3 class="account-drawer-title">My Account</h3>
+        <button type="button" class="account-drawer-close-btn" id="closeAccountDrawerBtn" aria-label="Close account menu">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="account-drawer-guest-card">
+        <div class="account-drawer-guest-title">Welcome to Falcon Logs</div>
+        <div class="account-drawer-guest-desc">Log in or create an account to access your instant logs, balance, and priority support.</div>
+        <div class="account-drawer-guest-actions">
+          <a href="/login.html" class="account-drawer-guest-btn primary">Log In</a>
+          <a href="/login.html?tab=register" class="account-drawer-guest-btn secondary">Create Account</a>
+        </div>
+      </div>
+
+      <div class="account-drawer-divider"></div>
+
+      <nav class="account-drawer-nav">
+        <a href="/orders.html" class="account-drawer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>My Orders</span>
+        </a>
+        <a href="/support.html" class="account-drawer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>Support</span>
+        </a>
+        <a href="/cart.html" class="account-drawer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span>Cart</span>
+          <span class="account-drawer-cart-badge" data-cart-count>0</span>
+        </a>
+      </nav>
+    `;
+
+    const closeBtn = drawer.querySelector("#closeAccountDrawerBtn");
+    if (closeBtn) closeBtn.onclick = closeAccountDrawer;
+  }
+
+  drawer.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", () => {
+      document.body.style.overflow = "";
+    });
+  });
+
+  updateCartBadge();
 }
 
 // =========================================================

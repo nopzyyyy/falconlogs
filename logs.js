@@ -39,20 +39,54 @@ async function checkAuthStatus() {
   }
 }
 
-// Category Dropdown Toggle (Collapsed by Default)
+// Category Dropdown Toggle & Open/Close Helpers
+function openCategoryDropdown() {
+  if (!categoryMenuPanel || !categoryDropdownToggle) return;
+  categoryMenuPanel.style.display = "flex";
+  categoryDropdownToggle.classList.add("open");
+  categoryDropdownToggle.setAttribute("aria-expanded", "true");
+  const searchInp = document.querySelector("#categorySearchInput");
+  if (searchInp) {
+    searchInp.value = "";
+    filterCategoryItems("");
+    setTimeout(() => searchInp.focus(), 60);
+  }
+}
+
+function closeCategoryDropdown() {
+  if (!categoryMenuPanel || !categoryDropdownToggle) return;
+  categoryMenuPanel.style.display = "none";
+  categoryDropdownToggle.classList.remove("open");
+  categoryDropdownToggle.setAttribute("aria-expanded", "false");
+}
+
 if (categoryDropdownToggle && categoryMenuPanel) {
   categoryDropdownToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     const isCurrentlyOpen = categoryMenuPanel.style.display === "flex";
-    categoryMenuPanel.style.display = isCurrentlyOpen ? "none" : "flex";
-    categoryDropdownToggle.classList.toggle("open", !isCurrentlyOpen);
+    if (isCurrentlyOpen) {
+      closeCategoryDropdown();
+    } else {
+      openCategoryDropdown();
+    }
+  });
+
+  categoryMenuPanel.addEventListener("click", (e) => {
+    e.stopPropagation();
   });
 
   // Close dropdown when clicking outside
   document.addEventListener("click", (e) => {
     if (!categoryDropdownToggle.contains(e.target) && !categoryMenuPanel.contains(e.target)) {
-      categoryMenuPanel.style.display = "none";
-      categoryDropdownToggle.classList.remove("open");
+      closeCategoryDropdown();
+    }
+  });
+
+  // Close dropdown on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && categoryMenuPanel.style.display === "flex") {
+      closeCategoryDropdown();
+      categoryDropdownToggle.focus();
     }
   });
 }
@@ -95,16 +129,16 @@ const ICON_MAP = {
 };
 
 function getCategoryIconHtml(icon) {
-  const defaultSvg = `<svg class="category-dropdown-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--accent-light,#fb923c);flex-shrink:0;"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>`;
+  const defaultSvg = `<svg class="category-dropdown-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:#fb923c;flex-shrink:0;"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>`;
   
   if (!icon || icon === "grid" || icon === "grid_view") {
     return defaultSvg;
   }
   if (ICON_MAP[icon]) {
-    return `<span style="display:inline-flex;align-items:center;width:16px;height:16px;color:var(--accent-light,#fb923c);flex-shrink:0;">${ICON_MAP[icon]}</span>`;
+    return `<span style="display:inline-flex;align-items:center;width:16px;height:16px;color:#fb923c;flex-shrink:0;">${ICON_MAP[icon]}</span>`;
   }
   if (typeof icon === "string" && icon.startsWith("<svg")) {
-    return `<span style="display:inline-flex;align-items:center;width:16px;height:16px;color:var(--accent-light,#fb923c);flex-shrink:0;">${icon}</span>`;
+    return `<span style="display:inline-flex;align-items:center;width:16px;height:16px;color:#fb923c;flex-shrink:0;">${icon}</span>`;
   }
   if (typeof icon === "string" && (icon.startsWith("http://") || icon.startsWith("https://") || icon.startsWith("/"))) {
     return `<img src="${escapeHtml(icon)}" alt="" style="width:16px;height:16px;object-fit:contain;flex-shrink:0;">`;
@@ -112,45 +146,100 @@ function getCategoryIconHtml(icon) {
   return defaultSvg;
 }
 
-function renderCategoryMenu() {
-  if (!categoryMenuPanel) return;
+function updateCategoryToggleLabel() {
+  if (!categoryDropdownToggle) return;
+  const leftWrap = categoryDropdownToggle.querySelector(".category-dropdown-left");
+  if (!leftWrap) return;
 
-  const normalizedCats = categories.map(c => typeof c === "string" ? { name: c, icon: "grid" } : c);
-
-  categoryMenuPanel.innerHTML = `
-    <button type="button" class="category-item-btn ${activeCategory === "All" ? "active" : ""}" data-category="All" style="display:flex;align-items:center;gap:8px;">
-      ${getCategoryIconHtml("grid")}
-      <span>All</span>
-    </button>
-    ${normalizedCats.map(c => `
-      <button type="button" class="category-item-btn ${activeCategory === c.name ? "active" : ""}" data-category="${escapeHtml(c.name)}" style="display:flex;align-items:center;gap:8px;">
-        ${getCategoryIconHtml(c.icon)}
-        <span>${escapeHtml(c.name)}</span>
-      </button>
-    `).join("")}
-  `;
-
-  // Update selected category dropdown toggle button icon + text label
+  const normalizedCats = categories.map(c => typeof c === "string" ? { name: c, icon: "folder" } : c);
   const matchedCat = normalizedCats.find(c => c.name === activeCategory);
-  const leftWrap = categoryDropdownToggle ? categoryDropdownToggle.querySelector(".category-dropdown-left") : null;
-  if (leftWrap) {
-    const iconHtml = matchedCat ? getCategoryIconHtml(matchedCat.icon) : getCategoryIconHtml("grid");
-    const labelText = activeCategory === "All" ? "Search Category" : activeCategory;
-    leftWrap.innerHTML = `
-      ${iconHtml}
-      <span id="selectedCategoryLabel">${escapeHtml(labelText)}</span>
+
+  const iconHtml = (activeCategory === "All" || !matchedCat)
+    ? getCategoryIconHtml("grid_view")
+    : getCategoryIconHtml(matchedCat.icon);
+    
+  const labelText = activeCategory === "All" ? "Choose Category" : activeCategory;
+
+  leftWrap.innerHTML = `
+    ${iconHtml}
+    <span id="selectedCategoryLabel">${escapeHtml(labelText)}</span>
+  `;
+}
+
+function filterCategoryItems(query = "") {
+  const listEl = document.querySelector("#categoryItemsList");
+  if (!listEl) return;
+
+  const q = String(query || "").trim().toLowerCase();
+  const normalizedCats = categories.map(c => typeof c === "string" ? { name: c, icon: "folder" } : c);
+  
+  const allMatches = !q || "all".includes(q) || "all categories".includes(q) || "choose category".includes(q);
+  const matchedCats = normalizedCats.filter(c => !q || c.name.toLowerCase().includes(q));
+
+  if (!allMatches && matchedCats.length === 0) {
+    listEl.innerHTML = `<div class="category-no-results">No categories found</div>`;
+    return;
+  }
+
+  let html = "";
+  if (allMatches) {
+    const isAllActive = activeCategory === "All";
+    html += `
+      <button type="button" class="category-item-btn ${isAllActive ? "active" : ""}" data-category="All">
+        <div class="category-item-main">
+          <span class="category-item-icon">${getCategoryIconHtml("grid_view")}</span>
+          <span class="category-item-name">All</span>
+        </div>
+        ${isAllActive ? `<svg class="category-item-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>` : ""}
+      </button>
     `;
   }
 
-  categoryMenuPanel.querySelectorAll(".category-item-btn").forEach(btn => {
+  matchedCats.forEach(c => {
+    const isActive = activeCategory === c.name;
+    html += `
+      <button type="button" class="category-item-btn ${isActive ? "active" : ""}" data-category="${escapeHtml(c.name)}">
+        <div class="category-item-main">
+          <span class="category-item-icon">${getCategoryIconHtml(c.icon)}</span>
+          <span class="category-item-name">${escapeHtml(c.name)}</span>
+        </div>
+        ${isActive ? `<svg class="category-item-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>` : ""}
+      </button>
+    `;
+  });
+
+  listEl.innerHTML = html;
+
+  listEl.querySelectorAll(".category-item-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       activeCategory = btn.dataset.category;
-      if (categoryMenuPanel) categoryMenuPanel.style.display = "none";
-      if (categoryDropdownToggle) categoryDropdownToggle.classList.remove("open");
+      closeCategoryDropdown();
+      updateCategoryToggleLabel();
       renderCategoryMenu();
       renderProducts();
     });
   });
+}
+
+function renderCategoryMenu() {
+  if (!categoryMenuPanel) return;
+
+  updateCategoryToggleLabel();
+  filterCategoryItems("");
+
+  const searchInp = document.querySelector("#categorySearchInput");
+  if (searchInp && !searchInp.dataset.bound) {
+    searchInp.dataset.bound = "true";
+    searchInp.addEventListener("input", (e) => {
+      filterCategoryItems(e.target.value);
+    });
+    searchInp.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+    searchInp.addEventListener("keydown", (e) => {
+      e.stopPropagation();
+    });
+  }
 }
 
 function getSingleVariantStock(v) {

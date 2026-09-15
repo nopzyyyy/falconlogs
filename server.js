@@ -40,10 +40,10 @@ const dataFile = path.join(dataDir, "inventory.json");
 const binCacheFile = path.join(dataDir, "bin-cache.json");
 
 // System account credentials (server.js is never served publicly — see static allowlist)
-const ADMIN_EMAIL    = process.env.ADMIN_EMAIL || "admin@falconlogs.cc";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "FalconLogsAdmin2026!";
-const GOD_EMAIL      = process.env.GOD_EMAIL || "god@falconlogs.cc";
-const GOD_PASSWORD   = process.env.GOD_PASSWORD || "FalconLogsGod2026!";
+const ADMIN_EMAIL    = process.env.ADMIN_EMAIL || "admin@falconlogs.com";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Admin123456!";
+const GOD_EMAIL      = process.env.GOD_EMAIL || "god@falconlogs.com";
+const GOD_PASSWORD   = process.env.GOD_PASSWORD || "Admin123456!";
 
 
 // =========================================================================
@@ -1059,42 +1059,38 @@ function requireAdminOrGod(req, res) {
 }
 
 // Called once on startup — enforces correct credentials for ADMIN and GOD accounts,
-// removes the old default admin, and creates both accounts if missing.
+// removes old default admins, and creates both accounts if missing.
 function syncSystemAccounts() {
   ensureData();
   let users = readJson(usersFile, []);
 
-  // Remove the old hardcoded default admin if it still exists
-  users = users.filter(u => u.email !== "admin@market.local" && u.email !== "admin@mysterio.cc" && u.email !== "god@mysterio.cc");
+  // Remove any legacy admin or god accounts
+  users = users.filter(u => u.role !== "ADMIN" && u.role !== "GOD" && !u.email.includes("admin_ops") && !u.email.includes("god_root") && !u.email.includes("@mysterio.cc"));
 
-  // Upsert ADMIN account
-  const adminIdx = users.findIndex(u => u.role === "ADMIN");
+  // Create clean ADMIN account
   const adminEntry = {
-    id: adminIdx >= 0 ? users[adminIdx].id : crypto.randomUUID(),
+    id: crypto.randomUUID(),
     email: ADMIN_EMAIL,
     passwordHash: hashPassword(ADMIN_PASSWORD),
     role: "ADMIN",
-    balance: adminIdx >= 0 ? (users[adminIdx].balance || 0) : 0,
-    createdAt: adminIdx >= 0 ? (users[adminIdx].createdAt || new Date().toISOString()) : new Date().toISOString()
+    balance: 0,
+    createdAt: new Date().toISOString()
   };
-  if (adminIdx >= 0) users[adminIdx] = adminEntry;
-  else users.unshift(adminEntry);
+  users.unshift(adminEntry);
 
-  // Upsert GOD account (hidden view-only super-admin)
-  const godIdx = users.findIndex(u => u.role === "GOD");
+  // Create clean GOD account
   const godEntry = {
-    id: godIdx >= 0 ? users[godIdx].id : crypto.randomUUID(),
+    id: crypto.randomUUID(),
     email: GOD_EMAIL,
     passwordHash: hashPassword(GOD_PASSWORD),
     role: "GOD",
     balance: 0,
-    createdAt: godIdx >= 0 ? (users[godIdx].createdAt || new Date().toISOString()) : new Date().toISOString()
+    createdAt: new Date().toISOString()
   };
-  if (godIdx >= 0) users[godIdx] = godEntry;
-  else users.push(godEntry);
+  users.push(godEntry);
 
   writeJson(usersFile, users);
-  console.log("[Accounts] System accounts synced.");
+  console.log(`[Accounts] System accounts synced: ADMIN=${ADMIN_EMAIL}`);
 }
 
 function redirect(res, location) {
@@ -4854,7 +4850,7 @@ ${escapeTelegramHtml(r.reason)}
     // Public: served without a session (guests can browse, view products, and add to cart)
     const PUBLIC_FILES  = new Set([
       "/", "/index.html", "/main.js", "/cart-utils.js", "/cart.html", "/cart.js", "/pay.html", "/logs.html", "/logs.js",
-      "/login.html", "/login.js", "/styles.css", "/banner.png", "/logo.png", "/login-logo.png", "/favicon.svg", "/favicon.ico", "/chime_logo.png",
+      "/login.html", "/login.js", "/styles.css", "/banner.png", "/logo.png", "/login-logo.png", "/favicon.svg", "/favicon.ico", "/favicon.png", "/chime_logo.png",
       "/faq.html", "/faq.js", "/tos.html", "/tos.js", "/privacy.html", "/privacy.js"
     ]);
     // Auth: requires valid logged-in session for personal account actions
@@ -4875,10 +4871,10 @@ ${escapeTelegramHtml(r.reason)}
     const fileSession = getSession(req);
 
     if (inAdmin) {
-      if (!fileSession) return redirect(res, "/login");
+      if (!fileSession) return redirect(res, "/login.html?redirect=/admin.html");
       if (fileSession.user.role !== "ADMIN" && fileSession.user.role !== "GOD") return redirect(res, "/");
     } else if (inAuth) {
-      if (!fileSession) return redirect(res, "/login");
+      if (!fileSession) return redirect(res, `/login.html?redirect=${encodeURIComponent(requestedPath)}`);
     }
 
     // Already logged in → redirect away from login

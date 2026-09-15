@@ -7,12 +7,12 @@ var currentAdminUserId = typeof window.currentAdminUserId !== "undefined" ? wind
   try {
     const res = await fetch("/api/auth/me");
     if (!res.ok) {
-      window.location.replace("/login.html");
+      window.location.replace("/login.html?redirect=/admin.html");
       return;
     }
     const user = await res.json();
     if (!user.authenticated || (user.role !== "ADMIN" && user.role !== "GOD")) {
-      window.location.replace("/login.html");
+      window.location.replace("/login.html?redirect=/admin.html");
     }
   } catch (e) {}
 })();
@@ -154,7 +154,7 @@ function siteToast(message, type = "success") {
     <span style="color:#ffffff;font-size:13px;font-weight:700;font-family:'Montserrat',sans-serif;">${escapeHtml(message)}</span>
   `;
   toast.style.cssText = `
-    background:#090b14;
+    background:#120e0a;
     border:1px solid rgba(234, 88, 12,0.25);
     border-radius:8px;
     box-shadow:0 10px 30px rgba(0,0,0,0.85);
@@ -1421,6 +1421,8 @@ document?.addEventListener("click", (e) => {
       if (typeof loadTransactionsTab === "function") loadTransactionsTab();
     } else if (t === "refunds") {
       if (typeof loadRefunds === "function") loadRefunds();
+    } else if (t === "replacements") {
+      if (typeof loadAdminReplacementTickets === "function") loadAdminReplacementTickets();
     } else if (t === "coupons") {
       if (typeof loadCouponsTab === "function") loadCouponsTab();
     } else if (t === "announcements") {
@@ -1446,7 +1448,7 @@ document.querySelector("#logoutBtn")?.addEventListener("click", async () => {
   location.href = "/login.html";
 });
 
-document?.addEventListener("DOMContentLoaded", () => {
+function initAdminMobileAndStats() {
   // Mobile Drawer Navigation Toggles
   const menuToggle = document.getElementById("adminMobileMenuToggle");
   const sidebar = document.getElementById("adminSidebar");
@@ -1482,7 +1484,13 @@ document?.addEventListener("DOMContentLoaded", () => {
 
   // Load dashboard stats once on initial page load (no auto-polling, no auto-reloading)
   loadAnalyticsStats().catch(err => console.error("loadAnalyticsStats error:", err));
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initAdminMobileAndStats);
+} else {
+  initAdminMobileAndStats();
+}
 
 refreshAdminData().catch(err => console.error("refreshAdminData error:", err));
 // Preload bases so the Card Inventory tab is instant when opened
@@ -2634,7 +2642,7 @@ function renderFilteredAdminTickets(tickets) {
 }
 
 // Search ticket input listener
-document.addEventListener("DOMContentLoaded", () => {
+function initTicketSearchInput() {
   const searchInput = document.getElementById("adminTicketSearchInput");
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
@@ -2653,7 +2661,13 @@ document.addEventListener("DOMContentLoaded", () => {
       renderFilteredAdminTickets(filtered);
     });
   }
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initTicketSearchInput);
+} else {
+  initTicketSearchInput();
+}
 
 function showAdminChatPlaceholder() {
   const placeholder = document.getElementById("adminChatPlaceholder");
@@ -3786,12 +3800,58 @@ window.deleteUser = async function(userId) {
 };
 
 document.getElementById("openNewStaffModalBtn")?.addEventListener("click", () => {
-  document.getElementById("staffFormStatus").textContent = "";
-  document.getElementById("createStaffForm").reset();
-  document.getElementById("staffFormModalOverlay").classList.add("active");
+  const status = document.getElementById("staffFormStatus");
+  if (status) status.textContent = "";
+  document.getElementById("createStaffForm")?.reset();
+  document.getElementById("staffFormModalOverlay")?.classList.add("active");
 });
 document.getElementById("closeStaffFormModal")?.addEventListener("click", () => {
-  document.getElementById("staffFormModalOverlay").classList.remove("active");
+  document.getElementById("staffFormModalOverlay")?.classList.remove("active");
 });
 document.getElementById("cancelStaffFormBtn")?.addEventListener("click", () => {
-  d
+  document.getElementById("staffFormModalOverlay")?.classList.remove("active");
+});
+document.getElementById("createStaffForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const emailInput = document.getElementById("staffEmailInput");
+  const passwordInput = document.getElementById("staffPasswordInput");
+  const status = document.getElementById("staffFormStatus");
+  if (!emailInput || !passwordInput) return;
+  
+  if (status) {
+    status.textContent = "Creating...";
+    status.style.color = "var(--muted)";
+  }
+  
+  try {
+    const res = await fetch("/api/admin/users/create-staff", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: emailInput.value.trim(),
+        password: passwordInput.value
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      if (status) {
+        status.textContent = data.error || "Failed to create staff.";
+        status.style.color = "var(--red)";
+      }
+      return;
+    }
+    if (status) {
+      status.textContent = "Staff account created successfully!";
+      status.style.color = "#22c55e";
+    }
+    setTimeout(() => {
+      document.getElementById("staffFormModalOverlay")?.classList.remove("active");
+      if (typeof refreshAdminData === "function") refreshAdminData();
+    }, 800);
+  } catch (err) {
+    if (status) {
+      status.textContent = "Network error. Try again.";
+      status.style.color = "var(--red)";
+    }
+  }
+});

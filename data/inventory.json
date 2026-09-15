@@ -29,8 +29,8 @@
     "billing": "Y",
     "price": 10,
     "city": "Los Angeles",
-    "isSold": true,
-    "soldTo": "400606fe-9059-438c-8e26-290a50099db2",
-    "orderId": "ORD-94C467AB"
+    "isSold": false,
+    "soldTo": null,
+    "orderId": null
   }
 ]

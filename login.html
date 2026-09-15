@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=999">
-    <link rel="icon" type="image/png" href="/favicon.png?v=999">
-    <link rel="shortcut icon" href="/favicon.ico?v=999">
-    <link rel="apple-touch-icon" href="/favicon.png?v=999">
+    <link rel="icon" type="image/png" href="/logo.png?v=1001">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1001">
+    <link rel="shortcut icon" href="/favicon.ico?v=1001">
+    <link rel="apple-touch-icon" href="/logo.png?v=1001">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Login - Falcon Logs</title>
-    
-    <link rel="alternate icon" type="image/png" href="/logo.png">
+    <link rel="icon" type="image/png" href="/logo.png?v=1001">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1001">
+    <link rel="shortcut icon" href="/favicon.ico?v=1001">
+    <link rel="apple-touch-icon" href="/logo.png?v=1001">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
@@ -21,7 +23,7 @@
       }
 
       body {
-        background: #08090d;
+        background: #000000;
         color: #ffffff;
         font-family: 'Montserrat', sans-serif;
         min-height: 100vh;
@@ -32,7 +34,19 @@
         overflow-x: hidden;
       }
 
+      .login-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
+      }
+
       .standalone-login-wrap {
+        position: relative;
+        z-index: 1;
         width: 100%;
         max-width: 320px;
         display: flex;
@@ -43,7 +57,8 @@
       .login-brand-link {
         display: flex;
         justify-content: center;
-        margin-bottom: 22px;
+        margin-top: 14px;
+        margin-bottom: 14px;
         text-decoration: none;
       }
 
@@ -51,7 +66,7 @@
         width: 155px;
         height: auto;
         display: block;
-        filter: drop-shadow(0 4px 16px rgba(234, 88, 12, 0.18));
+        filter: none;
         transition: transform 0.2s ease;
       }
 
@@ -83,7 +98,7 @@
       .form-label {
         font-size: 11.5px;
         font-weight: 600;
-        color: #71717a;
+        color: #888888;
         margin-bottom: 5px;
         letter-spacing: 0.2px;
       }
@@ -96,8 +111,8 @@
       .form-input {
         width: 100%;
         height: 40px;
-        background: #13141b;
-        border: 1px solid #222430;
+        background: #0d0d0d;
+        border: 1px solid #222222;
         border-radius: 4px;
         padding: 0 12px;
         color: #ffffff;
@@ -109,13 +124,13 @@
       }
 
       .form-input::placeholder {
-        color: #4b4d5a;
+        color: #555555;
         font-size: 12.5px;
       }
 
       .form-input:focus {
         border-color: #ea580c;
-        background: #171922;
+        background: #141414;
       }
 
       .form-input-wrap .toggle-pass-btn {
@@ -125,7 +140,7 @@
         transform: translateY(-50%);
         background: transparent;
         border: none;
-        color: #64748b;
+        color: #777777;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -167,7 +182,7 @@
       .login-toggle-row {
         margin-top: 14px;
         font-size: 11.5px;
-        color: #71717a;
+        color: #777777;
         text-align: center;
       }
 
@@ -191,7 +206,7 @@
         display: block;
         text-align: center;
         margin-top: 20px;
-        color: #4b4d5a;
+        color: #555555;
         font-size: 11px;
         font-weight: 500;
         text-decoration: none;
@@ -199,7 +214,7 @@
       }
 
       .login-back-link:hover {
-        color: #94a3b8;
+        color: #aaaaaa;
       }
 
       .login-alert-msg {
@@ -218,6 +233,7 @@
     </style>
   </head>
   <body>
+    <canvas id="particlesCanvas" class="login-particles"></canvas>
     <div class="standalone-login-wrap">
       <!-- LOGO -->
       <a href="/" class="login-brand-link" aria-label="Falcon Logs Home">
@@ -333,7 +349,7 @@
         togglePassBtn.addEventListener('click', () => {
           const isPass = passInput.type === 'password';
           passInput.type = isPass ? 'text' : 'password';
-          togglePassBtn.style.color = isPass ? '#ea580c' : '#64748b';
+          togglePassBtn.style.color = isPass ? '#ea580c' : '#777777';
         });
       }
 
@@ -387,11 +403,13 @@
               });
               const loginData = await loginRes.json();
               if (loginRes.ok) {
-                if (loginData.user && (loginData.user.role === "ADMIN" || loginData.user.role === "GOD")) {
-                  window.location.href = "/admin.html";
+                let target = urlParams.get('redirect');
+                if (loginData.role === "ADMIN" || loginData.role === "GOD") {
+                  target = (target && !['/logs', '/', '/index.html'].includes(target)) ? target : '/admin.html';
                 } else {
-                  window.location.href = "/dashboard.html";
+                  target = target || "/logs";
                 }
+                window.location.href = target;
               } else {
                 setAuthMode(false);
                 errorMsg.textContent = "Registered! Please sign in.";
@@ -400,11 +418,13 @@
                 submitBtn.textContent = "Login";
               }
             } else {
-              if (data.user && (data.user.role === "ADMIN" || data.user.role === "GOD")) {
-                window.location.href = "/admin.html";
+              let target = urlParams.get('redirect');
+              if (data.role === "ADMIN" || data.role === "GOD") {
+                target = (target && !['/logs', '/', '/index.html'].includes(target)) ? target : '/admin.html';
               } else {
-                window.location.href = "/dashboard.html";
+                target = target || "/logs";
               }
+              window.location.href = target;
             }
           } else {
             errorMsg.textContent = data.error || (isRegister ? "Registration failed." : "Invalid email or password.");
@@ -419,6 +439,108 @@
           submitBtn.textContent = isRegister ? "Register" : "Login";
         }
       });
+
+      // ==========================================
+      // RISING ORANGE PARTICLES ENGINE
+      // ==========================================
+      (function() {
+        const canvas = document.getElementById('particlesCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = 0;
+        let height = 0;
+        let animationFrameId = null;
+
+        const colors = [
+          { r: 234, g: 88, b: 12 },   // #ea580c (Falcon Orange)
+          { r: 249, g: 115, b: 22 },  // #f97316 (Vibrant Orange)
+          { r: 251, g: 146, b: 60 },  // #fb923c (Bright Orange)
+          { r: 253, g: 186, b: 116 }, // #fdba74 (Soft Orange Amber)
+          { r: 194, g: 65, b: 12 }    // #c2410c (Deep Ember)
+        ];
+
+        function resize() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          width = window.innerWidth;
+          height = window.innerHeight;
+          canvas.width = Math.floor(width * dpr);
+          canvas.height = Math.floor(height * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        const PARTICLE_COUNT = 60;
+        const particles = [];
+
+        class Particle {
+          constructor(initialRandomY = true) {
+            this.reset(initialRandomY);
+          }
+
+          reset(initialRandomY = false) {
+            this.x = Math.random() * width;
+            this.y = initialRandomY ? Math.random() * height : height + 10 + Math.random() * 20;
+            this.radius = Math.random() * 1.6 + 0.8; // 0.8px to 2.4px
+            this.speedY = -(Math.random() * 0.75 + 0.35); // upwards float
+            this.speedX = (Math.random() - 0.5) * 0.3; // gentle drift
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.baseAlpha = Math.random() * 0.45 + 0.25;
+            this.alpha = this.baseAlpha;
+            this.twinkleSpeed = Math.random() * 0.03 + 0.015;
+            this.twinkleAngle = Math.random() * Math.PI * 2;
+          }
+
+          update() {
+            this.y += this.speedY;
+            this.x += this.speedX + Math.sin(this.twinkleAngle) * 0.25;
+            this.twinkleAngle += this.twinkleSpeed;
+            this.alpha = Math.max(0.1, this.baseAlpha + Math.sin(this.twinkleAngle) * 0.15);
+
+            if (this.y < -15 || this.x < -25 || this.x > width + 25) {
+              this.reset(false);
+            }
+          }
+
+          draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`;
+            ctx.fill();
+          }
+        }
+
+        function initParticles() {
+          particles.length = 0;
+          for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push(new Particle(true));
+          }
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, width, height);
+          for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+          }
+          animationFrameId = requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+          resize();
+          initParticles();
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+          } else {
+            animationFrameId = requestAnimationFrame(animate);
+          }
+        });
+
+        resize();
+        initParticles();
+        animate();
+      })();
     </script>
   </body>
 </html>

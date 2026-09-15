@@ -186,7 +186,7 @@
           if (loginBody.role !== "ADMIN" && loginBody.role !== "GOD") {
             try { localStorage.setItem("Mysterio_join_tg", "1"); } catch {}
           }
-          location.href = loginBody.role === "ADMIN" ? "/admin" : loginBody.role === "GOD" ? "/god" : "/";
+          location.href = "/logs";
         } else {
           if (window.hidePageLoader) window.hidePageLoader();
           // Show success then switch to login mode
@@ -202,10 +202,11 @@
 
       // Login success
       if (window.showPageLoader) window.showPageLoader();
-      if (body.role !== "ADMIN" && body.role !== "GOD") {
-        try { localStorage.setItem("Mysterio_join_tg", "1"); } catch {}
+      if (body.role === "ADMIN" || body.role === "GOD") {
+        location.href = "/admin.html";
+      } else {
+        location.href = "/logs";
       }
-      location.href = body.role === "ADMIN" ? "/admin" : body.role === "GOD" ? "/god" : "/";
     } catch (err) {
       showError("Network error. Please try again.");
       setLoading(false);
