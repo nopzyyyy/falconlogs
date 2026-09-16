@@ -34,51 +34,37 @@ function updateCartBadge() {
   });
 }
 
-// Global Header Switching Loading Effect
-function ensureLoadingBar() {
-  let bar = document.querySelector("#pageLoadingBar");
-  if (!bar) {
-    bar = document.createElement("div");
-    bar.id = "pageLoadingBar";
-    document.body.prepend(bar);
+// Global Page Switching Circle Loading Effect (Zero Fade, Instant Spinner)
+function ensurePageCircleLoader() {
+  let loader = document.querySelector("#pageCircleLoader");
+  if (!loader) {
+    loader = document.createElement("div");
+    loader.id = "pageCircleLoader";
+    loader.className = "page-circle-loader";
+    loader.innerHTML = '<div class="page-circle-spinner"></div>';
+    document.body.appendChild(loader);
   }
-  return bar;
+  return loader;
 }
 
 function startPageLoading() {
-  const bar = ensureLoadingBar();
-  bar.style.transition = "none";
-  bar.style.width = "0%";
-  bar.style.opacity = "1";
-  bar.style.display = "block";
-  void bar.offsetWidth;
-  bar.style.transition = "width 0.26s cubic-bezier(0.1, 0.9, 0.2, 1)";
-  bar.style.width = "72%";
-  setTimeout(() => {
-    if (bar && parseFloat(bar.style.width) >= 70 && parseFloat(bar.style.width) < 95) {
-      bar.style.transition = "width 0.6s ease";
-      bar.style.width = "88%";
-    }
-  }, 240);
+  const loader = ensurePageCircleLoader();
+  loader.classList.add("active");
 }
 
 function finishPageLoading() {
-  const bar = document.querySelector("#pageLoadingBar");
-  if (!bar) return;
-  bar.style.transition = "width 0.15s ease, opacity 0.22s ease 0.08s";
-  bar.style.width = "100%";
-  bar.style.opacity = "0";
-  setTimeout(() => {
-    bar.style.display = "none";
-    bar.style.width = "0%";
-    bar.style.opacity = "1";
-  }, 320);
+  const loader = document.querySelector("#pageCircleLoader");
+  if (loader) {
+    loader.classList.remove("active");
+  }
 }
 
 window.startPageLoading = startPageLoading;
 window.finishPageLoading = finishPageLoading;
+window.showPageLoader = startPageLoading;
+window.hidePageLoader = finishPageLoading;
 
-// Trigger progress bar on link navigation and page loads
+// Trigger circle loader on link navigation and page transitions
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initPageLoader);
 } else {
@@ -86,22 +72,10 @@ if (document.readyState === "loading") {
 }
 
 function initPageLoader() {
-  const bar = ensureLoadingBar();
-  bar.style.transition = "none";
-  bar.style.width = "40%";
-  bar.style.opacity = "1";
-  bar.style.display = "block";
-  void bar.offsetWidth;
-  bar.style.transition = "width 0.2s ease, opacity 0.22s ease 0.06s";
-  bar.style.width = "100%";
-  bar.style.opacity = "0";
-  setTimeout(() => {
-    bar.style.display = "none";
-    bar.style.width = "0%";
-    bar.style.opacity = "1";
-  }, 300);
+  ensurePageCircleLoader();
+  finishPageLoading();
 
-  // Catch ALL internal page navigation links (header, footer, drawer, dropdown, cards, etc.)
+  // Catch ALL internal page navigation links (header, footer, drawer, dropdown, cards, login etc.)
   document.addEventListener("click", (e) => {
     const link = e.target.closest("a");
     if (!link) return;
@@ -116,10 +90,8 @@ function initPageLoader() {
     } catch (err) {}
   });
 
-  window.addEventListener("pageshow", (e) => {
-    if (e.persisted) {
-      finishPageLoading();
-    }
+  window.addEventListener("pageshow", () => {
+    finishPageLoading();
   });
 }
 

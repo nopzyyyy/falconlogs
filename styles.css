@@ -2633,35 +2633,42 @@ input[type=number] {
   to { transform: rotate(360deg); }
 }
 
-/* Global Header Switching Loading Bar (Zero Glow, Clean Flat Line) */
+/* Global Page Switching Circle Loader (Zero Fade, Clean Instant Spinner) */
 #pageLoadingBar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2.5px;
-  width: 0%;
-  background: #ea580c;
-  box-shadow: none !important;
-  z-index: 9999999;
-  pointer-events: none;
-  transition: width 0.22s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.22s ease;
-  display: block;
-}
-
-#pageLoadingBar::after {
   display: none !important;
 }
 
-/* Smooth Page Entrance Transition */
-@keyframes pageEnterFade {
-  from {
-    opacity: 0.88;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.page-circle-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 8, 5, 0.72);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999999;
+  pointer-events: all;
+}
+
+.page-circle-loader.active {
+  display: flex !important;
+}
+
+.page-circle-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3.5px solid rgba(234, 88, 12, 0.22);
+  border-top-color: #ea580c;
+  border-radius: 50%;
+  animation: circleSpin 0.7s linear infinite;
+  box-sizing: border-box;
+}
+
+@keyframes circleSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .store-shell,
@@ -2673,7 +2680,7 @@ input[type=number] {
 .faq-shell,
 .tos-shell,
 .privacy-shell {
-  animation: pageEnterFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: none !important;
 }
 
 /* =========================================================
