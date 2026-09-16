@@ -624,25 +624,41 @@ function initFalconHeroFire() {
     };
   }
 
+  // 80 verified body points covering wings, spine, chest, claws, and tail
+  const BODY_POINTS = [
+    [0.612, 0.316], [0.554, 0.514], [0.439, 0.508], [0.503, 0.714], [0.505, 0.78],
+    [0.552, 0.662], [0.774, 0.771], [0.427, 0.366], [0.451, 0.225], [0.534, 0.717],
+    [0.628, 0.693], [0.578, 0.781], [0.528, 0.508], [0.484, 0.642], [0.755, 0.771],
+    [0.727, 0.773], [0.371, 0.205], [0.388, 0.824], [0.631, 0.705], [0.501, 0.317],
+    [0.268, 0.865], [0.702, 0.383], [0.58, 0.717], [0.386, 0.465], [0.641, 0.338],
+    [0.634, 0.654], [0.553, 0.31], [0.523, 0.604], [0.217, 0.189], [0.602, 0.607],
+    [0.478, 0.762], [0.79, 0.578], [0.374, 0.402], [0.5, 0.634], [0.538, 0.343],
+    [0.504, 0.329], [0.501, 0.283], [0.346, 0.453], [0.404, 0.473], [0.761, 0.658],
+    [0.677, 0.655], [0.32, 0.779], [0.489, 0.432], [0.459, 0.445], [0.281, 0.838],
+    [0.31, 0.8], [0.4, 0.885], [0.641, 0.768], [0.34, 0.829], [0.642, 0.416],
+    [0.203, 0.188], [0.861, 0.595], [0.505, 0.399], [0.302, 0.851], [0.454, 0.806],
+    [0.918, 0.695], [0.343, 0.848], [0.602, 0.312], [0.479, 0.364], [0.353, 0.38],
+    [0.287, 0.199], [0.328, 0.152], [0.596, 0.586], [0.483, 0.763], [0.42, 0.29],
+    [0.204, 0.324], [0.289, 0.292], [0.525, 0.503], [0.595, 0.764], [0.466, 0.454],
+    [0.402, 0.42], [0.604, 0.349], [0.349, 0.534], [0.668, 0.68], [0.353, 0.287],
+    [0.486, 0.833], [0.224, 0.157], [0.559, 0.299], [0.604, 0.547], [0.372, 0.785]
+  ];
+
   function spawnParticle(bounds) {
-    // Contour of falcon's back and wings (strictly behind head/chest)
-    const t = Math.random();
-    const normX = 0.18 + t * 0.45;
-    const normY = 0.11 + Math.pow(t, 1.35) * 0.35;
+    // Sample across the entire body of the falcon
+    const pt = BODY_POINTS[Math.floor(Math.random() * BODY_POINTS.length)];
+    const x = bounds.fx + bounds.fw * pt[0] + (Math.random() - 0.5) * 4;
+    const y = bounds.fy + bounds.fh * pt[1] + (Math.random() - 0.5) * 2;
 
-    const x = bounds.fx + bounds.fw * normX + (Math.random() - 0.5) * 3;
-    const y = bounds.fy + bounds.fh * normY + (Math.random() - 0.5) * 2;
+    // Laser-straight horizontal speedlines
+    const isFastStreak = Math.random() < 0.35;
+    const speed = isFastStreak ? (Math.random() * 8.0 + 12.0) : (Math.random() * 6.0 + 7.0); // 7 to 20 px/frame
+    const vx = -speed; // 100% straight left
+    const vy = 0; // 100% horizontal
 
-    // Laser-straight horizontal trajectory (less than 2 degrees spread)
-    const isSupersonic = Math.random() < 0.32;
-    const speed = isSupersonic ? (Math.random() * 8.0 + 13.0) : (Math.random() * 6.5 + 7.5); // 7.5 to 21 px/frame
-    const angle = Math.PI + (Math.random() - 0.5) * 0.035; // virtually 180 deg straight left
-    const vx = Math.cos(angle) * speed;
-    const vy = Math.sin(angle) * speed;
-
-    const maxLife = isSupersonic ? (Math.random() * 12 + 10) : (Math.random() * 18 + 14);
-    const size = isSupersonic ? (Math.random() * 1.5 + 1.2) : (Math.random() * 2.8 + 1.5);
-    const streakLength = isSupersonic ? (Math.random() * 1.8 + 3.2) : (Math.random() * 1.2 + 2.2);
+    const maxLife = isFastStreak ? (Math.random() * 12 + 10) : (Math.random() * 18 + 14);
+    const lineWidth = isFastStreak ? (Math.random() * 0.8 + 1.2) : (Math.random() * 1.0 + 1.4);
+    const streakLength = isFastStreak ? (Math.random() * 2.0 + 3.2) : (Math.random() * 1.2 + 2.0);
 
     return {
       x,
@@ -651,9 +667,9 @@ function initFalconHeroFire() {
       vy,
       life: 1.0,
       decay: 1.0 / maxLife,
-      size,
+      lineWidth,
       streakLength,
-      isSupersonic
+      isFastStreak
     };
   }
 
@@ -667,7 +683,7 @@ function initFalconHeroFire() {
 
     const bounds = getFalconBounds();
     if (bounds.fw > 0 && bounds.fh > 0) {
-      // Spawn 3-5 particles every frame for a dense straight fire jet stream
+      // Spawn 3-5 speedlines every frame across the entire body
       const spawnCount = Math.floor(Math.random() * 3) + 3;
       for (let i = 0; i < spawnCount; i++) {
         if (particles.length < 110) {
@@ -682,8 +698,7 @@ function initFalconHeroFire() {
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.x += p.vx;
-      p.y += p.vy;
-      p.vx *= 0.988; // minimal drag to maintain high speed straight line
+      p.vx *= 0.988; // minimal drag to maintain straight high speed line
       p.life -= p.decay;
 
       if (p.life <= 0 || p.x < 0 || p.y < 0 || p.x > width || p.y > height) {
@@ -691,46 +706,38 @@ function initFalconHeroFire() {
         continue;
       }
 
-      const curSize = p.size * (0.3 + 0.7 * p.life);
       const alpha = Math.min(1, p.life * 1.3);
 
-      // Rich supersonic flame colors
+      // Pure Falcon Orange palette - NO white/yellow
       let r, g, b;
-      if (p.life > 0.7) {
-        // Blazing core hot yellow/gold
-        r = 255;
-        g = Math.floor(200 + 40 * p.life);
-        b = Math.floor(60 + 70 * p.life);
-      } else if (p.life > 0.3) {
-        // High-speed Falcon orange
-        r = 245;
-        g = Math.floor(95 + 65 * ((p.life - 0.3) / 0.4));
-        b = 18;
+      if (p.life > 0.6) {
+        // Bright flame orange (vibrant #fb923c)
+        r = 251;
+        g = Math.floor(130 + 20 * p.life);
+        b = 30;
+      } else if (p.life > 0.25) {
+        // Falcon brand orange (#ea580c)
+        r = 234;
+        g = Math.floor(88 + 30 * ((p.life - 0.25) / 0.35));
+        b = 12;
       } else {
-        // Trailing ember red
-        r = Math.floor(190 + 40 * (p.life / 0.3));
-        g = Math.floor(30 + 40 * (p.life / 0.3));
-        b = 8;
+        // Deep burnt ember orange (#c2410c)
+        r = Math.floor(190 + 35 * (p.life / 0.25));
+        g = Math.floor(45 + 30 * (p.life / 0.25));
+        b = 10;
       }
 
-      // Straight supersonic fire streak (trails strictly behind moving particle)
+      // Straight supersonic speed line (NO stars/dots, pure lines only)
       const grow = Math.min(1.0, (1.0 - p.life) * 4.0);
       const tailX = p.x - p.vx * p.streakLength * grow;
-      const tailY = p.y - p.vy * p.streakLength * grow;
 
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
-      ctx.lineTo(tailX, tailY);
-      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.85})`;
-      ctx.lineWidth = curSize * (p.isSupersonic ? 0.75 : 0.95);
+      ctx.lineTo(tailX, p.y);
+      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.9})`;
+      ctx.lineWidth = p.lineWidth;
       ctx.lineCap = "round";
       ctx.stroke();
-
-      // Sharp glowing projectile tip
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, curSize * 0.55, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-      ctx.fill();
     }
 
     ctx.restore();
