@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "mysterio-storefront",
+      name: "falcon-storefront",
       script: "./server.js",
       env: {
         PORT: 3001,
@@ -9,23 +9,23 @@ module.exports = {
       }
     },
     {
-      name: "mysterio-gateway-bot",
+      name: "falcon-gateway-bot",
       script: "./gateway_bot.js"
     },
     {
-      name: "mysterio-payments-bot",
+      name: "falcon-payments-bot",
       script: "./payments_bot.js"
     },
     {
-      name: "mysterio-dashboard-bot",
+      name: "falcon-dashboard-bot",
       script: "./dashboard_bot.js"
     },
     {
-      name: "mysterio-success-bot",
+      name: "falcon-success-bot",
       script: "./success_bot.js"
     },
     {
-      name: "mysterio-replacement-bot",
+      name: "falcon-replacement-bot",
       script: "./replacement_bot.js"
     }
   ]
