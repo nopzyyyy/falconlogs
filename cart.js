@@ -115,10 +115,6 @@ async function fetchUserStatus() {
   } catch (e) {
     currentUser = null;
   }
-  const authNotice = document.querySelector("#checkoutAuthNotice");
-  if (authNotice) {
-    authNotice.style.display = currentUser ? "none" : "flex";
-  }
   updateCheckoutButtonText();
 }
 
@@ -330,7 +326,7 @@ if (checkoutSubmitBtn) {
 
     if (!currentUser) {
       showMysterioAlert({ message: "Please log in or create an account before checking out.", title: "Login Required", isError: true });
-      setTimeout(() => window.location.href = "/login.html", 1200);
+      setTimeout(() => window.location.href = "/login.html?redirect=/cart.html", 1200);
       return;
     }
 
