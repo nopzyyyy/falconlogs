@@ -1,6 +1,6 @@
 let cart = [];
-let selectedPaymentMethod = "balance";
-let selectedCoin = "btc";
+let selectedPaymentMethod = "crypto";
+let selectedCoin = null;
 let selectedNetwork = null;
 let appliedCoupon = null;
 let currentUser = null;
@@ -208,13 +208,23 @@ function renderCart() {
 }
 
 function updateSelectedCoinDisplay() {
-  const meta = COIN_META[selectedCoin] || COIN_META.btc;
   const iconEl = document.querySelector("#selectedCoinIcon");
   const titleEl = document.querySelector("#selectedCoinTitle");
   const subEl = document.querySelector("#selectedCoinSub");
+  const btnText = document.querySelector("#changeCoinBtnText");
 
+  if (!selectedCoin) {
+    if (iconEl) iconEl.src = "/icons/crypto.svg";
+    if (titleEl) titleEl.textContent = "Cryptocurrency";
+    if (subEl) subEl.textContent = "Choose coin & network";
+    if (btnText) btnText.textContent = "Select Coin";
+    return;
+  }
+
+  const meta = COIN_META[selectedCoin] || COIN_META.btc;
   if (iconEl) iconEl.src = meta.icon;
   if (titleEl) titleEl.textContent = `Pay with ${meta.name}`;
+  if (btnText) btnText.textContent = "Change";
   if (subEl) {
     let networkText = "";
     if ((selectedCoin === "usdt" || selectedCoin === "usdc") && selectedNetwork) {
@@ -234,9 +244,13 @@ function updateCheckoutButtonText() {
   if (selectedPaymentMethod === "balance") {
     btn.textContent = "Buy with Store Balance";
   } else if (selectedPaymentMethod === "crypto") {
-    const meta = COIN_META[selectedCoin] || COIN_META.btc;
-    const netUpper = selectedNetwork ? ` (${selectedNetwork.toUpperCase()})` : "";
-    btn.textContent = `Pay with ${meta.name}${netUpper}`;
+    if (!selectedCoin) {
+      btn.textContent = "Select Coin & Pay →";
+    } else {
+      const meta = COIN_META[selectedCoin] || COIN_META.btc;
+      const netUpper = selectedNetwork ? ` (${selectedNetwork.toUpperCase()})` : "";
+      btn.textContent = `Pay with ${meta.name}${netUpper}`;
+    }
   } else {
     btn.textContent = "Proceed to Payment";
   }
@@ -302,7 +316,7 @@ if (choiceCrypto) {
     const isChangeBtn = e.target.closest("#openCoinsDrawerBtn");
     const wasAlreadyCrypto = selectedPaymentMethod === "crypto";
     setPaymentMethod("crypto");
-    if (isChangeBtn || wasAlreadyCrypto) {
+    if (isChangeBtn || wasAlreadyCrypto || !selectedCoin) {
       openCoinsDrawer();
     }
   });
@@ -445,6 +459,14 @@ if (checkoutSubmitBtn) {
     if (!currentUser) {
       showMysterioAlert({ message: "Please log in or create an account before checking out.", title: "Login Required", isError: true });
       setTimeout(() => window.location.href = "/login.html?redirect=/cart.html", 1200);
+      return;
+    }
+
+    if (selectedPaymentMethod === "crypto" && !selectedCoin) {
+      openCoinsDrawer();
+      if (typeof showMysterioAlert === "function") {
+        showMysterioAlert({ message: "Please select a cryptocurrency and network to proceed.", title: "Select Coin", isError: false });
+      }
       return;
     }
 

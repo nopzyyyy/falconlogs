@@ -114,7 +114,7 @@ async function handleMessage(msg) {
   if (text.startsWith("/start")) {
     await telegramApi("sendMessage", {
       chat_id: chatId,
-      text: "👋 Welcome to the <b>Mysterio Fulfillment Bot</b>!\n\nI will notify you when buyers pay for custom setup products. To complete an order, use: \n<code>/done &lt;orderID&gt;</code>",
+      text: "👋 Welcome to the <b>Falcon Logs Fulfillment Bot</b>!\n\nI will notify you when buyers pay for custom setup products. To complete an order, use: \n<code>/done &lt;orderID&gt;</code>",
       parse_mode: "HTML"
     });
     return;
@@ -221,7 +221,7 @@ async function alignOffset(state) {
 
 // Bot main loop
 async function runBot() {
-  console.log("Starting Mysterio Fulfillment Bot...");
+  console.log("Starting Falcon Logs Fulfillment Bot...");
   const state = loadState();
 
   try {

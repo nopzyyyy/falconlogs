@@ -189,7 +189,7 @@ async function handleUpdate(update, state) {
       // Standard /start without order ID
       await telegramApi("sendMessage", {
         chat_id: chatId,
-        text: `👋 <b>Welcome to Mysterio Payments Bot!</b>\n\nThis bot processes secure payments for Mysterio.cc using Telegram Stars (purchasable via Apple Pay or Google Pay).\n\n🛒 To buy accounts or cards, please add them to your cart on <b>mysterio.cc</b> and choose Apple Pay & GPay at checkout.`,
+        text: `👋 <b>Welcome to Falcon Logs Payments Bot!</b>\n\nThis bot processes secure payments for Falcon Logs using Telegram Stars (purchasable via Apple Pay or Google Pay).\n\n🛒 To buy accounts or cards, please add them to your cart on <b>Falcon Logs</b> and choose Apple Pay & GPay at checkout.`,
         parse_mode: "HTML"
       });
       return;

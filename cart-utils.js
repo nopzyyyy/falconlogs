@@ -802,7 +802,7 @@ function showMysterioAlert(opts) {
         <div class="mysterio-alert-head">
           <div class="mysterio-alert-title-wrap">
             <div class="mysterio-alert-title" id="mysterioAlertTitle">Notice</div>
-            <div class="mysterio-alert-subtitle" id="mysterioAlertSubtitle">Mysterio Store</div>
+            <div class="mysterio-alert-subtitle" id="mysterioAlertSubtitle">Falcon Logs</div>
           </div>
         </div>
         <div class="mysterio-alert-body" id="mysterioAlertBody"></div>
@@ -822,7 +822,7 @@ function showMysterioAlert(opts) {
   }
 
   titleEl.textContent = opts.title || (opts.isMinimalError ? "Minimum Amount Required" : "Notice");
-  subEl.textContent = opts.subtitle || (opts.isMinimalError ? "NOWPayments Requirement" : "Mysterio Store");
+  subEl.textContent = opts.subtitle || (opts.isMinimalError ? "NOWPayments Requirement" : "Falcon Logs");
 
   if (opts.isMinimalError && (opts.gbpMin || opts.usdMin)) {
     const minVal = Number(opts.gbpMin || opts.usdMin || 0);

@@ -130,10 +130,10 @@ async function handleUpdate(update) {
       // Normal /start
       await tg("sendMessage", {
         chat_id: chatId,
-        text: `🔄 <b>Mysterio Replacement Bot</b>\n\n` +
+        text: `🔄 <b>Falcon Logs Replacement Bot</b>\n\n` +
           `Welcome! This bot handles automatic replacements for your purchases.\n\n` +
           `<b>How to use:</b>\n` +
-          `1️⃣ Go to your <b>Orders</b> page on mysterio.cc\n` +
+          `1️⃣ Go to your <b>Orders</b> page on Falcon Logs\n` +
           `2️⃣ Click the <b>\"Replace\"</b> button on any eligible item\n` +
           `3️⃣ You'll be redirected here with your order loaded\n` +
           `4️⃣ Tap the item you want replaced\n` +
@@ -160,7 +160,7 @@ async function handleUpdate(update) {
     if (text === "/myorders" || text === "/orders") {
       await tg("sendMessage", {
         chat_id: chatId,
-        text: "📦 To view your orders and request replacements, visit:\n\n🌐 <b>mysterio.cc/orders</b>\n\nThen click <b>Replace</b> on any eligible item to open it here.",
+        text: "📦 To view your orders and request replacements, visit:\n\n🌐 <b>Orders Page</b>\n\nThen click <b>Replace</b> on any eligible item to open it here.",
         parse_mode: "HTML"
       });
       return;
@@ -426,7 +426,7 @@ async function handleReplacement(cq, chatId, orderId, itemIndex) {
 
 // ─── Main loop ──────────────────────────────────────────────────────────────
 async function runBot() {
-  console.log("🔄 Starting Mysterio Replacement Bot (Auto-Replace)...");
+  console.log("🔄 Starting Falcon Logs Replacement Bot (Auto-Replace)...");
   console.log(`   Bot: @${BOT_USERNAME}`);
   console.log(`   Admin notifications: ${ADMIN_ID}`);
 

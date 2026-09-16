@@ -134,7 +134,7 @@
               </div>
 
               <!-- Balance Option -->
-              <div class="cart-method-choice active" id="choiceMethodBalance" data-method="balance">
+              <div class="cart-method-choice" id="choiceMethodBalance" data-method="balance">
                 <div class="method-choice-left">
                   <div class="method-radio"></div>
                   <img src="/icons/balance.svg?v=2" alt="Balance" width="28" height="28" class="method-icon-img">
@@ -146,17 +146,17 @@
               </div>
 
               <!-- Crypto Option (With Coin Drawer Trigger) -->
-              <div class="cart-method-choice" id="choiceMethodCrypto" data-method="crypto">
+              <div class="cart-method-choice active" id="choiceMethodCrypto" data-method="crypto">
                 <div class="method-choice-left">
                   <div class="method-radio"></div>
-                  <img src="/icons/btc.svg" alt="Crypto" width="28" height="28" id="selectedCoinIcon" class="method-icon-img">
+                  <img src="/icons/crypto.svg" alt="Crypto" width="28" height="28" id="selectedCoinIcon" class="method-icon-img">
                   <div class="method-choice-info">
-                    <span class="method-choice-title" id="selectedCoinTitle">Pay with Bitcoin</span>
-                    <span class="method-choice-sub" id="selectedCoinSub">BTC · ~30 min</span>
+                    <span class="method-choice-title" id="selectedCoinTitle">Cryptocurrency</span>
+                    <span class="method-choice-sub" id="selectedCoinSub">Choose coin &amp; network</span>
                   </div>
                 </div>
-                <button type="button" class="change-coin-btn" id="openCoinsDrawerBtn" aria-label="Change coin">
-                  <span>Change</span>
+                <button type="button" class="change-coin-btn" id="openCoinsDrawerBtn" aria-label="Select coin">
+                  <span id="changeCoinBtnText">Select Coin</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
               </div>
@@ -196,7 +196,7 @@
       <!-- COINS LIST IN DRAWER -->
       <div class="crypto-drawer-list" id="paymentMethodsGrid">
         <!-- Bitcoin -->
-        <div class="drawer-coin-card payment-method-card active" data-method="crypto" data-coin="btc" data-coin-search="bitcoin btc">
+        <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="btc" data-coin-search="bitcoin btc">
           <div class="drawer-coin-left">
             <img src="/icons/btc.svg" alt="Bitcoin" width="36" height="36" class="payment-method-coin-img">
             <div class="drawer-coin-meta">

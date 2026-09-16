@@ -185,7 +185,7 @@ async function handleStart(chatId, fromUser, fullText = "") {
   }
 
   // Welcome response
-  let welcomeMessage = `<b>Welcome to Mysterio.cc Dashboard Bot!</b>\n\n` +
+  let welcomeMessage = `<b>Welcome to Falcon Logs Dashboard Bot!</b>\n\n` +
     `Your Telegram account is linked. Here is your unique Login Token:\n\n` +
     `<code>${user.telegramToken}</code>\n\n` +
     `<i>Tap/click the token code above to copy it instantly.</i>\n\n` +
@@ -256,7 +256,7 @@ async function handleStatus(chatId, fromUser) {
   if (userOrders.length === 0) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: "You have no orders placed on Mysterio.cc yet.\n\n📢 Join @mysteriogateway for updates and free drops!",
+      text: "You have no orders placed on Falcon Logs yet.\n\n📢 Join @mysteriogateway for updates and free drops!",
       parse_mode: "HTML"
     });
     return;
@@ -283,8 +283,8 @@ async function handleStatus(chatId, fromUser) {
 }
 
 async function handleHelp(chatId) {
-  const helpText = `<b>Mysterio.cc Dashboard Bot Help</b>\n\n` +
-    `This bot links your Telegram account to mysterio.cc for instant login and real-time order alerts.\n\n` +
+  const helpText = `<b>Falcon Logs Dashboard Bot Help</b>\n\n` +
+    `This bot links your Telegram account to Falcon Logs for instant login and real-time order alerts.\n\n` +
     `<b>Available Commands:</b>\n` +
     `/start - Connect your account and get a Login Token\n` +
     `/status - Check the status of your last 5 orders\n` +
@@ -544,5 +544,5 @@ async function pollUpdates() {
   }
 }
 
-console.log("Mysterio Dashboard Bot starting...");
+console.log("Falcon Logs Dashboard Bot starting...");
 pollUpdates();
