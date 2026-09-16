@@ -4839,7 +4839,7 @@ ${escapeTelegramHtml(r.reason)}
           if (err) { res.writeHead(404); return res.end("Not found"); }
           res.writeHead(200, {
             "Content-Type": "image/svg+xml",
-            "Cache-Control": "public, max-age=86400"
+            "Cache-Control": "no-cache, no-store, must-revalidate"
           });
           return res.end(data);
         });

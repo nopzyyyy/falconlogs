@@ -985,28 +985,32 @@ input[type=number] {
 .store-search-input {
   width: 100%;
   height: 48px;
-  background: #110e0a;
-  border: 1px solid rgba(234, 88, 12, 0.25);
+  background: #0d0a06;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   border-radius: 8px;
   padding: 0 16px 0 46px;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: #ffffff;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: background 0.2s ease;
   box-sizing: border-box;
 }
 
 .store-search-input:hover {
-  border-color: rgba(234, 88, 12, 0.45);
-  background: #15110d;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: #140e08 !important;
 }
 
 .store-search-input:focus {
-  border-color: #ea580c;
-  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18);
-  background: #15110d;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: #171109 !important;
 }
 
 .store-search-input::placeholder {
@@ -1992,9 +1996,9 @@ input[type=number] {
 
 .cart-section-box {
   background: #14110c;
-  border: 1px solid rgba(234, 88, 12, 0.14);
+  border: none !important;
   border-radius: 8px;
-  box-shadow: none;
+  box-shadow: none !important;
   padding: 18px;
   display: flex;
   flex-direction: column;
@@ -2025,26 +2029,27 @@ input[type=number] {
   flex: 1;
   min-width: 0;
   height: 42px !important;
-  background: #0e0b07;
-  border: 1px solid rgba(234, 88, 12, 0.18);
+  background: #0d0a06;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   border-radius: 6px;
   padding: 0 14px;
   font-family: 'Montserrat', sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: #ffffff;
-  outline: none;
   box-sizing: border-box;
   margin: 0 !important;
   text-transform: uppercase;
-  transition: border-color 0.15s, outline 0.15s, background 0.15s;
+  transition: background 0.15s;
 }
 
 .cart-coupon-input:focus {
-  border-color: #ea580c;
-  outline: 2px solid rgba(234, 88, 12, 0.35);
-  outline-offset: 1px;
-  background: #110e0a;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: #18120b;
 }
 
 .cart-coupon-btn {
@@ -2079,9 +2084,9 @@ input[type=number] {
 }
 
 .cart-item-card {
-  background: #14110c;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: #0e0b07;
+  border: none !important;
+  border-radius: 8px;
   padding: 14px 16px;
   display: flex;
   align-items: flex-start;
@@ -2095,7 +2100,7 @@ input[type=number] {
   height: 64px;
   min-width: 64px;
   min-height: 64px;
-  border-radius: 12px;
+  border-radius: 8px;
   object-fit: cover;
   background: #110e0a;
   flex-shrink: 0;
@@ -2199,26 +2204,26 @@ input[type=number] {
 }
 
 .payment-method-card {
-  background: #110e0a;
-  border: 1px solid rgba(234, 88, 12, 0.15) !important;
+  background: #0e0b07;
+  border: none !important;
   border-radius: 6px;
   box-shadow: none !important;
-  padding: 11px 14px;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s;
 }
 
 .payment-method-card:hover {
-  background: #1a140e;
-  border-color: rgba(234, 88, 12, 0.35) !important;
+  background: #17110a !important;
+  border: none !important;
 }
 
 .payment-method-card.active {
-  border: 1.5px solid #ea580c !important;
-  background: #110e0a !important;
+  border: none !important;
+  background: #23160a !important;
   box-shadow: none !important;
 }
 
@@ -2274,9 +2279,10 @@ input[type=number] {
 }
 
 .network-chip {
-  background: #16120d;
-  color: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1a1208;
+  color: #fdba74;
+  border: none !important;
+  box-shadow: none !important;
   border-radius: 4px;
   padding: 3px 10px;
   font-family: 'Montserrat', sans-serif;
@@ -2286,19 +2292,20 @@ input[type=number] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-.network-chip:hover {
-  background: #16120d;
-  color: #ffffff;
-  border-color: rgba(234, 88, 12, 0.35);
+.network-chip:hover:not(.active) {
+  background: rgba(234, 88, 12, 0.2) !important;
+  color: #ffffff !important;
+  border: none !important;
 }
 
 .network-chip.active {
   background: #ea580c !important;
   color: #ffffff !important;
-  border-color: #ea580c !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .deposit-coin-card {
@@ -2309,18 +2316,19 @@ input[type=number] {
   border-radius: 6px;
   padding: 10px 12px;
   cursor: pointer;
-  border: 1px solid rgba(234, 88, 12, 0.15);
-  transition: background 0.15s ease, border-color 0.15s ease;
+  border: none !important;
+  box-shadow: none !important;
+  transition: background 0.15s ease;
 }
 
 .deposit-coin-card:hover {
-  background: #1a140e;
-  border-color: rgba(234, 88, 12, 0.35);
+  background: #1a140e !important;
+  border: none !important;
 }
 
 .deposit-coin-card.active {
-  background: #110e0a !important;
-  border: 1.5px solid #ea580c !important;
+  background: #23160a !important;
+  border: none !important;
   box-shadow: none !important;
 }
 
@@ -2365,9 +2373,9 @@ input[type=number] {
 /* Order Summary Box */
 .order-summary-card {
   background: #14110c;
-  border: 1px solid rgba(234, 88, 12, 0.14);
+  border: none !important;
   border-radius: 8px;
-  box-shadow: none;
+  box-shadow: none !important;
   padding: 18px;
   display: flex;
   flex-direction: column;

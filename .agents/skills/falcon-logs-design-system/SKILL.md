@@ -38,6 +38,8 @@ This skill defines the official visual design language, spatial hierarchy, color
 
 5. **Borderless & Stroke-Free Architecture**:
    - No heavy, high-contrast borders or thick outlines. Elements use `border: none;` or subtle `1px solid rgba(255, 255, 255, 0.07)`.
+   - **Cart & Checkout Boxes**: All container cards (`.cart-section-box`, `.order-summary-card`, `.cart-item-card`, `.payment-method-card`, `.store-search-input`, `.cart-coupon-input`) must have **ZERO borders and ZERO shadows** (`border: none !important; box-shadow: none !important;`). Active payment selection is indicated solely through background contrast (`#23160a`), never high-contrast borders.
+   - **Account Balance Icon**: The store credit/balance wallet icon must use Falcon Orange (`#ea580c`), never blue. Cache headers for SVG assets are set to `no-cache, no-store, must-revalidate`.
 
 ---
 
