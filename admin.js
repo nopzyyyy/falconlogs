@@ -2975,15 +2975,27 @@ async function loadSettings() {
     const settings = await res.json();
     const methods = settings.paymentMethods || {};
     
-    document.getElementById("toggle-balance").checked = methods.balance !== false;
-    document.getElementById("toggle-crypto").checked = methods.crypto !== false;
-    document.getElementById("toggle-chime").checked = methods.chime !== false;
-    document.getElementById("toggle-tg_stars").checked = methods.tg_stars !== false;
+    const balanceEl = document.getElementById("toggle-balance");
+    if (balanceEl) balanceEl.checked = methods.balance !== false;
+
+    const cryptoEl = document.getElementById("toggle-crypto");
+    if (cryptoEl) cryptoEl.checked = methods.crypto !== false;
+
+    const chimeEl = document.getElementById("toggle-chime");
+    if (chimeEl) chimeEl.checked = methods.chime !== false;
+
+    const tgStarsEl = document.getElementById("toggle-tg_stars");
+    if (tgStarsEl) tgStarsEl.checked = methods.tg_stars !== false;
     
     const tgForwarder = settings.telegramForwarder || {};
-    document.getElementById("toggle-tg_forwarder_enabled").checked = tgForwarder.enabled === true;
-    document.getElementById("tg_forwarder_source_link").value = tgForwarder.sourceMessageLink || "https://t.me/Flowmark/1287";
-    document.getElementById("tg_forwarder_interval").value = tgForwarder.intervalHours || 6;
+    const tgFwdEl = document.getElementById("toggle-tg_forwarder_enabled");
+    if (tgFwdEl) tgFwdEl.checked = tgForwarder.enabled === true;
+
+    const tgLinkEl = document.getElementById("tg_forwarder_source_link");
+    if (tgLinkEl) tgLinkEl.value = tgForwarder.sourceMessageLink || "https://t.me/Flowmark/1287";
+
+    const tgIntEl = document.getElementById("tg_forwarder_interval");
+    if (tgIntEl) tgIntEl.value = tgForwarder.intervalHours || 6;
 
     const toggleParticles = document.getElementById("toggle-particles");
     if (toggleParticles) {
@@ -2999,31 +3011,40 @@ async function loadSettings() {
           cb.closest(".toggle-switch").style.pointerEvents = "none";
         }
       });
-      document.getElementById("tg_forwarder_source_link").disabled = true;
-      document.getElementById("tg_forwarder_interval").disabled = true;
-      document.getElementById("saveTgForwarderBtn").disabled = true;
+      if (tgLinkEl) tgLinkEl.disabled = true;
+      if (tgIntEl) tgIntEl.disabled = true;
+      const saveFwdBtn = document.getElementById("saveTgForwarderBtn");
+      if (saveFwdBtn) saveFwdBtn.disabled = true;
     }
   } catch (err) {
     console.error("Failed to load settings:", err);
   }
 }
 
-async function saveSettings() {
+async function saveSettings(source) {
   if (IS_GOD_MODE) return;
   
+  const toggleBalance = document.getElementById("toggle-balance");
+  const toggleCrypto = document.getElementById("toggle-crypto");
+  const toggleChime = document.getElementById("toggle-chime");
+  const toggleTgStars = document.getElementById("toggle-tg_stars");
   const toggleParticles = document.getElementById("toggle-particles");
+  const toggleTgFwd = document.getElementById("toggle-tg_forwarder_enabled");
+  const tgLinkEl = document.getElementById("tg_forwarder_source_link");
+  const tgIntEl = document.getElementById("tg_forwarder_interval");
+
   const payload = {
     paymentMethods: {
-      balance: document.getElementById("toggle-balance").checked,
-      crypto: document.getElementById("toggle-crypto").checked,
-      chime: document.getElementById("toggle-chime").checked,
-      tg_stars: document.getElementById("toggle-tg_stars").checked
+      balance: toggleBalance ? toggleBalance.checked : true,
+      crypto: toggleCrypto ? toggleCrypto.checked : true,
+      chime: toggleChime ? toggleChime.checked : true,
+      tg_stars: toggleTgStars ? toggleTgStars.checked : true
     },
     particlesEnabled: toggleParticles ? toggleParticles.checked : true,
     telegramForwarder: {
-      enabled: document.getElementById("toggle-tg_forwarder_enabled").checked,
-      sourceMessageLink: document.getElementById("tg_forwarder_source_link").value.trim(),
-      intervalHours: Number(document.getElementById("tg_forwarder_interval").value) || 6
+      enabled: toggleTgFwd ? toggleTgFwd.checked : false,
+      sourceMessageLink: tgLinkEl ? tgLinkEl.value.trim() : "https://t.me/Flowmark/1287",
+      intervalHours: tgIntEl ? (Number(tgIntEl.value) || 6) : 6
     }
   };
   
@@ -3035,12 +3056,23 @@ async function saveSettings() {
     });
     if (!res.ok) {
       const data = await res.json();
-      siteAlert(data.error || "Failed to save settings.", { variant: "warn", title: "Error" });
+      if (typeof siteAlert === "function") {
+        siteAlert(data.error || "Failed to save settings.", { variant: "warn", title: "Error" });
+      }
       loadSettings();
     } else {
       localStorage.setItem("falcon_particles_enabled", String(payload.particlesEnabled));
       if (typeof window.setGlobalParticlesActive === "function") {
         window.setGlobalParticlesActive(payload.particlesEnabled);
+      }
+      if (typeof siteToast === "function") {
+        if (source === "particles") {
+          siteToast(`Particle effects ${payload.particlesEnabled ? "enabled" : "disabled"}.`, "success");
+        } else if (source === "forwarder") {
+          siteToast("Telegram Auto-Forwarder settings saved!", "success");
+        } else {
+          siteToast("Settings updated successfully.", "success");
+        }
       }
     }
   } catch (err) {
@@ -3054,15 +3086,20 @@ document.querySelectorAll('.admin-tab[data-admin-tab="settings"]').forEach(tab =
 });
 
 ["balance", "crypto", "chime", "tg_stars", "particles", "tg_forwarder_enabled"].forEach(m => {
-  document.getElementById(`toggle-${m}`)?.addEventListener("change", async () => {
-    await saveSettings();
-  });
+  const el = document.getElementById(`toggle-${m}`);
+  if (el) {
+    el.addEventListener("change", async () => {
+      await saveSettings(m);
+    });
+  }
 });
 
 document.getElementById("saveTgForwarderBtn")?.addEventListener("click", async () => {
-  await saveSettings();
-  siteAlert("Telegram Auto-Forwarder settings saved!", { variant: "success", title: "Success" });
+  await saveSettings("forwarder");
 });
+
+// Sync initial settings on load
+loadSettings();
 
 // =========================================================================
 // CATEGORIES TAB

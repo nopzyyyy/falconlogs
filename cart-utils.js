@@ -967,10 +967,14 @@ function animateFalconParticles() {
 
 function setGlobalParticlesActive(enabled) {
   _falconParticlesActive = !!enabled;
+  if (!_falconParticlesCanvas) {
+    _falconParticlesCanvas = document.getElementById("particlesCanvas") || document.getElementById("falconGlobalParticlesCanvas");
+  }
   if (!_falconParticlesCanvas) return;
 
   if (_falconParticlesActive) {
     _falconParticlesCanvas.style.display = "block";
+    _falconParticlesCanvas.removeAttribute("hidden");
     if (!_falconParticlesRafId) {
       if (_falconParticlesList.length === 0) {
         const count = window.innerWidth < 768 ? 32 : 58;
@@ -982,12 +986,17 @@ function setGlobalParticlesActive(enabled) {
     }
   } else {
     _falconParticlesCanvas.style.display = "none";
+    _falconParticlesCanvas.setAttribute("hidden", "");
     if (_falconParticlesRafId) {
       cancelAnimationFrame(_falconParticlesRafId);
       _falconParticlesRafId = null;
     }
+    if (_falconParticlesCtx) {
+      _falconParticlesCtx.clearRect(0, 0, _falconParticlesWidth || window.innerWidth, _falconParticlesHeight || window.innerHeight);
+    }
   }
 }
+window.setGlobalParticlesActive = setGlobalParticlesActive;
 
 function initFalconGlobalParticlesEngine() {
   try {
@@ -1025,6 +1034,17 @@ function initFalconGlobalParticlesEngine() {
       } else if (_falconParticlesActive) {
         if (!_falconParticlesRafId) {
           _falconParticlesRafId = requestAnimationFrame(animateFalconParticles);
+        }
+      }
+    });
+
+    window.addEventListener("storage", (e) => {
+      if (e.key === "falcon_particles_enabled") {
+        const active = e.newValue !== "false";
+        setGlobalParticlesActive(active);
+        const adminToggle = document.getElementById("toggle-particles");
+        if (adminToggle) {
+          adminToggle.checked = active;
         }
       }
     });
