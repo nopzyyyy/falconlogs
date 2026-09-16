@@ -108,6 +108,46 @@ input[type=number] {
   object-fit: contain;
   object-position: left;
   display: block;
+  transition: transform 0.15s ease;
+}
+
+.brand:hover .brand-logo-img {
+  transform: scale(1.04);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1;
+  user-select: none;
+}
+
+.brand-name-top {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 1.1;
+  transition: color 0.15s ease;
+}
+
+.brand-name-bottom {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.8px;
+  color: #ea580c;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-top: 2px;
+  transition: color 0.15s ease;
+}
+
+.brand:hover .brand-name-bottom {
+  color: #fb923c;
 }
 
 .header-nav-center {
@@ -901,8 +941,9 @@ input[type=number] {
 }
 
 .store-hero-logo {
-  width: 82px;
-  height: 82px;
+  height: 88px;
+  width: auto;
+  max-width: 140px;
   object-fit: contain;
   display: block;
   margin-bottom: 14px;
@@ -935,8 +976,9 @@ input[type=number] {
     padding: 22px 12px 10px;
   }
   .store-hero-logo {
-    width: 64px;
     height: 64px;
+    width: auto;
+    max-width: 100px;
     margin-bottom: 10px;
   }
   .store-hero-title {

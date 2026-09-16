@@ -68,6 +68,10 @@ The Falcon Logs header uses an enclosed floating card layout with a 3-column CSS
 
 .brand {
   justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
 }
 
 .header-nav-center {
@@ -84,6 +88,16 @@ The Falcon Logs header uses an enclosed floating card layout with a 3-column CSS
   gap: 12px;
 }
 ```
+
+### Brand Logo & Typography
+The header brand link `.brand` contains:
+- Image: `/logo.png` (`height: 38px`, auto width).
+- Text stack `.brand-text`:
+  - Top line `.brand-name-top`: `FALCON` (`14px`, weight 800, color `#ffffff`, tracking `1.2px`).
+  - Bottom line `.brand-name-bottom`: `LOGS` (`10px`, weight 800, color `#ea580c`, tracking `2.8px`).
+
+### Hero Section Logo
+- In the hero section (`index.html` & `logs.html`), the dedicated fiery falcon logo (`/hero-logo.png`) is displayed directly above the "Welcome to Falcon Logs" heading at `height: 88px` (responsive to `64px` on mobile). The header keeps the standard brand icon (`/logo.png`).
 
 ### Navigation Links
 The middle navigation has exactly 3 primary links:

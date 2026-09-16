@@ -4850,7 +4850,7 @@ ${escapeTelegramHtml(r.reason)}
     // Public: served without a session (guests can browse, view products, and add to cart)
     const PUBLIC_FILES  = new Set([
       "/", "/index.html", "/main.js", "/cart-utils.js", "/cart.html", "/cart.js", "/pay.html", "/logs.html", "/logs.js",
-      "/login.html", "/login.js", "/styles.css", "/banner.png", "/logo.png", "/login-logo.png", "/favicon.svg", "/favicon.ico", "/favicon.png", "/chime_logo.png",
+      "/login.html", "/login.js", "/styles.css", "/banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png", "/favicon.svg", "/favicon.ico", "/favicon.png", "/chime_logo.png",
       "/faq.html", "/faq.js", "/tos.html", "/tos.js", "/privacy.html", "/privacy.js"
     ]);
     // Auth: requires valid logged-in session for personal account actions
