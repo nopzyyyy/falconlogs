@@ -1539,8 +1539,24 @@ input[type=number] {
 }
 
 /* =========================================================
-   PURCHASE MODAL (FALCON LOGS / MATCHING REFERENCE SCREENSHOT)
+   MODALS FAST & CRISP TRANSITIONS
    ========================================================= */
+@keyframes modalOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalContentPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1555,7 +1571,15 @@ input[type=number] {
 }
 
 .modal-overlay.active {
-  display: flex;
+  display: flex !important;
+  animation: modalOverlayIn 0.14s ease-out;
+}
+
+.modal-overlay.active .modal-card,
+.modal-overlay.active .modal-content,
+.modal-overlay.active .order-info-modal-card {
+  animation: modalContentPopIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: none;
 }
 
 .modal-card {
@@ -2633,42 +2657,35 @@ input[type=number] {
   to { transform: rotate(360deg); }
 }
 
-/* Global Page Switching Circle Loader (Zero Fade, Clean Instant Spinner) */
+/* Global Header Switching Loading Bar (Fast & Clean, Zero Glow) */
 #pageLoadingBar {
-  display: none !important;
-}
-
-.page-circle-loader {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(10, 8, 5, 0.72);
+  height: 2.5px;
+  width: 0%;
+  background: #ea580c;
+  box-shadow: none !important;
+  z-index: 9999999;
+  pointer-events: none;
+  transition: width 0.22s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.18s ease;
   display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999999;
-  pointer-events: all;
 }
 
-.page-circle-loader.active {
-  display: flex !important;
+.page-circle-loader {
+  display: none !important;
 }
 
-.page-circle-spinner {
-  width: 44px;
-  height: 44px;
-  border: 3.5px solid rgba(234, 88, 12, 0.22);
-  border-top-color: #ea580c;
-  border-radius: 50%;
-  animation: circleSpin 0.7s linear infinite;
-  box-sizing: border-box;
-}
-
-@keyframes circleSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Fast, Crisp Page Entrance Transition */
+@keyframes pageEnterSmooth {
+  from {
+    opacity: 0.92;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .store-shell,
@@ -2680,7 +2697,7 @@ input[type=number] {
 .faq-shell,
 .tos-shell,
 .privacy-shell {
-  animation: none !important;
+  animation: pageEnterSmooth 0.16s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* =========================================================
@@ -3946,13 +3963,23 @@ select.modal-form-control option {
   border: none;
   border-radius: 8px;
   box-shadow: none;
-  transform: translateY(-30px);
-  opacity: 1 !important;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: none;
+}
+
+@keyframes orderTabPaneFast {
+  from {
+    opacity: 0.88;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .order-tab-pane {
   display: block;
+  animation: orderTabPaneFast 0.14s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .order-info-tabs-bar {
