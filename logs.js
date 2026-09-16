@@ -579,15 +579,43 @@ if (search) {
 }
 
 // =========================================================
-// FAST FIRE PARTICLES STREAMING FROM FALCON'S BACK
+// SPEEDLINES STREAMING ACROSS & BEHIND FALCON'S BODY
 // =========================================================
 function initFalconHeroFire() {
-  const canvas = document.querySelector("#falconFireCanvas");
+  const logoWrap = document.querySelector(".store-hero-logo-wrap");
   const logo = document.querySelector(".store-hero-logo");
-  if (!canvas || !logo) return;
+  if (!logoWrap || !logo) return;
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
+  let canvasUnder = document.querySelector("#falconFireCanvasUnder");
+  let canvasOver = document.querySelector("#falconFireCanvasOver");
+
+  // Backward compatibility fallback: ensure both canvases exist
+  if (!canvasUnder && !canvasOver) {
+    const legacyCanvas = document.querySelector("#falconFireCanvas");
+    if (legacyCanvas) {
+      legacyCanvas.id = "falconFireCanvasUnder";
+      legacyCanvas.classList.add("hero-fire-canvas-under");
+      canvasUnder = legacyCanvas;
+    } else {
+      canvasUnder = document.createElement("canvas");
+      canvasUnder.id = "falconFireCanvasUnder";
+      canvasUnder.className = "hero-fire-canvas hero-fire-canvas-under";
+      logoWrap.insertBefore(canvasUnder, logo);
+    }
+    canvasOver = document.createElement("canvas");
+    canvasOver.id = "falconFireCanvasOver";
+    canvasOver.className = "hero-fire-canvas hero-fire-canvas-over";
+    logoWrap.appendChild(canvasOver);
+  } else if (!canvasOver) {
+    canvasOver = document.createElement("canvas");
+    canvasOver.id = "falconFireCanvasOver";
+    canvasOver.className = "hero-fire-canvas hero-fire-canvas-over";
+    logoWrap.appendChild(canvasOver);
+  }
+
+  const ctxUnder = canvasUnder.getContext("2d");
+  const ctxOver = canvasOver.getContext("2d");
+  if (!ctxUnder || !ctxOver) return;
 
   let width = 0;
   let height = 0;
@@ -597,13 +625,18 @@ function initFalconHeroFire() {
   let animId = null;
 
   function resize() {
-    const rect = canvas.getBoundingClientRect();
+    const rect = canvasUnder.getBoundingClientRect();
     width = rect.width;
     height = rect.height;
     if (width === 0 || height === 0) return;
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    canvasUnder.width = Math.round(width * dpr);
+    canvasUnder.height = Math.round(height * dpr);
+    ctxUnder.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    canvasOver.width = Math.round(width * dpr);
+    canvasOver.height = Math.round(height * dpr);
+    ctxOver.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
   document.addEventListener("visibilitychange", () => {
@@ -615,7 +648,7 @@ function initFalconHeroFire() {
 
   function getFalconBounds() {
     const logoRect = logo.getBoundingClientRect();
-    const canvasRect = canvas.getBoundingClientRect();
+    const canvasRect = canvasUnder.getBoundingClientRect();
     return {
       fx: logoRect.left - canvasRect.left,
       fy: logoRect.top - canvasRect.top,
@@ -650,15 +683,21 @@ function initFalconHeroFire() {
     const x = bounds.fx + bounds.fw * pt[0] + (Math.random() - 0.5) * 4;
     const y = bounds.fy + bounds.fh * pt[1] + (Math.random() - 0.5) * 2;
 
-    // Laser-straight horizontal speedlines
-    const isFastStreak = Math.random() < 0.35;
-    const speed = isFastStreak ? (Math.random() * 8.0 + 12.0) : (Math.random() * 6.0 + 7.0); // 7 to 20 px/frame
-    const vx = -speed; // 100% straight left
-    const vy = 0; // 100% horizontal
+    // Layer selection: ~45% render ON TOP of falcon, ~55% render UNDER falcon
+    const isOver = Math.random() < 0.45;
 
-    const maxLife = isFastStreak ? (Math.random() * 12 + 10) : (Math.random() * 18 + 14);
-    const lineWidth = isFastStreak ? (Math.random() * 0.8 + 1.2) : (Math.random() * 1.0 + 1.4);
-    const streakLength = isFastStreak ? (Math.random() * 2.0 + 3.2) : (Math.random() * 1.2 + 2.0);
+    // Slower, smoother speedline velocity (reduced from 7-20 to ~3.2-7.5 px/frame)
+    const isFastStreak = Math.random() < 0.30;
+    const speed = isFastStreak ? (Math.random() * 2.5 + 5.2) : (Math.random() * 2.0 + 3.2);
+    const vx = -speed; // strictly horizontal to the left
+    const vy = 0;
+
+    // Extended lifespan for gentle, smooth travel
+    const maxLife = isFastStreak ? (Math.random() * 16 + 28) : (Math.random() * 22 + 36);
+    const lineWidth = isOver
+      ? (isFastStreak ? (Math.random() * 0.6 + 1.1) : (Math.random() * 0.7 + 1.2))
+      : (isFastStreak ? (Math.random() * 0.8 + 1.3) : (Math.random() * 0.9 + 1.6));
+    const streakLength = isFastStreak ? (Math.random() * 2.5 + 4.2) : (Math.random() * 1.8 + 2.8);
 
     return {
       x,
@@ -669,7 +708,8 @@ function initFalconHeroFire() {
       decay: 1.0 / maxLife,
       lineWidth,
       streakLength,
-      isFastStreak
+      isFastStreak,
+      isOver
     };
   }
 
@@ -679,26 +719,29 @@ function initFalconHeroFire() {
       return;
     }
 
-    ctx.clearRect(0, 0, width, height);
+    ctxUnder.clearRect(0, 0, width, height);
+    ctxOver.clearRect(0, 0, width, height);
 
     const bounds = getFalconBounds();
     if (bounds.fw > 0 && bounds.fh > 0) {
-      // Spawn 3-5 speedlines every frame across the entire body
-      const spawnCount = Math.floor(Math.random() * 3) + 3;
+      // Spawn 2-3 smooth speedlines every frame
+      const spawnCount = Math.floor(Math.random() * 2) + 2;
       for (let i = 0; i < spawnCount; i++) {
-        if (particles.length < 110) {
+        if (particles.length < 135) {
           particles.push(spawnParticle(bounds));
         }
       }
     }
 
-    ctx.save();
-    ctx.globalCompositeOperation = "lighter";
+    ctxUnder.save();
+    ctxOver.save();
+    ctxUnder.globalCompositeOperation = "lighter";
+    ctxOver.globalCompositeOperation = "lighter";
 
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.x += p.vx;
-      p.vx *= 0.988; // minimal drag to maintain straight high speed line
+      p.vx *= 0.994; // gentle aerodynamic friction for silky movement
       p.life -= p.decay;
 
       if (p.life <= 0 || p.x < 0 || p.y < 0 || p.x > width || p.y > height) {
@@ -706,12 +749,16 @@ function initFalconHeroFire() {
         continue;
       }
 
-      const alpha = Math.min(1, p.life * 1.3);
+      // Smooth ease-in (first 18% of life) and graceful ease-out (last 82%)
+      const progress = 1.0 - p.life;
+      const fadeIn = progress < 0.18 ? (progress / 0.18) : 1.0;
+      const fadeOut = Math.pow(p.life, 1.2);
+      const alpha = fadeIn * fadeOut;
 
       // Pure Falcon Orange palette - NO white/yellow
       let r, g, b;
       if (p.life > 0.6) {
-        // Bright flame orange (vibrant #fb923c)
+        // Bright flame orange (#fb923c)
         r = 251;
         g = Math.floor(130 + 20 * p.life);
         b = 30;
@@ -727,20 +774,29 @@ function initFalconHeroFire() {
         b = 10;
       }
 
-      // Straight supersonic speed line (NO stars/dots, pure lines only)
-      const grow = Math.min(1.0, (1.0 - p.life) * 4.0);
+      // Smooth horizontal speed line
+      const grow = Math.min(1.0, progress * 3.5);
       const tailX = p.x - p.vx * p.streakLength * grow;
 
-      ctx.beginPath();
-      ctx.moveTo(p.x, p.y);
-      ctx.lineTo(tailX, p.y);
-      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.9})`;
-      ctx.lineWidth = p.lineWidth;
-      ctx.lineCap = "round";
-      ctx.stroke();
+      const activeCtx = p.isOver ? ctxOver : ctxUnder;
+
+      // Soft aerodynamic gradient along the streak from tail to head
+      const grad = activeCtx.createLinearGradient(tailX, p.y, p.x, p.y);
+      grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0)`);
+      grad.addColorStop(0.3, `rgba(${r}, ${g}, ${b}, ${alpha * 0.45})`);
+      grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, ${alpha * (p.isOver ? 0.85 : 0.95)})`);
+
+      activeCtx.beginPath();
+      activeCtx.moveTo(tailX, p.y);
+      activeCtx.lineTo(p.x, p.y);
+      activeCtx.strokeStyle = grad;
+      activeCtx.lineWidth = p.lineWidth;
+      activeCtx.lineCap = "round";
+      activeCtx.stroke();
     }
 
-    ctx.restore();
+    ctxUnder.restore();
+    ctxOver.restore();
     animId = requestAnimationFrame(loop);
   }
 

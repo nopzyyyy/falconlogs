@@ -957,7 +957,14 @@ input[type=number] {
   width: calc(100% + 245px);
   height: calc(100% + 50px);
   pointer-events: none;
+}
+
+.hero-fire-canvas-under {
   z-index: 1;
+}
+
+.hero-fire-canvas-over {
+  z-index: 3;
 }
 
 @keyframes falconSpeedHover {
