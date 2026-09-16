@@ -5,11 +5,11 @@
   --bg: #0a0805;
   --bg-deep: #080604;
   --header-bg: #120e08;
-  --store-card: #14110c;
-  --store-card-hover: #1a1610;
-  --store-input-bg: #110e0a;
-  --panel: #110e0a;
-  --panel-2: #151210;
+  --store-card: #1b1712;
+  --store-card-hover: #221d16;
+  --store-input-bg: #1a1611;
+  --panel: #1a1611;
+  --panel-2: #211c16;
   --line: rgba(234, 88, 12, 0.16);
   --line-strong: rgba(234, 88, 12, 0.35);
   --text: #ffffff;
@@ -1092,7 +1092,7 @@ input[type=number] {
 .store-search-input {
   width: 100%;
   height: 48px;
-  background: #110e0a;
+  background: #1a1611;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -1109,19 +1109,19 @@ input[type=number] {
 .store-search-input:hover {
   border: none !important;
   box-shadow: none !important;
-  background: #15110d !important;
+  background: #211c16 !important;
 }
 
 .store-search-input:focus {
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
-  background: #15110d !important;
+  background: #211c16 !important;
 }
 
 /* Maintain borderless style in cart crypto search */
 .payment-methods-grid .store-search-input {
-  background: #0d0a06 !important;
+  background: #14100b !important;
   border: none !important;
   box-shadow: none !important;
 }
@@ -1141,7 +1141,7 @@ input[type=number] {
 .category-dropdown-btn {
   height: 48px;
   min-width: 220px;
-  background: #110e0a;
+  background: #1a1611;
   border: none !important;
   box-shadow: none !important;
   border-radius: 8px;
@@ -1163,13 +1163,13 @@ input[type=number] {
 .category-dropdown-btn:hover {
   border: none !important;
   box-shadow: none !important;
-  background: #15110d;
+  background: #211c16;
 }
 
 .category-dropdown-btn.open {
   border: none !important;
   box-shadow: none !important;
-  background: #15110d;
+  background: #211c16;
 }
 
 .category-dropdown-left {
@@ -1217,7 +1217,7 @@ input[type=number] {
   top: calc(100% + 8px);
   right: 0;
   width: 270px;
-  background: #110e0a;
+  background: #1a1611;
   border: none !important;
   border-radius: 10px;
   padding: 10px;
@@ -1263,7 +1263,7 @@ input[type=number] {
 .category-search-input {
   width: 100%;
   height: 38px;
-  background: #17130e;
+  background: #211c16;
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
@@ -1447,7 +1447,8 @@ input[type=number] {
   max-width: 245px;
   flex-shrink: 0;
   background: var(--store-card);
-  border: 1px solid rgba(234, 88, 12, 0.14);
+  border: none !important;
+  box-shadow: none !important;
   border-radius: 6px;
   overflow: hidden;
   display: flex;
@@ -1458,10 +1459,10 @@ input[type=number] {
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #120e08;
+  background: #14100b;
   position: relative;
   cursor: pointer;
-  border-bottom: 1px solid rgba(234, 88, 12, 0.1);
+  border-bottom: none !important;
 }
 
 .product-card-img {
@@ -1599,8 +1600,8 @@ input[type=number] {
 .modal-card {
   width: 100%;
   max-width: 440px;
-  background: #110e0a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1b1712;
+  border: none !important;
   border-radius: 6px;
   padding: 22px 24px 24px;
   display: flex;
@@ -1633,8 +1634,8 @@ input[type=number] {
   width: 32px;
   height: 32px;
   min-width: 32px;
-  background: #110e0a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #14100b;
+  border: none !important;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -1649,7 +1650,7 @@ input[type=number] {
 }
 
 .modal-close-square-btn:hover {
-  background: #1a140e;
+  background: #201912;
   color: #ffffff;
 }
 
@@ -1664,8 +1665,8 @@ input[type=number] {
 }
 
 .modal-desc-box {
-  background: #06080e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #14100b;
+  border: none !important;
   border-radius: 4px;
   padding: 12px 14px;
   font-family: 'Montserrat', sans-serif;
@@ -1691,7 +1692,7 @@ input[type=number] {
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  background: #110e0a;
+  background: #14100b;
   color: #ea580c;
   padding: 4px 10px;
   border-radius: 4px;
@@ -1712,8 +1713,8 @@ input[type=number] {
 .modal-select {
   width: 100%;
   height: 44px;
-  background: #06080e;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #14100b;
+  border: none !important;
   border-radius: 4px;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
@@ -1728,11 +1729,11 @@ input[type=number] {
 }
 
 .modal-select:focus {
-  border-color: #ea580c;
+  border: none !important;
 }
 
 .modal-select option {
-  background: #110e0a;
+  background: #1b1712;
   color: #ffffff;
   font-weight: 600;
   padding: 10px;
@@ -2181,7 +2182,7 @@ input[type=number] {
 }
 
 .cart-section-box {
-  background: #14110c;
+  background: #1b1712;
   border: none !important;
   border-radius: 8px;
   box-shadow: none !important;
@@ -2234,7 +2235,7 @@ input[type=number] {
 }
 
 .cart-item-card {
-  background: #0e0b07;
+  background: #14100b;
   border: none !important;
   border-radius: 8px;
   box-shadow: none !important;
@@ -2247,7 +2248,7 @@ input[type=number] {
 }
 
 .cart-item-card:hover {
-  background: #120e08;
+  background: #1a150e;
 }
 
 .cart-item-thumb {
@@ -2366,7 +2367,7 @@ input[type=number] {
   flex: 1;
   min-width: 0;
   height: 42px !important;
-  background: #0d0a06;
+  background: #14100b;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -2382,7 +2383,7 @@ input[type=number] {
 }
 
 .cart-coupon-input:focus {
-  background: #18120b;
+  background: #1a150e;
 }
 
 .cart-coupon-btn {
@@ -2419,7 +2420,7 @@ input[type=number] {
 }
 /* Sticky Checkout Summary & Payment Hub */
 .cart-checkout-card {
-  background: #14110c;
+  background: #1b1712;
   border: none !important;
   border-radius: 8px;
   box-shadow: none !important;
@@ -2475,7 +2476,7 @@ input[type=number] {
 }
 
 .cart-method-choice {
-  background: #0e0b07;
+  background: #14100b;
   border: none !important;
   border-radius: 6px;
   box-shadow: none !important;
@@ -2488,11 +2489,11 @@ input[type=number] {
 }
 
 .cart-method-choice:hover {
-  background: #18120a !important;
+  background: #1d160e !important;
 }
 
 .cart-method-choice.active {
-  background: #23160a !important;
+  background: #25180c !important;
 }
 
 .method-choice-left {
@@ -2622,7 +2623,7 @@ input[type=number] {
 
 .crypto-drawer {
   width: 100%;
-  background: #0f0c08;
+  background: #14100b;
   border-radius: 8px;
   margin-top: 6px;
   overflow: hidden;
@@ -2656,7 +2657,7 @@ input[type=number] {
 .crypto-drawer-search {
   width: 100%;
   height: 38px;
-  background: #16110b;
+  background: #1b1712;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -2670,7 +2671,7 @@ input[type=number] {
 }
 
 .crypto-drawer-search:focus {
-  background: #1c150d;
+  background: #221c16;
 }
 
 .drawer-search-icon {
@@ -2700,7 +2701,7 @@ input[type=number] {
 }
 
 .drawer-coin-card {
-  background: #14100b;
+  background: #1b1712;
   border: none !important;
   border-radius: 6px;
   box-shadow: none !important;
