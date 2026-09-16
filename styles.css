@@ -950,14 +950,26 @@ input[type=number] {
 
 .hero-fire-canvas {
   position: absolute;
-  top: -45px;
-  left: -130px;
+  top: -30px;
+  left: -220px;
   right: -25px;
-  bottom: -25px;
-  width: calc(100% + 155px);
-  height: calc(100% + 70px);
+  bottom: -20px;
+  width: calc(100% + 245px);
+  height: calc(100% + 50px);
   pointer-events: none;
   z-index: 1;
+}
+
+@keyframes falconSpeedHover {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(2px, -1px, 0);
+  }
+  100% {
+    transform: translate3d(-0.5px, 0.5px, 0);
+  }
 }
 
 .store-hero-logo {
@@ -970,6 +982,7 @@ input[type=number] {
   display: block;
   margin-bottom: 0 !important;
   user-select: none;
+  animation: falconSpeedHover 0.75s ease-in-out infinite alternate;
 }
 
 .store-hero-title {

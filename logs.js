@@ -625,22 +625,24 @@ function initFalconHeroFire() {
   }
 
   function spawnParticle(bounds) {
-    // Contour of falcon's back from upper neck to wing tips
+    // Contour of falcon's back and wings (strictly behind head/chest)
     const t = Math.random();
-    const normX = 0.22 + t * 0.54;
-    const normY = 0.12 + Math.pow(t, 1.35) * 0.44;
+    const normX = 0.18 + t * 0.45;
+    const normY = 0.11 + Math.pow(t, 1.35) * 0.35;
 
-    const x = bounds.fx + bounds.fw * normX + (Math.random() - 0.5) * 8;
-    const y = bounds.fy + bounds.fh * normY + (Math.random() - 0.5) * 6;
+    const x = bounds.fx + bounds.fw * normX + (Math.random() - 0.5) * 3;
+    const y = bounds.fy + bounds.fh * normY + (Math.random() - 0.5) * 2;
 
-    // Fast particles rushing backwards (left) and drifting slightly up
-    const speed = Math.random() * 3.8 + 2.6; // 2.6 to 6.4 px/frame (fast!)
-    const angle = Math.PI + (Math.random() - 0.5) * 0.48 - 0.18; // mostly left & slightly up
+    // Laser-straight horizontal trajectory (less than 2 degrees spread)
+    const isSupersonic = Math.random() < 0.32;
+    const speed = isSupersonic ? (Math.random() * 8.0 + 13.0) : (Math.random() * 6.5 + 7.5); // 7.5 to 21 px/frame
+    const angle = Math.PI + (Math.random() - 0.5) * 0.035; // virtually 180 deg straight left
     const vx = Math.cos(angle) * speed;
     const vy = Math.sin(angle) * speed;
 
-    const maxLife = Math.random() * 18 + 14; // 14 to 32 frames of life
-    const size = Math.random() * 2.6 + 1.4;
+    const maxLife = isSupersonic ? (Math.random() * 12 + 10) : (Math.random() * 18 + 14);
+    const size = isSupersonic ? (Math.random() * 1.5 + 1.2) : (Math.random() * 2.8 + 1.5);
+    const streakLength = isSupersonic ? (Math.random() * 1.8 + 3.2) : (Math.random() * 1.2 + 2.2);
 
     return {
       x,
@@ -650,8 +652,8 @@ function initFalconHeroFire() {
       life: 1.0,
       decay: 1.0 / maxLife,
       size,
-      wobble: Math.random() * Math.PI * 2,
-      wobbleSpeed: (Math.random() - 0.5) * 0.3
+      streakLength,
+      isSupersonic
     };
   }
 
@@ -665,10 +667,10 @@ function initFalconHeroFire() {
 
     const bounds = getFalconBounds();
     if (bounds.fw > 0 && bounds.fh > 0) {
-      // Spawn 2-4 particles every frame for a rich fiery trail
-      const spawnCount = Math.floor(Math.random() * 3) + 2;
+      // Spawn 3-5 particles every frame for a dense straight fire jet stream
+      const spawnCount = Math.floor(Math.random() * 3) + 3;
       for (let i = 0; i < spawnCount; i++) {
-        if (particles.length < 80) {
+        if (particles.length < 110) {
           particles.push(spawnParticle(bounds));
         }
       }
@@ -681,9 +683,7 @@ function initFalconHeroFire() {
       const p = particles[i];
       p.x += p.vx;
       p.y += p.vy;
-      p.wobble += p.wobbleSpeed;
-      p.y += Math.sin(p.wobble) * 0.35 - 0.08; // upward draft
-      p.vx *= 0.982; // wind drag
+      p.vx *= 0.988; // minimal drag to maintain high speed straight line
       p.life -= p.decay;
 
       if (p.life <= 0 || p.x < 0 || p.y < 0 || p.x > width || p.y > height) {
@@ -691,40 +691,44 @@ function initFalconHeroFire() {
         continue;
       }
 
-      const curSize = p.size * (0.25 + 0.75 * p.life);
-      const alpha = Math.min(1, p.life * 1.25);
+      const curSize = p.size * (0.3 + 0.7 * p.life);
+      const alpha = Math.min(1, p.life * 1.3);
 
-      // Rich flame color palette
+      // Rich supersonic flame colors
       let r, g, b;
-      if (p.life > 0.75) {
-        // Core golden flame
+      if (p.life > 0.7) {
+        // Blazing core hot yellow/gold
         r = 255;
-        g = Math.floor(190 + 35 * p.life);
-        b = Math.floor(40 + 60 * p.life);
-      } else if (p.life > 0.35) {
-        // Vibrant Falcon flame orange
+        g = Math.floor(200 + 40 * p.life);
+        b = Math.floor(60 + 70 * p.life);
+      } else if (p.life > 0.3) {
+        // High-speed Falcon orange
         r = 245;
-        g = Math.floor(90 + 60 * (p.life - 0.35) / 0.4);
+        g = Math.floor(95 + 65 * ((p.life - 0.3) / 0.4));
         b = 18;
       } else {
-        // Deep glowing ember
-        r = Math.floor(190 + 40 * (p.life / 0.35));
-        g = Math.floor(30 + 40 * (p.life / 0.35));
+        // Trailing ember red
+        r = Math.floor(190 + 40 * (p.life / 0.3));
+        g = Math.floor(30 + 40 * (p.life / 0.3));
         b = 8;
       }
 
-      // Fast motion flame streak
+      // Straight supersonic fire streak (trails strictly behind moving particle)
+      const grow = Math.min(1.0, (1.0 - p.life) * 4.0);
+      const tailX = p.x - p.vx * p.streakLength * grow;
+      const tailY = p.y - p.vy * p.streakLength * grow;
+
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
-      ctx.lineTo(p.x - p.vx * 1.8, p.y - p.vy * 1.8);
-      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.75})`;
-      ctx.lineWidth = curSize * 0.95;
+      ctx.lineTo(tailX, tailY);
+      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.85})`;
+      ctx.lineWidth = curSize * (p.isSupersonic ? 0.75 : 0.95);
       ctx.lineCap = "round";
       ctx.stroke();
 
-      // Bright spark head
+      // Sharp glowing projectile tip
       ctx.beginPath();
-      ctx.arc(p.x, p.y, curSize * 0.6, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, curSize * 0.55, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
       ctx.fill();
     }
