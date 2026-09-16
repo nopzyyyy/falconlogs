@@ -2600,117 +2600,68 @@ input[type=number] {
 }
 
 /* =========================================================
-   CRYPTO COINS DRAWER
+   CRYPTO COINS INLINE DRAWER (INSIDE CART PAYMENT BOX)
    ========================================================= */
 .crypto-drawer-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-.crypto-drawer-backdrop.open {
-  opacity: 1;
-  pointer-events: auto;
+  display: none !important;
 }
 
 .crypto-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 440px;
-  max-width: 95vw;
-  background: #0c0906;
-  z-index: 1001;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  background: #0f0c08;
+  border-radius: 8px;
+  margin-top: 6px;
+  overflow: hidden;
   border: none !important;
   box-shadow: none !important;
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: max-height 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease, margin 0.22s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .crypto-drawer.open {
-  transform: translateX(0);
+  max-height: 800px;
+  opacity: 1;
+  pointer-events: auto;
+  margin-top: 8px;
+  margin-bottom: 6px;
 }
 
 .crypto-drawer-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 22px 22px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.crypto-drawer-title-group {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.crypto-drawer-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: -0.3px;
-}
-
-.crypto-drawer-sub {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.crypto-drawer-close {
-  background: rgba(255, 255, 255, 0.06);
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 6px;
-  color: rgba(255, 255, 255, 0.7);
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-.crypto-drawer-close:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
+  display: none !important;
 }
 
 .crypto-drawer-search-wrap {
-  padding: 14px 22px 10px;
+  padding: 10px 12px 6px;
   position: relative;
 }
 
 .crypto-drawer-search {
   width: 100%;
-  height: 42px;
-  background: #14100b;
+  height: 38px;
+  background: #16110b;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
   border-radius: 6px;
-  padding: 0 14px 0 38px;
+  padding: 0 12px 0 34px;
   color: #ffffff;
-  font-size: 13px;
+  font-size: 12.5px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   box-sizing: border-box;
 }
 
+.crypto-drawer-search:focus {
+  background: #1c150d;
+}
+
 .drawer-search-icon {
   position: absolute;
-  left: 34px;
+  left: 24px;
   top: 50%;
   transform: translateY(-50%);
   stroke: rgba(255, 255, 255, 0.35);
@@ -2718,20 +2669,28 @@ input[type=number] {
 }
 
 .crypto-drawer-list {
-  flex: 1;
+  max-height: 340px;
   overflow-y: auto;
-  padding: 6px 22px 16px;
+  padding: 4px 12px 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+}
+
+.crypto-drawer-list::-webkit-scrollbar {
+  width: 4px;
+}
+.crypto-drawer-list::-webkit-scrollbar-thumb {
+  background: rgba(234, 88, 12, 0.3);
+  border-radius: 4px;
 }
 
 .drawer-coin-card {
   background: #14100b;
   border: none !important;
-  border-radius: 8px;
+  border-radius: 6px;
   box-shadow: none !important;
-  padding: 13px 15px;
+  padding: 10px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2756,8 +2715,8 @@ input[type=number] {
 }
 
 .payment-method-coin-img {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: contain;
   flex-shrink: 0;
@@ -2828,7 +2787,7 @@ input[type=number] {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-center;
   transition: background 0.15s, color 0.15s;
 }
 
@@ -2861,10 +2820,16 @@ input[type=number] {
   color: #ffffff;
 }
 
+.coin-chevron-icon {
+  transition: transform 0.25s ease;
+}
+
+.change-coin-btn.open .coin-chevron-icon {
+  transform: rotate(180deg);
+}
+
 .crypto-drawer-footer {
-  padding: 16px 22px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: #0c0906;
+  display: none !important;
 }
 
 .drawer-confirm-btn {

@@ -265,6 +265,7 @@ function setPaymentMethod(method) {
     if (method === "balance") {
       balanceChoice.classList.add("active");
       cryptoChoice.classList.remove("active");
+      closeCoinsDrawer();
     } else {
       cryptoChoice.classList.add("active");
       balanceChoice.classList.remove("active");
@@ -273,34 +274,42 @@ function setPaymentMethod(method) {
   updateCheckoutButtonText();
 }
 
-// Drawer Controls
+// Drawer Controls (Inline Expandable Drawer)
 function openCoinsDrawer() {
   const drawer = document.querySelector("#cryptoDrawer");
-  const backdrop = document.querySelector("#cryptoDrawerBackdrop");
-  if (drawer && backdrop) {
+  const changeBtn = document.querySelector("#openCoinsDrawerBtn");
+  if (drawer) {
     drawer.classList.add("open");
-    backdrop.classList.add("open");
     drawer.setAttribute("aria-hidden", "false");
-    backdrop.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-    const searchInput = document.querySelector("#cryptoSearch");
-    if (searchInput) {
-      searchInput.value = "";
-      document.querySelectorAll(".drawer-coin-card").forEach(c => c.style.display = "flex");
-      setTimeout(() => searchInput.focus(), 120);
-    }
+  }
+  if (changeBtn) {
+    changeBtn.classList.add("open");
+  }
+  const searchInput = document.querySelector("#cryptoSearch");
+  if (searchInput) {
+    searchInput.value = "";
+    document.querySelectorAll(".drawer-coin-card").forEach(c => c.style.display = "flex");
   }
 }
 
 function closeCoinsDrawer() {
   const drawer = document.querySelector("#cryptoDrawer");
-  const backdrop = document.querySelector("#cryptoDrawerBackdrop");
-  if (drawer && backdrop) {
+  const changeBtn = document.querySelector("#openCoinsDrawerBtn");
+  if (drawer) {
     drawer.classList.remove("open");
-    backdrop.classList.remove("open");
     drawer.setAttribute("aria-hidden", "true");
-    backdrop.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
+  }
+  if (changeBtn) {
+    changeBtn.classList.remove("open");
+  }
+}
+
+function toggleCoinsDrawer() {
+  const drawer = document.querySelector("#cryptoDrawer");
+  if (drawer && drawer.classList.contains("open")) {
+    closeCoinsDrawer();
+  } else {
+    openCoinsDrawer();
   }
 }
 
@@ -310,14 +319,24 @@ if (choiceBalance) {
   choiceBalance.addEventListener("click", () => setPaymentMethod("balance"));
 }
 
+const openCoinsBtn = document.querySelector("#openCoinsDrawerBtn");
+if (openCoinsBtn) {
+  openCoinsBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setPaymentMethod("crypto");
+    toggleCoinsDrawer();
+  });
+}
+
 const choiceCrypto = document.querySelector("#choiceMethodCrypto");
 if (choiceCrypto) {
   choiceCrypto.addEventListener("click", (e) => {
-    const isChangeBtn = e.target.closest("#openCoinsDrawerBtn");
-    const wasAlreadyCrypto = selectedPaymentMethod === "crypto";
+    if (e.target.closest("#openCoinsDrawerBtn")) return;
     setPaymentMethod("crypto");
-    if (isChangeBtn || wasAlreadyCrypto || !selectedCoin) {
+    if (!selectedCoin) {
       openCoinsDrawer();
+    } else {
+      toggleCoinsDrawer();
     }
   });
 }
@@ -359,9 +378,7 @@ document.querySelectorAll(".drawer-coin-card").forEach(card => {
     updateSelectedCoinDisplay();
     updateCheckoutButtonText();
 
-    if (!chip) {
-      setTimeout(closeCoinsDrawer, 160);
-    }
+    setTimeout(closeCoinsDrawer, 220);
   });
 });
 
@@ -464,6 +481,8 @@ if (checkoutSubmitBtn) {
 
     if (selectedPaymentMethod === "crypto" && !selectedCoin) {
       openCoinsDrawer();
+      const drawer = document.querySelector("#cryptoDrawer");
+      if (drawer) drawer.scrollIntoView({ behavior: "smooth", block: "nearest" });
       if (typeof showMysterioAlert === "function") {
         showMysterioAlert({ message: "Please select a cryptocurrency and network to proceed.", title: "Select Coin", isError: false });
       }

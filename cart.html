@@ -155,10 +155,153 @@
                     <span class="method-choice-sub" id="selectedCoinSub">Choose coin &amp; network</span>
                   </div>
                 </div>
-                <button type="button" class="change-coin-btn" id="openCoinsDrawerBtn" aria-label="Select coin">
+                <button type="button" class="change-coin-btn open" id="openCoinsDrawerBtn" aria-label="Select coin">
                   <span id="changeCoinBtnText">Select Coin</span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  <svg class="coin-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
+              </div>
+
+              <!-- INLINE EXPANDABLE COINS DRAWER -->
+              <div id="cryptoDrawer" class="crypto-drawer open" aria-label="Select Cryptocurrency">
+                <!-- SEARCH COINS IN DRAWER -->
+                <div class="crypto-drawer-search-wrap">
+                  <svg class="drawer-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                  <input id="cryptoSearch" type="search" class="crypto-drawer-search" placeholder="Search Bitcoin, USDT, Solana..." autocomplete="off">
+                </div>
+
+                <!-- COINS LIST IN DRAWER -->
+                <div class="crypto-drawer-list" id="paymentMethodsGrid">
+                  <!-- Bitcoin -->
+                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="btc" data-coin-search="bitcoin btc">
+                    <div class="drawer-coin-left">
+                      <img src="/icons/btc.svg" alt="Bitcoin" width="32" height="32" class="payment-method-coin-img">
+                      <div class="drawer-coin-meta">
+                        <div class="drawer-coin-header">
+                          <span class="drawer-coin-name">Bitcoin</span>
+                          <span class="drawer-coin-tag">BTC</span>
+                        </div>
+                        <span class="drawer-coin-speed">Estimated ~30 mins</span>
+                      </div>
+                    </div>
+                    <div class="drawer-coin-check">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+
+                  <!-- Litecoin -->
+                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="ltc" data-coin-search="litecoin ltc">
+                    <div class="drawer-coin-left">
+                      <img src="/icons/ltc.svg" alt="Litecoin" width="32" height="32" class="payment-method-coin-img">
+                      <div class="drawer-coin-meta">
+                        <div class="drawer-coin-header">
+                          <span class="drawer-coin-name">Litecoin</span>
+                          <span class="drawer-coin-tag">LTC</span>
+                          <span class="drawer-speed-badge">Fast &amp; Cheap</span>
+                        </div>
+                        <span class="drawer-coin-speed">Estimated ~5 mins</span>
+                      </div>
+                    </div>
+                    <div class="drawer-coin-check">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+
+                  <!-- Solana -->
+                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="sol" data-coin-search="solana sol">
+                    <div class="drawer-coin-left">
+                      <img src="/icons/sol.svg" alt="Solana" width="32" height="32" class="payment-method-coin-img">
+                      <div class="drawer-coin-meta">
+                        <div class="drawer-coin-header">
+                          <span class="drawer-coin-name">Solana</span>
+                          <span class="drawer-coin-tag">SOL</span>
+                          <span class="drawer-speed-badge">Instant</span>
+                        </div>
+                        <span class="drawer-coin-speed">Instant confirmation (&lt;1 min)</span>
+                      </div>
+                    </div>
+                    <div class="drawer-coin-check">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+
+                  <!-- Tether USD -->
+                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="usdt" data-coin-search="tether usdt trc20 erc20 sol">
+                    <div class="drawer-coin-left">
+                      <img src="/icons/usdt.svg" alt="Tether" width="32" height="32" class="payment-method-coin-img">
+                      <div class="drawer-coin-meta">
+                        <div class="drawer-coin-header">
+                          <span class="drawer-coin-name">Tether USD</span>
+                          <span class="drawer-coin-tag">USDT</span>
+                        </div>
+                        <span class="drawer-coin-speed">Choose network:</span>
+                        <div class="network-chips-row">
+                          <span class="network-chip active" data-network="trc20">TRC20</span>
+                          <span class="network-chip" data-network="erc20">ERC20</span>
+                          <span class="network-chip" data-network="sol">SOL</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="drawer-coin-check">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+
+                  <!-- USD Coin -->
+                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="usdc" data-coin-search="usd coin usdc erc20 sol">
+                    <div class="drawer-coin-left">
+                      <img src="/icons/usdc.svg" alt="USD Coin" width="32" height="32" class="payment-method-coin-img">
+                      <div class="drawer-coin-meta">
+                        <div class="drawer-coin-header">
+                          <span class="drawer-coin-name">USD Coin</span>
+                          <span class="drawer-coin-tag">USDC</span>
+                        </div>
+                        <span class="drawer-coin-speed">Choose network:</span>
+                        <div class="network-chips-row">
+                          <span class="network-chip active" data-network="erc20">ERC20</span>
+                          <span class="network-chip" data-network="sol">SOL</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="drawer-coin-check">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+
+                  <!-- Ethereum -->
+                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="eth" data-coin-search="ethereum eth erc20">
+                    <div class="drawer-coin-left">
+                      <img src="/icons/eth.svg" alt="Ethereum" width="32" height="32" class="payment-method-coin-img">
+                      <div class="drawer-coin-meta">
+                        <div class="drawer-coin-header">
+                          <span class="drawer-coin-name">Ethereum</span>
+                          <span class="drawer-coin-tag">ETH</span>
+                        </div>
+                        <span class="drawer-coin-speed">ERC20 · ~3 mins</span>
+                      </div>
+                    </div>
+                    <div class="drawer-coin-check">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+
+                  <!-- Tron -->
+                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="trx" data-coin-search="tron trx">
+                    <div class="drawer-coin-left">
+                      <img src="/icons/trx.svg" alt="Tron" width="32" height="32" class="payment-method-coin-img">
+                      <div class="drawer-coin-meta">
+                        <div class="drawer-coin-header">
+                          <span class="drawer-coin-name">Tron</span>
+                          <span class="drawer-coin-tag">TRX</span>
+                          <span class="drawer-speed-badge">Instant</span>
+                        </div>
+                        <span class="drawer-coin-speed">Instant confirmation (&lt;1 min)</span>
+                      </div>
+                    </div>
+                    <div class="drawer-coin-check">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -172,165 +315,6 @@
         </div>
       </div>
     </main>
-
-    <!-- COINS SELECTION DRAWER -->
-    <div id="cryptoDrawerBackdrop" class="crypto-drawer-backdrop" aria-hidden="true"></div>
-
-    <aside id="cryptoDrawer" class="crypto-drawer" aria-label="Select Cryptocurrency" aria-hidden="true">
-      <div class="crypto-drawer-header">
-        <div class="crypto-drawer-title-group">
-          <h3 class="crypto-drawer-title">Choose Cryptocurrency</h3>
-          <span class="crypto-drawer-sub">Select your asset and preferred network</span>
-        </div>
-        <button type="button" id="closeCryptoDrawerBtn" class="crypto-drawer-close" aria-label="Close drawer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="6"></line></svg>
-        </button>
-      </div>
-
-      <!-- SEARCH COINS IN DRAWER -->
-      <div class="crypto-drawer-search-wrap">
-        <svg class="drawer-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-        <input id="cryptoSearch" type="search" class="crypto-drawer-search" placeholder="Search Bitcoin, USDT, Solana..." autocomplete="off">
-      </div>
-
-      <!-- COINS LIST IN DRAWER -->
-      <div class="crypto-drawer-list" id="paymentMethodsGrid">
-        <!-- Bitcoin -->
-        <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="btc" data-coin-search="bitcoin btc">
-          <div class="drawer-coin-left">
-            <img src="/icons/btc.svg" alt="Bitcoin" width="36" height="36" class="payment-method-coin-img">
-            <div class="drawer-coin-meta">
-              <div class="drawer-coin-header">
-                <span class="drawer-coin-name">Bitcoin</span>
-                <span class="drawer-coin-tag">BTC</span>
-              </div>
-              <span class="drawer-coin-speed">Estimated ~30 mins</span>
-            </div>
-          </div>
-          <div class="drawer-coin-check">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-
-        <!-- Litecoin -->
-        <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="ltc" data-coin-search="litecoin ltc">
-          <div class="drawer-coin-left">
-            <img src="/icons/ltc.svg" alt="Litecoin" width="36" height="36" class="payment-method-coin-img">
-            <div class="drawer-coin-meta">
-              <div class="drawer-coin-header">
-                <span class="drawer-coin-name">Litecoin</span>
-                <span class="drawer-coin-tag">LTC</span>
-                <span class="drawer-speed-badge">Fast & Cheap</span>
-              </div>
-              <span class="drawer-coin-speed">Estimated ~5 mins</span>
-            </div>
-          </div>
-          <div class="drawer-coin-check">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-
-        <!-- Solana -->
-        <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="sol" data-coin-search="solana sol">
-          <div class="drawer-coin-left">
-            <img src="/icons/sol.svg" alt="Solana" width="36" height="36" class="payment-method-coin-img">
-            <div class="drawer-coin-meta">
-              <div class="drawer-coin-header">
-                <span class="drawer-coin-name">Solana</span>
-                <span class="drawer-coin-tag">SOL</span>
-                <span class="drawer-speed-badge">Instant</span>
-              </div>
-              <span class="drawer-coin-speed">Instant confirmation (&lt;1 min)</span>
-            </div>
-          </div>
-          <div class="drawer-coin-check">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-
-        <!-- Tether USD -->
-        <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="usdt" data-coin-search="tether usdt trc20 erc20 sol">
-          <div class="drawer-coin-left">
-            <img src="/icons/usdt.svg" alt="Tether" width="36" height="36" class="payment-method-coin-img">
-            <div class="drawer-coin-meta">
-              <div class="drawer-coin-header">
-                <span class="drawer-coin-name">Tether USD</span>
-                <span class="drawer-coin-tag">USDT</span>
-              </div>
-              <span class="drawer-coin-speed">Choose network:</span>
-              <div class="network-chips-row">
-                <span class="network-chip active" data-network="trc20">TRC20</span>
-                <span class="network-chip" data-network="erc20">ERC20</span>
-                <span class="network-chip" data-network="sol">SOL</span>
-              </div>
-            </div>
-          </div>
-          <div class="drawer-coin-check">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-
-        <!-- USD Coin -->
-        <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="usdc" data-coin-search="usd coin usdc erc20 sol">
-          <div class="drawer-coin-left">
-            <img src="/icons/usdc.svg" alt="USD Coin" width="36" height="36" class="payment-method-coin-img">
-            <div class="drawer-coin-meta">
-              <div class="drawer-coin-header">
-                <span class="drawer-coin-name">USD Coin</span>
-                <span class="drawer-coin-tag">USDC</span>
-              </div>
-              <span class="drawer-coin-speed">Choose network:</span>
-              <div class="network-chips-row">
-                <span class="network-chip active" data-network="erc20">ERC20</span>
-                <span class="network-chip" data-network="sol">SOL</span>
-              </div>
-            </div>
-          </div>
-          <div class="drawer-coin-check">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-
-        <!-- Ethereum -->
-        <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="eth" data-coin-search="ethereum eth erc20">
-          <div class="drawer-coin-left">
-            <img src="/icons/eth.svg" alt="Ethereum" width="36" height="36" class="payment-method-coin-img">
-            <div class="drawer-coin-meta">
-              <div class="drawer-coin-header">
-                <span class="drawer-coin-name">Ethereum</span>
-                <span class="drawer-coin-tag">ETH</span>
-              </div>
-              <span class="drawer-coin-speed">ERC20 · ~3 mins</span>
-            </div>
-          </div>
-          <div class="drawer-coin-check">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-
-        <!-- Tron -->
-        <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="trx" data-coin-search="tron trx">
-          <div class="drawer-coin-left">
-            <img src="/icons/trx.svg" alt="Tron" width="36" height="36" class="payment-method-coin-img">
-            <div class="drawer-coin-meta">
-              <div class="drawer-coin-header">
-                <span class="drawer-coin-name">Tron</span>
-                <span class="drawer-coin-tag">TRX</span>
-                <span class="drawer-speed-badge">Instant</span>
-              </div>
-              <span class="drawer-coin-speed">Instant confirmation (&lt;1 min)</span>
-            </div>
-          </div>
-          <div class="drawer-coin-check">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="crypto-drawer-footer">
-        <button type="button" id="confirmCoinSelectionBtn" class="drawer-confirm-btn">Confirm Selection</button>
-      </div>
-    </aside>
 
     <!-- FOOTER -->
     <footer class="site-footer">
