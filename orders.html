@@ -107,9 +107,7 @@
       </div>
 
       <!-- PAGINATION -->
-      <div class="orders-pagination" id="ordersPagination">
-        <button class="orders-page-btn active" type="button">1</button>
-      </div>
+      <div class="orders-pagination" id="ordersPagination" style="display: none;"></div>
     </main>
  
     <!-- FOOTER -->
@@ -184,7 +182,7 @@
             </div>
 
             <div class="order-info-actions" style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
-              <a href="https://t.me/mysteriogateway" target="_blank" rel="noopener noreferrer" class="pill-button" id="modalVouchBtn" style="height: 42px; background: #f59e0b; color: #050811; font-weight: 600; font-size: 13.5px; border-radius: 6px; display: flex; align-items: center; justify-content: center; text-decoration: none; border: none;">Submit Vouch</a>
+              <a href="/support.html" class="pill-button" id="modalVouchBtn" style="height: 42px; background: #ea580c; color: #ffffff; font-weight: 600; font-size: 13.5px; border-radius: 6px; display: flex; align-items: center; justify-content: center; text-decoration: none; border: none;">Submit Vouch</a>
               <button type="button" class="pill-button" id="modalOrderUrlBtn" style="height: 42px; background: rgba(255, 255, 255, 0.07) !important; color: #e2e8f0 !important; font-weight: 600; font-size: 13.5px; border-radius: 6px !important; border: none !important; box-shadow: none !important; cursor: pointer; width: 100%;">Order Url</button>
             </div>
           </div>
@@ -424,8 +422,10 @@
         });
 
         countNum.textContent = filtered.length;
+        const paginationEl = document.querySelector("#ordersPagination");
 
         if (filtered.length === 0) {
+          if (paginationEl) paginationEl.style.display = "none";
           tableBody.innerHTML = `
             <tr>
               <td colspan="6" style="padding: 36px 18px; text-align: center; color: rgba(255,255,255,0.45); font-size: 13px;">
@@ -434,6 +434,10 @@
             </tr>
           `;
           return;
+        }
+
+        if (paginationEl) {
+          paginationEl.style.display = filtered.length > 20 ? "flex" : "none";
         }
 
         tableBody.innerHTML = filtered.map(r => `

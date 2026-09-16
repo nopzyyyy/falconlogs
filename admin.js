@@ -2248,7 +2248,7 @@ addVariantBtn?.addEventListener("click", async () => {
     submitLabel: "Add Variant",
     fields: [
       { name: "name", label: "Variant name", value: "", placeholder: "e.g. 1 Month", required: true },
-      { name: "price", label: "Price (USD)", value: "1.00", type: "number", step: "0.01", required: true },
+      { name: "price", label: "Price (GBP)", value: "1.00", type: "number", step: "0.01", required: true },
       { name: "min", label: "Minimum quantity", value: "1", type: "number", step: "1", required: true }
     ]
   });
@@ -2281,7 +2281,7 @@ window.editVariant = async function(productId, variantId) {
     submitLabel: "Save Changes",
     fields: [
       { name: "name", label: "Variant name", value: variant.name, required: true },
-      { name: "price", label: "Price (USD)", value: variant.price, type: "number", step: "0.01", required: true },
+      { name: "price", label: "Price (GBP)", value: variant.price, type: "number", step: "0.01", required: true },
       { name: "min", label: "Minimum quantity", value: variant.min || 1, type: "number", step: "1", required: true }
     ]
   });

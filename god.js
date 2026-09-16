@@ -16,7 +16,7 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
   }[c]));
-  const money = v => '$' + Number(v || 0).toFixed(2);
+  const money = v => '£' + Number(v || 0).toFixed(2);
   const ymd = d => {
     const dt = new Date(d);
     return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;

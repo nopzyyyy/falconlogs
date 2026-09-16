@@ -460,7 +460,7 @@ function toItem(row) {
 const seedItems = [
   ["483312", "DEBIT", "CLASSIC", "JPMORGAN CHASE BANK N.A. - TEST", "NM", "88346", "USA", "05/24 USA TOP SELLER", "Y", "2.00", "Alamogordo"],
   ["473702", "DEBIT", "CLASSIC", "WELLS FARGO BANK, NATIONAL ASSOCIATION - TEST", "NC", "27529", "USA", "05/24 USA TOP SELLER", "Y", "2.00", "Garner"],
-  ["601100", "CREDIT", "PLATINUM", "DISCOVER ISSUER - TEST", "IL", "62922", "USA", "0525-US-SNIFFED-85% ($500 DEMO BALANCE)", "Y", "17.50", "Carbondale"],
+  ["601100", "CREDIT", "PLATINUM", "DISCOVER ISSUER - TEST", "IL", "62922", "USA", "0525-US-SNIFFED-85% (£500 DEMO BALANCE)", "Y", "17.50", "Carbondale"],
   ["426684", "CREDIT", "TRADITIONAL", "JPMORGAN CHASE BANK N.A. - TEST", "NY", "10033", "USA", "05/24 USA TOP SELLER", "Y", "2.00", "New York"],
   ["498503", "DEBIT", "CLASSIC", "STRIDE BANK, NATIONAL ASSOCIATION - TEST", "FL", "33596", "USA", "05/24 USA TOP SELLER", "Y", "2.00", "Valrico"],
   ["433419", "CREDIT", "TRADITIONAL", "VARO BANK, NATIONAL ASSOCIATION - TEST", "TX", "77506", "USA", "05/24 USA TOP SELLER", "Y", "2.00", "Pasadena"],
@@ -1344,10 +1344,7 @@ function restockBotApi(method, payload) {
 function sendDashboardBotNotification(telegramId, text, replyMarkup = null) {
   if (!telegramId) return Promise.resolve(null);
   
-  let formattedText = text;
-  if (!formattedText.includes("@mysteriogateway")) {
-    formattedText += "\n\n📢 Join @mysteriogateway for updates and free drops!";
-  }
+  const formattedText = text;
 
   return new Promise((resolve) => {
     const payload = {

@@ -258,9 +258,16 @@ function renderHistoryTable() {
     return true;
   });
 
+  const pagination = document.querySelector("#supportPagination") || document.querySelector(".history-pagination");
+
   if (filtered.length === 0) {
+    if (pagination) pagination.style.display = "none";
     rows.innerHTML = `<tr><td colspan="7" class="empty">No tickets found.</td></tr>`;
     return;
+  }
+
+  if (pagination) {
+    pagination.style.display = filtered.length > 20 ? "flex" : "none";
   }
 
   rows.innerHTML = filtered.map(t => {

@@ -204,7 +204,7 @@
           </div>
           <div class="invoice-meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:13px;">
             <span style="color:var(--muted); margin-right:10px;">Amount</span>
-            <strong style="color:var(--green);">$${Number(topup.amount).toFixed(2)}</strong>
+            <strong style="color:var(--green);">£${Number(topup.amount).toFixed(2)}</strong>
           </div>
           <div class="invoice-meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:13px;">
             <span style="color:var(--muted); margin-right:10px;">Status</span>

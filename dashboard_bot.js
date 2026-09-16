@@ -198,7 +198,7 @@ async function handleStart(chatId, fromUser, fullText = "") {
     
     welcomeMessage += `• <b>Status:</b> <code>${statusLabel}</code>\n` +
       `• <b>Date:</b> ${dateStr}\n` +
-      `• <b>Total:</b> $${Number(linkedOrder.total || 0).toFixed(2)}\n\n`;
+      `• <b>Total:</b> £${Number(linkedOrder.total || 0).toFixed(2)}\n\n`;
 
     if (linkedOrder.status === "COMPLETED") {
       welcomeMessage += `<b>Fulfillment Details:</b>\n`;
@@ -269,7 +269,7 @@ async function handleStatus(chatId, fromUser) {
     
     text += `<b>Order ID:</b> <code>${o.id}</code>\n` +
       `  <b>Date:</b> ${dateStr}\n` +
-      `  <b>Amount:</b> $${Number(o.total || 0).toFixed(2)}\n` +
+      `  <b>Amount:</b> £${Number(o.total || 0).toFixed(2)}\n` +
       `  <b>Status:</b> <code>${statusLabel}</code>\n\n`;
   });
 
