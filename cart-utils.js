@@ -472,14 +472,23 @@ async function initGlobalAccountHeader() {
         logoutBtn.disabled = true;
         try {
           await fetch("/api/auth/logout", { method: "POST" });
-          window.location.href = "/";
+          window.location.href = "/login";
         } catch (err) {
           window.location.reload();
         }
       };
     }
   } else {
-    // Guest state
+    // Unauthenticated guest check: redirect to /login if on any non-login page
+    const p = window.location.pathname.toLowerCase();
+    if (!p.includes("login")) {
+      const search = window.location.search || "";
+      const target = (p === "/" || p === "/index.html" || p === "/index") ? "" : `?redirect=${encodeURIComponent(p + search)}`;
+      window.location.href = `/login${target}`;
+      return;
+    }
+
+    // Guest state (only shown if somehow drawer rendered on login page)
     drawer.innerHTML = `
       <div class="account-drawer-header">
         <h3 class="account-drawer-title">My Account</h3>

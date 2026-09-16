@@ -1742,8 +1742,9 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/products" && req.method === "GET") {
       const session = getSession(req);
+      if (!session) return sendJson(res, 401, { error: "Login required." });
       const allProds = readProducts();
-      if (session && (session.user.role === "ADMIN" || session.user.role === "GOD")) {
+      if (session.user.role === "ADMIN" || session.user.role === "GOD") {
         return sendJson(res, 200, { products: allProds });
       } else {
         return sendJson(res, 200, { products: allProds.filter(p => !p.isHidden) });
@@ -2307,6 +2308,8 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (url.pathname === "/api/announcements" && req.method === "GET") {
+      const session = getSession(req);
+      if (!session) return sendJson(res, 401, { error: "Login required." });
       const announcements = readJson(announcementsFile, []);
       return sendJson(res, 200, { announcements: announcements.filter(a => a.isActive) });
     }
@@ -2422,6 +2425,8 @@ const server = http.createServer(async (req, res) => {
 
     // CATEGORIES
     if (url.pathname === "/api/categories" && req.method === "GET") {
+      const session = getSession(req);
+      if (!session) return sendJson(res, 401, { error: "Login required." });
       const cats = readJson(categoriesFile, ["Shopping"]);
       return sendJson(res, 200, { categories: cats });
     }
@@ -4855,14 +4860,21 @@ ${escapeTelegramHtml(r.reason)}
     }
 
     // Strict allowlist — anything not listed here is a hard 404
-    // Public: served without a session (guests can browse, view products, and add to cart)
+    // Public: accessible without a session (only login page & essential assets to render it)
     const PUBLIC_FILES  = new Set([
-      "/", "/index.html", "/main.js", "/cart-utils.js", "/cart.html", "/cart.js", "/pay.html", "/logs.html", "/logs.js",
-      "/login.html", "/login.js", "/styles.css", "/banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png", "/favicon.svg", "/favicon.ico", "/favicon.png", "/chime_logo.png",
+      "/login.html", "/login.js", "/styles.css", "/cart-utils.js",
+      "/banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png",
+      "/favicon.svg", "/favicon.ico", "/favicon.png", "/chime_logo.png"
+    ]);
+    // Auth: requires valid logged-in session for access to any page or code on the platform
+    const AUTH_FILES    = new Set([
+      "/", "/index.html", "/main.js", "/logs.html", "/logs.js",
+      "/cart.html", "/cart.js", "/pay.html",
+      "/orders.html", "/balance.html", "/balance.js",
+      "/dashboard.html", "/dashboard.js", "/deposit.html", "/deposit.js",
+      "/support.html", "/support.js",
       "/faq.html", "/faq.js", "/tos.html", "/tos.js", "/privacy.html", "/privacy.js"
     ]);
-    // Auth: requires valid logged-in session for personal account actions
-    const AUTH_FILES    = new Set(["/orders.html", "/balance.html", "/balance.js", "/dashboard.html", "/dashboard.js", "/deposit.html", "/deposit.js", "/support.html", "/support.js"]);
     // Admin: requires ADMIN role
     const ADMIN_FILES   = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);
 
@@ -4879,10 +4891,14 @@ ${escapeTelegramHtml(r.reason)}
     const fileSession = getSession(req);
 
     if (inAdmin) {
-      if (!fileSession) return redirect(res, "/login.html?redirect=/admin.html");
+      if (!fileSession) return redirect(res, "/login?redirect=/admin");
       if (fileSession.user.role !== "ADMIN" && fileSession.user.role !== "GOD") return redirect(res, "/");
     } else if (inAuth) {
-      if (!fileSession) return redirect(res, `/login.html?redirect=${encodeURIComponent(requestedPath)}`);
+      if (!fileSession) {
+        const cleanPath = requestedPath.endsWith(".html") ? requestedPath.slice(0, -5) : requestedPath;
+        const redir = (cleanPath === "/index" || cleanPath === "/" || cleanPath === "") ? "" : `?redirect=${encodeURIComponent(cleanPath)}`;
+        return redirect(res, `/login${redir}`);
+      }
     }
 
     // Already logged in → redirect away from login
