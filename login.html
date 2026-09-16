@@ -311,8 +311,8 @@
 
       <!-- Toggle Mode -->
       <div class="login-toggle-row">
-        <span id="authToggleText">Don't have an account?</span>
-        <button type="button" class="login-toggle-btn" id="toggleAuthBtn">create one now</button>
+        <span id="authToggleText">New here?</span>
+        <button type="button" class="login-toggle-btn" id="toggleAuthBtn">Create an account</button>
       </div>
 
       <!-- Back Link -->
@@ -344,7 +344,7 @@
           confirmPassInput.required = true;
           passInput.autocomplete = 'new-password';
           toggleText.textContent = "Already have an account?";
-          toggleBtn.textContent = "log in now";
+          toggleBtn.textContent = "Log in";
         } else {
           title.textContent = "Login";
           submitBtn.textContent = "Login";
@@ -352,8 +352,8 @@
           confirmPassField.style.display = 'none';
           confirmPassInput.required = false;
           passInput.autocomplete = 'current-password';
-          toggleText.textContent = "Don't have an account?";
-          toggleBtn.textContent = "create one now";
+          toggleText.textContent = "New here?";
+          toggleBtn.textContent = "Create an account";
         }
         errorMsg.style.display = 'none';
       }
