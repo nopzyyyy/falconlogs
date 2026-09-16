@@ -1447,7 +1447,7 @@ input[type=number] {
   max-width: 245px;
   flex-shrink: 0;
   background: var(--store-card);
-  border: none !important;
+  border: 1px solid rgba(234, 88, 12, 0.14) !important;
   box-shadow: none !important;
   border-radius: 6px;
   overflow: hidden;
@@ -1462,7 +1462,7 @@ input[type=number] {
   background: #14100b;
   position: relative;
   cursor: pointer;
-  border-bottom: none !important;
+  border-bottom: 1px solid rgba(234, 88, 12, 0.1) !important;
 }
 
 .product-card-img {
