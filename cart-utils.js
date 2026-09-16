@@ -256,7 +256,14 @@ function initMobileDrawer() {
     document.body.style.overflow = "";
   }
 
-  toggleBtn.onclick = openDrawer;
+  toggleBtn.onclick = (e) => {
+    e.preventDefault();
+    if (typeof window.openAccountDrawer === "function") {
+      window.openAccountDrawer();
+    } else {
+      openDrawer();
+    }
+  };
   backdrop.onclick = closeDrawer;
   const closeBtn = drawer.querySelector("#closeMobileDrawerBtn");
   if (closeBtn) closeBtn.onclick = closeDrawer;
@@ -518,14 +525,11 @@ async function initGlobalAccountHeader() {
           <span>Cart</span>
           <span class="account-drawer-cart-badge" data-cart-count>0</span>
         </a>
-      </nav>
-
-      <div class="account-drawer-footer">
         <button type="button" class="account-drawer-logout-btn" id="accountDrawerLogoutBtn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           <span>Log out</span>
         </button>
-      </div>
+      </nav>
     `;
 
     const closeBtn = drawer.querySelector("#closeAccountDrawerBtn");
