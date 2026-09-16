@@ -4,5 +4,6 @@
     "crypto": true,
     "chime": false,
     "tg_stars": true
-  }
+  },
+  "particlesEnabled": true
 }

@@ -876,8 +876,195 @@ window.setCart = setCart;
 window.initGlobalAccountHeader = initGlobalAccountHeader;
 window.openCryptoPaymentDrawer = openCryptoPaymentDrawer;
 window.showMysterioAlert = showMysterioAlert;
+window.setGlobalParticlesActive = setGlobalParticlesActive;
+window.initFalconGlobalParticlesEngine = initFalconGlobalParticlesEngine;
 
-document.addEventListener("DOMContentLoaded", () => {
+// =========================================================================
+// FALCON GLOBAL BACKGROUND PARTICLES ENGINE (Rising Flame Embers)
+// =========================================================================
+let _falconParticlesCanvas = null;
+let _falconParticlesCtx = null;
+let _falconParticlesList = [];
+let _falconParticlesRafId = null;
+let _falconParticlesActive = false;
+let _falconParticlesWidth = 0;
+let _falconParticlesHeight = 0;
+
+const FALCON_EMBER_COLORS = [
+  { r: 234, g: 88, b: 12 },   // #ea580c (Falcon Primary Orange)
+  { r: 249, g: 115, b: 22 },  // #f97316 (Vibrant Flame)
+  { r: 251, g: 146, b: 60 },  // #fb923c (Bright Ember)
+  { r: 253, g: 186, b: 116 }, // #fdba74 (Warm Light Amber)
+  { r: 194, g: 65, b: 12 },   // #c2410c (Deep Molten Ember)
+  { r: 254, g: 240, b: 138 }  // #fef08a (Spark Core Glow)
+];
+
+class FalconEmberParticle {
+  constructor(initialRandomY = true) {
+    this.reset(initialRandomY);
+  }
+
+  reset(initialRandomY = false) {
+    const w = _falconParticlesWidth || window.innerWidth || 800;
+    const h = _falconParticlesHeight || window.innerHeight || 600;
+    this.x = Math.random() * w;
+    this.y = initialRandomY ? Math.random() * h : h + 10 + Math.random() * 25;
+    this.radius = Math.random() * 1.5 + 0.8; // 0.8px - 2.3px
+    this.speedY = -(Math.random() * 0.65 + 0.35); // upwards float
+    this.speedX = (Math.random() - 0.5) * 0.3; // gentle sway
+    this.color = FALCON_EMBER_COLORS[Math.floor(Math.random() * FALCON_EMBER_COLORS.length)];
+    this.baseAlpha = Math.random() * 0.4 + 0.25;
+    this.alpha = this.baseAlpha;
+    this.twinkleSpeed = Math.random() * 0.03 + 0.015;
+    this.twinkleAngle = Math.random() * Math.PI * 2;
+  }
+
+  update() {
+    this.y += this.speedY;
+    this.x += this.speedX + Math.sin(this.twinkleAngle) * 0.25;
+    this.twinkleAngle += this.twinkleSpeed;
+    this.alpha = Math.max(0.08, this.baseAlpha + Math.sin(this.twinkleAngle) * 0.16);
+
+    if (this.y < -15 || this.x < -25 || this.x > _falconParticlesWidth + 25) {
+      this.reset(false);
+    }
+  }
+
+  draw(ctx) {
+    if (this.radius > 1.4) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius * 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${(this.alpha * 0.18).toFixed(3)})`;
+      ctx.fill();
+    }
+
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha.toFixed(3)})`;
+    ctx.fill();
+  }
+}
+
+function resizeFalconParticles() {
+  if (!_falconParticlesCanvas || !_falconParticlesCtx) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  _falconParticlesWidth = window.innerWidth;
+  _falconParticlesHeight = window.innerHeight;
+  _falconParticlesCanvas.width = Math.floor(_falconParticlesWidth * dpr);
+  _falconParticlesCanvas.height = Math.floor(_falconParticlesHeight * dpr);
+  _falconParticlesCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function animateFalconParticles() {
+  if (!_falconParticlesActive || !_falconParticlesCtx) return;
+  _falconParticlesCtx.clearRect(0, 0, _falconParticlesWidth, _falconParticlesHeight);
+  for (let i = 0; i < _falconParticlesList.length; i++) {
+    _falconParticlesList[i].update();
+    _falconParticlesList[i].draw(_falconParticlesCtx);
+  }
+  _falconParticlesRafId = requestAnimationFrame(animateFalconParticles);
+}
+
+function setGlobalParticlesActive(enabled) {
+  _falconParticlesActive = !!enabled;
+  if (!_falconParticlesCanvas) return;
+
+  if (_falconParticlesActive) {
+    _falconParticlesCanvas.style.display = "block";
+    if (!_falconParticlesRafId) {
+      if (_falconParticlesList.length === 0) {
+        const count = window.innerWidth < 768 ? 32 : 58;
+        for (let i = 0; i < count; i++) {
+          _falconParticlesList.push(new FalconEmberParticle(true));
+        }
+      }
+      _falconParticlesRafId = requestAnimationFrame(animateFalconParticles);
+    }
+  } else {
+    _falconParticlesCanvas.style.display = "none";
+    if (_falconParticlesRafId) {
+      cancelAnimationFrame(_falconParticlesRafId);
+      _falconParticlesRafId = null;
+    }
+  }
+}
+
+function initFalconGlobalParticlesEngine() {
+  try {
+    _falconParticlesCanvas = document.getElementById("particlesCanvas") || document.getElementById("falconGlobalParticlesCanvas");
+    if (!_falconParticlesCanvas) {
+      _falconParticlesCanvas = document.createElement("canvas");
+      _falconParticlesCanvas.id = "falconGlobalParticlesCanvas";
+      _falconParticlesCanvas.className = "falcon-global-particles";
+      document.body.prepend(_falconParticlesCanvas);
+    } else {
+      if (!_falconParticlesCanvas.classList.contains("falcon-global-particles")) {
+        _falconParticlesCanvas.classList.add("falcon-global-particles");
+      }
+    }
+
+    _falconParticlesCtx = _falconParticlesCanvas.getContext("2d");
+    resizeFalconParticles();
+
+    const count = window.innerWidth < 768 ? 32 : 58;
+    _falconParticlesList = [];
+    for (let i = 0; i < count; i++) {
+      _falconParticlesList.push(new FalconEmberParticle(true));
+    }
+
+    window.addEventListener("resize", () => {
+      resizeFalconParticles();
+    }, { passive: true });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        if (_falconParticlesRafId) {
+          cancelAnimationFrame(_falconParticlesRafId);
+          _falconParticlesRafId = null;
+        }
+      } else if (_falconParticlesActive) {
+        if (!_falconParticlesRafId) {
+          _falconParticlesRafId = requestAnimationFrame(animateFalconParticles);
+        }
+      }
+    });
+
+    let isEnabled = true;
+    const cachedPref = localStorage.getItem("falcon_particles_enabled");
+    if (cachedPref === "false") {
+      isEnabled = false;
+    }
+
+    setGlobalParticlesActive(isEnabled);
+
+    fetch("/api/settings")
+      .then(r => r.ok ? r.json() : null)
+      .then(settings => {
+        if (settings && typeof settings.particlesEnabled === "boolean") {
+          localStorage.setItem("falcon_particles_enabled", String(settings.particlesEnabled));
+          setGlobalParticlesActive(settings.particlesEnabled);
+          const adminToggle = document.getElementById("toggle-particles");
+          if (adminToggle) {
+            adminToggle.checked = settings.particlesEnabled;
+          }
+        }
+      })
+      .catch(() => {});
+  } catch (err) {
+    console.warn("Particles engine init notice:", err);
+  }
+}
+
+function onFalconDomReady(fn) {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", fn);
+  } else {
+    fn();
+  }
+}
+
+onFalconDomReady(() => {
   updateCartBadge();
   initGlobalAccountHeader();
+  initFalconGlobalParticlesEngine();
 });

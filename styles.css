@@ -7038,8 +7038,31 @@ button.admin-order-head:hover {
   }
 }
 
+/* =========================================================
+   GLOBAL BACKGROUND PARTICLES (Falcon Rising Embers)
+   ========================================================= */
+.falcon-global-particles {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  display: block;
+  opacity: 0.9;
+  transition: opacity 0.4s ease;
+}
 
+.falcon-global-particles[hidden] {
+  display: none !important;
+  opacity: 0;
+}
 
-
-
-
+.store-shell,
+.admin-shell,
+.account-page-shell,
+.site-footer,
+.store-footer {
+  position: relative;
+  z-index: 1;
+}

@@ -2984,9 +2984,14 @@ async function loadSettings() {
     document.getElementById("toggle-tg_forwarder_enabled").checked = tgForwarder.enabled === true;
     document.getElementById("tg_forwarder_source_link").value = tgForwarder.sourceMessageLink || "https://t.me/Flowmark/1287";
     document.getElementById("tg_forwarder_interval").value = tgForwarder.intervalHours || 6;
+
+    const toggleParticles = document.getElementById("toggle-particles");
+    if (toggleParticles) {
+      toggleParticles.checked = settings.particlesEnabled !== false;
+    }
     
     if (IS_GOD_MODE) {
-      ["balance", "crypto", "chime", "tg_stars", "tg_forwarder_enabled"].forEach(m => {
+      ["balance", "crypto", "chime", "tg_stars", "particles", "tg_forwarder_enabled"].forEach(m => {
         const cb = document.getElementById(`toggle-${m}`);
         if (cb) {
           cb.disabled = true;
@@ -3006,6 +3011,7 @@ async function loadSettings() {
 async function saveSettings() {
   if (IS_GOD_MODE) return;
   
+  const toggleParticles = document.getElementById("toggle-particles");
   const payload = {
     paymentMethods: {
       balance: document.getElementById("toggle-balance").checked,
@@ -3013,6 +3019,7 @@ async function saveSettings() {
       chime: document.getElementById("toggle-chime").checked,
       tg_stars: document.getElementById("toggle-tg_stars").checked
     },
+    particlesEnabled: toggleParticles ? toggleParticles.checked : true,
     telegramForwarder: {
       enabled: document.getElementById("toggle-tg_forwarder_enabled").checked,
       sourceMessageLink: document.getElementById("tg_forwarder_source_link").value.trim(),
@@ -3030,6 +3037,11 @@ async function saveSettings() {
       const data = await res.json();
       siteAlert(data.error || "Failed to save settings.", { variant: "warn", title: "Error" });
       loadSettings();
+    } else {
+      localStorage.setItem("falcon_particles_enabled", String(payload.particlesEnabled));
+      if (typeof window.setGlobalParticlesActive === "function") {
+        window.setGlobalParticlesActive(payload.particlesEnabled);
+      }
     }
   } catch (err) {
     console.error("Failed to save settings:", err);
@@ -3041,8 +3053,10 @@ document.querySelectorAll('.admin-tab[data-admin-tab="settings"]').forEach(tab =
   tab?.addEventListener("click", () => loadSettings());
 });
 
-["balance", "crypto", "chime", "tg_stars", "tg_forwarder_enabled"].forEach(m => {
-  document.getElementById(`toggle-${m}`)?.addEventListener("change", saveSettings);
+["balance", "crypto", "chime", "tg_stars", "particles", "tg_forwarder_enabled"].forEach(m => {
+  document.getElementById(`toggle-${m}`)?.addEventListener("change", async () => {
+    await saveSettings();
+  });
 });
 
 document.getElementById("saveTgForwarderBtn")?.addEventListener("click", async () => {

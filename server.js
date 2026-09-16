@@ -384,9 +384,14 @@ function readSettings() {
       enabled: false,
       intervalHours: 6,
       sourceMessageLink: "https://t.me/Flowmark/1287"
-    }
+    },
+    particlesEnabled: true
   };
-  return readJson(settingsFile, defaultSettings);
+  const settings = readJson(settingsFile, defaultSettings);
+  if (settings.particlesEnabled === undefined) {
+    settings.particlesEnabled = true;
+  }
+  return settings;
 }
 
 function writeSettings(settings) {
@@ -1765,6 +1770,9 @@ const server = http.createServer(async (req, res) => {
         chime: paymentMethods.chime !== false,
         tg_stars: paymentMethods.tg_stars !== false
       };
+      if (body.particlesEnabled !== undefined) {
+        settings.particlesEnabled = body.particlesEnabled !== false;
+      }
       const telegramForwarder = body.telegramForwarder || {};
       settings.telegramForwarder = {
         enabled: telegramForwarder.enabled === true,
@@ -1772,7 +1780,7 @@ const server = http.createServer(async (req, res) => {
         sourceMessageLink: String(telegramForwarder.sourceMessageLink || "https://t.me/Flowmark/1287").trim()
       };
       writeSettings(settings);
-      logAuditAction(req, "SETTINGS_CHANGE", "Updated Site Settings (Payment and Auto-Forwarder)");
+      logAuditAction(req, "SETTINGS_CHANGE", "Updated Site Settings (Payment, Particles, and Auto-Forwarder)");
       return sendJson(res, 200, settings);
     }
 
