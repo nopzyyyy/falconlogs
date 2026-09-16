@@ -118,6 +118,16 @@ async function fetchUserStatus() {
   updateCheckoutButtonText();
 }
 
+const COIN_META = {
+  btc: { name: "Bitcoin", ticker: "BTC", icon: "/icons/btc.svg", desc: "BTC · ~30 min" },
+  ltc: { name: "Litecoin", ticker: "LTC", icon: "/icons/ltc.svg", desc: "LTC · ~5 min · Low Fee" },
+  sol: { name: "Solana", ticker: "SOL", icon: "/icons/sol.svg", desc: "SOL · Instant" },
+  usdt: { name: "Tether USD", ticker: "USDT", icon: "/icons/usdt.svg", desc: "USDT · TRC20 / ERC20 / SOL" },
+  usdc: { name: "USD Coin", ticker: "USDC", icon: "/icons/usdc.svg", desc: "USDC · ERC20 / SOL" },
+  eth: { name: "Ethereum", ticker: "ETH", icon: "/icons/eth.svg", desc: "ETH · ~3 min" },
+  trx: { name: "Tron", ticker: "TRX", icon: "/icons/trx.svg", desc: "TRX · Instant" }
+};
+
 function renderCart() {
   const itemsList = document.querySelector("#cartItemsList");
   const itemCountLabel = document.querySelector("#cartItemCountLabel");
@@ -133,7 +143,13 @@ function renderCart() {
   }
 
   if (cart.length === 0) {
-    itemsList.innerHTML = `<div style="text-align:center; padding: 24px; color: var(--muted); font-weight:600;">Your cart is empty. <a href="/" style="color:var(--accent-light); text-decoration:none;">Browse Products</a></div>`;
+    itemsList.innerHTML = `
+      <div style="text-align:center; padding: 36px 16px; color: var(--muted); font-weight:600; display:flex; flex-direction:column; align-items:center; gap:12px;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+        <div style="color:rgba(255,255,255,0.7); font-size:14px;">Your shopping cart is currently empty.</div>
+        <a href="/" style="background:#ea580c; color:#fff; text-decoration:none; padding:8px 18px; border-radius:6px; font-size:12.5px; font-weight:700; margin-top:4px;">Browse Products &rarr;</a>
+      </div>
+    `;
     if (summarySubtotal) summarySubtotal.textContent = "£0.00";
     if (summaryDiscount) summaryDiscount.textContent = "£0.00";
     if (summaryTotal) summaryTotal.textContent = "£0.00";
@@ -145,20 +161,21 @@ function renderCart() {
     const formattedVarName = formatVariantName(item.variantName || "Standard");
     return `
       <div class="cart-item-card">
-        ${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="cart-item-thumb">` : `<div class="cart-item-thumb" style="display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:16px;">${escapeHtml(String(item.name).slice(0, 2).toUpperCase())}</div>`}
+        ${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="cart-item-thumb">` : `<div class="cart-item-thumb">${escapeHtml(String(item.name).slice(0, 2).toUpperCase())}</div>`}
         <div class="cart-item-details">
           <span class="cart-item-name">${escapeHtml(item.name)}</span>
           <div class="cart-item-variant">${escapeHtml(formattedVarName)}</div>
-          <div class="cart-item-price-qty">
-            Price : <strong class="cart-item-val">£${Number(item.price).toFixed(2)}</strong> &nbsp;&middot;&nbsp; QTY : <strong class="cart-item-val">${item.quantity || 1}</strong>
-          </div>
-          <div class="cart-item-total-row">
-            Total : <strong class="cart-item-val">£${itemTotal.toFixed(2)}</strong>
+          <div class="cart-item-meta-row">
+            <span class="cart-item-qty-badge">QTY: ${item.quantity || 1}</span>
+            <span class="cart-item-unit-price">£${Number(item.price).toFixed(2)} each</span>
           </div>
         </div>
-        <button type="button" class="cart-remove-btn" data-index="${idx}" aria-label="Remove item" title="Remove item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
-        </button>
+        <div class="cart-item-right">
+          <button type="button" class="cart-remove-btn" data-index="${idx}" aria-label="Remove item" title="Remove item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          </button>
+          <span class="cart-item-total">£${itemTotal.toFixed(2)}</span>
+        </div>
       </div>
     `;
   }).join("");
@@ -190,6 +207,23 @@ function renderCart() {
   if (summaryTotal) summaryTotal.textContent = `£${finalTotal.toFixed(2)}`;
 }
 
+function updateSelectedCoinDisplay() {
+  const meta = COIN_META[selectedCoin] || COIN_META.btc;
+  const iconEl = document.querySelector("#selectedCoinIcon");
+  const titleEl = document.querySelector("#selectedCoinTitle");
+  const subEl = document.querySelector("#selectedCoinSub");
+
+  if (iconEl) iconEl.src = meta.icon;
+  if (titleEl) titleEl.textContent = `Pay with ${meta.name}`;
+  if (subEl) {
+    let networkText = "";
+    if ((selectedCoin === "usdt" || selectedCoin === "usdc") && selectedNetwork) {
+      networkText = ` · ${selectedNetwork.toUpperCase()}`;
+    }
+    subEl.textContent = `${meta.ticker}${networkText}`;
+  }
+}
+
 function updateCheckoutButtonText() {
   const btn = document.querySelector("#checkoutSubmitBtn");
   if (!btn) return;
@@ -198,20 +232,98 @@ function updateCheckoutButtonText() {
     return;
   }
   if (selectedPaymentMethod === "balance") {
-    btn.textContent = "Buy with Balance";
+    btn.textContent = "Buy with Store Balance";
   } else if (selectedPaymentMethod === "crypto") {
-    const coinUpper = String(selectedCoin || "BTC").toUpperCase();
+    const meta = COIN_META[selectedCoin] || COIN_META.btc;
     const netUpper = selectedNetwork ? ` (${selectedNetwork.toUpperCase()})` : "";
-    btn.textContent = `Pay with ${coinUpper}${netUpper}`;
+    btn.textContent = `Pay with ${meta.name}${netUpper}`;
   } else {
     btn.textContent = "Proceed to Payment";
   }
 }
 
-// Payment method selection & Network chips
-document.querySelectorAll(".payment-method-card").forEach(card => {
+function setPaymentMethod(method) {
+  selectedPaymentMethod = method;
+  const balanceChoice = document.querySelector("#choiceMethodBalance");
+  const cryptoChoice = document.querySelector("#choiceMethodCrypto");
+
+  if (balanceChoice && cryptoChoice) {
+    if (method === "balance") {
+      balanceChoice.classList.add("active");
+      cryptoChoice.classList.remove("active");
+    } else {
+      cryptoChoice.classList.add("active");
+      balanceChoice.classList.remove("active");
+    }
+  }
+  updateCheckoutButtonText();
+}
+
+// Drawer Controls
+function openCoinsDrawer() {
+  const drawer = document.querySelector("#cryptoDrawer");
+  const backdrop = document.querySelector("#cryptoDrawerBackdrop");
+  if (drawer && backdrop) {
+    drawer.classList.add("open");
+    backdrop.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    backdrop.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    const searchInput = document.querySelector("#cryptoSearch");
+    if (searchInput) {
+      searchInput.value = "";
+      document.querySelectorAll(".drawer-coin-card").forEach(c => c.style.display = "flex");
+      setTimeout(() => searchInput.focus(), 120);
+    }
+  }
+}
+
+function closeCoinsDrawer() {
+  const drawer = document.querySelector("#cryptoDrawer");
+  const backdrop = document.querySelector("#cryptoDrawerBackdrop");
+  if (drawer && backdrop) {
+    drawer.classList.remove("open");
+    backdrop.classList.remove("open");
+    drawer.setAttribute("aria-hidden", "true");
+    backdrop.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+}
+
+// Method selection choices
+const choiceBalance = document.querySelector("#choiceMethodBalance");
+if (choiceBalance) {
+  choiceBalance.addEventListener("click", () => setPaymentMethod("balance"));
+}
+
+const choiceCrypto = document.querySelector("#choiceMethodCrypto");
+if (choiceCrypto) {
+  choiceCrypto.addEventListener("click", (e) => {
+    const isChangeBtn = e.target.closest("#openCoinsDrawerBtn");
+    const wasAlreadyCrypto = selectedPaymentMethod === "crypto";
+    setPaymentMethod("crypto");
+    if (isChangeBtn || wasAlreadyCrypto) {
+      openCoinsDrawer();
+    }
+  });
+}
+
+const closeDrawerBtn = document.querySelector("#closeCryptoDrawerBtn");
+if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeCoinsDrawer);
+
+const drawerBackdrop = document.querySelector("#cryptoDrawerBackdrop");
+if (drawerBackdrop) drawerBackdrop.addEventListener("click", closeCoinsDrawer);
+
+const confirmCoinBtn = document.querySelector("#confirmCoinSelectionBtn");
+if (confirmCoinBtn) confirmCoinBtn.addEventListener("click", closeCoinsDrawer);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeCoinsDrawer();
+});
+
+// Coin selection in drawer
+document.querySelectorAll(".drawer-coin-card").forEach(card => {
   card.addEventListener("click", (e) => {
-    // If clicked on a network chip inside the card
     const chip = e.target.closest(".network-chip");
     if (chip) {
       const chipParent = chip.parentElement;
@@ -220,25 +332,31 @@ document.querySelectorAll(".payment-method-card").forEach(card => {
       selectedNetwork = chip.dataset.network;
     }
 
-    document.querySelectorAll(".payment-method-card").forEach(c => c.classList.remove("active"));
+    document.querySelectorAll(".drawer-coin-card").forEach(c => c.classList.remove("active"));
     card.classList.add("active");
-    selectedPaymentMethod = card.dataset.method;
-    if (card.dataset.coin) {
-      selectedCoin = card.dataset.coin;
-      if (card.dataset.coin === "usdt" && !selectedNetwork) selectedNetwork = "trc20";
-      if (card.dataset.coin === "usdc" && !selectedNetwork) selectedNetwork = "erc20";
-      if (card.dataset.coin !== "usdt" && card.dataset.coin !== "usdc") selectedNetwork = null;
-    }
+    selectedPaymentMethod = "crypto";
+    selectedCoin = card.dataset.coin || "btc";
+
+    if (selectedCoin === "usdt" && !selectedNetwork) selectedNetwork = "trc20";
+    if (selectedCoin === "usdc" && !selectedNetwork) selectedNetwork = "erc20";
+    if (selectedCoin !== "usdt" && selectedCoin !== "usdc") selectedNetwork = null;
+
+    setPaymentMethod("crypto");
+    updateSelectedCoinDisplay();
     updateCheckoutButtonText();
+
+    if (!chip) {
+      setTimeout(closeCoinsDrawer, 160);
+    }
   });
 });
 
-// Crypto Live Search Filter
+// Live Coin Search Filter in Drawer
 const cryptoSearchInput = document.querySelector("#cryptoSearch");
 if (cryptoSearchInput) {
   cryptoSearchInput.addEventListener("input", (e) => {
     const query = e.target.value.toLowerCase().trim();
-    document.querySelectorAll(".payment-method-card[data-method='crypto']").forEach(card => {
+    document.querySelectorAll(".drawer-coin-card").forEach(card => {
       const searchTerms = (card.dataset.coinSearch || "").toLowerCase();
       if (!query || searchTerms.includes(query)) {
         card.style.display = "flex";
@@ -412,6 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchUserStatus();
   renderCart();
   syncCartWithLiveProducts();
+  updateSelectedCoinDisplay();
   updateCheckoutButtonText();
   if (typeof window.updateCartBadge === "function") window.updateCartBadge();
 });

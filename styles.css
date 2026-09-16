@@ -2104,8 +2104,87 @@ input[type=number] {
 }
 
 /* =========================================================
-   CART & CHECKOUT PAGE (SCREENSHOT 4 STYLE)
+   CART & CHECKOUT PAGE (NEW CYBER SPLIT & COIN DRAWER)
    ========================================================= */
+.cart-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+
+.cart-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.cart-items-pill {
+  background: rgba(234, 88, 12, 0.15);
+  color: #ea580c;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cart-steps-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.cart-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cart-step.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #14110c;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+}
+
+.cart-step.active .step-num {
+  background: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.step-divider {
+  width: 14px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .cart-layout-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -2113,10 +2192,22 @@ input[type=number] {
   width: 100%;
 }
 
-@media (min-width: 860px) {
+@media (min-width: 960px) {
   .cart-layout-grid {
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: minmax(0, 1.45fr) 380px;
+    align-items: start;
   }
+}
+
+.cart-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.cart-right-col {
+  min-width: 0;
 }
 
 .cart-section-box {
@@ -2124,24 +2215,175 @@ input[type=number] {
   border: none !important;
   border-radius: 8px;
   box-shadow: none !important;
-  padding: 18px;
+  padding: 18px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.cart-section-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.cart-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+.cart-section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-section-title svg {
+  stroke: #ea580c;
+}
+
+.cart-continue-link {
+  color: #ea580c;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.cart-continue-link:hover {
+  color: #fb923c;
+  text-decoration: underline;
+}
+
+/* Cart Items Stack */
+.cart-items-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-item-card {
+  background: #0e0b07;
+  border: none !important;
+  border-radius: 8px;
+  box-shadow: none !important;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  transition: background 0.15s;
+}
+
+.cart-item-card:hover {
+  background: #120e08;
+}
+
+.cart-item-thumb {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #18130d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #ea580c;
+  font-size: 15px;
+  flex-shrink: 0;
+  border: none !important;
+}
+
+.cart-item-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-right: 12px;
+}
+
+.cart-item-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-item-variant {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.cart-item-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.cart-item-qty-badge {
+  background: #1a140d;
+  color: #fdba74;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cart-item-unit-price {
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11.5px;
+}
+
+.cart-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cart-item-total {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.cart-remove-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #ef4444;
+  opacity: 0.7;
+  cursor: pointer;
+  padding: 4px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.cart-remove-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Coupon Box */
 .cart-coupon-row {
   display: flex;
   align-items: stretch;
@@ -2165,22 +2407,16 @@ input[type=number] {
   font-weight: 600;
   color: #ffffff;
   box-sizing: border-box;
-  margin: 0 !important;
   text-transform: uppercase;
   transition: background 0.15s;
 }
 
 .cart-coupon-input:focus {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
   background: #18120b;
 }
 
 .cart-coupon-btn {
   height: 42px !important;
-  min-height: 42px !important;
-  max-height: 42px !important;
   background: #ea580c !important;
   color: #ffffff !important;
   border: none !important;
@@ -2193,10 +2429,8 @@ input[type=number] {
   align-items: center;
   justify-content: center;
   padding: 0 20px !important;
-  margin: 0 !important;
   flex-shrink: 0;
   box-sizing: border-box;
-  line-height: 1;
   transition: background 0.15s, transform 0.1s;
 }
 
@@ -2205,306 +2439,81 @@ input[type=number] {
 }
 
 .cart-coupon-btn:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
-.cart-item-card {
-  background: #0e0b07;
-  border: none !important;
-  border-radius: 8px;
-  padding: 14px 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  box-sizing: border-box;
-  position: relative;
+.cart-coupon-status {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.4);
+  display: block;
 }
 
-.cart-item-thumb {
-  width: 64px;
-  height: 64px;
-  min-width: 64px;
-  min-height: 64px;
-  border-radius: 8px;
-  object-fit: cover;
+/* Trust Badges */
+.cart-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.cart-trust-item {
   background: #110e0a;
-  flex-shrink: 0;
-}
-
-.cart-item-details {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-width: 0;
-  padding-right: 24px;
-}
-
-.cart-item-name {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.25;
-  word-break: break-word;
-  margin-bottom: 2px !important;
-  display: block;
-}
-
-.cart-item-variant {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.45);
-  margin-top: 0 !important;
-  margin-bottom: 3px !important;
-  line-height: 1.2;
-  display: block;
-}
-
-.cart-remove-btn {
-  position: absolute !important;
-  top: 14px !important;
-  right: 14px !important;
-  background: transparent !important;
   border: none !important;
-  padding: 2px !important;
-  margin: 0 !important;
-  cursor: pointer;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: #ef4444;
-  opacity: 0.9;
-  transition: opacity 0.15s, transform 0.1s;
-  flex-shrink: 0;
-  height: 22px !important;
-  min-height: 22px !important;
-  max-height: 22px !important;
-  width: 22px !important;
-  min-width: 22px !important;
-  max-width: 22px !important;
-  box-sizing: border-box !important;
-}
-
-.cart-remove-btn:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-.cart-remove-btn:active {
-  transform: scale(0.95);
-}
-
-.cart-item-price-qty {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12.5px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 0 !important;
-  margin-bottom: 2px !important;
-  line-height: 1.2;
-}
-
-.cart-item-total-row {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12.5px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 0 !important;
-  line-height: 1.2;
-}
-
-.cart-item-val {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-/* Payment Methods */
-.payment-methods-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.payment-method-card {
-  background: #0e0b07;
-  border: none !important;
-  border-radius: 6px;
+  border-radius: 8px;
   box-shadow: none !important;
-  padding: 12px 14px;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
-  cursor: pointer;
-  transition: background 0.15s;
 }
 
-.payment-method-card:hover {
-  background: #17110a !important;
-  border: none !important;
-}
-
-.payment-method-card.active {
-  border: none !important;
-  background: #23160a !important;
-  box-shadow: none !important;
-}
-
-.payment-method-icon {
+.trust-icon {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  min-width: 32px;
+  background: rgba(234, 88, 12, 0.12);
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
 }
 
-.payment-method-icon img,
-.payment-method-coin-img,
-.payment-method-icon svg {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: block;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.payment-method-info {
-  flex: 1;
+.trust-text {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.payment-method-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13.5px;
-  font-weight: 600;
+.trust-text strong {
+  font-size: 12px;
+  font-weight: 700;
   color: #ffffff;
 }
 
-.payment-method-desc {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11.5px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.network-chips-row {
-  display: flex;
-  gap: 6px;
-  margin-top: 5px;
-}
-
-.network-chip {
-  background: #1a1208;
-  color: #fdba74;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 4px;
-  padding: 3px 10px;
-  font-family: 'Montserrat', sans-serif;
+.trust-text span {
   font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s ease, color 0.15s ease;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.25;
 }
 
-.network-chip:hover:not(.active) {
-  background: rgba(234, 88, 12, 0.2) !important;
-  color: #ffffff !important;
-  border: none !important;
-}
-
-.network-chip.active {
-  background: #ea580c !important;
-  color: #ffffff !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.deposit-coin-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #110e0a;
-  border-radius: 6px;
-  padding: 10px 12px;
-  cursor: pointer;
-  border: none !important;
-  box-shadow: none !important;
-  transition: background 0.15s ease;
-}
-
-.deposit-coin-card:hover {
-  background: #1a140e !important;
-  border: none !important;
-}
-
-.deposit-coin-card.active {
-  background: #23160a !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.deposit-coin-title {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.deposit-coin-desc {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.network-chip {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  background: #1a1208;
-  color: #fdba74;
-  padding: 3px 10px;
-  border-radius: 6px;
-  border: none !important;
-  box-shadow: none !important;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.network-chip.active {
-  background: #ea580c !important;
-  color: #ffffff !important;
-}
-
-.network-chip:hover:not(.active) {
-  background: rgba(234, 88, 12, 0.2);
-  color: #ffffff;
-}
-
-/* Order Summary Box */
-.order-summary-card {
+/* Sticky Checkout Summary & Payment Hub */
+.cart-checkout-card {
   background: #14110c;
   border: none !important;
   border-radius: 8px;
   box-shadow: none !important;
-  padding: 18px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  position: sticky;
+  top: 20px;
+}
+
+.cart-summary-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .summary-row {
@@ -2516,11 +2525,11 @@ input[type=number] {
 }
 
 .summary-row.total {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: #ffffff;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 10px;
+  padding-top: 14px;
   margin-top: 4px;
 }
 
@@ -2530,23 +2539,444 @@ input[type=number] {
   color: #ffffff;
 }
 
-.checkout-pay-btn {
-  width: 100%;
-  height: 48px;
-  background: var(--accent);
-  color: #ffffff;
-  border: none;
+.summary-val.total-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ea580c;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Payment Method Choices */
+.cart-payment-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cart-method-choice {
+  background: #0e0b07;
+  border: none !important;
   border-radius: 6px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14.5px;
-  font-weight: 600;
+  box-shadow: none !important;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
-  margin-top: 8px;
+  transition: background 0.15s ease;
+}
+
+.cart-method-choice:hover {
+  background: #18120a !important;
+}
+
+.cart-method-choice.active {
+  background: #23160a !important;
+}
+
+.method-choice-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.method-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1a140d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   transition: background 0.15s;
 }
 
+.cart-method-choice.active .method-radio {
+  background: #ea580c;
+}
+
+.cart-method-choice.active .method-radio::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.method-icon-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.method-choice-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.method-choice-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.method-choice-sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.change-coin-btn {
+  background: rgba(234, 88, 12, 0.15);
+  color: #ea580c;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.change-coin-btn:hover {
+  background: #ea580c;
+  color: #ffffff;
+}
+
+.checkout-pay-btn {
+  width: 100%;
+  height: 48px;
+  background: #ea580c;
+  color: #ffffff;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.15s, transform 0.1s;
+}
+
 .checkout-pay-btn:hover {
-  background: var(--accent-hover);
+  background: #c2410c;
+}
+
+.checkout-pay-btn:active {
+  transform: scale(0.99);
+}
+
+.checkout-terms-note {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+  line-height: 1.35;
+  margin-top: -6px;
+}
+
+/* =========================================================
+   CRYPTO COINS DRAWER
+   ========================================================= */
+.crypto-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.crypto-drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.crypto-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 440px;
+  max-width: 95vw;
+  background: #0c0906;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.crypto-drawer.open {
+  transform: translateX(0);
+}
+
+.crypto-drawer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 22px 22px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.crypto-drawer-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.crypto-drawer-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.crypto-drawer-sub {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.crypto-drawer-close {
+  background: rgba(255, 255, 255, 0.06);
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.crypto-drawer-close:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+.crypto-drawer-search-wrap {
+  padding: 14px 22px 10px;
+  position: relative;
+}
+
+.crypto-drawer-search {
+  width: 100%;
+  height: 42px;
+  background: #14100b;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 6px;
+  padding: 0 14px 0 38px;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.drawer-search-icon {
+  position: absolute;
+  left: 34px;
+  top: 50%;
+  transform: translateY(-50%);
+  stroke: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+.crypto-drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 22px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drawer-coin-card {
+  background: #14100b;
+  border: none !important;
+  border-radius: 8px;
+  box-shadow: none !important;
+  padding: 13px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.drawer-coin-card:hover {
+  background: #1c150e !important;
+}
+
+.drawer-coin-card.active {
+  background: #23160a !important;
+}
+
+.drawer-coin-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.payment-method-coin-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.drawer-coin-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.drawer-coin-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.drawer-coin-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.drawer-coin-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #ea580c;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(234, 88, 12, 0.12);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.drawer-speed-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.drawer-coin-speed {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.network-chips-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.network-chip {
+  background: #1f170f;
+  color: #fdba74;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.network-chip:hover:not(.active) {
+  background: rgba(234, 88, 12, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.network-chip.active {
+  background: #ea580c !important;
+  color: #ffffff !important;
+}
+
+.drawer-coin-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1a140d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: transparent;
+  transition: background 0.15s, color 0.15s;
+  margin-left: 10px;
+}
+
+.drawer-coin-card.active .drawer-coin-check {
+  background: #ea580c;
+  color: #ffffff;
+}
+
+.crypto-drawer-footer {
+  padding: 16px 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0c0906;
+}
+
+.drawer-confirm-btn {
+  width: 100%;
+  height: 44px;
+  background: #ea580c;
+  color: #ffffff;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.drawer-confirm-btn:hover {
+  background: #c2410c;
 }
 
 /* =========================================================
