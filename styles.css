@@ -108,11 +108,11 @@ input[type=number] {
   object-fit: contain;
   object-position: left;
   display: block;
-  transition: transform 0.15s ease;
+  transition: none !important;
 }
 
 .brand:hover .brand-logo-img {
-  transform: scale(1.04);
+  transform: none !important;
 }
 
 .brand-text {
@@ -366,11 +366,11 @@ input[type=number] {
 }
 
 .cart-badge.pop {
-  animation: cartBadgeBounce 0.35s ease;
+  animation: none !important;
 }
 
 .cart-icon-btn.pop svg {
-  animation: cartIconWiggle 0.4s ease;
+  animation: none !important;
 }
 
 .nav-btn {
@@ -418,7 +418,7 @@ input[type=number] {
   color: #ea580c;
   cursor: pointer;
   text-decoration: none;
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition: none !important;
   position: relative;
   box-sizing: border-box;
 }
@@ -426,8 +426,8 @@ input[type=number] {
 #navUserBtn:hover,
 #navUserBtn.active {
   background: transparent !important;
-  color: #fb923c;
-  transform: scale(1.1);
+  color: #ea580c !important;
+  transform: none !important;
 }
 
 #navUserBtn .nav-btn-icon {
@@ -437,7 +437,7 @@ input[type=number] {
   stroke-width: 2.2;
   fill: none;
   display: block;
-  transition: color 0.15s ease;
+  transition: none !important;
 }
 
 #navUserBtn #navUserText {
@@ -458,7 +458,7 @@ input[type=number] {
   box-shadow: none !important;
   padding: 0;
   text-decoration: none;
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition: none !important;
   box-sizing: border-box;
 }
 
@@ -469,13 +469,13 @@ input[type=number] {
   stroke-width: 2;
   fill: none;
   display: block;
-  transition: color 0.15s ease;
+  transition: none !important;
 }
 
 .cart-icon-btn:hover {
   background: transparent !important;
-  color: #fb923c;
-  transform: scale(1.1);
+  color: #ea580c !important;
+  transform: none !important;
 }
 
 .cart-badge {
@@ -994,7 +994,13 @@ input[type=number] {
   display: block;
   margin-bottom: 0 !important;
   user-select: none;
-  animation: falconSpeedHover 0.75s ease-in-out infinite alternate;
+  animation: none !important;
+  transform: none !important;
+}
+
+.store-hero-logo:hover {
+  animation: none !important;
+  transform: none !important;
 }
 
 .store-hero-title {
@@ -1080,14 +1086,14 @@ input[type=number] {
 }
 
 .search-input-wrapper:focus-within .search-icon-svg {
-  color: #ea580c;
+  color: rgba(255, 255, 255, 0.4) !important;
 }
 
 .store-search-input {
   width: 100%;
   height: 48px;
   background: #110e0a;
-  border: 1px solid rgba(234, 88, 12, 0.25) !important;
+  border: none !important;
   outline: none !important;
   box-shadow: none !important;
   border-radius: 8px;
@@ -1096,18 +1102,20 @@ input[type=number] {
   font-size: 14px;
   font-weight: 500;
   color: #ffffff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: background 0.2s ease;
   box-sizing: border-box;
 }
 
 .store-search-input:hover {
-  border-color: rgba(234, 88, 12, 0.45) !important;
+  border: none !important;
+  box-shadow: none !important;
   background: #15110d !important;
 }
 
 .store-search-input:focus {
-  border-color: #ea580c !important;
-  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18) !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
   background: #15110d !important;
 }
 
@@ -1134,7 +1142,8 @@ input[type=number] {
   height: 48px;
   min-width: 220px;
   background: #110e0a;
-  border: 1px solid rgba(234, 88, 12, 0.25);
+  border: none !important;
+  box-shadow: none !important;
   border-radius: 8px;
   padding: 0 16px;
   font-family: 'Montserrat', sans-serif;
@@ -1146,19 +1155,20 @@ input[type=number] {
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: background 0.2s ease;
   box-sizing: border-box;
   user-select: none;
 }
 
 .category-dropdown-btn:hover {
-  border-color: rgba(234, 88, 12, 0.45);
+  border: none !important;
+  box-shadow: none !important;
   background: #15110d;
 }
 
 .category-dropdown-btn.open {
-  border-color: #ea580c;
-  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18);
+  border: none !important;
+  box-shadow: none !important;
   background: #15110d;
 }
 
@@ -1208,25 +1218,24 @@ input[type=number] {
   right: 0;
   width: 270px;
   background: #110e0a;
-  border: 1px solid rgba(234, 88, 12, 0.35);
+  border: none !important;
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
   flex-direction: column;
   gap: 8px;
   z-index: 1000;
-  animation: dropdownSlide 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
 }
 
 @keyframes dropdownSlide {
   from {
-    opacity: 0;
-    transform: translateY(-6px);
+    opacity: 1;
+    transform: none;
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
@@ -1245,32 +1254,33 @@ input[type=number] {
   height: 14px;
   color: rgba(255, 255, 255, 0.4);
   pointer-events: none;
-  transition: color 0.2s ease;
 }
 
 .category-search-box:focus-within .category-search-icon {
-  color: #ea580c;
+  color: rgba(255, 255, 255, 0.4) !important;
 }
 
 .category-search-input {
   width: 100%;
   height: 38px;
   background: #17130e;
-  border: 1px solid rgba(234, 88, 12, 0.2);
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
   border-radius: 6px;
   padding: 0 12px 0 32px;
   font-family: 'Montserrat', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: #ffffff;
-  outline: none;
   box-sizing: border-box;
-  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .category-search-input:focus {
-  border-color: #ea580c;
-  background: #1c1711;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: #17130e;
 }
 
 .category-search-input::placeholder {
@@ -2955,7 +2965,7 @@ input[type=number] {
 }
 
 .cart-badge.pop {
-  animation: badgePop 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: none !important;
 }
 
 @keyframes spin {
@@ -2963,35 +2973,19 @@ input[type=number] {
   to { transform: rotate(360deg); }
 }
 
-/* Global Header Switching Loading Bar (Fast & Clean, Zero Glow) */
+/* Global Header Switching Loading Bar - Permanently Disabled */
 #pageLoadingBar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2.5px;
-  width: 0%;
-  background: #ea580c;
-  box-shadow: none !important;
-  z-index: 9999999;
-  pointer-events: none;
-  transition: width 0.22s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.18s ease;
-  display: none;
+  display: none !important;
 }
 
 .page-circle-loader {
   display: none !important;
 }
 
-/* Fast, Crisp Page Entrance Transition */
+/* Page Entrance Animation - Disabled */
 @keyframes pageEnterSmooth {
-  from {
-    opacity: 0.92;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 1; transform: none; }
+  to { opacity: 1; transform: none; }
 }
 
 .store-shell,
@@ -3003,7 +2997,7 @@ input[type=number] {
 .faq-shell,
 .tos-shell,
 .privacy-shell {
-  animation: pageEnterSmooth 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: none !important;
 }
 
 /* =========================================================

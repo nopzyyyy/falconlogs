@@ -34,93 +34,24 @@ function updateCartBadge() {
   });
 }
 
-// Global Header Switching Loading Effect (Fast & Clean Top Progress Bar)
+// Global Header Switching Loading Effect (Disabled per user request)
 function ensureLoadingBar() {
-  let bar = document.querySelector("#pageLoadingBar");
-  if (!bar) {
-    bar = document.createElement("div");
-    bar.id = "pageLoadingBar";
-    document.body.prepend(bar);
-  }
-  return bar;
-}
-
-function startPageLoading() {
-  const bar = ensureLoadingBar();
-  bar.style.transition = "none";
-  bar.style.width = "0%";
-  bar.style.opacity = "1";
-  bar.style.display = "block";
-  void bar.offsetWidth;
-  bar.style.transition = "width 0.22s cubic-bezier(0.1, 0.9, 0.2, 1)";
-  bar.style.width = "75%";
-  setTimeout(() => {
-    if (bar && parseFloat(bar.style.width) >= 70 && parseFloat(bar.style.width) < 95) {
-      bar.style.transition = "width 0.45s ease";
-      bar.style.width = "90%";
-    }
-  }, 200);
-}
-
-function finishPageLoading() {
   const bar = document.querySelector("#pageLoadingBar");
-  if (!bar) return;
-  bar.style.transition = "width 0.14s ease, opacity 0.16s ease 0.04s";
-  bar.style.width = "100%";
-  bar.style.opacity = "0";
-  setTimeout(() => {
-    bar.style.display = "none";
-    bar.style.width = "0%";
-    bar.style.opacity = "1";
-  }, 220);
+  if (bar) bar.remove();
+  return null;
 }
+
+function startPageLoading() {}
+function finishPageLoading() {}
 
 window.startPageLoading = startPageLoading;
 window.finishPageLoading = finishPageLoading;
 window.showPageLoader = startPageLoading;
 window.hidePageLoader = finishPageLoading;
 
-// Trigger progress bar on link navigation and page transitions
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initPageLoader);
-} else {
-  initPageLoader();
-}
-
 function initPageLoader() {
-  const bar = ensureLoadingBar();
-  bar.style.transition = "none";
-  bar.style.width = "35%";
-  bar.style.opacity = "1";
-  bar.style.display = "block";
-  void bar.offsetWidth;
-  bar.style.transition = "width 0.16s ease, opacity 0.18s ease 0.04s";
-  bar.style.width = "100%";
-  bar.style.opacity = "0";
-  setTimeout(() => {
-    bar.style.display = "none";
-    bar.style.width = "0%";
-    bar.style.opacity = "1";
-  }, 220);
-
-  // Catch ALL internal page navigation links (header, footer, drawer, dropdown, cards, login etc.)
-  document.addEventListener("click", (e) => {
-    const link = e.target.closest("a");
-    if (!link) return;
-    const href = link.getAttribute("href");
-    if (!href || href.startsWith("#") || href.startsWith("javascript:") || href.startsWith("mailto:") || href.startsWith("tel:") || link.target === "_blank") return;
-
-    try {
-      const url = new URL(link.href, window.location.origin);
-      if (url.origin === window.location.origin && (url.pathname !== window.location.pathname || url.search !== window.location.search)) {
-        startPageLoading();
-      }
-    } catch (err) {}
-  });
-
-  window.addEventListener("pageshow", () => {
-    finishPageLoading();
-  });
+  const bar = document.querySelector("#pageLoadingBar");
+  if (bar) bar.remove();
 }
 
 function showToast(message, viewCart = false) {
