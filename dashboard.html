@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=940">
+    <link rel="stylesheet" href="styles.css?v=941">
     <link rel="icon" type="image/png" href="/logo.png?v=1001">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1001">
     <link rel="shortcut icon" href="/favicon.ico?v=1001">
@@ -62,14 +62,9 @@
       <!-- HEADER ROW -->
       <div class="dashboard-header-row">
         <div class="dashboard-title-group">
-          <span class="dashboard-tag">ACCOUNT SETTINGS</span>
-          <h1 class="dashboard-title">Your account</h1>
+          <span class="dashboard-tag">ACCOUNT</span>
+          <h1 class="dashboard-title" id="dashboardTitleName">Account</h1>
           <span class="dashboard-email" id="dashboardUserEmail">loading...</span>
-          <div style="margin-top: 6px; font-size: 13px;">
-            <a href="/deposit.html" style="color: #ea580c; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-              <span>Looking to manage balance or top up? Go to Deposit Page</span> &rarr;
-            </a>
-          </div>
         </div>
         <button type="button" class="dashboard-signout-btn" id="dashboardSignOutBtn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -77,7 +72,44 @@
         </button>
       </div>
 
-      <!-- CARD 1: CHANGE PASSWORD -->
+      <!-- CARD 1: BALANCE -->
+      <div class="dashboard-card">
+        <div class="dashboard-balance-card">
+          <div class="dashboard-balance-left">
+            <div class="dashboard-wallet-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/>
+                <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 1 1-1v-4"/>
+              </svg>
+            </div>
+            <div class="dashboard-balance-meta">
+              <span class="dashboard-balance-tag">BALANCE</span>
+              <strong id="dashboardBalanceAmount" class="dashboard-balance-num">£0.00</strong>
+              <span class="dashboard-balance-sub">Deposit crypto, then spend on any product at checkout.</span>
+            </div>
+          </div>
+          <a href="/deposit.html" class="dashboard-deposit-btn">Deposit</a>
+        </div>
+      </div>
+
+      <!-- CARD 2: PAST ORDERS -->
+      <div class="dashboard-card">
+        <div class="dashboard-card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16.5 9.4 7.55 4.24M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.29 7 12 12 20.71 7"/>
+            <line x1="12" y1="22" x2="12" y2="12"/>
+          </svg>
+          <span>PAST ORDERS</span>
+        </div>
+        <div id="dashboardOrdersContainer">
+          <div style="font-size: 13.5px; color: rgba(255,255,255,0.5); font-weight: 500; padding: 4px 0;">
+            Loading orders...
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3: CHANGE PASSWORD -->
       <div class="dashboard-card">
         <div class="dashboard-card-head">
           CHANGE PASSWORD
@@ -131,6 +163,16 @@
 
     <script src="cart-utils.js?v=520"></script>
     <script>
+      function escapeHtml(str) {
+        if (!str) return "";
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
       function timeAgo(dateString) {
         const d = new Date(dateString);
         const now = new Date();
@@ -185,9 +227,13 @@
             return;
           }
 
+          const titleEl = document.querySelector("#dashboardTitleName");
           const emailEl = document.querySelector("#dashboardUserEmail");
           const balanceEl = document.querySelector("#dashboardBalanceAmount");
-          if (emailEl) emailEl.textContent = (data.name && data.name.trim()) ? `${data.name.trim()} (${data.email})` : (data.email || "Account");
+          const userEmail = data.email || "";
+          const userName = (data.name && data.name.trim()) ? data.name.trim() : userEmail;
+          if (titleEl) titleEl.textContent = userName;
+          if (emailEl) emailEl.textContent = userEmail;
           if (balanceEl) balanceEl.textContent = `£${Number(data.balance || 0).toFixed(2)}`;
 
           // 2. Fetch both orders and topups
@@ -239,17 +285,22 @@
 
           if (formattedItems.length === 0) {
             ordersContainer.innerHTML = `
-              <div style="font-size: 13.5px; color: rgba(255,255,255,0.7); font-weight: 500; padding: 4px 0;">
-                No orders yet. <a href="/" style="color: #fb923c; text-decoration: none; font-weight: 600; margin-left: 4px;">Browse products</a>
+              <div style="font-size: 13.5px; color: rgba(255,255,255,0.7); font-weight: 500; padding: 2px 0 16px;">
+                No orders yet. <a href="/" style="color: #ea580c; text-decoration: none; font-weight: 600; margin-left: 4px;">Browse products</a>
+              </div>
+              <div style="padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+                <a href="/orders.html" class="dashboard-orders-nav-btn">
+                  <span>Go to orders page</span> &rarr;
+                </a>
               </div>
             `;
             return;
           }
 
-          // Show only the 5 most recent orders
-          const recentItems = formattedItems.slice(0, 5);
+          // Show only the 3 most recent orders
+          const recentItems = formattedItems.slice(0, 3);
 
-          let html = '<div class="dashboard-orders-list" style="display: flex; flex-direction: column; width: 100%;">';
+          let html = '<div class="dashboard-orders-list">';
           recentItems.forEach((item, idx) => {
             const relTime = timeAgo(item.createdAt);
             const dateFmt = formatDateSub(item.createdAt);
@@ -258,27 +309,27 @@
             const isLast = idx === recentItems.length - 1;
 
             html += `
-              <div class="dashboard-order-item" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 0; ${isLast ? '' : 'border-bottom: 1px solid rgba(255, 255, 255, 0.08);'} gap: 14px; width: 100%; box-sizing: border-box;">
-                <div class="dashboard-order-info" style="display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1;">
-                  <div class="dashboard-order-title" style="font-family: 'Montserrat', sans-serif; font-size: 13.5px; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
-                  <div class="dashboard-order-sub" style="font-family: 'Montserrat', sans-serif; font-size: 12px; color: rgba(255, 255, 255, 0.5); font-weight: 500;">
+              <div class="dashboard-order-item" style="${isLast ? 'border-bottom: none;' : ''}">
+                <div class="dashboard-order-info">
+                  <div class="dashboard-order-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
+                  <div class="dashboard-order-sub">
                     ${relTime}${dateFmt ? ' - ' + dateFmt : ''} - <span style="color: ${statusInfo.color}; font-weight: 600;">${statusInfo.label}</span>
                   </div>
                 </div>
-                <div class="dashboard-order-action" style="display: flex; align-items: center; gap: 14px; flex-shrink: 0;">
-                  <div class="dashboard-order-amount" style="font-family: 'Montserrat', sans-serif; font-size: 13.5px; font-weight: 600; color: #ffffff;">${priceStr}</div>
-                  <a href="${item.link}" class="dashboard-order-view-btn" style="background: #1e1710; border: 1px solid rgba(234, 88, 12, 0.2); color: #ffffff; border: none; border-radius: 6px; padding: 6px 14px; font-family: 'Montserrat', sans-serif; font-size: 12.5px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; box-sizing: border-box; transition: background 0.15s, color 0.15s;">View</a>
+                <div class="dashboard-order-action">
+                  <div class="dashboard-order-amount">${priceStr}</div>
+                  <a href="${item.link}" class="dashboard-order-view-btn">View</a>
                 </div>
               </div>
             `;
           });
           html += '</div>';
 
-          // Borderless View All Orders button
+          // Prominent Go to orders page button
           html += `
-            <div style="margin-top: 14px; padding-top: 6px; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
-              <a href="/orders.html" style="background: transparent; border: none; color: #fb923c; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 16px; transition: color 0.15s;">
-                View all orders &rarr;
+            <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+              <a href="/orders.html" class="dashboard-orders-nav-btn">
+                <span>Go to orders page</span> &rarr;
               </a>
             </div>
           `;
