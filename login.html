@@ -16,6 +16,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
     <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0a0805;
+        --store-input-bg: #110e0a;
+        --store-input-hover: #15110d;
+        --line: rgba(234, 88, 12, 0.22);
+        --accent: #ea580c;
+      }
+
       *, *::before, *::after {
         box-sizing: border-box;
         margin: 0;
@@ -23,7 +32,7 @@
       }
 
       body {
-        background: #000000;
+        background: #0a0805;
         color: #ffffff;
         font-family: 'Montserrat', sans-serif;
         min-height: 100vh;
@@ -111,8 +120,8 @@
       .form-input {
         width: 100%;
         height: 40px;
-        background: #0d0d0d;
-        border: 1px solid #222222;
+        background: #110e0a;
+        border: 1px solid rgba(234, 88, 12, 0.22);
         border-radius: 4px;
         padding: 0 12px;
         color: #ffffff;
@@ -124,13 +133,13 @@
       }
 
       .form-input::placeholder {
-        color: #555555;
+        color: rgba(255, 255, 255, 0.38);
         font-size: 12.5px;
       }
 
       .form-input:focus {
         border-color: #ea580c;
-        background: #141414;
+        background: #15110d;
       }
 
       .form-input-wrap .toggle-pass-btn {
