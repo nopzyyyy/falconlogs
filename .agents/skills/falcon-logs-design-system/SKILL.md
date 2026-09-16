@@ -96,8 +96,10 @@ The header brand link `.brand` contains:
   - Top line `.brand-name-top`: `FALCON` (`14px`, weight 800, color `#ffffff`, tracking `1.2px`).
   - Bottom line `.brand-name-bottom`: `LOGS` (`10px`, weight 800, color `#ea580c`, tracking `2.8px`).
 
-### Hero Section Logo
-- In the hero section (`index.html` & `logs.html`), the dedicated fiery falcon logo (`/hero-logo.png`) is displayed directly above the "Welcome to Falcon Logs" heading at `height: 88px` (responsive to `64px` on mobile). The header keeps the standard brand icon (`/logo.png`).
+### Hero Section Logo & Fast Fire Particle Animation
+- In the hero section (`index.html` & `logs.html`), the fiery falcon logo (`/hero-logo.png`) is centered in `.store-hero-logo-wrap`.
+- **Fire Particle Animation** (`#falconFireCanvas`): A high-performance 60fps canvas particle system emits fast flame embers and golden sparks (`#ea580c`, `#f97316`, `#fef08a`) streaming backwards and upwards from the falcon's back and wings. Layered at `z-index: 1` behind the bird (`z-index: 2`) to preserve feather sharpness while trailing into the dark canvas. Automatically pauses on hidden tabs.
+- **Search Bar & Category Border Alignment**: The storefront product search input (`.store-search-input`) has the exact same border as the category dropdown button (`border: 1px solid rgba(234, 88, 12, 0.25)`), height (`48px`), background (`#110e0a`), and focus ring (`#ea580c`).
 
 ### Navigation Links
 The middle navigation has exactly 3 primary links:

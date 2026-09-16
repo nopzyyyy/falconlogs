@@ -940,13 +940,35 @@ input[type=number] {
   width: 100%;
 }
 
+.store-hero-logo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.hero-fire-canvas {
+  position: absolute;
+  top: -45px;
+  left: -130px;
+  right: -25px;
+  bottom: -25px;
+  width: calc(100% + 155px);
+  height: calc(100% + 70px);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .store-hero-logo {
+  position: relative;
+  z-index: 2;
   height: 88px;
   width: auto;
   max-width: 140px;
   object-fit: contain;
   display: block;
-  margin-bottom: 14px;
+  margin-bottom: 0 !important;
   user-select: none;
 }
 
@@ -975,11 +997,22 @@ input[type=number] {
   .store-hero-section {
     padding: 22px 12px 10px;
   }
+  .store-hero-logo-wrap {
+    margin-bottom: 10px;
+  }
+  .hero-fire-canvas {
+    top: -30px;
+    left: -90px;
+    right: -15px;
+    bottom: -15px;
+    width: calc(100% + 105px);
+    height: calc(100% + 45px);
+  }
   .store-hero-logo {
     height: 64px;
     width: auto;
     max-width: 100px;
-    margin-bottom: 10px;
+    margin-bottom: 0 !important;
   }
   .store-hero-title {
     font-size: 23px;
@@ -1027,8 +1060,8 @@ input[type=number] {
 .store-search-input {
   width: 100%;
   height: 48px;
-  background: #0d0a06;
-  border: none !important;
+  background: #110e0a;
+  border: 1px solid rgba(234, 88, 12, 0.25) !important;
   outline: none !important;
   box-shadow: none !important;
   border-radius: 8px;
@@ -1037,22 +1070,26 @@ input[type=number] {
   font-size: 14px;
   font-weight: 500;
   color: #ffffff;
-  transition: background 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   box-sizing: border-box;
 }
 
 .store-search-input:hover {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  background: #140e08 !important;
+  border-color: rgba(234, 88, 12, 0.45) !important;
+  background: #15110d !important;
 }
 
 .store-search-input:focus {
+  border-color: #ea580c !important;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18) !important;
+  background: #15110d !important;
+}
+
+/* Maintain borderless style in cart crypto search */
+.payment-methods-grid .store-search-input {
+  background: #0d0a06 !important;
   border: none !important;
-  outline: none !important;
   box-shadow: none !important;
-  background: #171109 !important;
 }
 
 .store-search-input::placeholder {

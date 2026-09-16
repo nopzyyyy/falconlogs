@@ -578,7 +578,185 @@ if (search) {
   search.addEventListener("input", renderProducts);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+// =========================================================
+// FAST FIRE PARTICLES STREAMING FROM FALCON'S BACK
+// =========================================================
+function initFalconHeroFire() {
+  const canvas = document.querySelector("#falconFireCanvas");
+  const logo = document.querySelector(".store-hero-logo");
+  if (!canvas || !logo) return;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  let dpr = window.devicePixelRatio || 1;
+  let particles = [];
+  let isRunning = true;
+  let animId = null;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+    if (width === 0 || height === 0) return;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    isRunning = !document.hidden;
+    if (isRunning && !animId) {
+      animId = requestAnimationFrame(loop);
+    }
+  });
+
+  function getFalconBounds() {
+    const logoRect = logo.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    return {
+      fx: logoRect.left - canvasRect.left,
+      fy: logoRect.top - canvasRect.top,
+      fw: logoRect.width,
+      fh: logoRect.height
+    };
+  }
+
+  function spawnParticle(bounds) {
+    // Contour of falcon's back from upper neck to wing tips
+    const t = Math.random();
+    const normX = 0.22 + t * 0.54;
+    const normY = 0.12 + Math.pow(t, 1.35) * 0.44;
+
+    const x = bounds.fx + bounds.fw * normX + (Math.random() - 0.5) * 8;
+    const y = bounds.fy + bounds.fh * normY + (Math.random() - 0.5) * 6;
+
+    // Fast particles rushing backwards (left) and drifting slightly up
+    const speed = Math.random() * 3.8 + 2.6; // 2.6 to 6.4 px/frame (fast!)
+    const angle = Math.PI + (Math.random() - 0.5) * 0.48 - 0.18; // mostly left & slightly up
+    const vx = Math.cos(angle) * speed;
+    const vy = Math.sin(angle) * speed;
+
+    const maxLife = Math.random() * 18 + 14; // 14 to 32 frames of life
+    const size = Math.random() * 2.6 + 1.4;
+
+    return {
+      x,
+      y,
+      vx,
+      vy,
+      life: 1.0,
+      decay: 1.0 / maxLife,
+      size,
+      wobble: Math.random() * Math.PI * 2,
+      wobbleSpeed: (Math.random() - 0.5) * 0.3
+    };
+  }
+
+  function loop() {
+    if (!isRunning) {
+      animId = null;
+      return;
+    }
+
+    ctx.clearRect(0, 0, width, height);
+
+    const bounds = getFalconBounds();
+    if (bounds.fw > 0 && bounds.fh > 0) {
+      // Spawn 2-4 particles every frame for a rich fiery trail
+      const spawnCount = Math.floor(Math.random() * 3) + 2;
+      for (let i = 0; i < spawnCount; i++) {
+        if (particles.length < 80) {
+          particles.push(spawnParticle(bounds));
+        }
+      }
+    }
+
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.wobble += p.wobbleSpeed;
+      p.y += Math.sin(p.wobble) * 0.35 - 0.08; // upward draft
+      p.vx *= 0.982; // wind drag
+      p.life -= p.decay;
+
+      if (p.life <= 0 || p.x < 0 || p.y < 0 || p.x > width || p.y > height) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      const curSize = p.size * (0.25 + 0.75 * p.life);
+      const alpha = Math.min(1, p.life * 1.25);
+
+      // Rich flame color palette
+      let r, g, b;
+      if (p.life > 0.75) {
+        // Core golden flame
+        r = 255;
+        g = Math.floor(190 + 35 * p.life);
+        b = Math.floor(40 + 60 * p.life);
+      } else if (p.life > 0.35) {
+        // Vibrant Falcon flame orange
+        r = 245;
+        g = Math.floor(90 + 60 * (p.life - 0.35) / 0.4);
+        b = 18;
+      } else {
+        // Deep glowing ember
+        r = Math.floor(190 + 40 * (p.life / 0.35));
+        g = Math.floor(30 + 40 * (p.life / 0.35));
+        b = 8;
+      }
+
+      // Fast motion flame streak
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(p.x - p.vx * 1.8, p.y - p.vy * 1.8);
+      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.75})`;
+      ctx.lineWidth = curSize * 0.95;
+      ctx.lineCap = "round";
+      ctx.stroke();
+
+      // Bright spark head
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, curSize * 0.6, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      ctx.fill();
+    }
+
+    ctx.restore();
+    animId = requestAnimationFrame(loop);
+  }
+
+  function start() {
+    resize();
+    if (!animId) animId = requestAnimationFrame(loop);
+  }
+
+  if (logo.complete) {
+    start();
+  } else {
+    logo.onload = start;
+  }
+
+  window.addEventListener("resize", () => {
+    resize();
+  });
+}
+
+function onReady() {
   initStore();
+  initFalconHeroFire();
   if (typeof window.updateCartBadge === "function") window.updateCartBadge();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", onReady);
+} else {
+  onReady();
+}
