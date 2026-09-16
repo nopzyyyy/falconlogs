@@ -2141,50 +2141,6 @@ input[type=number] {
   letter-spacing: 0.5px;
 }
 
-.cart-steps-indicator {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.4);
-}
-
-.cart-step {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.cart-step.active {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.step-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #14110c;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 11px;
-}
-
-.cart-step.active .step-num {
-  background: #ea580c;
-  color: #ffffff;
-  font-weight: 700;
-}
-
-.step-divider {
-  width: 14px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.12);
-}
-
 .cart-layout-grid {
   display: grid;
   grid-template-columns: 1fr;
