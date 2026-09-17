@@ -2980,17 +2980,11 @@ select.modal-select:focus,
   text-align: center;
 }
 
-.footer-dev {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.32);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  text-align: center;
-  letter-spacing: 0.2px;
+.footer-dev,
+.footer-dev-credit,
+.footer-developer,
+.site-footer a[href*="peoze"] {
+  display: none !important;
 }
 
 .footer-dev a {
