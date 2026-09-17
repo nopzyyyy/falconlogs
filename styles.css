@@ -1790,15 +1790,17 @@ select.modal-select:focus,
 }
 
 .quantity-stepper-box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #14100b;
+  display: inline-flex !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
+  background: #14100b !important;
   border: 1px solid rgba(234, 88, 12, 0.14) !important;
-  border-radius: 6px;
-  height: 44px;
-  width: 116px;
-  padding: 0 4px;
+  border-radius: 6px !important;
+  height: 44px !important;
+  width: 120px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
 .modal-card .auth-input {
@@ -1809,34 +1811,53 @@ select.modal-select:focus,
 }
 
 .stepper-btn {
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  width: 34px;
-  height: 32px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.15s, background 0.15s;
-  border-radius: 3px;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  width: 38px !important;
+  min-width: 38px !important;
+  max-width: 38px !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: color 0.15s, background 0.15s !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  flex-shrink: 0 !important;
 }
 
-.stepper-btn:hover {
-  color: #ea580c;
-  background: rgba(255, 255, 255, 0.04);
+.stepper-btn:hover,
+.stepper-btn:active,
+.stepper-btn:focus {
+  color: #ea580c !important;
+  background: rgba(234, 88, 12, 0.14) !important;
+  outline: none !important;
 }
 
 .stepper-val {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #ffffff;
-  min-width: 24px;
-  text-align: center;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+  text-align: center !important;
+  user-select: none !important;
 }
 
 .modal-total-val {
@@ -1900,12 +1921,12 @@ select.modal-select:focus,
 }
 
 /* =========================================================
-   ADDED TO CART CONFIRMATION (MYSTERIO DESIGN SYSTEM)
+   ADDED TO CART CONFIRMATION (FALCON LOGS)
    ========================================================= */
 .modal-added-box {
-  background: #04060b;
-  border: 1.5px solid #ea580c;
-  border-radius: 6px;
+  background: #14100b;
+  border: 1px solid rgba(234, 88, 12, 0.22);
+  border-radius: 8px;
   padding: 16px 18px;
   margin: 14px 0 12px;
   display: flex;
@@ -2496,23 +2517,29 @@ select.modal-select:focus,
 
 .cart-method-choice {
   background: #14100b;
-  border: none !important;
-  border-radius: 6px;
+  border: 1px solid rgba(234, 88, 12, 0.14) !important;
+  border-radius: 8px;
   box-shadow: none !important;
   padding: 12px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  transition: background 0.15s ease;
+  gap: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .cart-method-choice:hover {
   background: #1d160e !important;
+  border-color: rgba(234, 88, 12, 0.25) !important;
 }
 
 .cart-method-choice.active {
   background: #25180c !important;
+  border-color: rgba(234, 88, 12, 0.35) !important;
 }
 
 .method-choice-left {
@@ -2567,6 +2594,9 @@ select.modal-select:focus,
   font-size: 13px;
   font-weight: 700;
   color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .method-choice-sub {
@@ -2579,26 +2609,36 @@ select.modal-select:focus,
 }
 
 .change-coin-btn {
-  background: rgba(234, 88, 12, 0.15);
-  color: #ea580c;
-  border: none !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  background: rgba(234, 88, 12, 0.15) !important;
+  color: #ea580c !important;
+  border: 1px solid rgba(234, 88, 12, 0.22) !important;
   box-shadow: none !important;
-  border-radius: 4px;
-  padding: 5px 10px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-  transition: background 0.15s, color 0.15s;
+  border-radius: 6px !important;
+  padding: 0 12px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  -webkit-tap-highlight-color: transparent !important;
+  transition: background 0.15s, color 0.15s, border-color 0.15s !important;
 }
 
-.change-coin-btn:hover {
-  background: #ea580c;
-  color: #ffffff;
+.change-coin-btn:hover,
+.change-coin-btn:active,
+.change-coin-btn.open {
+  background: #ea580c !important;
+  color: #ffffff !important;
+  border-color: #ea580c !important;
 }
 
 .checkout-pay-btn {
@@ -2813,16 +2853,21 @@ select.modal-select:focus,
   color: #fdba74;
   border: none !important;
   box-shadow: none !important;
-  border-radius: 4px;
-  padding: 3px 8px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10.5px;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-center;
-  transition: background 0.15s, color 0.15s;
+  border-radius: 4px !important;
+  padding: 0 8px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  -webkit-tap-highlight-color: transparent !important;
+  transition: background 0.15s, color 0.15s !important;
 }
 
 .network-chip:hover:not(.active) {
@@ -5253,7 +5298,7 @@ select.modal-form-control option {
     font-size: 12.5px !important;
   }
 
-  button:not(.product-card-btn):not(.btn-var-stock):not(.btn-var-icon-btn):not(.btn-var-download):not(.btn-var-edit):not(.btn-var-delete):not(.cart-remove-btn):not(.cart-coupon-btn), .pill-button, .mysterio-alert-btn, .dashboard-submit-btn, .deposit-submit-btn {
+  button:not(.product-card-btn):not(.btn-var-stock):not(.btn-var-icon-btn):not(.btn-var-download):not(.btn-var-edit):not(.btn-var-delete):not(.cart-remove-btn):not(.cart-coupon-btn):not(.stepper-btn):not(.change-coin-btn):not(.network-chip):not(.modal-close-square-btn):not(.category-item-btn):not(.password-toggle-btn):not(.tag-pill-btn):not(.cart-item-remove-btn):not(.drawer-coin-card):not(.deposit-preset-chip):not(.copy-btn):not(.orders-page-btn), .pill-button, .mysterio-alert-btn, .dashboard-submit-btn, .deposit-submit-btn {
     min-height: 44px !important;
     touch-action: manipulation;
   }
@@ -5347,6 +5392,106 @@ select.modal-form-control option {
 
   .nav-right-actions {
     gap: 8px !important;
+  }
+
+  /* Mobile Cart & Checkout Layout */
+  .cart-checkout-card {
+    padding: 16px 14px !important;
+    gap: 14px !important;
+  }
+
+  .cart-section-box {
+    padding: 16px 14px !important;
+    gap: 12px !important;
+  }
+
+  .cart-method-choice {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  .method-choice-left {
+    gap: 8px !important;
+  }
+
+  .method-icon-img {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .method-radio {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .method-choice-title {
+    font-size: 12.5px !important;
+  }
+
+  .method-choice-sub {
+    font-size: 10.5px !important;
+  }
+
+  .change-coin-btn {
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    font-size: 10.5px !important;
+    padding: 0 10px !important;
+    border-radius: 5px !important;
+  }
+
+  .cart-item-card {
+    padding: 12px 10px !important;
+    gap: 10px !important;
+  }
+
+  .cart-item-thumb {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+  }
+
+  .cart-item-name {
+    font-size: 13.5px !important;
+  }
+
+  .cart-item-total {
+    font-size: 14px !important;
+  }
+
+  /* Mobile Modal & Stepper Adjustments */
+  .modal-card {
+    max-width: min(380px, calc(100vw - 20px)) !important;
+    padding: 18px 14px !important;
+  }
+
+  .quantity-stepper-box {
+    height: 42px !important;
+    width: 114px !important;
+  }
+
+  .stepper-btn {
+    width: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    font-size: 17px !important;
+  }
+
+  .stepper-val {
+    font-size: 14px !important;
+  }
+
+  .modal-actions-row {
+    gap: 8px !important;
+  }
+
+  .modal-add-cart-primary-btn,
+  .modal-view-cart-secondary-btn {
+    font-size: 13px !important;
+    height: 44px !important;
+    padding: 0 8px !important;
   }
 }
 
