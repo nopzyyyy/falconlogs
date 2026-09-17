@@ -4913,13 +4913,14 @@ ${escapeTelegramHtml(r.reason)}
       const ext = path.extname(filePath);
       const mime = contentTypes[ext] || "application/octet-stream";
 
-      // Smart caching: static assets get cached, HTML and admin assets stay fresh
+      // Smart caching: HTML, CSS, and JS stay fresh immediately; images/icons cache safely
       const isHtml = ext === ".html";
+      const isCodeAsset = ext === ".css" || ext === ".js";
       const isAdminAsset = requestedPath.includes("admin") || requestedPath.includes("styles.css");
-      const isStaticAsset = [".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico"].includes(ext);
-      const cacheHeader = (isHtml || isAdminAsset)
-        ? "no-cache, no-store, must-revalidate"
-        : isStaticAsset ? "public, max-age=3600, stale-while-revalidate=86400" : "no-store";
+      const isImageOrFont = [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico", ".woff2", ".woff"].includes(ext);
+      const cacheHeader = (isHtml || isCodeAsset || isAdminAsset)
+        ? "no-cache, no-store, must-revalidate, max-age=0"
+        : isImageOrFont ? "public, max-age=86400, stale-while-revalidate=604800" : "no-store";
 
       // Gzip compress text-based responses
       const isCompressible = [".html", ".css", ".js", ".json", ".svg"].includes(ext);
