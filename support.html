@@ -358,16 +358,34 @@
           max-width: 96px !important;
           height: 38px !important;
         }
+        .history-table-container {
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch !important;
+          width: 100% !important;
+        }
+        .history-table-container table {
+          min-width: 800px !important;
+          width: 100% !important;
+        }
+        .history-table-container th,
+        .history-table-container td {
+          padding: 12px 14px !important;
+        }
       }
 
       .history-table-container {
-        background: #14110c; border: 1px solid rgba(234, 88, 12, 0.14);
+        background: #14110c;
+        border: 1px solid rgba(234, 88, 12, 0.14);
         border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: 6px;
-        overflow: hidden;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        max-width: 100%;
       }
       .history-table-container table {
         width: 100%;
+        min-width: 800px;
         border-collapse: collapse;
         font-size: 12.5px;
       }
