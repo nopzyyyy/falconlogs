@@ -958,16 +958,18 @@ function paymentExpiryTime(record) {
   return created ? created + PAYMENT_EXPIRY_MS : 0;
 }
 
-// Free any stock (unique cards + log-product units) reserved for a pending order.
+// Free any stock (log-product units + any remaining inventory) reserved for a pending order.
 function releaseOrderReservations(order) {
+  if (!order || !order.id) return;
+
   const allInventory = readItems();
   let invChanged = false;
-  for (const item of (order.items || [])) {
-    if (item.type === "stock") {
-      const e = allInventory.find(inv => inv.id === item.id && inv.orderId === order.id);
-      if (e && String(e.soldTo).startsWith("PENDING_")) {
-        e.isSold = false; e.soldTo = null; e.orderId = null; invChanged = true;
-      }
+  for (const inv of allInventory) {
+    if (inv.orderId === order.id && (!inv.soldTo || String(inv.soldTo).startsWith("PENDING_"))) {
+      inv.isSold = false;
+      inv.soldTo = null;
+      inv.orderId = null;
+      invChanged = true;
     }
   }
   if (invChanged) writeItems(allInventory);
@@ -977,8 +979,11 @@ function releaseOrderReservations(order) {
   for (const p of prods) {
     for (const v of (Array.isArray(p.variants) ? p.variants : [])) {
       for (const s of (v.stock || [])) {
-        if (s.orderId === order.id && String(s.soldTo).startsWith("PENDING_")) {
-          s.isSold = false; s.soldTo = null; s.orderId = null; prodChanged = true;
+        if (s.orderId === order.id && (!s.soldTo || String(s.soldTo).startsWith("PENDING_"))) {
+          s.isSold = false;
+          s.soldTo = null;
+          s.orderId = null;
+          prodChanged = true;
         }
       }
     }
@@ -1722,6 +1727,7 @@ const server = http.createServer(async (req, res) => {
     // -------------------------------------------------------------------------
     // PUBLIC ITEMS (Unsold only for regular users, all for admins)
     if (url.pathname === "/api/items" && req.method === "GET") {
+      expireStalePayments();
       const session = getSession(req);
       if (!session) return sendJson(res, 401, { error: "Login required." });
 
@@ -1738,6 +1744,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (url.pathname === "/api/products" && req.method === "GET") {
+      expireStalePayments();
       const session = getSession(req);
       if (!session) return sendJson(res, 401, { error: "Login required." });
       const allProds = readProducts();
@@ -3079,6 +3086,7 @@ const server = http.createServer(async (req, res) => {
 
     // REAL ORDERS & INVENTORY DELIVERY ENDPOINTS
     if (url.pathname === "/api/orders/checkout" && req.method === "POST") {
+      expireStalePayments();
       const session = requireUser(req, res);
       if (!session) return;
       
@@ -4182,6 +4190,7 @@ ${escapeTelegramHtml(r.reason)}
 
     // Fetch stored NOWPayments invoice details by ID
     if (url.pathname.startsWith("/api/nowpayments/invoice/") && req.method === "GET") {
+      expireStalePayments();
       const rawPath = String(url.pathname || url);
       const paymentId = rawPath.replace(/^\/api\/nowpayments\/invoice\//, "").split("?")[0].trim();
       if (!paymentId) return sendJson(res, 400, { error: "Payment ID required." });
@@ -4221,6 +4230,7 @@ ${escapeTelegramHtml(r.reason)}
 
     // Live NOWPayments Status Polling Endpoint (for orders & balance topups)
     if (url.pathname.startsWith("/api/nowpayments/status/") && req.method === "GET") {
+      expireStalePayments();
       const rawPath = String(url.pathname || url);
       const paymentId = rawPath.replace(/^\/api\/nowpayments\/status\//, "").split("?")[0].trim();
       if (!paymentId) return sendJson(res, 400, { error: "Payment ID required." });
@@ -4240,6 +4250,17 @@ ${escapeTelegramHtml(r.reason)}
 
       if (targetObj.status === "COMPLETED" || targetObj.status === "FINISHED") {
         return sendJson(res, 200, { isPaid: true, status: "completed", orderId: targetObj.id, isTopup });
+      }
+
+      // If internal 20 minutes expiry has lapsed, immediately expire and release stock
+      if (!isTopup && order && order.status === "WAITING_PAYMENT") {
+        const exp = paymentExpiryTime(order);
+        if (exp && Date.now() > exp) {
+          order.status = "EXPIRED";
+          releaseOrderReservations(order);
+          writeJson(ordersFile, orders);
+          return sendJson(res, 200, { isPaid: false, status: "expired", orderId: targetObj.id, isTopup: false });
+        }
       }
 
       // Check NOWPayments live API directly
@@ -4280,8 +4301,12 @@ ${escapeTelegramHtml(r.reason)}
             return sendJson(res, 200, { isPaid: false, status: "partially_paid", actuallyPaid: liveRes.amount_received, orderId: targetObj.id, isTopup });
           } else if (liveStatus === "expired" || liveStatus === "failed") {
             targetObj.status = "EXPIRED";
-            if (isTopup) writeJson(topupsFile, topups);
-            else writeJson(ordersFile, orders);
+            if (isTopup) {
+              writeJson(topupsFile, topups);
+            } else {
+              releaseOrderReservations(order);
+              writeJson(ordersFile, orders);
+            }
             return sendJson(res, 200, { isPaid: false, status: "expired", orderId: targetObj.id, isTopup });
           }
         }
@@ -4968,7 +4993,7 @@ server.listen(port, () => {
   pollRestockUpdates();
   setInterval(pollRestockUpdates, 60 * 1000);
 
-  // Expire stale crypto invoices (1h) and release their reserved stock. Sweep every 60s.
+  // Expire stale crypto invoices (20m) and release their reserved stock. Sweep every 30s.
   expireStalePayments();
-  setInterval(expireStalePayments, 60 * 1000);
+  setInterval(expireStalePayments, 30 * 1000);
 });

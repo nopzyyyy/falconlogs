@@ -7,5 +7,6 @@ yarn-error.log*
 .tempmediaStorage/
 verify_site.py
 data/backups/
+backups_archive/
 __pycache__/
 *.pyc

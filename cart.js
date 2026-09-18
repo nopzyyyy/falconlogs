@@ -25,17 +25,57 @@ function formatVariantName(name) {
 }
 
 function loadCart() {
-  try {
-    cart = JSON.parse(localStorage.getItem("mysterio_cart") || "[]");
-  } catch (e) {
-    cart = [];
+  if (typeof window.getCart === "function") {
+    cart = window.getCart();
+  } else {
+    try {
+      const expiresAt = Number(localStorage.getItem("mysterio_cart_expires_at") || 0);
+      if (expiresAt && Date.now() > expiresAt) {
+        localStorage.removeItem("mysterio_cart");
+        localStorage.removeItem("mysterio_cart_expires_at");
+        cart = [];
+      } else {
+        cart = JSON.parse(localStorage.getItem("mysterio_cart") || "[]");
+      }
+    } catch (e) {
+      cart = [];
+    }
   }
 }
 
 function saveCart() {
-  localStorage.setItem("mysterio_cart", JSON.stringify(cart));
-  if (typeof window.updateCartBadge === "function") window.updateCartBadge();
+  if (typeof window.setCart === "function") {
+    window.setCart(cart);
+  } else {
+    if (!cart || cart.length === 0) {
+      localStorage.removeItem("mysterio_cart");
+      localStorage.removeItem("mysterio_cart_expires_at");
+    } else {
+      localStorage.setItem("mysterio_cart", JSON.stringify(cart));
+      localStorage.setItem("mysterio_cart_expires_at", String(Date.now() + 15 * 60 * 1000));
+    }
+    if (typeof window.updateCartBadge === "function") window.updateCartBadge();
+  }
 }
+
+// Silently re-render if cart expires while on the cart page
+window.addEventListener("cart:expired", () => {
+  cart = [];
+  renderCart();
+});
+
+setInterval(() => {
+  if (cart && cart.length > 0) {
+    const expiresAt = Number(localStorage.getItem("mysterio_cart_expires_at") || 0);
+    if (expiresAt && Date.now() > expiresAt) {
+      cart = [];
+      localStorage.removeItem("mysterio_cart");
+      localStorage.removeItem("mysterio_cart_expires_at");
+      if (typeof window.updateCartBadge === "function") window.updateCartBadge();
+      renderCart();
+    }
+  }
+}, 2500);
 
 async function syncCartWithLiveProducts() {
   if (!cart || cart.length === 0) return;

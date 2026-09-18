@@ -1,5 +1,27 @@
+const CART_EXPIRY_MS = 15 * 60 * 1000;
+
+function checkCartExpiry() {
+  try {
+    const raw = localStorage.getItem("mysterio_cart");
+    if (!raw || raw === "[]") {
+      localStorage.removeItem("mysterio_cart_expires_at");
+      return false;
+    }
+    const expiresAt = Number(localStorage.getItem("mysterio_cart_expires_at") || 0);
+    if (expiresAt && Date.now() > expiresAt) {
+      localStorage.removeItem("mysterio_cart");
+      localStorage.removeItem("mysterio_cart_expires_at");
+      updateCartBadge();
+      window.dispatchEvent(new CustomEvent("cart:expired"));
+      return true;
+    }
+  } catch (e) {}
+  return false;
+}
+
 function getCart() {
   try {
+    if (checkCartExpiry()) return [];
     return JSON.parse(localStorage.getItem("mysterio_cart") || "[]");
   } catch (e) {
     return [];
@@ -7,8 +29,15 @@ function getCart() {
 }
 
 function setCart(cart) {
-  localStorage.setItem("mysterio_cart", JSON.stringify(cart));
+  if (!cart || cart.length === 0) {
+    localStorage.removeItem("mysterio_cart");
+    localStorage.removeItem("mysterio_cart_expires_at");
+  } else {
+    localStorage.setItem("mysterio_cart", JSON.stringify(cart));
+    localStorage.setItem("mysterio_cart_expires_at", String(Date.now() + CART_EXPIRY_MS));
+  }
   updateCartBadge();
+  window.dispatchEvent(new CustomEvent("cart:updated", { detail: { cart } }));
 }
 
 function addToCartStorage(item) {
@@ -33,6 +62,17 @@ function updateCartBadge() {
     badge.classList.add("pop");
   });
 }
+
+// Periodic check to silently clear cart and badge if 15 minutes elapsed
+setInterval(() => {
+  checkCartExpiry();
+}, 3000);
+
+window.addEventListener("storage", (e) => {
+  if (e.key === "mysterio_cart" || e.key === "mysterio_cart_expires_at") {
+    updateCartBadge();
+  }
+});
 
 // Global Header Switching Loading Effect (Disabled per user request)
 function ensureLoadingBar() {

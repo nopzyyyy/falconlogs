@@ -503,6 +503,7 @@ function addCurrentToCart() {
       cart.push(cartItem);
     }
     localStorage.setItem("mysterio_cart", JSON.stringify(cart));
+    localStorage.setItem("mysterio_cart_expires_at", String(Date.now() + 15 * 60 * 1000));
     if (typeof window.updateCartBadge === "function") window.updateCartBadge();
   }
   return true;
