@@ -237,61 +237,109 @@
         display: flex;
         flex: 1;
         min-width: 0;
-        align-items: center;
-      }
-      .history-search-wrap input {
-        flex: 1;
-        min-width: 0;
+        align-items: stretch;
         height: 38px;
-        background: #110e0a;
-        border: 1px solid rgba(234, 88, 12, 0.16);
-        border-right: none;
-        border-radius: 5px 0 0 5px;
-        padding: 0 12px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 12.5px;
-        color: #fff;
-        outline: none;
+        position: relative;
       }
-      .history-search-wrap input:focus {
-        border-color: #ea580c;
+      .history-search-wrap input,
+      #historySearchInput {
+        flex: 1 !important;
+        min-width: 0 !important;
+        height: 38px !important;
+        background: #110e0a !important;
+        border: 1px solid rgba(234, 88, 12, 0.22) !important;
+        border-right: none !important;
+        border-radius: 6px 0 0 6px !important;
+        padding: 0 12px !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 12.5px !important;
+        color: #fff !important;
+        outline: none !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        transition: border-color 0.15s !important;
+      }
+      .history-search-wrap input:focus,
+      #historySearchInput:focus {
+        border-color: #ea580c !important;
       }
       .history-status-wrap {
         display: flex;
-        width: 220px;
-        align-items: center;
+        width: 230px;
+        align-items: stretch;
+        height: 38px;
         flex-shrink: 0;
+        position: relative;
       }
       .history-status-wrap .custom-select-wrap {
-        flex: 1;
-        min-width: 0;
+        flex: 1 !important;
+        min-width: 0 !important;
+        position: relative !important;
+        height: 38px !important;
       }
-      .history-status-wrap select {
-        width: 100%;
-        height: 38px;
-        background: #110e0a;
-        border: 1px solid rgba(234, 88, 12, 0.16);
-        border-right: none;
-        border-radius: 5px 0 0 5px;
-        font-size: 12px;
-        padding: 0 32px 0 12px;
+      .history-status-wrap select,
+      #historyStatusFilter {
+        width: 100% !important;
+        height: 38px !important;
+        background: #110e0a !important;
+        border: 1px solid rgba(234, 88, 12, 0.22) !important;
+        border-right: none !important;
+        border-radius: 6px 0 0 6px !important;
+        font-size: 12px !important;
+        padding: 0 32px 0 12px !important;
+        color: #fff !important;
+        outline: none !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        cursor: pointer !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        transition: border-color 0.15s !important;
+      }
+      .history-status-wrap select:focus,
+      #historyStatusFilter:focus {
+        border-color: #ea580c !important;
       }
       .history-badge {
-        background: #1e1710;
-        border: 1px solid rgba(234, 88, 12, 0.2);
-        color: #fdba74;
-        font-size: 10.5px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        height: 38px;
-        padding: 0 14px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0 5px 5px 0;
-        white-space: nowrap;
-        user-select: none;
-        flex-shrink: 0;
+        background: #1e1710 !important;
+        border: 1px solid rgba(234, 88, 12, 0.22) !important;
+        border-left: 1px solid rgba(234, 88, 12, 0.2) !important;
+        color: #fdba74 !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 10.5px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.6px !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        width: 96px !important;
+        min-width: 96px !important;
+        max-width: 96px !important;
+        padding: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 0 6px 6px 0 !important;
+        white-space: nowrap !important;
+        user-select: none !important;
+        flex-shrink: 0 !important;
+        cursor: pointer !important;
+        box-sizing: border-box !important;
+        transition: background 0.15s, color 0.15s, border-color 0.15s !important;
+        margin: 0 !important;
+      }
+      .history-badge:hover {
+        background: #2a1f13 !important;
+        color: #fb923c !important;
+        border-color: rgba(234, 88, 12, 0.45) !important;
+      }
+      .history-badge:active {
+        background: #362516 !important;
+      }
+      .history-search-wrap:focus-within .history-badge,
+      .history-status-wrap:focus-within .history-badge {
+        border-color: #ea580c !important;
+        border-left-color: rgba(234, 88, 12, 0.35) !important;
       }
       @media (max-width: 768px) {
         .history-filter-bar {
@@ -302,6 +350,13 @@
         .history-search-wrap,
         .history-status-wrap {
           width: 100% !important;
+          height: 38px !important;
+        }
+        .history-badge {
+          width: 96px !important;
+          min-width: 96px !important;
+          max-width: 96px !important;
+          height: 38px !important;
         }
       }
 
@@ -507,7 +562,7 @@
         <div class="history-filter-bar">
           <div class="history-search-wrap">
             <input type="text" id="historySearchInput" placeholder="ticket-id1,ticket-id2,ticket-id3,...">
-            <span class="history-badge">TICKET ID</span>
+            <button type="button" class="history-badge" id="ticketIdBadge">TICKET ID</button>
           </div>
           <div class="history-status-wrap">
             <div class="custom-select-wrap">
@@ -520,7 +575,7 @@
               </select>
               <svg class="custom-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
-            <span class="history-badge">STATUS</span>
+            <button type="button" class="history-badge" id="statusBadge">STATUS</button>
           </div>
         </div>
 

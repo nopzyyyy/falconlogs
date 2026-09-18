@@ -5292,7 +5292,7 @@ select.modal-form-control option {
     font-size: 12.5px !important;
   }
 
-  button:not(.product-card-btn):not(.btn-var-stock):not(.btn-var-icon-btn):not(.btn-var-download):not(.btn-var-edit):not(.btn-var-delete):not(.cart-remove-btn):not(.cart-coupon-btn):not(.stepper-btn):not(.change-coin-btn):not(.network-chip):not(.modal-close-square-btn):not(.category-item-btn):not(.password-toggle-btn):not(.tag-pill-btn):not(.cart-item-remove-btn):not(.drawer-coin-card):not(.deposit-preset-chip):not(.copy-btn):not(.orders-page-btn), .pill-button, .mysterio-alert-btn, .dashboard-submit-btn, .deposit-submit-btn {
+  button:not(.product-card-btn):not(.btn-var-stock):not(.btn-var-icon-btn):not(.btn-var-download):not(.btn-var-edit):not(.btn-var-delete):not(.cart-remove-btn):not(.cart-coupon-btn):not(.stepper-btn):not(.change-coin-btn):not(.network-chip):not(.modal-close-square-btn):not(.category-item-btn):not(.password-toggle-btn):not(.tag-pill-btn):not(.cart-item-remove-btn):not(.drawer-coin-card):not(.deposit-preset-chip):not(.copy-btn):not(.orders-page-btn):not(.history-badge), .pill-button, .mysterio-alert-btn, .dashboard-submit-btn, .deposit-submit-btn {
     min-height: 44px !important;
     touch-action: manipulation;
   }

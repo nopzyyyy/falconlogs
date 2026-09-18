@@ -219,6 +219,20 @@ function initHistoryFilters() {
 
   if (searchInput) searchInput.addEventListener("input", renderHistoryTable);
   if (statusFilter) statusFilter.addEventListener("change", renderHistoryTable);
+
+  const ticketBadge = document.querySelector("#ticketIdBadge");
+  if (ticketBadge && searchInput) {
+    ticketBadge.addEventListener("click", () => searchInput.focus());
+  }
+  const statusBadge = document.querySelector("#statusBadge");
+  if (statusBadge && statusFilter) {
+    statusBadge.addEventListener("click", () => {
+      statusFilter.focus();
+      if (typeof statusFilter.showPicker === "function") {
+        try { statusFilter.showPicker(); } catch (_) {}
+      }
+    });
+  }
 }
 
 async function loadMyTickets() {
