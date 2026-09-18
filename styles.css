@@ -5299,47 +5299,47 @@ select.modal-form-control option {
 
   .product-grid {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 14px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
     padding: 0 4px !important;
     width: 100% !important;
   }
 
   .product-card {
-    width: 100% !important;
-    max-width: 270px !important;
-    flex: 0 0 auto !important;
+    width: calc(50% - 5px) !important;
+    max-width: calc(50% - 5px) !important;
+    flex: 0 0 calc(50% - 5px) !important;
     box-sizing: border-box !important;
-    border-radius: 7px !important;
+    border-radius: 6px !important;
   }
 
   .product-card-body {
-    padding: 12px 12px 14px !important;
-    gap: 6px !important;
+    padding: 10px 8px 12px !important;
+    gap: 5px !important;
   }
 
   .product-card-title {
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 800 !important;
-    min-height: auto !important;
-    line-height: 1.25 !important;
+    min-height: 32px !important;
+    line-height: 1.22 !important;
     letter-spacing: -0.2px !important;
   }
 
   .product-card-stock {
-    font-size: 11.5px !important;
+    font-size: 11px !important;
     font-weight: 600 !important;
-    margin-bottom: 3px !important;
+    margin-bottom: 2px !important;
   }
 
   .product-card-btn {
-    height: 34px !important;
-    min-height: 34px !important;
-    font-size: 12.5px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 11.5px !important;
     font-weight: 700 !important;
     border-radius: 5px !important;
-    padding: 0 12px !important;
+    padding: 0 8px !important;
   }
 }
 
