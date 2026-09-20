@@ -1747,9 +1747,11 @@ const server = http.createServer(async (req, res) => {
       expireStalePayments();
       const session = getSession(req);
       const allProds = readProducts();
-      let visible = (!session || (session.user.role !== "ADMIN" && session.user.role !== "GOD"))
-        ? allProds.filter(p => !p.isHidden)
-        : allProds;
+      const includeHidden = url.searchParams.get("includeHidden") === "true";
+      const isAdminOrGod = session && (session.user.role === "ADMIN" || session.user.role === "GOD");
+      let visible = (includeHidden && isAdminOrGod)
+        ? allProds
+        : allProds.filter(p => !p.isHidden);
 
       const titleQuery = (url.searchParams.get("title") || "").toLowerCase().trim();
       const catQuery = (url.searchParams.get("category") || "").trim();
@@ -1798,6 +1800,12 @@ const server = http.createServer(async (req, res) => {
       const allProds = readProducts();
       const prod = allProds.find(p => p.id === prodId);
       if (!prod) return sendJson(res, 404, { error: "Product not found" });
+
+      const session = getSession(req);
+      const isAdminOrGod = session && (session.user.role === "ADMIN" || session.user.role === "GOD");
+      if (prod.isHidden && !isAdminOrGod) {
+        return sendJson(res, 404, { error: "Product is currently unavailable." });
+      }
 
       const variants = Array.isArray(prod.variants) ? prod.variants : [];
       const options = variants.map(v => {
@@ -3230,6 +3238,9 @@ const server = http.createServer(async (req, res) => {
         if (cartItem.type === "stock") continue;
         const { prod, variant } = getCartItemProdAndVariant(cartItem, allProducts);
         if (!variant) return sendJson(res, 400, { error: "Product variant not found." });
+        if (prod && prod.isHidden) {
+          return sendJson(res, 400, { error: `"${prod.title}" is currently unavailable.` });
+        }
         if (prod && prod.isCustom) {
           // Bypass availability check for custom manual products.
         } else {

@@ -85,7 +85,7 @@
   // ── Data loading ───────────────────────────────────────────────────────
   async function loadAll() {
     const [p, i, u, o, t, r] = await Promise.all([
-      fetch('/api/products').then(r => r.json()).catch(() => ({ products: [] })),
+      fetch('/api/products?includeHidden=true').then(r => r.json()).catch(() => ({ products: [] })),
       fetch('/api/items').then(r => r.json()).catch(() => ({ items: [] })),
       fetch('/api/admin/users').then(r => r.json()).catch(() => ({ users: [] })),
       fetch('/api/admin/orders').then(r => r.json()).catch(() => ({ orders: [] })),

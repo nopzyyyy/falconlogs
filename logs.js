@@ -83,7 +83,7 @@ async function loadProducts() {
     if (activeFilters.country && activeFilters.country !== 'ww') params.set('country', activeFilters.country);
 
     const d = await apiFetch('/api/products?' + params);
-    allProducts = d.products;
+    allProducts = (d.products || []).filter(p => !p.isHidden);
     document.getElementById('searchBarFound').textContent = allProducts.length;
     currentPage = 1;
     renderProducts();
@@ -104,8 +104,9 @@ function flagUrl(code) {
 
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
+  const filtered = allProducts.filter(p => !p.isHidden);
   const start = (currentPage - 1) * PER_PAGE;
-  const page = allProducts.slice(start, start + PER_PAGE);
+  const page = filtered.slice(start, start + PER_PAGE);
 
   grid.innerHTML = page.map(p => {
     const flagSrc = flagUrl(p.country);

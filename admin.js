@@ -315,7 +315,7 @@ async function renderProducts() {
 
   if (!adminProducts || adminProducts.length === 0) {
     try {
-      const res = await fetch("/api/products");
+      const res = await fetch("/api/products?includeHidden=true");
       if (res.ok) {
         const data = await res.json();
         adminProducts = data.products || [];
@@ -1253,7 +1253,7 @@ function renderTopSellingProducts(topList) {
 
 async function refreshAdminData() {
   try {
-    const productsData = await fetch("/api/products").then(r => r.ok ? r.json() : {}).catch(() => ({}));
+    const productsData = await fetch("/api/products?includeHidden=true").then(r => r.ok ? r.json() : {}).catch(() => ({}));
     const usersData = await fetch("/api/admin/users").then(r => r.ok ? r.json() : {}).catch(() => ({}));
     const ordersData = await fetch("/api/admin/orders").then(r => r.ok ? r.json() : {}).catch(() => ({}));
 
