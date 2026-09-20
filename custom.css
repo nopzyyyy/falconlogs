@@ -94,7 +94,22 @@ body > .container-md > .navbar .navbar-nav.navbar-auth-actions .nav-link.btn {
 footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !important; }
 /* Drop the Telegram icon down so it sits in the optical center of the row */
 .footer-tg-icon { transform: translateY(3px); }
-.navbar-brand > img { width: auto !important; height: 38px !important; max-height: 38px; object-fit: contain; user-select: none; outline: none; }
+.navbar-brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-right: 1.25rem !important;
+}
+.navbar-brand > img {
+  width: auto !important;
+  height: 48px !important;
+  max-height: 48px !important;
+  object-fit: contain;
+  user-select: none;
+  outline: none;
+  margin-top: 4px !important;
+}
 .navbar-dark .navbar-nav .nav-link:not(.btn):not(.cart-count) { color: #fff !important; }
 .navbar-dark .navbar-nav .nav-link:not(.btn):not(.cart-count):hover { color: #fff !important; }
 .navbar-dark .navbar-nav .nav-link.active,
@@ -106,6 +121,65 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
 .navbar .nav-link.nav-balance-link #clientBalance {
   display: inline;
   font-weight: inherit;
+}
+
+/* Authed Header Badges, Actions & Account Dropdown */
+.authed-cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #ea580c;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 9px;
+  text-align: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.4);
+}
+.navbar-auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.navbar-auth-or-wrap {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+}
+.dropdown-menu.account-dropdown {
+  background: #212121;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+.dropdown-menu.account-dropdown .dropdown-item {
+  color: #e5e7eb;
+  font-size: 13.5px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+}
+.dropdown-menu.account-dropdown .dropdown-item:hover {
+  background: rgba(234, 88, 12, 0.15);
+  color: #ea580c;
+}
+.dropdown-menu.account-dropdown .account-dropdown-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.account-dropdown-header .acct-greet {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+.account-dropdown-header .acct-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ea580c;
+  word-break: break-all;
 }
 @media (max-width: 991.98px) {
   .navbar-collapse .nav-item.nav-item-balance {

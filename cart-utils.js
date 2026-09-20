@@ -1059,6 +1059,45 @@ function initFalconGlobalParticlesEngine() {
   }
 }
 
+async function initAuthedHeaderNavbar() {
+  const guestActions = document.getElementById('navGuestActions');
+  const authActions = document.getElementById('navAuthActions');
+  const balEl = document.getElementById('clientBalance');
+  const acctName = document.getElementById('accountUsername');
+
+  if (!guestActions && !authActions) return;
+
+  try {
+    const res = await fetch('/api/auth/me');
+    if (res.ok) {
+      const data = await res.json();
+      if (data && (data.authenticated === true || data.user)) {
+        window.IS_LOGGED_IN = true;
+        const user = data.user || data;
+        window.CURRENT_USER = user;
+        if (guestActions) guestActions.style.setProperty('display', 'none', 'important');
+        if (authActions) authActions.style.setProperty('display', 'flex', 'important');
+        if (balEl) balEl.textContent = `£${Number(user.balance || 0).toFixed(2)}`;
+        if (acctName) acctName.textContent = user.email ? user.email.split('@')[0] : (user.name || 'user');
+        return;
+      }
+    }
+  } catch (_) {}
+
+  window.IS_LOGGED_IN = false;
+  if (guestActions) guestActions.style.setProperty('display', 'flex', 'important');
+  if (authActions) authActions.style.setProperty('display', 'none', 'important');
+}
+
+document.addEventListener('click', async (e) => {
+  const logoutBtn = e.target.closest('#navLogoutBtn');
+  if (logoutBtn) {
+    e.preventDefault();
+    try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (_) {}
+    window.location.href = '/login.html';
+  }
+});
+
 function onFalconDomReady(fn) {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", fn);
@@ -1070,5 +1109,6 @@ function onFalconDomReady(fn) {
 onFalconDomReady(() => {
   updateCartBadge();
   initGlobalAccountHeader();
+  initAuthedHeaderNavbar();
   initFalconGlobalParticlesEngine();
 });
