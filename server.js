@@ -1708,7 +1708,7 @@ const server = http.createServer(async (req, res) => {
 
     // 4. If site IS locked, intercept all non-essential traffic
     if (isSiteLocked()) {
-      const allowedStatic = new Set(["/favicon.svg", "/favicon.ico", "/favicon.png", "/logo.png", "/login-logo.png", "/chime_logo.png", "/banner.png"]);
+      const allowedStatic = new Set(["/favicon.svg", "/favicon.ico", "/favicon.png", "/logo.png", "/login-logo.png", "/chime_logo.png", "/banner.png", "/hero-banner.png", "/custom.css", "/bootstrap.min.css", "/bootstrap.bundle.min.js"]);
       if (allowedStatic.has(url.pathname)) {
         // Allow static brand assets to fall through
       } else if (url.pathname.startsWith("/api/")) {
@@ -1746,13 +1746,89 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === "/api/products" && req.method === "GET") {
       expireStalePayments();
       const session = getSession(req);
-      if (!session) return sendJson(res, 401, { error: "Login required." });
       const allProds = readProducts();
-      if (session.user.role === "ADMIN" || session.user.role === "GOD") {
-        return sendJson(res, 200, { products: allProds });
-      } else {
-        return sendJson(res, 200, { products: allProds.filter(p => !p.isHidden) });
+      let visible = (!session || (session.user.role !== "ADMIN" && session.user.role !== "GOD"))
+        ? allProds.filter(p => !p.isHidden)
+        : allProds;
+
+      const titleQuery = (url.searchParams.get("title") || "").toLowerCase().trim();
+      const catQuery = (url.searchParams.get("category") || "").trim();
+      const countryQuery = (url.searchParams.get("country") || "").toLowerCase().trim();
+
+      if (titleQuery) {
+        visible = visible.filter(p => (p.title || "").toLowerCase().includes(titleQuery) || (p.tags || "").toLowerCase().includes(titleQuery));
       }
+      if (catQuery) {
+        visible = visible.filter(p => p.category === catQuery);
+      }
+      if (countryQuery && countryQuery !== "ww") {
+        visible = visible.filter(p => {
+          const c = String(p.country || "").toLowerCase().trim();
+          if (countryQuery === "usa") return c === "usa" || c === "us";
+          if (countryQuery === "ca") return c === "ca";
+          if (countryQuery === "uk") return c === "uk" || c === "gb";
+          if (countryQuery === "aus") return c === "aus" || c === "au";
+          return c === countryQuery;
+        });
+      }
+
+      const formatted = visible.map(p => {
+        const variants = Array.isArray(p.variants) ? p.variants : [];
+        const minPrice = variants.length > 0 ? Math.min(...variants.map(v => Number(v.price) || 0)) : 0;
+        return {
+          id: p.id,
+          title: p.title,
+          image: p.image || "",
+          image_url: p.image || "",
+          description: p.description || "",
+          tags: p.tags || "",
+          category: p.category || "",
+          country: String(p.country || "ww").toLowerCase(),
+          min_price: minPrice,
+          variants: p.variants,
+          isHidden: p.isHidden
+        };
+      });
+
+      return sendJson(res, 200, { products: formatted });
+    }
+
+    if (url.pathname.startsWith("/api/products/") && req.method === "GET") {
+      const prodId = decodeURIComponent(url.pathname.replace("/api/products/", "").trim());
+      const allProds = readProducts();
+      const prod = allProds.find(p => p.id === prodId);
+      if (!prod) return sendJson(res, 404, { error: "Product not found" });
+
+      const variants = Array.isArray(prod.variants) ? prod.variants : [];
+      const options = variants.map(v => {
+        let stockCount = 0;
+        if (v.unlimitedStock) stockCount = 999999;
+        else if (Array.isArray(v.stock)) stockCount = v.stock.filter(s => !s.isSold).length;
+        else if (typeof v.stock === "number") stockCount = v.stock;
+        return {
+          id: v.id,
+          name: v.name || "Default",
+          price: Number(v.price) || 0,
+          stock: stockCount
+        };
+      });
+      const minPrice = options.length > 0 ? Math.min(...options.map(o => o.price)) : 0;
+
+      return sendJson(res, 200, {
+        product: {
+          id: prod.id,
+          title: prod.title,
+          image: prod.image || "",
+          image_url: prod.image || "",
+          description: prod.description || "",
+          tags: prod.tags || "",
+          category: prod.category || "",
+          country: String(prod.country || "ww").toLowerCase(),
+          min_price: minPrice,
+          stock_type: "regular"
+        },
+        options
+      });
     }
 
     // SETTINGS
@@ -2429,10 +2505,9 @@ const server = http.createServer(async (req, res) => {
 
     // CATEGORIES
     if (url.pathname === "/api/categories" && req.method === "GET") {
-      const session = getSession(req);
-      if (!session) return sendJson(res, 401, { error: "Login required." });
       const cats = readJson(categoriesFile, ["Shopping"]);
-      return sendJson(res, 200, { categories: cats });
+      const list = cats.map(c => typeof c === "string" ? c : (c.name || ""));
+      return sendJson(res, 200, { categories: list });
     }
 
     if (url.pathname === "/api/admin/categories" && req.method === "POST") {
@@ -4825,8 +4900,10 @@ ${escapeTelegramHtml(r.reason)}
 
     // Map clean URLs to .html files
     let requestedPath;
-    if (url.pathname === "/") {
+    if (url.pathname === "/" || url.pathname === "/products") {
       requestedPath = "/index.html";
+    } else if (url.pathname === "/auth/login" || url.pathname === "/auth/signup") {
+      requestedPath = "/login.html";
     } else if (!path.extname(url.pathname) && !url.pathname.startsWith("/screenshots/") && !url.pathname.startsWith("/uploads/")) {
       requestedPath = url.pathname + ".html";
     } else {
@@ -4884,13 +4961,16 @@ ${escapeTelegramHtml(r.reason)}
     // Strict allowlist — anything not listed here is a hard 404
     // Public: accessible without a session (only login page & essential assets to render it)
     const PUBLIC_FILES  = new Set([
-      "/login.html", "/login.js", "/styles.css", "/cart-utils.js",
-      "/banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png",
+      "/", "/index.html", "/products", "/logs.html", "/logs.js",
+      "/login.html", "/login.js", "/styles.css", "/custom.css",
+      "/bootstrap.min.css", "/bootstrap.bundle.min.js",
+      "/cart-utils.js", "/app.js", "/products.js",
+      "/banner.png", "/hero-banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png",
       "/favicon.svg", "/favicon.ico", "/favicon.png", "/chime_logo.png"
     ]);
     // Auth: requires valid logged-in session for access to any page or code on the platform
     const AUTH_FILES    = new Set([
-      "/", "/index.html", "/main.js", "/logs.html", "/logs.js",
+      "/main.js",
       "/cart.html", "/cart.js", "/pay.html",
       "/orders.html", "/balance.html", "/balance.js",
       "/dashboard.html", "/dashboard.js", "/deposit.html", "/deposit.js",

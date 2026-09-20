@@ -1,169 +1,277 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <link rel="icon" type="image/png" href="/logo.png?v=1001">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1001">
-    <link rel="shortcut icon" href="/favicon.ico?v=1001">
-    <link rel="apple-touch-icon" href="/logo.png?v=1001">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Store - Falcon Logs</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="styles.css?v=1001">
-  </head>
-  <body>
-    <!-- HEADER (ENCLOSED CARD) -->
-    <div class="site-header-wrap">
-      <header class="store-site-header">
-        <a class="brand" href="/" aria-label="Falcon Logs">
-          <img src="/logo.png" alt="Falcon Logs Logo" class="brand-logo-img">
-          <span class="brand-text">
-            <span class="brand-name-top">Falcon</span>
-            <span class="brand-name-bottom">Logs</span>
-          </span>
-        </a>
-        <nav class="header-nav-center" aria-label="Primary">
-          <a href="/" class="header-nav-link active">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
-            <span>Logs</span>
-          </a>
-          <a href="/orders.html" class="header-nav-link ">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
-            <span>Orders</span>
-          </a>
-          <a href="/support.html" class="header-nav-link ">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-            <span>Support</span>
-          </a>
-        </nav>
-        <div class="nav-actions">
-          <a class="cart-icon-btn" href="/cart.html" aria-label="Cart">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-            <span class="cart-badge" data-cart-count>0</span>
-          </a>
-          <div class="nav-account-dropdown-wrap">
-            <a class="nav-btn" href="/login.html" id="navUserBtn">
-              <svg class="nav-btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <span id="navUserText">Log in</span>
+<html lang="en" class=""><head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Store - Falcon Logs</title>
+<meta name="currency-sign" content="£">
+<link rel="icon" href="/logo.png?v=1003" type="image/png"><link rel="shortcut icon" href="/favicon.ico?v=1003">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/bootstrap.min.css">
+<link rel="stylesheet" href="/custom.css?v=mu3gcm8y">
+
+
+<style>
+  .falcon-global-particles { display: none !important; }
+  .authed-cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: #ea580c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    border-radius: 9px;
+    text-align: center;
+    padding: 0 4px;
+    box-shadow: 0 2px 6px rgba(234, 88, 12, 0.4);
+  }
+  .navbar-auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .navbar-auth-or-wrap {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+  }
+  .hero-banner-img {
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+  .hero-section {
+    display: flex;
+    justify-content: center;
+  }
+  .dropdown-menu.account-dropdown {
+    background: #212121;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  }
+  .dropdown-menu.account-dropdown .dropdown-item {
+    color: #e5e7eb;
+    font-size: 13.5px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+  }
+  .dropdown-menu.account-dropdown .dropdown-item:hover {
+    background: rgba(234, 88, 12, 0.15);
+    color: #ea580c;
+  }
+  .dropdown-menu.account-dropdown .account-dropdown-header {
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .account-dropdown-header .acct-greet {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+  }
+  .account-dropdown-header .acct-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ea580c;
+    word-break: break-all;
+  }
+</style>
+</head>
+<body class="bg-dark2">
+
+</div>
+<div class="container-md">
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark rounded-2 p-2">
+  <a class="navbar-brand" href="/"><img src="/logo.png?v=1003" alt="Falcon Logs" style="height: 38px;"></a>
+  <button class="navbar-toggler" data-bs-target="#headerCollapse" data-bs-toggle="collapse" type="button" aria-label="Menu">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="headerCollapse">
+    <ul class="navbar-nav align-items-center">
+      <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/orders.html">Orders</a></li>
+      <li class="nav-item"><a class="nav-link" href="/support.html">Support</a></li>
+    </ul>
+
+    <!-- GUEST ACTIONS (DEFAULT NOT LOGGED IN) -->
+    <ul class="navbar-nav ms-auto navbar-auth-actions" id="navGuestActions">
+      <li class="nav-item"><a class="nav-link btn btn-primary" href="/login.html">login</a></li>
+      <li class="nav-item navbar-auth-or-wrap"><span class="navbar-auth-or text-white">or</span></li>
+      <li class="nav-item"><a class="nav-link btn btn-gradient" href="/login.html?mode=signup">create account</a></li>
+    </ul>
+
+    <!-- AUTH ACTIONS (WHEN LOGGED IN) -->
+    <ul class="navbar-nav ms-auto align-items-center" id="navAuthActions" style="display: none !important;">
+      <li class="nav-item nav-item-balance">
+        <a class="nav-link nav-balance-link" href="/deposit.html">Balance | <span id="clientBalance">£0.00</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)" role="button" id="navAccountDropdown">My Account</a>
+        <ul class="dropdown-menu dropdown-menu-end account-dropdown">
+          <li class="account-dropdown-header">
+            <div class="acct-greet">Signed in as</div>
+            <div class="acct-name" id="accountUsername">user</div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="/dashboard.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="margin-right:8px;"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>Dashboard</span>
             </a>
-          </div>
-        </div>
-      </header>
+          </li>
+          <li>
+            <a class="dropdown-item" href="/cart.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="margin-right:8px;"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+              <span>Cart</span>
+            </a>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <a class="dropdown-item text-danger" href="javascript:void(0)" id="navLogoutBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="margin-right:8px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item ms-2">
+        <a href="/cart.html" class="nav-link position-relative p-1" aria-label="Cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span class="authed-cart-badge" data-cart-count style="display:none;">0</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="products full loadable-content loaded">
+  <div class="main-content overflow-hidden">
+
+    
+    <div class="hero-section mb-3">
+      <img alt="Falcon Logs" class="rounded-3 mb-3" src="/hero-banner.png" width="680">
     </div>
+    
 
-    <!-- STORE SHELL -->
-    <main class="store-shell">
-      <!-- STORE HERO SECTION -->
-      <section class="store-hero-section">
-        <div class="store-hero-logo-wrap">
-          <canvas id="falconFireCanvasUnder" class="hero-fire-canvas hero-fire-canvas-under"></canvas>
-          <img src="/hero-logo.png" alt="Falcon Logs Logo" class="store-hero-logo">
-          <canvas id="falconFireCanvasOver" class="hero-fire-canvas hero-fire-canvas-over"></canvas>
+    <div class="collapse show mb-5" id="searchFilterCollapse">
+      <div class="products-title-category">
+        <div class="border-box text-success">
+          <svg fill="none" height="14" viewBox="0 0 14 14" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" d="M8.7888 9.58429C6.8011 11.1763 3.89152 11.051 2.04893 9.20839C0.0719048 7.23136 0.0719048 4.02596 2.04893 2.04893C4.02596 0.0719047 7.23136 0.071905 9.20839 2.04893C11.051 3.89152 11.1763 6.80109 9.58429 8.78879L13.451 12.6555C13.6707 12.8752 13.6707 13.2313 13.451 13.451C13.2313 13.6707 12.8752 13.6707 12.6555 13.451L8.7888 9.58429ZM2.84443 8.4129C1.30674 6.87521 1.30674 4.38212 2.84443 2.84443C4.38212 1.30674 6.87521 1.30674 8.4129 2.84443C9.94946 4.38099 9.95058 6.87155 8.41628 8.40951C8.41514 8.41062 8.41401 8.41175 8.41288 8.41288C8.41175 8.414 8.41063 8.41514 8.40951 8.41627C6.87155 9.95058 4.38099 9.94946 2.84443 8.4129Z" fill="currentColor" fill-rule="evenodd"></path>
+          </svg>
+          <input class="form-control searchable-input" id="searchTitle" name="title" placeholder="Search for a Product" type="text">
         </div>
-        <h1 class="store-hero-title">Welcome to <span class="hero-orange-text">Falcon Logs</span></h1>
-      </section>
-
-      <!-- SEARCH & CATEGORY CONTROLS -->
-      <div class="store-controls-wrap">
-        <div class="search-input-wrapper">
-          <svg class="search-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-          <input id="productSearch" type="search" class="store-search-input" placeholder="Search for a Product" autocomplete="off">
-        </div>
-
-        <div class="category-dropdown-wrapper">
-          <button type="button" class="category-dropdown-btn" id="categoryDropdownToggle" aria-haspopup="true" aria-expanded="false">
-            <div class="category-dropdown-left">
-              <svg class="category-dropdown-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
-              <span id="selectedCategoryLabel">Choose Category</span>
-            </div>
-            <svg class="category-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
-          </button>
-          <div class="category-menu-panel" id="categoryMenuPanel" style="display: none;">
-            <div class="category-search-box">
-              <svg class="category-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-              <input type="text" id="categorySearchInput" class="category-search-input" placeholder="Search..." autocomplete="off">
-            </div>
-            <div class="category-items-list" id="categoryItemsList"></div>
+        <div class="border-box text-success">
+          <svg fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.55675 2.68997C6.4205 2.56298 5.2463 2.56298 4.11006 2.68997C3.37907 2.77167 2.78799 3.3473 2.70178 4.08433C2.56588 5.24634 2.56588 6.42024 2.70178 7.58225C2.78799 8.31928 3.37907 8.89491 4.11006 8.97661C5.2463 9.1036 6.4205 9.1036 7.55675 8.97661C8.28773 8.89491 8.87882 8.31928 8.96502 7.58225C9.10093 6.42024 9.10093 5.24634 8.96502 4.08433C8.87882 3.3473 8.28773 2.77167 7.55675 2.68997Z" fill="currentColor"></path>
+            <path d="M15.8901 2.68997C14.7538 2.56298 13.5796 2.56298 12.4434 2.68997C11.7124 2.77167 11.1213 3.3473 11.0351 4.08433C10.8992 5.24634 10.8992 6.42024 11.0351 7.58225C11.1213 8.31928 11.7124 8.89491 12.4434 8.97661C13.5796 9.1036 14.7538 9.1036 15.8901 8.97661C16.6211 8.89491 17.2122 8.31928 17.2984 7.58225C17.4343 6.42024 17.4343 5.24634 17.2984 4.08433C17.2122 3.3473 16.6211 2.77167 15.8901 2.68997Z" fill="currentColor"></path>
+            <path d="M7.55675 11.0233C6.4205 10.8963 5.2463 10.8963 4.11006 11.0233C3.37907 11.105 2.78799 11.6806 2.70178 12.4177C2.56588 13.5797 2.56588 14.7536 2.70178 15.9156C2.78799 16.6526 3.37907 17.2282 4.11006 17.3099C5.2463 17.4369 6.4205 17.4369 7.55675 17.3099C8.28773 17.2282 8.87882 16.6526 8.96502 15.9156C9.10093 14.7536 9.10093 13.5797 8.96502 12.4177C8.87882 11.6806 8.28773 11.105 7.55675 11.0233Z" fill="currentColor"></path>
+            <path d="M15.8901 11.0233C14.7538 10.8963 13.5796 10.8963 12.4434 11.0233C11.7124 11.105 11.1213 11.6806 11.0351 12.4177C10.8992 13.5797 10.8992 14.7536 11.0351 15.9156C11.1213 16.6526 11.7124 17.2282 12.4434 17.3099C13.5796 17.4369 14.7538 17.4369 15.8901 17.3099C16.6211 17.2282 17.2122 16.6526 17.2984 15.9156C17.4343 14.7536 17.4343 13.5797 17.2984 12.4177C17.2122 11.6806 16.6211 11.105 15.8901 11.0233Z" fill="currentColor"></path>
+          </svg>
+          <div class="custom-select-wrapper" id="categorySelect">
+            <div class="custom-select-display">Choose Category</div>
+            <div class="custom-options"><div class="custom-option" data-value="">All Categories</div></div>
           </div>
         </div>
       </div>
 
-      <!-- PRODUCTS COUNT -->
-      <h4 class="product-count-heading">Total found: <span id="productCountNum">0</span></h4>
-
-      <!-- PRODUCTS GRID -->
-      <div id="productGrid" class="product-grid"></div>
-    </main>
-
-    <!-- PURCHASE MODAL (MATCHING REFERENCE SCREENSHOT) -->
-    <div class="modal-overlay" id="purchaseModalOverlay">
-      <div class="modal-card">
-        <div class="modal-header-row">
-          <h2 class="modal-title" id="purchaseModalTitle">PRODUCT NAME</h2>
-          <button type="button" class="modal-close-square-btn" id="closePurchaseModal" aria-label="Close">&times;</button>
+      <div class="countries mt-3 w-100 m-auto" id="countriesFilter">
+        <div class="country active" data-country="ww">
+          <img alt="Worldwide" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f30e.svg">
+          <h5>All</h5>
         </div>
-        
-        <!-- DESCRIPTION SECTION -->
-        <div class="modal-section-label">DESCRIPTION</div>
-        <div class="modal-desc-box" id="purchaseModalDesc"></div>
-
-        <!-- TAGS SECTION -->
-        <div class="modal-section-label" id="purchaseModalTagsLabel">TAGS</div>
-        <div class="modal-tags-row" id="purchaseModalTags"></div>
-
-        <!-- VARIANT SELECT SECTION -->
-        <div class="modal-form-group">
-          <label class="modal-section-label" for="purchaseModalVariantSelect">SELECT VARIANT</label>
-          <div class="modal-select-wrap">
-            <select id="purchaseModalVariantSelect" class="modal-select"></select>
-            <svg class="modal-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
+        <div class="country" data-country="usa">
+          <img alt="USA" src="https://flagcdn.com/us.svg">
+          <h5>USA</h5>
         </div>
-
-        <div id="purchaseModalCustomInputs" style="display:none; flex-direction:column; gap:12px; margin-bottom: 14px;"></div>
-
-        <!-- SEPARATOR -->
-        <div class="modal-divider"></div>
-
-        <!-- QUANTITY & TOTAL ROW -->
-        <div class="modal-qty-total-row">
-          <div class="modal-qty-col">
-            <div class="modal-section-label">QUANTITY</div>
-            <div class="quantity-stepper-box">
-              <button type="button" class="stepper-btn" id="purchaseQtyMinus">-</button>
-              <span class="stepper-val" id="purchaseQtyVal">1</span>
-              <button type="button" class="stepper-btn" id="purchaseQtyPlus">+</button>
-            </div>
-          </div>
-          <div class="modal-total-col">
-            <div class="modal-section-label">TOTAL</div>
-            <div class="modal-total-val" id="purchaseModalTotal">£0.00</div>
-          </div>
+        <div class="country" data-country="ca">
+          <img alt="Canada" src="https://flagcdn.com/ca.svg">
+          <h5>CA</h5>
         </div>
-
-        <!-- ACTION BUTTONS ROW -->
-        <div class="modal-actions-row">
-          <button type="button" id="purchaseAddToCartBtn" class="modal-add-cart-primary-btn">Add to Cart</button>
-          <a href="/cart.html" class="modal-view-cart-secondary-btn" id="purchaseViewCartBtn">View Cart</a>
+        <div class="country" data-country="uk">
+          <img alt="United Kingdom" src="https://flagcdn.com/gb.svg">
+          <h5>UK</h5>
+        </div>
+        <div class="country" data-country="aus">
+          <img alt="Australia" src="https://flagcdn.com/au.svg">
+          <h5>AUS</h5>
         </div>
       </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      <div class="footer-nav-links">
-        <a href="/">Home</a>
-        <a href="/cart.html">Cart</a>
-        <a href="/dashboard.html">Account</a>
-        <a href="/orders.html">Orders</a>
-      </div>
-      <p class="footer-copyright">&copy; 2026 Falcon Logs. All rights reserved.</p>
-    </footer>
+    <div class="products-area mt-2">
+      <h4 class="text-center text-white mt-4 mb-2">Total found: <span class="fw-bold" id="searchBarFound">0</span></h4>
+      <div class="items" id="productsGrid"></div>
+    </div>
 
-    <script src="cart-utils.js?v=1001" defer></script>
-    <script src="logs.js?v=1001" defer></script>
-  </body>
-</html>
+    <nav class="mb-3" id="paginationContainer">
+      <ul class="pagination justify-content-center m-auto rounded"></ul>
+    </nav>
+  </div>
+</div>
+
+<div class="social-media-buttons">
+  <button class="btn btn-secondary btn-sm position-sticky" id="btn-back-to-top" type="button" style="display:none">Back to top</button>
+</div>
+
+<footer class="bg-dark text-white p-4 mb-3 d-flex justify-content-center align-items-center flex-column" style="margin-top:0">
+  <nav class="navbar navbar-expand navbar-dark bg-transparent p-2 mb-0 mt-0">
+    <ul class="navbar-nav flex-wrap d-flex justify-content-center align-items-center">
+      <li class="nav-item d-flex flex-row align-items-center me-lg-2 text-success">
+        <a class="nav-link me-lg-0 me-1" href="https://t.me/FalconLogsBot">Reviews</a>
+        <svg class="footer-tg-icon" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="7.5" cy="7.5" fill="currentColor" r="7.5"></circle>
+          <path clip-rule="evenodd" d="M9.81536 10.2821L9.81561 10.2815L9.82182 10.266L10.8928 4.86629V4.84875C10.8928 4.71421 10.8431 4.59676 10.7349 4.52631C10.6403 4.46465 10.5314 4.46026 10.4551 4.46605C10.3744 4.47218 10.2983 4.49233 10.2456 4.5091C10.2185 4.51773 10.1958 4.52604 10.1795 4.53233C10.1714 4.53548 10.1648 4.53816 10.16 4.54016L10.1553 4.54214L4.18392 6.88462L4.18227 6.88521C4.17905 6.88638 4.17478 6.88797 4.16963 6.88998C4.15936 6.89398 4.14538 6.8997 4.12896 6.90714C4.09672 6.92175 4.05217 6.9443 4.00699 6.97524C3.93026 7.02779 3.78414 7.15219 3.80882 7.34941C3.82925 7.51277 3.94186 7.61652 4.01778 7.67024C4.05847 7.69903 4.09741 7.7198 4.12592 7.73337C4.14036 7.74025 4.15263 7.74552 4.16177 7.74924C4.16635 7.7511 4.17018 7.75259 4.17315 7.75372L4.17694 7.75513L4.17937 7.75604L5.2241 8.10775C5.22057 8.1733 5.22707 8.24013 5.24446 8.30607L5.76777 10.2912C5.82982 10.5266 6.04276 10.6906 6.28618 10.6904C6.50437 10.6902 6.69788 10.5582 6.78009 10.3613L7.59711 9.48769L9.00032 10.5635L9.02027 10.5722C9.14776 10.6278 9.26687 10.6455 9.37577 10.6306C9.48452 10.6157 9.57094 10.5701 9.63585 10.5182C9.69973 10.4671 9.74351 10.4094 9.77104 10.366C9.78503 10.3439 9.79546 10.3245 9.80269 10.3099C9.80632 10.3026 9.80919 10.2964 9.81133 10.2916L9.81402 10.2853L9.81498 10.283L9.81536 10.2821ZM5.76246 8.16951C5.75056 8.12439 5.76923 8.07677 5.80862 8.05175L9.3522 5.80143C9.3522 5.80143 9.56062 5.67489 9.55317 5.80143C9.55317 5.80143 9.59037 5.82377 9.47869 5.92796C9.37275 6.02692 6.95309 8.36301 6.70825 8.5994C6.69412 8.61304 6.68568 8.6287 6.6807 8.6477L6.28577 10.1547L5.76246 8.16951Z" fill="white" fill-rule="evenodd"></path>
+        </svg>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="/tos">TOS</a></li>
+      <li class="nav-item"><a class="nav-link" href="/faq">FAQs</a></li>
+    </ul>
+  </nav>
+  <p class="m-auto text-center mt-2 text-white">© 2026 Falcon Logs All rights reserved</p>
+</footer>
+</div>
+
+
+
+
+<!-- Product modal must sit on <body>, not inside .container-md, or Bootstrap backdrop covers it -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content bg-dark2 text-white">
+      <button class="btn-close-modal" data-bs-dismiss="modal" type="button" aria-label="Close" id="closeProductModal">✕</button>
+      <div class="modal-header">
+        <h6 class="modal-title" id="productModalTitle">Add to cart</h6>
+      </div>
+      <div class="modal-content-holder">
+        <div class="modal-body pt-3 pb-2 bg-dark2" id="productModalBody">
+          <div class="loading"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/bootstrap.bundle.min.js"></script>
+<script src="/cart-utils.js?v=1003"></script>
+<script src="/app.js?v=mu3gcm8y"></script>
+<script src="/products.js?v=mu3gcm8y"></script>
+</body></html>

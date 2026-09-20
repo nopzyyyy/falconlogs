@@ -303,12 +303,12 @@ function setPaymentMethod(method) {
 
   if (balanceChoice && cryptoChoice) {
     if (method === "balance") {
-      balanceChoice.classList.add("active");
-      cryptoChoice.classList.remove("active");
+      balanceChoice.classList.add("active", "selected");
+      cryptoChoice.classList.remove("active", "selected");
       closeCoinsDrawer();
     } else {
-      cryptoChoice.classList.add("active");
-      balanceChoice.classList.remove("active");
+      cryptoChoice.classList.add("active", "selected");
+      balanceChoice.classList.remove("active", "selected");
     }
   }
   updateCheckoutButtonText();
