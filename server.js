@@ -4961,15 +4961,15 @@ ${escapeTelegramHtml(r.reason)}
     // Strict allowlist — anything not listed here is a hard 404
     // Public: accessible without a session (only login page & essential assets to render it)
     const PUBLIC_FILES  = new Set([
-      "/", "/index.html", "/products", "/logs.html", "/logs.js",
       "/login.html", "/login.js", "/styles.css", "/custom.css",
       "/bootstrap.min.css", "/bootstrap.bundle.min.js",
-      "/cart-utils.js", "/app.js", "/products.js",
+      "/cart-utils.js", "/app.js",
       "/banner.png", "/hero-banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png",
       "/favicon.svg", "/favicon.ico", "/favicon.png", "/chime_logo.png"
     ]);
     // Auth: requires valid logged-in session for access to any page or code on the platform
     const AUTH_FILES    = new Set([
+      "/", "/index.html", "/products", "/logs.html", "/logs.js", "/products.js",
       "/main.js",
       "/cart.html", "/cart.js", "/pay.html",
       "/orders.html", "/balance.html", "/balance.js",

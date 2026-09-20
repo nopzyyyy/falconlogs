@@ -19,7 +19,7 @@
     <style>
       :root {
         color-scheme: dark;
-        --bg: #0a0805;
+        --bg: #141414;
         --store-input-bg: #110e0a;
         --store-input-hover: #15110d;
         --line: rgba(234, 88, 12, 0.22);
@@ -43,10 +43,12 @@
         overscroll-behavior: none !important;
         touch-action: none !important;
         -webkit-overflow-scrolling: none !important;
+        background-color: #141414 !important;
       }
 
       body {
-        background: #0a0805;
+        background: #141414 !important;
+        background-color: #141414 !important;
         color: #ffffff;
         font-family: 'Montserrat', sans-serif;
         display: flex;
@@ -61,13 +63,7 @@
       }
 
       .login-particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 0;
+        display: none !important;
       }
 
       .standalone-login-wrap {

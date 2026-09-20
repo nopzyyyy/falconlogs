@@ -2,9 +2,9 @@
 
 :root {
   color-scheme: dark;
-  --bg: #0a0805;
-  --bg-deep: #080604;
-  --header-bg: #120e08;
+  --bg: #141414;
+  --bg-deep: #141414;
+  --header-bg: #181818;
   --store-card: #1b1712;
   --store-card-hover: #221d16;
   --store-input-bg: #1a1611;
@@ -33,11 +33,14 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; overflow-x: hidden; touch-action: manipulation; }
+html { scroll-behavior: smooth; overflow-x: hidden; touch-action: manipulation; background-color: #141414 !important; }
+
+.falcon-global-particles { display: none !important; }
 
 body {
   min-height: 100vh;
-  background: var(--bg);
+  background: #141414 !important;
+  background-color: #141414 !important;
   color: var(--text);
   font-family: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 14px;
