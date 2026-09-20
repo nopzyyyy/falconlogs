@@ -3367,7 +3367,7 @@ const server = http.createServer(async (req, res) => {
         }
         logAuditAction(req, "ORDER_PLACE", `Placed order ${orderId} via BALANCE checkout (${total.toFixed(2)})`);
 
-        return sendJson(res, 200, { success: true, order: newOrder });
+        return sendJson(res, 200, { success: true, order: newOrder, orderId: newOrder.id });
       }
 
       // 2. CRYPTO CHECKOUT (Embedded NOWPayments Drawer)
@@ -3537,7 +3537,58 @@ const server = http.createServer(async (req, res) => {
 
         notifyUserOrderCreation(newOrder, "");
 
-        return sendJson(res, 200, { success: true, order: newOrder });
+        return sendJson(res, 200, { success: true, order: newOrder, orderId: newOrder.id });
+      }
+
+      // 4. TELEGRAM STARS CHECKOUT
+      if (paymentMethod === "TG_STARS" || paymentMethod === "TELEGRAM_STARS") {
+        const orderId = `ORD-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
+        const newOrder = {
+          id: orderId,
+          status: "WAITING_PAYMENT",
+          paymentMethod: "TG_STARS",
+          total: total,
+          rawTotal: rawTotal,
+          discountAmount: discountAmount,
+          couponCode: appliedCoupon ? appliedCoupon.code : null,
+          items: items.map(item => {
+            let serverPrice = item.price;
+            if (item.type === "stock") {
+              const dbItem = allInventory.find(inv => inv.id === item.id);
+              if (dbItem) serverPrice = dbItem.price;
+            } else {
+              const parts = String(item.id).split(":");
+              const prod = allProducts.find(p => p.id === parts[0]);
+              const variant = prod ? (prod.variants || []).find(v => v.id === parts[1]) : null;
+              if (variant) serverPrice = variant.price;
+            }
+            return {
+              id: item.id,
+              type: item.type,
+              name: item.name,
+              price: serverPrice,
+              quantity: item.quantity,
+              customInputs: item.customInputs || {}
+            };
+          }),
+          userId: session.userId,
+          createdAt: new Date().toISOString(),
+          expiresAt: Date.now() + 15 * 60 * 1000
+        };
+
+        const orders = readJson(ordersFile, []);
+        orders.unshift(newOrder);
+        writeJson(ordersFile, orders);
+
+        notifyUserOrderCreation(newOrder, "");
+
+        const botUser = process.env.PAYMENTS_BOT_USERNAME || process.env.GATEWAY_NAME || "FalconPaymentsBot";
+        return sendJson(res, 200, {
+          success: true,
+          order: newOrder,
+          orderId: newOrder.id,
+          redirectUrl: `https://t.me/${botUser}?start=order_${orderId}`
+        });
       }
     }
 

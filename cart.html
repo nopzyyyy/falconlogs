@@ -1,26 +1,381 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/png" href="/logo.png?v=1001">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1001">
-    <link rel="shortcut icon" href="/favicon.ico?v=1001">
-    <link rel="apple-touch-icon" href="/logo.png?v=1001">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Cart - Falcon Logs</title>
-    <link rel="icon" type="image/png" href="/logo.png?v=1001">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1001">
-    <link rel="shortcut icon" href="/favicon.ico?v=1001">
-    <link rel="apple-touch-icon" href="/logo.png?v=1001">
+    <link rel="icon" type="image/png" href="/logo.png?v=1003">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1003">
+    <link rel="shortcut icon" href="/favicon.ico?v=1003">
+    <link rel="apple-touch-icon" href="/logo.png?v=1003">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap">
 
     <link rel="stylesheet" href="/bootstrap.min.css">
     <link rel="stylesheet" href="/custom.css?v=mu3gcm8y">
-    <link rel="stylesheet" href="styles.css?v=1003">
+    <link rel="stylesheet" href="styles.css?v=1006">
+    <style>
+      body {
+        background-color: #141414 !important;
+        color: #ffffff;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      /* Cart Container matching mockup */
+      .cart-wrapper {
+        max-width: 980px;
+        margin: 28px auto 60px auto;
+        padding: 0 16px;
+      }
+
+      .cart-section-heading {
+        font-size: 16px;
+        font-weight: 700;
+        color: #ffffff;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 14px;
+      }
+
+      /* Cart Product Card */
+      .cart-items-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .cart-product-card {
+        background: #212121;
+        border-radius: 8px;
+        padding: 14px 18px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        transition: background 0.15s ease;
+      }
+
+      .cart-card-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .cart-card-thumb-wrap {
+        width: 76px;
+        height: 50px;
+        border-radius: 4px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #191919;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .cart-card-thumb {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .cart-card-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .cart-card-title {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.35;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+      }
+
+      .cart-card-variant {
+        font-size: 12px;
+        color: #8c8c8c;
+        margin-top: 3px;
+        font-weight: 500;
+      }
+
+      .cart-trash-btn {
+        background: transparent;
+        border: none;
+        padding: 4px 6px;
+        cursor: pointer;
+        color: #ef4444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        transition: opacity 0.15s ease, transform 0.1s ease;
+        margin-left: 8px;
+        flex-shrink: 0;
+      }
+
+      .cart-trash-btn:hover {
+        opacity: 0.8;
+        transform: scale(1.1);
+      }
+
+      .cart-card-bottom {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        padding-top: 2px;
+        font-size: 13px;
+      }
+
+      .cart-meta-label {
+        color: #8c8c8c;
+        font-weight: 500;
+      }
+
+      .cart-meta-value {
+        color: #ffffff;
+        font-weight: 700;
+        margin-left: 4px;
+      }
+
+      .cart-meta-divider {
+        color: #4a4a4a;
+        margin: 0 16px;
+        font-weight: 300;
+        user-select: none;
+      }
+
+      /* Horizontal line separator */
+      .cart-mockup-divider {
+        border: none;
+        border-top: 1px solid #2a2a2a;
+        margin: 28px 0;
+      }
+
+      /* Bottom 2-column layout */
+      .cart-bottom-container {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 36px;
+      }
+
+      @media (max-width: 820px) {
+        .cart-bottom-container {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+      }
+
+      /* Payment Processors Grid */
+      .cart-processors-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      @media (max-width: 500px) {
+        .cart-processors-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .cart-processor-tile {
+        background: #212121;
+        border: 1.5px solid transparent;
+        border-radius: 8px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.15s ease;
+        padding: 0 16px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .cart-processor-tile:hover {
+        background: #262626;
+      }
+
+      .cart-processor-tile.selected {
+        border-color: #0381de;
+        background: #262626;
+        box-shadow: 0 0 12px rgba(3, 129, 222, 0.25);
+      }
+
+      .cart-processor-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      /* Purchase Button */
+      .cart-purchase-button {
+        width: 100%;
+        background: #0381de;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 13px 20px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 16px;
+        transition: background 0.15s ease, transform 0.08s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .cart-purchase-button:hover {
+        background: #0070c2;
+      }
+
+      .cart-purchase-button:active {
+        transform: scale(0.99);
+      }
+
+      .cart-purchase-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* Coupon Input Box */
+      .cart-coupon-pill {
+        background: #212121;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 8px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+        gap: 8px;
+      }
+
+      .cart-coupon-field {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #ffffff;
+        font-size: 13.5px;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .cart-coupon-field::placeholder {
+        color: #737373;
+        font-weight: 400;
+      }
+
+      .cart-coupon-submit {
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 12.5px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        padding: 6px 4px;
+        transition: color 0.15s ease;
+      }
+
+      .cart-coupon-submit:hover {
+        color: #0381de;
+      }
+
+      .cart-coupon-message {
+        font-size: 12.5px;
+        margin-top: 6px;
+        font-weight: 500;
+      }
+
+      /* Order Details */
+      .cart-order-details-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-top: 24px;
+        margin-bottom: 14px;
+      }
+
+      .cart-details-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      .cart-details-label {
+        color: #9e9e9e;
+        font-weight: 500;
+      }
+
+      .cart-details-val {
+        color: #ffffff;
+        font-weight: 600;
+      }
+
+      .cart-discount-val {
+        color: #38bdf8;
+        font-weight: 600;
+      }
+
+      .cart-total-label {
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .cart-total-val {
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      /* Empty Cart Placeholder */
+      .cart-empty-state {
+        background: #212121;
+        border-radius: 8px;
+        padding: 44px 20px;
+        text-align: center;
+        color: #8c8c8c;
+      }
+
+      .cart-empty-btn {
+        display: inline-block;
+        margin-top: 14px;
+        background: #0381de;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 9px 22px;
+        border-radius: 6px;
+        font-size: 13.5px;
+        font-weight: 600;
+        transition: background 0.15s ease;
+      }
+
+      .cart-empty-btn:hover {
+        background: #0070c2;
+        color: #ffffff;
+      }
+    </style>
   </head>
-  <body style="background-color: #141414; color: #fff;">
+  <body>
     <div class="container-md">
       <!-- HEADER / NAVBAR (EXACT HOME / AUTHED.CC) -->
       <nav class="navbar navbar-expand-lg navbar-dark rounded-2 p-2">
@@ -90,265 +445,74 @@
       </nav>
     </div>
 
-    <!-- CART CONTAINER (NEW CYBER SPLIT & COIN DRAWER) -->
-    <main class="store-shell">
-      <!-- TOP BREADCRUMB / STATUS BAR -->
-      <div class="cart-top-bar">
-        <div class="cart-title-wrap">
-          <h1 class="cart-title">Your Cart</h1>
-          <span class="cart-items-pill" id="cartItemCountLabel">0 items</span>
-        </div>
+    <!-- MAIN CART CONTENT (EXACT 1:1 CLONE OF USER MOCKUP) -->
+    <main class="cart-wrapper">
+      <!-- TOP SECTION: PRODUCTS -->
+      <div class="cart-section-heading">PRODUCTS</div>
+      <div id="cartItemsList" class="cart-items-container">
+        <!-- Rendered by cart.js -->
       </div>
 
-      <div class="cart-layout-grid">
-        <!-- LEFT COLUMN: ITEMS, PROMO CODE & VALUE PROPS -->
-        <div class="cart-left-col">
-          <!-- PRODUCTS BOX -->
-          <div class="cart-section-box">
-            <div class="cart-section-header">
-              <div class="cart-section-title">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-                <span>SELECTED LOGS</span>
-              </div>
-              <a href="/" class="cart-continue-link">Add more items +</a>
-            </div>
-            <div id="cartItemsList" class="cart-items-stack">
-              <!-- Dynamic Cart Items -->
-            </div>
+      <!-- HORIZONTAL DIVIDER -->
+      <hr class="cart-mockup-divider">
+
+      <!-- BOTTOM 2-COLUMN SECTION -->
+      <div class="cart-bottom-container">
+        <!-- LEFT COLUMN: SELECT PAYMENT PROCESSOR -->
+        <div>
+          <div class="cart-section-heading">SELECT PAYMENT PROCESSOR</div>
+          <div class="cart-processors-grid">
+            <!-- Telegram Stars Option -->
+            <button type="button" class="cart-processor-tile" id="choiceTgStars" data-method="TG_STARS">
+              <span class="cart-processor-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#38bdf8">
+                  <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
+                  <path d="M5 4L5.8 6.2L8 7L5.8 7.8L5 10L4.2 7.8L2 7L4.2 6.2L5 4Z"/>
+                </svg>
+              </span>
+              <span>Telegram Stars</span>
+            </button>
+
+            <!-- Balance Option -->
+            <button type="button" class="cart-processor-tile selected" id="choiceBalance" data-method="BALANCE">
+              <span class="cart-processor-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#4ade80">
+                  <path d="M21 7.28V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-2.28c.59-.35 1-.99 1-1.72V9c0-.73-.41-1.37-1-1.72zM20 9v6h-7V9h7zM5 19V5h14v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5z"/>
+                </svg>
+              </span>
+              <span>Balance</span>
+            </button>
           </div>
 
-          <!-- PROMO CODE BOX -->
-          <div class="cart-section-box">
-            <div class="cart-section-header">
-              <div class="cart-section-title">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                <span>APPLY COUPON CODE</span>
-              </div>
-            </div>
-            <div class="cart-coupon-row">
-              <input type="text" id="couponCodeInput" class="cart-coupon-input" placeholder="Coupon code" autocomplete="off" spellcheck="false">
-              <button type="button" id="applyCouponBtn" class="cart-coupon-btn">Apply</button>
-            </div>
-            <span id="couponStatusText" class="cart-coupon-status">Discount applied instantly at purchase.</span>
-          </div>
+          <!-- PURCHASE BUTTON -->
+          <button type="button" id="purchaseBtn" class="cart-purchase-button">
+            Purchase
+          </button>
         </div>
 
-        <!-- RIGHT COLUMN: STICKY CHECKOUT SUMMARY & PAYMENT HUB -->
-        <div class="cart-right-col">
-          <div class="cart-checkout-card">
-            <div class="cart-section-title">
-              <span>ORDER SUMMARY</span>
-            </div>
+        <!-- RIGHT COLUMN: APPLY COUPON CODE & ORDER DETAILS -->
+        <div>
+          <!-- APPLY COUPON CODE -->
+          <div class="cart-section-heading">APPLY COUPON CODE</div>
+          <div class="cart-coupon-pill">
+            <input type="text" id="couponCodeInput" class="cart-coupon-field" placeholder="your coupon here ..." autocomplete="off" spellcheck="false">
+            <button type="button" id="applyCouponBtn" class="cart-coupon-submit">APPLY</button>
+          </div>
+          <div id="couponStatusMessage" class="cart-coupon-message" style="display: none;"></div>
 
-            <div class="cart-summary-breakdown">
-              <div class="summary-row">
-                <span>Subtotal :</span>
-                <span class="summary-val" id="summarySubtotal">£0.00</span>
-              </div>
-              <div class="summary-row">
-                <span>Platform Fee :</span>
-                <span class="summary-val" style="color:#22c55e;">0% (Free)</span>
-              </div>
-              <div class="summary-row">
-                <span>Discount :</span>
-                <span class="summary-val" id="summaryDiscount">£0.00</span>
-              </div>
-              <div class="summary-row total">
-                <span>Total :</span>
-                <span class="summary-val total-price" id="summaryTotal">£0.00</span>
-              </div>
-            </div>
-
-            <!-- PAYMENT METHOD SELECTION (AUTHED.CC GLASS CARDS) -->
-            <div class="cart-payment-selection">
-              <div class="payment-section-label" style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
-                SELECT PAYMENT METHOD
-              </div>
-
-              <div class="paymentProcessors mb-3">
-                <!-- Crypto Option -->
-                <div class="cart-method-choice paymentProcessor selected active" id="choiceMethodCrypto" data-method="crypto">
-                  <div class="paymentProcessor-check">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  </div>
-                  <div class="paymentProcessor-icon paymentProcessor-icon--crypto">
-                    <img src="/icons/crypto.svg" alt="Crypto" width="24" height="24" id="selectedCoinIcon">
-                  </div>
-                  <div class="paymentProcessor-info">
-                    <div class="paymentProcessor-title" id="selectedCoinTitle">Cryptocurrency</div>
-                    <div class="paymentProcessor-desc" id="selectedCoinSub">NOWPayments instant checkout</div>
-                  </div>
-                  <button type="button" class="change-coin-btn open" id="openCoinsDrawerBtn" aria-label="Select coin" style="margin-left: auto; z-index: 2;">
-                    <span id="changeCoinBtnText">Select Coin</span>
-                    <svg class="coin-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                  </button>
-                </div>
-
-                <!-- Balance Option -->
-                <div class="cart-method-choice paymentProcessor" id="choiceMethodBalance" data-method="balance">
-                  <div class="paymentProcessor-check">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  </div>
-                  <div class="paymentProcessor-icon paymentProcessor-icon--balance">
-                    <img src="/icons/balance.svg?v=2" alt="Balance" width="24" height="24">
-                  </div>
-                  <div class="paymentProcessor-info">
-                    <div class="paymentProcessor-title">Store Balance</div>
-                    <div class="paymentProcessor-desc" id="balanceDescLabel">Pay instantly from credit</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- INLINE EXPANDABLE COINS DRAWER -->
-              <div id="cryptoDrawer" class="crypto-drawer open" aria-label="Select Cryptocurrency">
-                <!-- SEARCH COINS IN DRAWER -->
-                <div class="crypto-drawer-search-wrap">
-                  <svg class="drawer-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-                  <input id="cryptoSearch" type="search" class="crypto-drawer-search" placeholder="Search Bitcoin, USDT, Solana..." autocomplete="off">
-                </div>
-
-                <!-- COINS LIST IN DRAWER -->
-                <div class="crypto-drawer-list" id="paymentMethodsGrid">
-                  <!-- Bitcoin -->
-                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="btc" data-coin-search="bitcoin btc">
-                    <div class="drawer-coin-left">
-                      <img src="/icons/btc.svg" alt="Bitcoin" width="32" height="32" class="payment-method-coin-img">
-                      <div class="drawer-coin-meta">
-                        <div class="drawer-coin-header">
-                          <span class="drawer-coin-name">Bitcoin</span>
-                          <span class="drawer-coin-tag">BTC</span>
-                        </div>
-                        <span class="drawer-coin-speed">Estimated ~30 mins</span>
-                      </div>
-                    </div>
-                    <div class="drawer-coin-check">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                  </div>
-
-                  <!-- Litecoin -->
-                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="ltc" data-coin-search="litecoin ltc">
-                    <div class="drawer-coin-left">
-                      <img src="/icons/ltc.svg" alt="Litecoin" width="32" height="32" class="payment-method-coin-img">
-                      <div class="drawer-coin-meta">
-                        <div class="drawer-coin-header">
-                          <span class="drawer-coin-name">Litecoin</span>
-                          <span class="drawer-coin-tag">LTC</span>
-                          <span class="drawer-speed-badge">Fast &amp; Cheap</span>
-                        </div>
-                        <span class="drawer-coin-speed">Estimated ~5 mins</span>
-                      </div>
-                    </div>
-                    <div class="drawer-coin-check">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                  </div>
-
-                  <!-- Solana -->
-                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="sol" data-coin-search="solana sol">
-                    <div class="drawer-coin-left">
-                      <img src="/icons/sol.svg" alt="Solana" width="32" height="32" class="payment-method-coin-img">
-                      <div class="drawer-coin-meta">
-                        <div class="drawer-coin-header">
-                          <span class="drawer-coin-name">Solana</span>
-                          <span class="drawer-coin-tag">SOL</span>
-                          <span class="drawer-speed-badge">Instant</span>
-                        </div>
-                        <span class="drawer-coin-speed">Instant confirmation (&lt;1 min)</span>
-                      </div>
-                    </div>
-                    <div class="drawer-coin-check">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                  </div>
-
-                  <!-- Tether USD -->
-                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="usdt" data-coin-search="tether usdt trc20 erc20 sol">
-                    <div class="drawer-coin-left">
-                      <img src="/icons/usdt.svg" alt="Tether" width="32" height="32" class="payment-method-coin-img">
-                      <div class="drawer-coin-meta">
-                        <div class="drawer-coin-header">
-                          <span class="drawer-coin-name">Tether USD</span>
-                          <span class="drawer-coin-tag">USDT</span>
-                        </div>
-                        <span class="drawer-coin-speed">Choose network:</span>
-                        <div class="network-chips-row">
-                          <span class="network-chip active" data-network="trc20">TRC20</span>
-                          <span class="network-chip" data-network="erc20">ERC20</span>
-                          <span class="network-chip" data-network="sol">SOL</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="drawer-coin-check">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                  </div>
-
-                  <!-- USD Coin -->
-                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="usdc" data-coin-search="usd coin usdc erc20 sol">
-                    <div class="drawer-coin-left">
-                      <img src="/icons/usdc.svg" alt="USD Coin" width="32" height="32" class="payment-method-coin-img">
-                      <div class="drawer-coin-meta">
-                        <div class="drawer-coin-header">
-                          <span class="drawer-coin-name">USD Coin</span>
-                          <span class="drawer-coin-tag">USDC</span>
-                        </div>
-                        <span class="drawer-coin-speed">Choose network:</span>
-                        <div class="network-chips-row">
-                          <span class="network-chip active" data-network="erc20">ERC20</span>
-                          <span class="network-chip" data-network="sol">SOL</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="drawer-coin-check">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                  </div>
-
-                  <!-- Ethereum -->
-                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="eth" data-coin-search="ethereum eth erc20">
-                    <div class="drawer-coin-left">
-                      <img src="/icons/eth.svg" alt="Ethereum" width="32" height="32" class="payment-method-coin-img">
-                      <div class="drawer-coin-meta">
-                        <div class="drawer-coin-header">
-                          <span class="drawer-coin-name">Ethereum</span>
-                          <span class="drawer-coin-tag">ETH</span>
-                        </div>
-                        <span class="drawer-coin-speed">ERC20 · ~3 mins</span>
-                      </div>
-                    </div>
-                    <div class="drawer-coin-check">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                  </div>
-
-                  <!-- Tron -->
-                  <div class="drawer-coin-card payment-method-card" data-method="crypto" data-coin="trx" data-coin-search="tron trx">
-                    <div class="drawer-coin-left">
-                      <img src="/icons/trx.svg" alt="Tron" width="32" height="32" class="payment-method-coin-img">
-                      <div class="drawer-coin-meta">
-                        <div class="drawer-coin-header">
-                          <span class="drawer-coin-name">Tron</span>
-                          <span class="drawer-coin-tag">TRX</span>
-                          <span class="drawer-speed-badge">Instant</span>
-                        </div>
-                        <span class="drawer-coin-speed">Instant confirmation (&lt;1 min)</span>
-                      </div>
-                    </div>
-                    <div class="drawer-coin-check">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- CHECKOUT ACTION -->
-            <button type="button" id="checkoutSubmitBtn" class="checkout-pay-btn">Proceed to Payment</button>
-
-            <p class="checkout-terms-note">
-              Instant automated stock delivery upon transaction confirmation.
-            </p>
+          <!-- ORDER DETAILS -->
+          <div class="cart-order-details-title">Order Details</div>
+          <div class="cart-details-row">
+            <span class="cart-details-label">Subtotal :</span>
+            <span class="cart-details-val" id="summarySubtotal">£0.00</span>
+          </div>
+          <div class="cart-details-row">
+            <span class="cart-details-label">Discount :</span>
+            <span class="cart-discount-val" id="summaryDiscount">-£0.00</span>
+          </div>
+          <div class="cart-details-row">
+            <span class="cart-total-label">Total :</span>
+            <span class="cart-total-val" id="summaryTotal">£0.00</span>
           </div>
         </div>
       </div>
@@ -367,6 +531,6 @@
 
     <script src="/bootstrap.bundle.min.js"></script>
     <script src="/cart-utils.js?v=1004"></script>
-    <script src="cart.js?v=1002"></script>
+    <script src="/cart.js?v=1006"></script>
   </body>
 </html>

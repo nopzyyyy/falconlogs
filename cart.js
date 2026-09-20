@@ -1,7 +1,6 @@
+// Falcon Logs Cart Logic - 1:1 Matching Mockup
 let cart = [];
-let selectedPaymentMethod = "crypto";
-let selectedCoin = null;
-let selectedNetwork = null;
+let selectedPaymentMethod = "BALANCE"; // Default to BALANCE
 let appliedCoupon = null;
 let currentUser = null;
 
@@ -13,6 +12,11 @@ function escapeHtml(value) {
     '"': "&quot;",
     "'": "&#039;"
   })[character]);
+}
+
+function getCurrencySign() {
+  const meta = document.querySelector('meta[name="currency-sign"]');
+  return meta ? meta.content : '£';
 }
 
 function formatVariantName(name) {
@@ -58,24 +62,33 @@ function saveCart() {
   }
 }
 
-// Silently re-render if cart expires while on the cart page
 window.addEventListener("cart:expired", () => {
   cart = [];
   renderCart();
 });
 
-setInterval(() => {
-  if (cart && cart.length > 0) {
-    const expiresAt = Number(localStorage.getItem("mysterio_cart_expires_at") || 0);
-    if (expiresAt && Date.now() > expiresAt) {
-      cart = [];
-      localStorage.removeItem("mysterio_cart");
-      localStorage.removeItem("mysterio_cart_expires_at");
-      if (typeof window.updateCartBadge === "function") window.updateCartBadge();
-      renderCart();
+async function checkAuth() {
+  try {
+    const r = await fetch('/api/auth/me');
+    if (r.ok) {
+      const data = await r.json();
+      if (data && (data.authenticated === true || data.user)) {
+        currentUser = data.user || data;
+        const guestActions = document.getElementById('navGuestActions');
+        const authActions = document.getElementById('navAuthActions');
+        if (guestActions) guestActions.style.setProperty('display', 'none', 'important');
+        if (authActions) authActions.style.setProperty('display', 'flex', 'important');
+        const balEl = document.getElementById('clientBalance');
+        if (balEl) balEl.textContent = `£${Number(currentUser.balance || 0).toFixed(2)}`;
+        const acctName = document.getElementById('accountUsername');
+        if (acctName) acctName.textContent = currentUser.email ? currentUser.email.split('@')[0] : (currentUser.name || 'user');
+        return currentUser;
+      }
     }
-  }
-}, 2500);
+  } catch (_) {}
+  currentUser = null;
+  return null;
+}
 
 async function syncCartWithLiveProducts() {
   if (!cart || cart.length === 0) return;
@@ -87,7 +100,6 @@ async function syncCartWithLiveProducts() {
 
     let modified = false;
     cart.forEach(item => {
-      // Find matching product by ID
       const product = products.find(p => p.id === item.productId || p.id === String(item.id).split(":")[0]);
       if (product) {
         if (product.title && item.name !== product.title) {
@@ -99,7 +111,6 @@ async function syncCartWithLiveProducts() {
           modified = true;
         }
 
-        // Find matching variant
         if (Array.isArray(product.variants) && product.variants.length > 0) {
           let variant = product.variants.find(v => v.id === item.variantId || v.id === String(item.id).split(":")[1]);
           if (!variant && item.variantName) {
@@ -119,14 +130,6 @@ async function syncCartWithLiveProducts() {
             }
           }
         }
-      } else {
-        if (item.variantName) {
-          const formatted = formatVariantName(item.variantName);
-          if (item.variantName !== formatted) {
-            item.variantName = formatted;
-            modified = true;
-          }
-        }
       }
     });
 
@@ -139,88 +142,68 @@ async function syncCartWithLiveProducts() {
   }
 }
 
-async function fetchUserStatus() {
-  try {
-    const res = await fetch("/api/auth/me");
-    const data = await res.json();
-    const balanceDescLabel = document.querySelector("#balanceDescLabel");
-    if (data && data.authenticated) {
-      currentUser = data;
-      if (balanceDescLabel) {
-        balanceDescLabel.textContent = `Available balance: £${Number(data.balance || 0).toFixed(2)}`;
-      }
-    } else {
-      currentUser = null;
-    }
-  } catch (e) {
-    currentUser = null;
-  }
-  updateCheckoutButtonText();
-}
-
-const COIN_META = {
-  btc: { name: "Bitcoin", ticker: "BTC", icon: "/icons/btc.svg", desc: "BTC · ~30 min" },
-  ltc: { name: "Litecoin", ticker: "LTC", icon: "/icons/ltc.svg", desc: "LTC · ~5 min · Low Fee" },
-  sol: { name: "Solana", ticker: "SOL", icon: "/icons/sol.svg", desc: "SOL · Instant" },
-  usdt: { name: "Tether USD", ticker: "USDT", icon: "/icons/usdt.svg", desc: "USDT · TRC20 / ERC20 / SOL" },
-  usdc: { name: "USD Coin", ticker: "USDC", icon: "/icons/usdc.svg", desc: "USDC · ERC20 / SOL" },
-  eth: { name: "Ethereum", ticker: "ETH", icon: "/icons/eth.svg", desc: "ETH · ~3 min" },
-  trx: { name: "Tron", ticker: "TRX", icon: "/icons/trx.svg", desc: "TRX · Instant" }
-};
-
 function renderCart() {
   const itemsList = document.querySelector("#cartItemsList");
-  const itemCountLabel = document.querySelector("#cartItemCountLabel");
   const summarySubtotal = document.querySelector("#summarySubtotal");
   const summaryDiscount = document.querySelector("#summaryDiscount");
   const summaryTotal = document.querySelector("#summaryTotal");
+  const purchaseBtn = document.querySelector("#purchaseBtn");
+  const cur = getCurrencySign();
 
   if (!itemsList) return;
 
-  const totalItems = cart.reduce((s, i) => s + (i.quantity || 1), 0);
-  if (itemCountLabel) {
-    itemCountLabel.textContent = `${totalItems} item${totalItems === 1 ? "" : "s"}`;
-  }
-
-  if (cart.length === 0) {
+  if (!cart || cart.length === 0) {
     itemsList.innerHTML = `
-      <div style="text-align:center; padding: 36px 16px; color: var(--muted); font-weight:600; display:flex; flex-direction:column; align-items:center; gap:12px;">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
-        <div style="color:rgba(255,255,255,0.7); font-size:14px;">Your shopping cart is currently empty.</div>
-        <a href="/" style="background:#ea580c; color:#fff; text-decoration:none; padding:8px 18px; border-radius:6px; font-size:12.5px; font-weight:700; margin-top:4px;">Browse Products &rarr;</a>
+      <div class="cart-empty-state">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+        <div style="font-size: 15px; font-weight: 600; color: #ffffff;">Your shopping cart is currently empty.</div>
+        <a href="/" class="cart-empty-btn">Browse Products &rarr;</a>
       </div>
     `;
-    if (summarySubtotal) summarySubtotal.textContent = "£0.00";
-    if (summaryDiscount) summaryDiscount.textContent = "£0.00";
-    if (summaryTotal) summaryTotal.textContent = "£0.00";
+    if (summarySubtotal) summarySubtotal.textContent = `${cur}0.00`;
+    if (summaryDiscount) summaryDiscount.textContent = `-${cur}0.00`;
+    if (summaryTotal) summaryTotal.textContent = `${cur}0.00`;
+    if (purchaseBtn) purchaseBtn.disabled = true;
     return;
   }
+
+  if (purchaseBtn) purchaseBtn.disabled = false;
 
   itemsList.innerHTML = cart.map((item, idx) => {
     const itemTotal = (item.price || 0) * (item.quantity || 1);
     const formattedVarName = formatVariantName(item.variantName || "Standard");
+    const thumbUrl = item.image || "/uploads/discord_thumbnail.png";
     return `
-      <div class="cart-item-card">
-        ${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="cart-item-thumb">` : `<div class="cart-item-thumb">${escapeHtml(String(item.name).slice(0, 2).toUpperCase())}</div>`}
-        <div class="cart-item-details">
-          <span class="cart-item-name">${escapeHtml(item.name)}</span>
-          <div class="cart-item-variant">${escapeHtml(formattedVarName)}</div>
-          <div class="cart-item-meta-row">
-            <span class="cart-item-qty-badge">QTY: ${item.quantity || 1}</span>
-            <span class="cart-item-unit-price">£${Number(item.price).toFixed(2)} each</span>
+      <div class="cart-product-card" data-index="${idx}">
+        <div class="cart-card-top">
+          <div class="cart-card-thumb-wrap">
+            <img src="${escapeHtml(thumbUrl)}" alt="${escapeHtml(item.name)}" class="cart-card-thumb" onerror="this.src='/uploads/discord_thumbnail.png'">
           </div>
-        </div>
-        <div class="cart-item-right">
-          <button type="button" class="cart-remove-btn" data-index="${idx}" aria-label="Remove item" title="Remove item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          <div class="cart-card-info">
+            <h4 class="cart-card-title">${escapeHtml(item.name)}</h4>
+            <div class="cart-card-variant">${escapeHtml(formattedVarName)}</div>
+          </div>
+          <button type="button" class="cart-trash-btn" data-index="${idx}" aria-label="Remove item" title="Remove item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
           </button>
-          <span class="cart-item-total">£${itemTotal.toFixed(2)}</span>
+        </div>
+        <div class="cart-card-bottom">
+          <span class="cart-meta-label">Price :</span> <span class="cart-meta-value">${cur}${Number(item.price || 0).toFixed(2)}</span>
+          <span class="cart-meta-label" style="margin-left: 20px;">QTY :</span> <span class="cart-meta-value">${item.quantity || 1}</span>
+          <span class="cart-meta-divider">|</span>
+          <span class="cart-meta-label">Total :</span> <span class="cart-meta-value">${cur}${itemTotal.toFixed(2)}</span>
         </div>
       </div>
     `;
   }).join("");
 
-  itemsList.querySelectorAll(".cart-remove-btn").forEach(btn => {
+  // Remove item listener
+  itemsList.querySelectorAll(".cart-trash-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const idx = parseInt(btn.dataset.index, 10);
       cart.splice(idx, 1);
@@ -242,306 +225,127 @@ function renderCart() {
 
   const finalTotal = Math.max(0, subtotal - discount);
 
-  if (summarySubtotal) summarySubtotal.textContent = `£${subtotal.toFixed(2)}`;
-  if (summaryDiscount) summaryDiscount.textContent = discount > 0 ? `-£${discount.toFixed(2)}` : "£0.00";
-  if (summaryTotal) summaryTotal.textContent = `£${finalTotal.toFixed(2)}`;
+  if (summarySubtotal) summarySubtotal.textContent = `${cur}${subtotal.toFixed(2)}`;
+  if (summaryDiscount) summaryDiscount.textContent = discount > 0 ? `-${cur}${discount.toFixed(2)}` : `-${cur}0.00`;
+  if (summaryTotal) summaryTotal.textContent = `${cur}${finalTotal.toFixed(2)}`;
 }
 
-function updateSelectedCoinDisplay() {
-  const iconEl = document.querySelector("#selectedCoinIcon");
-  const titleEl = document.querySelector("#selectedCoinTitle");
-  const subEl = document.querySelector("#selectedCoinSub");
-  const btnText = document.querySelector("#changeCoinBtnText");
+// Payment method selection listeners
+function setupPaymentSelection() {
+  const choiceTgStars = document.getElementById("choiceTgStars");
+  const choiceBalance = document.getElementById("choiceBalance");
 
-  if (!selectedCoin) {
-    if (iconEl) iconEl.src = "/icons/crypto.svg";
-    if (titleEl) titleEl.textContent = "Cryptocurrency";
-    if (subEl) subEl.textContent = "Choose coin & network";
-    if (btnText) btnText.textContent = "Select Coin";
-    return;
+  if (choiceTgStars) {
+    choiceTgStars.addEventListener("click", () => {
+      selectedPaymentMethod = "TG_STARS";
+      choiceTgStars.classList.add("selected");
+      if (choiceBalance) choiceBalance.classList.remove("selected");
+    });
   }
 
-  const meta = COIN_META[selectedCoin] || COIN_META.btc;
-  if (iconEl) iconEl.src = meta.icon;
-  if (titleEl) titleEl.textContent = `Pay with ${meta.name}`;
-  if (btnText) btnText.textContent = "Change";
-  if (subEl) {
-    let networkText = "";
-    if ((selectedCoin === "usdt" || selectedCoin === "usdc") && selectedNetwork) {
-      networkText = ` · ${selectedNetwork.toUpperCase()}`;
-    }
-    subEl.textContent = `${meta.ticker}${networkText}`;
+  if (choiceBalance) {
+    choiceBalance.addEventListener("click", () => {
+      selectedPaymentMethod = "BALANCE";
+      choiceBalance.classList.add("selected");
+      if (choiceTgStars) choiceTgStars.classList.remove("selected");
+    });
   }
 }
 
-function updateCheckoutButtonText() {
-  const btn = document.querySelector("#checkoutSubmitBtn");
-  if (!btn) return;
-  if (!currentUser) {
-    btn.textContent = "Log in to Checkout →";
-    return;
-  }
-  if (selectedPaymentMethod === "balance") {
-    btn.textContent = "Buy with Store Balance";
-  } else if (selectedPaymentMethod === "crypto") {
-    if (!selectedCoin) {
-      btn.textContent = "Select Coin & Pay →";
-    } else {
-      const meta = COIN_META[selectedCoin] || COIN_META.btc;
-      const netUpper = selectedNetwork ? ` (${selectedNetwork.toUpperCase()})` : "";
-      btn.textContent = `Pay with ${meta.name}${netUpper}`;
-    }
-  } else {
-    btn.textContent = "Proceed to Payment";
-  }
-}
+// Coupon validation
+function setupCoupon() {
+  const applyCouponBtn = document.getElementById("applyCouponBtn");
+  const couponCodeInput = document.getElementById("couponCodeInput");
+  const couponMsg = document.getElementById("couponStatusMessage");
 
-function setPaymentMethod(method) {
-  selectedPaymentMethod = method;
-  const balanceChoice = document.querySelector("#choiceMethodBalance");
-  const cryptoChoice = document.querySelector("#choiceMethodCrypto");
+  if (applyCouponBtn && couponCodeInput) {
+    applyCouponBtn.addEventListener("click", async () => {
+      const code = couponCodeInput.value.trim().toUpperCase();
+      if (!code) return;
 
-  if (balanceChoice && cryptoChoice) {
-    if (method === "balance") {
-      balanceChoice.classList.add("active", "selected");
-      cryptoChoice.classList.remove("active", "selected");
-      closeCoinsDrawer();
-    } else {
-      cryptoChoice.classList.add("active", "selected");
-      balanceChoice.classList.remove("active", "selected");
-    }
-  }
-  updateCheckoutButtonText();
-}
+      const subtotal = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
+      applyCouponBtn.disabled = true;
+      applyCouponBtn.textContent = "...";
 
-// Drawer Controls (Inline Expandable Drawer)
-function openCoinsDrawer() {
-  const drawer = document.querySelector("#cryptoDrawer");
-  const changeBtn = document.querySelector("#openCoinsDrawerBtn");
-  if (drawer) {
-    drawer.classList.add("open");
-    drawer.setAttribute("aria-hidden", "false");
-  }
-  if (changeBtn) {
-    changeBtn.classList.add("open");
-  }
-  const searchInput = document.querySelector("#cryptoSearch");
-  if (searchInput) {
-    searchInput.value = "";
-    document.querySelectorAll(".drawer-coin-card").forEach(c => c.style.display = "flex");
-  }
-}
+      try {
+        const res = await fetch("/api/coupons/validate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code, total: subtotal })
+        });
+        const data = await res.json();
+        applyCouponBtn.disabled = false;
+        applyCouponBtn.textContent = "APPLY";
 
-function closeCoinsDrawer() {
-  const drawer = document.querySelector("#cryptoDrawer");
-  const changeBtn = document.querySelector("#openCoinsDrawerBtn");
-  if (drawer) {
-    drawer.classList.remove("open");
-    drawer.setAttribute("aria-hidden", "true");
-  }
-  if (changeBtn) {
-    changeBtn.classList.remove("open");
-  }
-}
-
-function toggleCoinsDrawer() {
-  const drawer = document.querySelector("#cryptoDrawer");
-  if (drawer && drawer.classList.contains("open")) {
-    closeCoinsDrawer();
-  } else {
-    openCoinsDrawer();
-  }
-}
-
-// Method selection choices
-const choiceBalance = document.querySelector("#choiceMethodBalance");
-if (choiceBalance) {
-  choiceBalance.addEventListener("click", () => setPaymentMethod("balance"));
-}
-
-const openCoinsBtn = document.querySelector("#openCoinsDrawerBtn");
-if (openCoinsBtn) {
-  openCoinsBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    setPaymentMethod("crypto");
-    toggleCoinsDrawer();
-  });
-}
-
-const choiceCrypto = document.querySelector("#choiceMethodCrypto");
-if (choiceCrypto) {
-  choiceCrypto.addEventListener("click", (e) => {
-    if (e.target.closest("#openCoinsDrawerBtn")) return;
-    setPaymentMethod("crypto");
-    if (!selectedCoin) {
-      openCoinsDrawer();
-    } else {
-      toggleCoinsDrawer();
-    }
-  });
-}
-
-const closeDrawerBtn = document.querySelector("#closeCryptoDrawerBtn");
-if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeCoinsDrawer);
-
-const drawerBackdrop = document.querySelector("#cryptoDrawerBackdrop");
-if (drawerBackdrop) drawerBackdrop.addEventListener("click", closeCoinsDrawer);
-
-const confirmCoinBtn = document.querySelector("#confirmCoinSelectionBtn");
-if (confirmCoinBtn) confirmCoinBtn.addEventListener("click", closeCoinsDrawer);
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeCoinsDrawer();
-});
-
-// Coin selection in drawer
-document.querySelectorAll(".drawer-coin-card").forEach(card => {
-  card.addEventListener("click", (e) => {
-    const chip = e.target.closest(".network-chip");
-    if (chip) {
-      const chipParent = chip.parentElement;
-      chipParent.querySelectorAll(".network-chip").forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
-      selectedNetwork = chip.dataset.network;
-    }
-
-    document.querySelectorAll(".drawer-coin-card").forEach(c => c.classList.remove("active"));
-    card.classList.add("active");
-    selectedPaymentMethod = "crypto";
-    selectedCoin = card.dataset.coin || "btc";
-
-    if (selectedCoin === "usdt" && !selectedNetwork) selectedNetwork = "trc20";
-    if (selectedCoin === "usdc" && !selectedNetwork) selectedNetwork = "erc20";
-    if (selectedCoin !== "usdt" && selectedCoin !== "usdc") selectedNetwork = null;
-
-    setPaymentMethod("crypto");
-    updateSelectedCoinDisplay();
-    updateCheckoutButtonText();
-
-    setTimeout(closeCoinsDrawer, 220);
-  });
-});
-
-// Live Coin Search Filter in Drawer
-const cryptoSearchInput = document.querySelector("#cryptoSearch");
-if (cryptoSearchInput) {
-  cryptoSearchInput.addEventListener("input", (e) => {
-    const query = e.target.value.toLowerCase().trim();
-    document.querySelectorAll(".drawer-coin-card").forEach(card => {
-      const searchTerms = (card.dataset.coinSearch || "").toLowerCase();
-      if (!query || searchTerms.includes(query)) {
-        card.style.display = "flex";
-      } else {
-        card.style.display = "none";
+        if (res.ok && data.valid) {
+          appliedCoupon = {
+            code: data.code,
+            discountType: data.discountType,
+            discountValue: data.discountValue,
+            discountAmount: data.discountAmount
+          };
+          const discLabel = data.discountType === "PERCENT" ? `${data.discountValue}% OFF` : `£${Number(data.discountValue).toFixed(2)} OFF`;
+          if (couponMsg) {
+            couponMsg.textContent = `✓ Coupon "${data.code}" applied (${discLabel})`;
+            couponMsg.style.color = "#4ade80";
+            couponMsg.style.display = "block";
+          }
+          renderCart();
+        } else {
+          appliedCoupon = null;
+          if (couponMsg) {
+            couponMsg.textContent = data.error || "Invalid or expired coupon code.";
+            couponMsg.style.color = "#ef4444";
+            couponMsg.style.display = "block";
+          }
+          renderCart();
+        }
+      } catch (e) {
+        applyCouponBtn.disabled = false;
+        applyCouponBtn.textContent = "APPLY";
+        if (couponMsg) {
+          couponMsg.textContent = "Error verifying coupon code.";
+          couponMsg.style.color = "#ef4444";
+          couponMsg.style.display = "block";
+        }
       }
     });
-  });
+  }
 }
 
-// Apply Coupon
-const applyCouponBtn = document.querySelector("#applyCouponBtn");
-const couponCodeInput = document.querySelector("#couponCodeInput");
-const couponStatusText = document.querySelector("#couponStatusText");
+// Purchase / Checkout action
+function setupPurchase() {
+  const purchaseBtn = document.getElementById("purchaseBtn");
+  if (!purchaseBtn) return;
 
-if (applyCouponBtn && couponCodeInput) {
-  applyCouponBtn.addEventListener("click", async () => {
-    const code = couponCodeInput.value.trim().toUpperCase();
-    if (!code) return;
-
-    const subtotal = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
-
-    applyCouponBtn.disabled = true;
-    applyCouponBtn.textContent = "Verifying...";
-
-    try {
-      const res = await fetch("/api/coupons/validate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, total: subtotal })
-      });
-      const data = await res.json();
-      
-      applyCouponBtn.disabled = false;
-      applyCouponBtn.textContent = "Apply";
-
-      if (res.ok && data.valid) {
-        appliedCoupon = {
-          code: data.code,
-          discountType: data.discountType,
-          discountValue: data.discountValue,
-          discountAmount: data.discountAmount
-        };
-        
-        const discLabel = data.discountType === "PERCENT" ? `${data.discountValue}% OFF` : `£${Number(data.discountValue).toFixed(2)} OFF`;
-        if (couponStatusText) {
-          couponStatusText.textContent = `✓ Coupon "${data.code}" applied (${discLabel})`;
-          couponStatusText.style.color = "#4ade80";
-        }
-        
-        if (typeof showMysterioAlert === "function") {
-          showMysterioAlert({ message: `Coupon "${data.code}" applied (${discLabel})!`, title: "Coupon Applied", isError: false });
-        }
-        renderCart();
+  purchaseBtn.addEventListener("click", async () => {
+    if (!cart || cart.length === 0) {
+      if (typeof showMysterioAlert === "function") {
+        showMysterioAlert({ message: "Your cart is empty.", title: "Cart Empty", isError: true });
       } else {
-        appliedCoupon = null;
-        if (couponStatusText) {
-          couponStatusText.textContent = data.error || "Invalid or expired coupon code.";
-          couponStatusText.style.color = "#f87171";
-        }
-        if (typeof showMysterioAlert === "function") {
-          showMysterioAlert({ message: data.error || "Invalid or expired coupon code.", title: "Coupon Error", isError: true });
-        }
-        renderCart();
+        alert("Your cart is empty.");
       }
-    } catch (e) {
-      applyCouponBtn.disabled = false;
-      applyCouponBtn.textContent = "Apply";
-      if (couponStatusText) {
-        couponStatusText.textContent = "Error verifying coupon code.";
-        couponStatusText.style.color = "#f87171";
-      }
-    }
-  });
-}
-
-// Checkout Submit
-const checkoutSubmitBtn = document.querySelector("#checkoutSubmitBtn");
-if (checkoutSubmitBtn) {
-  checkoutSubmitBtn.addEventListener("click", async () => {
-    if (cart.length === 0) {
-      showMysterioAlert({ message: "Your cart is empty.", title: "Cart Empty", isError: true });
       return;
     }
 
     if (!currentUser) {
-      showMysterioAlert({ message: "Please log in or create an account before checking out.", title: "Login Required", isError: true });
+      if (typeof showMysterioAlert === "function") {
+        showMysterioAlert({ message: "Please log in to complete your purchase.", title: "Login Required", isError: true });
+      } else {
+        alert("Please log in to complete your purchase.");
+      }
       setTimeout(() => window.location.href = "/login.html?redirect=/cart.html", 1200);
       return;
     }
 
-    if (selectedPaymentMethod === "crypto" && !selectedCoin) {
-      openCoinsDrawer();
-      const drawer = document.querySelector("#cryptoDrawer");
-      if (drawer) drawer.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      if (typeof showMysterioAlert === "function") {
-        showMysterioAlert({ message: "Please select a cryptocurrency and network to proceed.", title: "Select Coin", isError: false });
-      }
-      return;
-    }
-
-    const emailInput = document.querySelector("#checkoutEmailInput");
-    const email = emailInput ? emailInput.value.trim() : "";
-
-    checkoutSubmitBtn.disabled = true;
-    checkoutSubmitBtn.innerHTML = `<span class="btn-loading-spinner"></span> Processing...`;
+    purchaseBtn.disabled = true;
+    const origText = purchaseBtn.textContent;
+    purchaseBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...`;
 
     try {
       const payload = {
         items: cart,
         paymentMethod: selectedPaymentMethod,
-        coin: selectedCoin,
-        network: selectedNetwork,
-        email: email,
         couponCode: appliedCoupon ? appliedCoupon.code : null
       };
 
@@ -563,55 +367,63 @@ if (checkoutSubmitBtn) {
         cart = [];
         saveCart();
 
-        if (data.nowpayments) {
-          sessionStorage.setItem("active_crypto_payment", JSON.stringify(data.nowpayments));
-          window.location.href = `/pay.html?paymentId=${data.nowpayments.payment_id}&orderId=${data.orderId || ''}`;
-        } else if (data.redirectUrl) {
+        if (data.redirectUrl) {
           window.location.href = data.redirectUrl;
-        } else if (data.orderId) {
-          window.location.href = `/orders.html?orderId=${data.orderId}`;
+        } else if (data.orderId || (data.order && data.order.id)) {
+          const ordId = data.orderId || data.order.id;
+          window.location.href = `/orders.html?orderId=${ordId}`;
         } else {
           window.location.href = "/orders.html";
         }
       } else {
         if (res.status === 401) {
-          showMysterioAlert({ title: "Login Required", message: "Please sign in to complete your purchase.", isError: true });
-          setTimeout(() => window.location.href = "/login.html", 1500);
+          if (typeof showMysterioAlert === "function") {
+            showMysterioAlert({ title: "Login Required", message: "Please sign in to complete your purchase.", isError: true });
+          } else {
+            alert("Please sign in to complete your purchase.");
+          }
+          setTimeout(() => window.location.href = "/login.html", 1200);
           return;
         }
 
-        // If it's a NOWPayments minimum amount error
-        if (data.code === "AMOUNT_MINIMAL_ERROR" || (data.error && data.error.includes("minimal"))) {
-          data.isMinimalError = true;
+        const errMsg = data.error || data.message || "Failed to process purchase.";
+        if (typeof showMysterioAlert === "function") {
+          showMysterioAlert({ title: "Checkout Error", message: errMsg, isError: true });
+        } else {
+          alert(errMsg);
         }
-
-        showMysterioAlert({
-          title: data.isMinimalError ? "Minimum Amount Required" : (data.title || "Checkout Notice"),
-          message: data.error || data.message || "Failed to process checkout.",
-          error: data.error,
-          isMinimalError: data.isMinimalError,
-          usdMin: data.usdMin,
-          cryptoMin: data.cryptoMin,
-          coinSymbol: data.coinSymbol,
-          currentAmountUsd: data.currentAmountUsd,
-          isError: true
-        });
       }
     } catch (e) {
-      showMysterioAlert({ message: e.message || "Network error during checkout. Please try again.", title: "Checkout Error", isError: true });
+      if (typeof showMysterioAlert === "function") {
+        showMysterioAlert({ message: e.message || "Network error during checkout.", title: "Checkout Error", isError: true });
+      } else {
+        alert(e.message || "Network error during checkout.");
+      }
     } finally {
-      checkoutSubmitBtn.disabled = false;
-      updateCheckoutButtonText();
+      purchaseBtn.disabled = false;
+      purchaseBtn.textContent = origText;
     }
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function setupLogout() {
+  const logoutBtn = document.getElementById("navLogoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (_) {}
+      window.location.href = '/login.html';
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
   loadCart();
-  fetchUserStatus();
+  await checkAuth();
   renderCart();
   syncCartWithLiveProducts();
-  updateSelectedCoinDisplay();
-  updateCheckoutButtonText();
+  setupPaymentSelection();
+  setupCoupon();
+  setupPurchase();
+  setupLogout();
   if (typeof window.updateCartBadge === "function") window.updateCartBadge();
 });
