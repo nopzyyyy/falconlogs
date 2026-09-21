@@ -3515,7 +3515,8 @@ body.loader-active #pageLoader ~ * {
 }
 .main-content.auth h5 {
   font-size: 1.25rem;
-  font-weight: 400;
+  font-weight: 600;
+  color: #fff;
   margin-bottom: 1.5rem !important;
 }
 .main-content.auth label {
@@ -3528,30 +3529,47 @@ body.loader-active #pageLoader ~ * {
   margin-bottom: 6px;
 }
 .main-content.auth input.form-control {
-  background-color: #2c2c2c !important;
-  border: 0 !important;
-  border-radius: 4px;
+  background-color: #212121 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 6px;
   height: 42px;
   padding: 8px 12px;
-  font-size: 16px !important;
+  font-size: 14.5px !important;
+  color: #ffffff !important;
+  outline: none !important;
+  transition: border-color 0.15s ease;
+}
+.main-content.auth input.form-control:focus {
+  border-color: #ea580c !important;
+  box-shadow: none !important;
 }
 .main-content.auth .mb-3 { margin-bottom: 1rem !important; }
 .main-content.auth .btn-success {
   width: 100%;
   text-transform: capitalize;
-  font-weight: 500;
+  font-weight: 600;
+  background-color: #ea580c !important;
+  border-color: #ea580c !important;
+  color: #ffffff !important;
+  border-radius: 6px;
+  height: 42px;
+}
+.main-content.auth .btn-success:hover {
+  background-color: #c2410c !important;
+  border-color: #c2410c !important;
+  color: #ffffff !important;
 }
 .main-content.auth p {
   font-size: 13px;
-  color: #fff;
-  margin-top: .25rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: .5rem;
 }
 .main-content.auth p a {
-  color: var(--bs-link-color);
+  color: #ea580c;
   font-weight: 600;
   text-decoration: underline;
 }
-.main-content.auth p a:hover { color: var(--bs-link-hover-color); }
+.main-content.auth p a:hover { color: #fb923c; }
 
 /* Back-compat for any leftover references */
 .auth-box { max-width: 550px; margin: 2.5rem auto 0; padding: 0 1rem; }
