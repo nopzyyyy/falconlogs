@@ -232,13 +232,13 @@ function renderCart() {
 
 // Payment method selection listeners
 function setupPaymentSelection() {
-  const choiceTgStars = document.getElementById("choiceTgStars");
+  const choiceCrypto = document.getElementById("choiceCrypto");
   const choiceBalance = document.getElementById("choiceBalance");
 
-  if (choiceTgStars) {
-    choiceTgStars.addEventListener("click", () => {
-      selectedPaymentMethod = "TG_STARS";
-      choiceTgStars.classList.add("selected");
+  if (choiceCrypto) {
+    choiceCrypto.addEventListener("click", () => {
+      selectedPaymentMethod = "CRYPTO";
+      choiceCrypto.classList.add("selected");
       if (choiceBalance) choiceBalance.classList.remove("selected");
     });
   }
@@ -247,7 +247,7 @@ function setupPaymentSelection() {
     choiceBalance.addEventListener("click", () => {
       selectedPaymentMethod = "BALANCE";
       choiceBalance.classList.add("selected");
-      if (choiceTgStars) choiceTgStars.classList.remove("selected");
+      if (choiceCrypto) choiceCrypto.classList.remove("selected");
     });
   }
 }
@@ -346,6 +346,7 @@ function setupPurchase() {
       const payload = {
         items: cart,
         paymentMethod: selectedPaymentMethod,
+        coin: "btc",
         couponCode: appliedCoupon ? appliedCoupon.code : null
       };
 
@@ -367,7 +368,15 @@ function setupPurchase() {
         cart = [];
         saveCart();
 
-        if (data.redirectUrl) {
+        if (data.nowpayments && data.nowpayments.payment_id) {
+          try {
+            sessionStorage.setItem("active_crypto_payment", JSON.stringify({
+              ...data.nowpayments,
+              order_id: data.order ? data.order.id : (data.orderId || data.nowpayments.payment_id)
+            }));
+          } catch (_) {}
+          window.location.href = `/pay.html?paymentId=${data.nowpayments.payment_id}`;
+        } else if (data.redirectUrl) {
           window.location.href = data.redirectUrl;
         } else if (data.orderId || (data.order && data.order.id)) {
           const ordId = data.orderId || data.order.id;
