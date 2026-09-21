@@ -61,7 +61,7 @@ function addToCartStorage(item) {
 function updateCartBadge() {
   const cart = getCart();
   const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  document.querySelectorAll("[data-cart-count]").forEach(badge => {
+  document.querySelectorAll("[data-cart-count], #cartItemsCount, #cartItemsCountAuth").forEach(badge => {
     badge.textContent = totalCount;
     badge.style.display = totalCount > 0 ? "inline-flex" : "none";
     badge.classList.remove("pop");

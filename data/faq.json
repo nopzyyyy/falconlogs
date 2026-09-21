@@ -1,0 +1,30 @@
+[
+  {
+    "id": "faq_1",
+    "question": "How do I make an account?",
+    "answer": "Click <b>Create Account</b> in the top-right of any page, fill in your details, and you're in. Account creation is free and instant.",
+    "order": 1,
+    "isActive": true
+  },
+  {
+    "id": "faq_2",
+    "question": "How do I charge my account?",
+    "answer": "Go to <a href=\"/deposit.html\">Balance</a>, enter the amount you want to charge, select Cryptocurrency, press <code>Charge</code> and complete payment.",
+    "order": 2,
+    "isActive": true
+  },
+  {
+    "id": "faq_3",
+    "question": "How do I place an order?",
+    "answer": "Browse <a href=\"/\">Products</a>, add items to your cart, then go to checkout. Choose to pay with cryptocurrency or your stored balance.",
+    "order": 3,
+    "isActive": true
+  },
+  {
+    "id": "faq_4",
+    "question": "Where do I find my keys after purchase?",
+    "answer": "Go to the <a href=\"/orders.html\">Orders</a> page, click any fulfilled order, and you'll see the delivered content. You can copy it with one click.",
+    "order": 4,
+    "isActive": true
+  }
+]

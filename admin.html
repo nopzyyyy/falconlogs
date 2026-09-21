@@ -95,6 +95,10 @@
           <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
           <span>Announcements</span>
         </button>
+        <button class="admin-tab" type="button" data-admin-tab="vouches">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Vouches</span>
+        </button>
         
         <div class="menu-group-label" style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em; padding: 12px 18px 4px;">System</div>
         <button class="admin-tab" type="button" data-admin-tab="audit_log">
@@ -619,6 +623,57 @@
             </thead>
             <tbody id="adminAnnRows">
               <tr><td colspan="6" class="empty">Loading announcements...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VOUCHES TAB -->
+      <section class="admin-section" id="admin-vouches">
+        <div class="admin-topline">
+          <div>
+            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em;">FEEDBACK & REVIEWS</span>
+            <h1 style="margin: 2px 0 0; font-size: 24px; font-weight: 800; color: #fff;">Customer Vouches</h1>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button id="openNewVouchModalBtn" class="pill-button" type="button">+ Add Vouch</button>
+            <button id="refreshVouchesBtn" class="ghost-cta" type="button" style="min-height:38px;">Refresh</button>
+          </div>
+        </div>
+
+        <h3 style="font-size:15px; font-weight:700; margin:24px 0 12px; color:#ea580c;">Pending Submissions (Awaiting Approval)</h3>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width:70px;">Preview</th>
+                <th>Vouch ID</th>
+                <th>Submitter</th>
+                <th>Date</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminPendingVouchesRows">
+              <tr><td colspan="5" class="empty">Loading pending vouches...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-size:15px; font-weight:700; margin:32px 0 12px; color:#fff;">Published Gallery (Live on Store)</h3>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width:70px;">Preview</th>
+                <th>Vouch ID</th>
+                <th>Title / Notes</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminApprovedVouchesRows">
+              <tr><td colspan="6" class="empty">Loading published vouches...</td></tr>
             </tbody>
           </table>
         </div>
@@ -1198,6 +1253,34 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ADD VOUCH MODAL -->
+    <div class="modal-overlay" id="adminVouchModalOverlay">
+      <div class="modal-content" style="max-width: 480px; width: 100%;">
+        <div class="modal-header">
+          <h2>Add Customer Vouch</h2>
+          <button class="modal-close-btn" id="closeAdminVouchModalBtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <form id="adminVouchForm" class="modal-body">
+          <div class="modal-form-group">
+            <label>Title / Customer Note</label>
+            <input type="text" id="adminVouchTitleInput" class="modal-form-control" placeholder="e.g. Fast delivery proof" value="Verified Customer Vouch">
+          </div>
+          <div class="modal-form-group">
+            <label>Image URL</label>
+            <input type="text" id="adminVouchUrlInput" class="modal-form-control" placeholder="https://... or /uploads/...">
+          </div>
+          <div class="modal-form-group">
+            <label>Or Upload Screenshot File</label>
+            <input type="file" id="adminVouchFileInput" accept="image/*" class="modal-form-control">
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+            <button type="button" id="cancelAdminVouchBtn" class="ghost-cta" style="min-height:38px;">Cancel</button>
+            <button type="submit" class="pill-button" style="min-height:38px;">Publish Vouch</button>
+          </div>
+        </form>
       </div>
     </div>
 

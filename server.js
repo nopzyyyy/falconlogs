@@ -142,6 +142,7 @@ const couponsFile = path.join(dataDir, "coupons.json");
 const announcementsFile = path.join(dataDir, "announcements.json");
 const faqFile = path.join(dataDir, "faq.json");
 const pagesFile = path.join(dataDir, "pages.json");
+const vouchesFile = path.join(dataDir, "vouches.json");
 const auditLogsFile = path.join(dataDir, "audit_logs.json");
 const lockdownFile = path.join(dataDir, "lockdown.json");
 const LOCKDOWN_PASSWORD = process.env.LOCKDOWN_PASSWORD || "";
@@ -598,6 +599,15 @@ function ensureData() {
   }
   if (!fs.existsSync(auditLogsFile)) {
     fs.writeFileSync(auditLogsFile, "[]");
+  }
+  if (!fs.existsSync(vouchesFile)) {
+    fs.writeFileSync(vouchesFile, "[]");
+  }
+  if (!fs.existsSync(faqFile)) {
+    fs.writeFileSync(faqFile, "[]");
+  }
+  if (!fs.existsSync(pagesFile)) {
+    fs.writeFileSync(pagesFile, "{}");
   }
 }
 
@@ -2141,6 +2151,252 @@ const server = http.createServer(async (req, res) => {
       }
       const pages = readJson(pagesFile, {});
       return sendJson(res, 200, pages[slug] || { title: "", content: "" });
+    }
+
+    // -------------------------------------------------------------------------
+    // VOUCHES & REVIEWS API
+    // -------------------------------------------------------------------------
+    // 1. Public Gallery
+    if (url.pathname === "/api/vouches/gallery" && req.method === "GET") {
+      const vouches = readJson(vouchesFile, []);
+      const approved = vouches
+        .filter(v => v.status === "approved" || v.approved === true)
+        .map(v => ({
+          id: v.id,
+          image_url: v.image_url || v.url,
+          title: v.title || "",
+          created_at: v.created_at || v.createdAt
+        }));
+      return sendJson(res, 200, { photos: approved });
+    }
+
+    // 2. User Drafts
+    if (url.pathname === "/api/vouches/drafts" && req.method === "GET") {
+      const session = getSession(req);
+      if (!session) return sendJson(res, 200, { photos: [] });
+      const vouches = readJson(vouchesFile, []);
+      const drafts = vouches.filter(v => (v.userId === session.user.id || v.user_id === session.user.id) && v.status === "draft");
+      return sendJson(res, 200, { photos: drafts });
+    }
+
+    // 3. User Upload Draft Vouch Photos (supports JSON base64 or multipart)
+    if (url.pathname === "/api/vouches/upload" && req.method === "POST") {
+      const session = getSession(req);
+      const userId = session ? session.user.id : "guest";
+      const contentType = req.headers["content-type"] || "";
+
+      if (contentType.includes("application/json")) {
+        const body = JSON.parse(await parseBody(req) || "{}");
+        const files = Array.isArray(body.files) ? body.files : (body.image ? [{ data: body.image, name: body.name }] : []);
+        const saved = [];
+        const vouches = readJson(vouchesFile, []);
+        for (const f of files) {
+          const data = f.data || f;
+          if (typeof data === "string" && data.includes(";base64,")) {
+            const [meta, raw] = data.split(";base64,");
+            const ext = meta.includes("jpeg") || meta.includes("jpg") ? "jpg" : meta.includes("webp") ? "webp" : "png";
+            const filename = `vouch_${Date.now()}_${crypto.randomBytes(4).toString("hex")}.${ext}`;
+            fs.writeFileSync(path.join(uploadsDir, filename), Buffer.from(raw, "base64"));
+            const item = {
+              id: "vouch_" + crypto.randomBytes(6).toString("hex"),
+              userId,
+              image_url: `/uploads/${filename}`,
+              url: `/uploads/${filename}`,
+              status: "draft",
+              created_at: new Date().toISOString()
+            };
+            vouches.push(item);
+            saved.push(item);
+          }
+        }
+        writeJson(vouchesFile, vouches);
+        return sendJson(res, 200, { success: true, photos: saved });
+      }
+
+      const chunks = [];
+      req.on("data", chunk => chunks.push(chunk));
+      req.on("end", () => {
+        try {
+          const buffer = Buffer.concat(chunks);
+          if (!buffer.length) return sendJson(res, 400, { error: "Empty upload payload." });
+          const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+          const saved = [];
+          const vouches = readJson(vouchesFile, []);
+          if (boundaryMatch) {
+            const boundary = boundaryMatch[1] || boundaryMatch[2];
+            const boundaryBuf = Buffer.from("--" + boundary);
+            let start = 0;
+            while ((start = buffer.indexOf(boundaryBuf, start)) !== -1) {
+              start += boundaryBuf.length;
+              if (buffer.slice(start, start + 2).toString() === "--") break;
+              if (buffer.slice(start, start + 2).toString() === "\r\n") start += 2;
+              const headerEnd = buffer.indexOf("\r\n\r\n", start);
+              if (headerEnd === -1) break;
+              const headersText = buffer.slice(start, headerEnd).toString();
+              const nextBoundary = buffer.indexOf(boundaryBuf, headerEnd + 4);
+              if (nextBoundary === -1) break;
+              const fileEnd = nextBoundary - 2;
+              const fileData = buffer.slice(headerEnd + 4, fileEnd);
+              if (fileData.length > 0 && headersText.includes("filename=")) {
+                let ext = "png";
+                if (headersText.includes("image/jpeg") || headersText.includes(".jpg") || headersText.includes(".jpeg")) ext = "jpg";
+                else if (headersText.includes("image/webp") || headersText.includes(".webp")) ext = "webp";
+                else if (headersText.includes("image/gif") || headersText.includes(".gif")) ext = "gif";
+                const filename = `vouch_${Date.now()}_${crypto.randomBytes(4).toString("hex")}.${ext}`;
+                fs.writeFileSync(path.join(uploadsDir, filename), fileData);
+                const item = {
+                  id: "vouch_" + crypto.randomBytes(6).toString("hex"),
+                  userId,
+                  image_url: `/uploads/${filename}`,
+                  url: `/uploads/${filename}`,
+                  status: "draft",
+                  created_at: new Date().toISOString()
+                };
+                vouches.push(item);
+                saved.push(item);
+              }
+              start = nextBoundary;
+            }
+          } else {
+            let ext = "png";
+            if (contentType.includes("jpeg") || contentType.includes("jpg")) ext = "jpg";
+            else if (contentType.includes("webp")) ext = "webp";
+            const filename = `vouch_${Date.now()}_${crypto.randomBytes(4).toString("hex")}.${ext}`;
+            fs.writeFileSync(path.join(uploadsDir, filename), buffer);
+            const item = {
+              id: "vouch_" + crypto.randomBytes(6).toString("hex"),
+              userId,
+              image_url: `/uploads/${filename}`,
+              url: `/uploads/${filename}`,
+              status: "draft",
+              created_at: new Date().toISOString()
+            };
+            vouches.push(item);
+            saved.push(item);
+          }
+          writeJson(vouchesFile, vouches);
+          return sendJson(res, 200, { success: true, photos: saved });
+        } catch (err) {
+          return sendJson(res, 500, { error: err.message });
+        }
+      });
+      return;
+    }
+
+    // 4. Delete Draft Vouch
+    if (url.pathname.startsWith("/api/vouches/draft/") && req.method === "DELETE") {
+      const session = getSession(req);
+      if (!session) return sendJson(res, 401, { error: "Login required." });
+      const id = url.pathname.replace("/api/vouches/draft/", "").trim();
+      const vouches = readJson(vouchesFile, []);
+      const idx = vouches.findIndex(v => String(v.id) === String(id) && (v.userId === session.user.id || v.user_id === session.user.id) && v.status === "draft");
+      if (idx !== -1) {
+        vouches.splice(idx, 1);
+        writeJson(vouchesFile, vouches);
+      }
+      return sendJson(res, 200, { success: true });
+    }
+
+    // 5. Submit Draft Vouches for Approval
+    if (url.pathname === "/api/vouches/submit" && req.method === "POST") {
+      const session = getSession(req);
+      const body = JSON.parse(await parseBody(req) || "{}");
+      const photoIds = Array.isArray(body.photoIds) ? body.photoIds.map(String) : [];
+      const vouches = readJson(vouchesFile, []);
+      let updated = 0;
+      for (const v of vouches) {
+        if (photoIds.includes(String(v.id))) {
+          v.status = "pending";
+          if (session) v.user_email = session.user.email;
+          updated++;
+        }
+      }
+      writeJson(vouchesFile, vouches);
+      return sendJson(res, 200, { success: true, updated });
+    }
+
+    // 6. Admin Vouches Management
+    if (url.pathname === "/api/admin/vouches" && req.method === "GET") {
+      if (!requireAdminOrGod(req, res)) return;
+      const vouches = readJson(vouchesFile, []);
+      return sendJson(res, 200, { vouches });
+    }
+
+    if (url.pathname === "/api/admin/vouches/approve" && req.method === "POST") {
+      if (!requireAdmin(req, res)) return;
+      const body = JSON.parse(await parseBody(req) || "{}");
+      const { id } = body;
+      const vouches = readJson(vouchesFile, []);
+      const item = vouches.find(v => String(v.id) === String(id));
+      if (!item) return sendJson(res, 404, { error: "Vouch not found." });
+      item.status = "approved";
+      writeJson(vouchesFile, vouches);
+      logAuditAction(req, "VOUCH_APPROVE", `Approved vouch ${id}`);
+      return sendJson(res, 200, { success: true, vouch: item });
+    }
+
+    if (url.pathname === "/api/admin/vouches/reject" && req.method === "POST") {
+      if (!requireAdmin(req, res)) return;
+      const body = JSON.parse(await parseBody(req) || "{}");
+      const { id } = body;
+      const vouches = readJson(vouchesFile, []);
+      const idx = vouches.findIndex(v => String(v.id) === String(id));
+      if (idx !== -1) {
+        vouches.splice(idx, 1);
+        writeJson(vouchesFile, vouches);
+        logAuditAction(req, "VOUCH_REJECT", `Rejected/deleted vouch ${id}`);
+      }
+      return sendJson(res, 200, { success: true });
+    }
+
+    if (url.pathname === "/api/admin/vouches/create" && req.method === "POST") {
+      if (!requireAdmin(req, res)) return;
+      const body = JSON.parse(await parseBody(req) || "{}");
+      const { image_url, title } = body;
+      if (!image_url) return sendJson(res, 400, { error: "Image URL is required." });
+      const vouches = readJson(vouchesFile, []);
+      const item = {
+        id: "vouch_" + crypto.randomBytes(6).toString("hex"),
+        image_url: String(image_url).trim(),
+        url: String(image_url).trim(),
+        title: String(title || "Falcon Logs Customer Vouch").trim(),
+        status: "approved",
+        created_at: new Date().toISOString()
+      };
+      vouches.unshift(item);
+      writeJson(vouchesFile, vouches);
+      logAuditAction(req, "VOUCH_CREATE", `Created approved vouch ${item.id}`);
+      return sendJson(res, 200, { success: true, vouch: item });
+    }
+
+    if (url.pathname.startsWith("/api/admin/vouches/") && req.method === "DELETE") {
+      if (!requireAdmin(req, res)) return;
+      const id = url.pathname.replace("/api/admin/vouches/", "").trim();
+      const vouches = readJson(vouchesFile, []);
+      const idx = vouches.findIndex(v => String(v.id) === String(id));
+      if (idx !== -1) {
+        vouches.splice(idx, 1);
+        writeJson(vouchesFile, vouches);
+        logAuditAction(req, "VOUCH_DELETE", `Deleted vouch ${id}`);
+      }
+      return sendJson(res, 200, { success: true });
+    }
+
+    // 7. Notifications API
+    if (url.pathname === "/api/notifications/unread-count" && req.method === "GET") {
+      return sendJson(res, 200, { count: 0 });
+    }
+
+    if (url.pathname === "/api/notifications" && req.method === "GET") {
+      return sendJson(res, 200, { notifications: [], total: 0, unread: 0, totalPages: 1 });
+    }
+
+    if (url.pathname.startsWith("/api/notifications/") && url.pathname.endsWith("/read") && req.method === "POST") {
+      return sendJson(res, 200, { success: true });
+    }
+
+    if (url.pathname === "/api/notifications/read-all" && req.method === "POST") {
+      return sendJson(res, 200, { success: true });
     }
 
     // CATEGORIES
@@ -4311,11 +4567,13 @@ ${escapeTelegramHtml(r.reason)}
     }
 
     // Strict allowlist — anything not listed here is a hard 404
-    // Public: accessible without a session (only login page & essential assets to render it)
+    // Public: accessible without a session (only login page, legal/info pages & essential assets)
     const PUBLIC_FILES  = new Set([
       "/login.html", "/login.js", "/styles.css", "/custom.css",
       "/bootstrap.min.css", "/bootstrap.bundle.min.js",
-      "/cart-utils.js", "/app.js",
+      "/cart-utils.js", "/app.js", "/datetime.js",
+      "/tos.html", "/faq.html", "/vouches.html", "/vouches.js",
+      "/very.html", "/notifications.html", "/notifications.js",
       "/banner.png", "/hero-banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png",
       "/favicon.svg", "/favicon.ico", "/favicon.png"
     ]);
@@ -4326,7 +4584,9 @@ ${escapeTelegramHtml(r.reason)}
       "/cart.html", "/cart.js", "/pay.html",
       "/orders.html", "/balance.html",
       "/dashboard.html", "/dashboard.js", "/deposit.html",
-      "/support.html", "/support.js"
+      "/support.html", "/support.js",
+      "/vouches.html", "/vouches.js", "/tos.html", "/faq.html",
+      "/very.html", "/notifications.html", "/notifications.js"
     ]);
     // Admin: requires ADMIN role
     const ADMIN_FILES   = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Terms of Service - Falcon Logs</title>
+    <link rel="icon" type="image/png" href="/logo.png?v=1003">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1003">
+    <link rel="shortcut icon" href="/favicon.ico?v=1003">
+    <link rel="apple-touch-icon" href="/logo.png?v=1003">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/custom.css?v=mu3gcm9e">
+    <link rel="stylesheet" href="/styles.css?v=1007">
+  </head>
+  <body class="bg-dark2" style="background-color: #141414; color: #fff;">
+    <div class="container-md">
+      <!-- HEADER / NAVBAR -->
+      <nav class="navbar navbar-expand-lg navbar-dark rounded-2 p-2">
+        <a class="navbar-brand" href="/">
+          <img src="/logo.png?v=1003" alt="Falcon Logs" style="height: 44px; margin-top: 2px;">
+        </a>
+        <button class="navbar-toggler" data-bs-target="#headerCollapse" data-bs-toggle="collapse" type="button" aria-label="Menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="headerCollapse">
+          <ul class="navbar-nav align-items-center">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/orders.html">Orders</a></li>
+            <li class="nav-item"><a class="nav-link" href="/support.html">Support</a></li>
+            <li class="nav-item"><a class="nav-link" href="/vouches.html">Vouches</a></li>
+            <li class="nav-item"><a class="nav-link" href="/very.html">Very</a></li>
+            <li class="nav-item"><a class="nav-link" href="/notifications.html">Notifications</a></li>
+          </ul>
+
+          <!-- GUEST ACTIONS (NOT LOGGED IN) -->
+          <ul class="navbar-nav ms-auto navbar-auth-actions" id="navGuestActions">
+            <li class="nav-item"><a class="nav-link btn btn-primary" href="/login.html">login</a></li>
+            <li class="nav-item navbar-auth-or-wrap"><span class="navbar-auth-or text-white">or</span></li>
+            <li class="nav-item"><a class="nav-link btn btn-gradient" href="/login.html?mode=signup">create account</a></li>
+            <li class="nav-item ms-2">
+              <a href="/cart.html" class="nav-link cart-count position-relative" aria-label="Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="cartItemsCount">0</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- AUTH ACTIONS (WHEN LOGGED IN) -->
+          <ul class="navbar-nav ms-auto align-items-center" id="navAuthActions" style="display: none !important;">
+            <li class="nav-item nav-item-balance">
+              <a class="nav-link nav-balance-link" href="/deposit.html">Balance | <span id="clientBalance">£0.00</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)" role="button" id="navAccountDropdown">My Account</a>
+              <ul class="dropdown-menu dropdown-menu-end account-dropdown">
+                <li class="account-dropdown-header">
+                  <div class="acct-greet">Signed in as</div>
+                  <div class="acct-name" id="accountUsername">user</div>
+                </li>
+                <li><a class="dropdown-item" href="/dashboard.html"><span>Dashboard</span></a></li>
+                <li><a class="dropdown-item" href="/cart.html"><span>Cart</span></a></li>
+                <li><a class="dropdown-item" href="/deposit.html"><span>Deposit</span></a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="javascript:void(0)" id="navLogoutBtn"><span>Logout</span></a></li>
+              </ul>
+            </li>
+            <li class="nav-item ms-2">
+              <a href="/cart.html" class="nav-link cart-count position-relative" aria-label="Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="cartItemsCountAuth">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- TERMS OF SERVICE CONTENT -->
+      <div class="products full mt-4">
+        <div class="main-content mb-3 text-white">
+          <h4 class="fw-bold mb-4 text-center text-uppercase" style="letter-spacing:1.5px;font-size:20px">Terms of Service</h4>
+          <div class="static-page">
+            <p>As a buyer of Falcon Logs products and services, you are responsible for reading the terms of service in full before completing any purchase. By browsing this site, creating an account, topping up your balance, or completing an order, you confirm that you have read, understood, and accepted these terms in their entirety. No exceptions will be granted for buyers who claim otherwise after the fact.</p>
+
+            <section class="mt-4">
+              <h5 class="fw-semibold text-white">General Terms And Conditions</h5>
+              <ul>
+                <li>Do not change any information on delivered accounts (name, email, password, phone, recovery options) unless the product description explicitly says you may. Modifying these details voids the warranty immediately.</li>
+                <li>Defective items must be reported through the Support page within 3 hours of the purchase timestamp. Inside this window, valid items are exchanged for working replacements while stock lasts.</li>
+                <li>Items reported after the 3-hour window are out of warranty. Falcon Logs is not obligated to replace or refund them.</li>
+                <li>All sales are final. Balance top-ups and product purchases are non-refundable except where these terms or applicable law explicitly require otherwise.</li>
+                <li>Falcon Logs and its operators accept no responsibility for the buyer's actions, behaviour, or third-party consequences after delivery has occurred.</li>
+              </ul>
+            </section>
+
+            <section class="mt-4">
+              <h5 class="fw-semibold text-white">Pertinent Information Regarding Your Privacy</h5>
+              <p>To protect both you and us, we recommend funding your account with cryptocurrency rather than third-party card processors that require invasive personal information.</p>
+              <p>Buyers must register with a permanent personal email such as Gmail, Outlook, ProtonMail, or similar. Disposable, temporary, or forwarding-only email services will not be accepted for delivery, account recovery, or support communication.</p>
+            </section>
+
+            <section class="mt-4">
+              <h5 class="fw-semibold text-white">Expectations and Proper Conduct</h5>
+              <ul>
+                <li>Once payment confirms, the product is delivered to your account immediately and is visible under the Orders page. You are responsible for testing it without delay and reporting any defect via the Support page during the warranty window.</li>
+                <li>When opening a support ticket, use clear concise language and attach screenshot proof wherever applicable. Vague reports without evidence may be closed without action.</li>
+                <li>Compensation under warranty is limited to a replacement of the deficient item. The warranty applies only to the specific item purchased — not to downstream third-party platform policies.</li>
+                <li>Falcon Logs does not operate a public feedback channel for support disputes. All issues must be raised through the official Support page. Posting hostile or defamatory feedback elsewhere voids your warranty.</li>
+                <li>Any act of misrepresentation, fraud, or ill intent against Falcon Logs voids all warranty and customer privileges. Bans are permanent.</li>
+              </ul>
+            </section>
+
+            <section class="mt-4">
+              <h5 class="fw-semibold text-white">Legal</h5>
+              <p>The digital goods and logs offered through Falcon Logs are provided for educational, analytical, and testing purposes. Nothing on this site shall be interpreted as an instruction or endorsement of any illegal activity. Falcon Logs disclaims all liability for any use the buyer makes of the delivered products following delivery.</p>
+            </section>
+          </div>
+
+          <p class="text-center mt-5" style="font-size:11.5px;color:rgba(255,255,255,.45)">
+            Last updated September 2026 • Falcon Logs
+          </p>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="bg-dark text-white p-4 mb-3 d-flex justify-content-center align-items-center flex-column" style="margin-top:40px; border-radius:8px;">
+        <nav class="navbar navbar-expand navbar-dark bg-transparent p-2 mb-0 mt-0">
+          <ul class="navbar-nav flex-wrap d-flex justify-content-center align-items-center" style="gap: 16px;">
+            <li class="nav-item"><a class="nav-link" href="/vouches.html">Vouches</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/tos.html">TOS</a></li>
+            <li class="nav-item"><a class="nav-link" href="/faq.html">FAQs</a></li>
+            <li class="nav-item"><a class="nav-link" href="/support.html">Support</a></li>
+          </ul>
+        </nav>
+        <p class="m-auto text-center mt-2 text-white" style="font-size: 12.5px; color: rgba(255,255,255,0.6) !important;">
+          &copy; 2026 Falcon Logs. All rights reserved.
+        </p>
+      </footer>
+    </div>
+
+    <script src="/bootstrap.bundle.min.js"></script>
+    <script src="/cart-utils.js?v=mu3gcm9e"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof initAuthedHeaderNavbar === 'function') initAuthedHeaderNavbar();
+        if (typeof updateGlobalCartBadge === 'function') updateGlobalCartBadge();
+      });
+    </script>
+  </body>
+</html>

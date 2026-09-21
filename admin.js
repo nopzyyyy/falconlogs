@@ -1427,6 +1427,8 @@ document?.addEventListener("click", (e) => {
       if (typeof loadCouponsTab === "function") loadCouponsTab();
     } else if (t === "announcements") {
       if (typeof loadAnnouncementsTab === "function") loadAnnouncementsTab();
+    } else if (t === "vouches") {
+      if (typeof loadAdminVouches === "function") loadAdminVouches();
     } else if (t === "faq") {
       if (typeof loadFaqTab === "function") loadFaqTab();
     } else if (t === "pages") {
@@ -3708,6 +3710,166 @@ document.getElementById("savePrivacyEditorBtn")?.addEventListener("click", () =>
   const content = document.getElementById("privacyContentEditor").value;
   const status = document.getElementById("privacyEditorStatus");
   savePageContent("privacy", content, status);
+});
+
+// =========================================================================
+// VOUCHES & REVIEWS TAB
+// =========================================================================
+async function loadAdminVouches() {
+  const pendingTbody = document.querySelector("#adminPendingVouchesRows");
+  const approvedTbody = document.querySelector("#adminApprovedVouchesRows");
+  if (pendingTbody) pendingTbody.innerHTML = `<tr><td colspan="5" class="empty">Loading pending vouches...</td></tr>`;
+  if (approvedTbody) approvedTbody.innerHTML = `<tr><td colspan="6" class="empty">Loading published vouches...</td></tr>`;
+
+  try {
+    const res = await fetch("/api/admin/vouches");
+    const data = await res.json();
+    const vouches = data.vouches || [];
+
+    const pending = vouches.filter(v => v.status === "pending");
+    const approved = vouches.filter(v => v.status === "approved" || v.approved === true);
+
+    if (pendingTbody) {
+      if (!pending.length) {
+        pendingTbody.innerHTML = `<tr><td colspan="5" class="empty" style="text-align:center; padding:24px; color:var(--muted);">No pending vouches awaiting approval.</td></tr>`;
+      } else {
+        pendingTbody.innerHTML = pending.map(v => `
+          <tr>
+            <td>
+              <a href="${escapeHtml(v.image_url || v.url)}" target="_blank">
+                <img src="${escapeHtml(v.image_url || v.url)}" style="width:50px; height:36px; object-fit:cover; border-radius:4px; border:1px solid var(--line);" alt="Proof">
+              </a>
+            </td>
+            <td style="font-family:monospace; font-size:12px; color:var(--primary);">${escapeHtml(v.id)}</td>
+            <td>${escapeHtml(v.user_email || v.userId || 'Customer')}</td>
+            <td style="font-size:12px; color:var(--muted);">${new Date(v.created_at || v.createdAt || Date.now()).toLocaleDateString()}</td>
+            <td style="text-align:right;">
+              <button class="pill-button" style="min-height:30px; padding:4px 10px; font-size:12px; background:var(--green); margin-right:6px;" onclick="window.approveVouch('${v.id}')">Approve</button>
+              <button class="ghost-cta" style="min-height:30px; padding:4px 10px; font-size:12px; color:var(--red);" onclick="window.rejectVouch('${v.id}')">Reject</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    if (approvedTbody) {
+      if (!approved.length) {
+        approvedTbody.innerHTML = `<tr><td colspan="6" class="empty" style="text-align:center; padding:24px; color:var(--muted);">No vouches published yet. Click "+ Add Vouch" to upload one.</td></tr>`;
+      } else {
+        approvedTbody.innerHTML = approved.map(v => `
+          <tr>
+            <td>
+              <a href="${escapeHtml(v.image_url || v.url)}" target="_blank">
+                <img src="${escapeHtml(v.image_url || v.url)}" style="width:50px; height:36px; object-fit:cover; border-radius:4px; border:1px solid var(--line);" alt="Proof">
+              </a>
+            </td>
+            <td style="font-family:monospace; font-size:12px; color:var(--primary);">${escapeHtml(v.id)}</td>
+            <td>${escapeHtml(v.title || 'Customer Vouch')}</td>
+            <td><span class="badge" style="background:rgba(34,197,94,0.15); color:#22c55e; border-radius:4px; padding:2px 8px; font-size:11px;">Live</span></td>
+            <td style="font-size:12px; color:var(--muted);">${new Date(v.created_at || v.createdAt || Date.now()).toLocaleDateString()}</td>
+            <td style="text-align:right;">
+              <button class="ghost-cta" style="min-height:30px; padding:4px 10px; font-size:12px; color:var(--red);" onclick="window.deleteVouch('${v.id}')">Delete</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+  } catch (err) {
+    if (pendingTbody) pendingTbody.innerHTML = `<tr><td colspan="5" class="empty" style="color:var(--red);">Failed to load vouches.</td></tr>`;
+  }
+}
+
+window.approveVouch = async function(id) {
+  try {
+    const res = await fetch("/api/admin/vouches/approve", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    if (res.ok) {
+      if (typeof siteAlert === "function") siteAlert("Vouch approved and published to store!", { variant: "success", title: "Approved" });
+      loadAdminVouches();
+    }
+  } catch (_) {}
+};
+
+window.rejectVouch = async function(id) {
+  if (typeof siteConfirm === "function") {
+    if (!(await siteConfirm("Reject and delete this customer vouch submission?", { title: "Reject Vouch", confirmLabel: "Reject", danger: true }))) return;
+  }
+  try {
+    const res = await fetch("/api/admin/vouches/reject", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    if (res.ok) {
+      loadAdminVouches();
+    }
+  } catch (_) {}
+};
+
+window.deleteVouch = async function(id) {
+  if (typeof siteConfirm === "function") {
+    if (!(await siteConfirm("Delete this published vouch from the store gallery?", { title: "Delete Vouch", confirmLabel: "Delete", danger: true }))) return;
+  }
+  try {
+    const res = await fetch(`/api/admin/vouches/${encodeURIComponent(id)}`, { method: "DELETE" });
+    if (res.ok) {
+      loadAdminVouches();
+    }
+  } catch (_) {}
+};
+
+// Modal controls for Add Vouch
+document.getElementById("openNewVouchModalBtn")?.addEventListener("click", () => {
+  document.getElementById("adminVouchModalOverlay")?.classList.add("active");
+});
+document.getElementById("closeAdminVouchModalBtn")?.addEventListener("click", () => {
+  document.getElementById("adminVouchModalOverlay")?.classList.remove("active");
+});
+document.getElementById("cancelAdminVouchBtn")?.addEventListener("click", () => {
+  document.getElementById("adminVouchModalOverlay")?.classList.remove("active");
+});
+document.getElementById("refreshVouchesBtn")?.addEventListener("click", loadAdminVouches);
+
+document.getElementById("adminVouchForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const title = document.getElementById("adminVouchTitleInput")?.value || "Verified Customer Vouch";
+  const urlInput = document.getElementById("adminVouchUrlInput")?.value.trim();
+  const fileInput = document.getElementById("adminVouchFileInput");
+
+  let imageUrl = urlInput;
+  if (fileInput && fileInput.files && fileInput.files[0]) {
+    const fd = new FormData();
+    fd.append("files", fileInput.files[0]);
+    try {
+      const uploadRes = await fetch("/api/vouches/upload", { method: "POST", body: fd });
+      const uploadData = await uploadRes.json();
+      if (uploadData.photos && uploadData.photos[0]) {
+        imageUrl = uploadData.photos[0].url || uploadData.photos[0].image_url;
+      }
+    } catch (_) {}
+  }
+
+  if (!imageUrl) {
+    if (typeof siteAlert === "function") siteAlert("Please provide an image URL or choose a file to upload.", { variant: "warn", title: "Missing Image" });
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/admin/vouches/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image_url: imageUrl, title })
+    });
+    if (res.ok) {
+      document.getElementById("adminVouchModalOverlay")?.classList.remove("active");
+      document.getElementById("adminVouchForm")?.reset();
+      loadAdminVouches();
+      if (typeof siteAlert === "function") siteAlert("Vouch published to gallery!", { variant: "success", title: "Published" });
+    }
+  } catch (_) {}
 });
 
 // =========================================================================

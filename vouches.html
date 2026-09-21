@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Customer Vouches & Reviews - Falcon Logs</title>
+    <link rel="icon" type="image/png" href="/logo.png?v=1003">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1003">
+    <link rel="shortcut icon" href="/favicon.ico?v=1003">
+    <link rel="apple-touch-icon" href="/logo.png?v=1003">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/custom.css?v=mu3gcm9e">
+    <link rel="stylesheet" href="/styles.css?v=1007">
+  </head>
+  <body class="bg-dark2 vouches-page" style="background-color: #141414; color: #fff;">
+    <div class="container-md">
+      <!-- HEADER / NAVBAR -->
+      <nav class="navbar navbar-expand-lg navbar-dark rounded-2 p-2">
+        <a class="navbar-brand" href="/">
+          <img src="/logo.png?v=1003" alt="Falcon Logs" style="height: 44px; margin-top: 2px;">
+        </a>
+        <button class="navbar-toggler" data-bs-target="#headerCollapse" data-bs-toggle="collapse" type="button" aria-label="Menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="headerCollapse">
+          <ul class="navbar-nav align-items-center">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/orders.html">Orders</a></li>
+            <li class="nav-item"><a class="nav-link" href="/support.html">Support</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/vouches.html">Vouches</a></li>
+            <li class="nav-item"><a class="nav-link" href="/very.html">Very</a></li>
+            <li class="nav-item"><a class="nav-link" href="/notifications.html">Notifications</a></li>
+          </ul>
+
+          <!-- GUEST ACTIONS (NOT LOGGED IN) -->
+          <ul class="navbar-nav ms-auto navbar-auth-actions" id="navGuestActions">
+            <li class="nav-item"><a class="nav-link btn btn-primary" href="/login.html">login</a></li>
+            <li class="nav-item navbar-auth-or-wrap"><span class="navbar-auth-or text-white">or</span></li>
+            <li class="nav-item"><a class="nav-link btn btn-gradient" href="/login.html?mode=signup">create account</a></li>
+            <li class="nav-item ms-2">
+              <a href="/cart.html" class="nav-link cart-count position-relative" aria-label="Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="cartItemsCount">0</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- AUTH ACTIONS (WHEN LOGGED IN) -->
+          <ul class="navbar-nav ms-auto align-items-center" id="navAuthActions" style="display: none !important;">
+            <li class="nav-item nav-item-balance">
+              <a class="nav-link nav-balance-link" href="/deposit.html">Balance | <span id="clientBalance">£0.00</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)" role="button" id="navAccountDropdown">My Account</a>
+              <ul class="dropdown-menu dropdown-menu-end account-dropdown">
+                <li class="account-dropdown-header">
+                  <div class="acct-greet">Signed in as</div>
+                  <div class="acct-name" id="accountUsername">user</div>
+                </li>
+                <li><a class="dropdown-item" href="/dashboard.html"><span>Dashboard</span></a></li>
+                <li><a class="dropdown-item" href="/cart.html"><span>Cart</span></a></li>
+                <li><a class="dropdown-item" href="/deposit.html"><span>Deposit</span></a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="javascript:void(0)" id="navLogoutBtn"><span>Logout</span></a></li>
+              </ul>
+            </li>
+            <li class="nav-item ms-2">
+              <a href="/cart.html" class="nav-link cart-count position-relative" aria-label="Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="cartItemsCountAuth">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- VOUCHES MAIN -->
+      <div class="main-content text-white mt-4">
+        <h4 class="fw-bold text-center mb-1" style="font-size: 20px;">Customer Vouches</h4>
+        <p class="text-center mb-4" style="color: rgba(255,255,255,.55); font-size: 13px;">Verified proof and feedback from our buyers</p>
+
+        <!-- TABS -->
+        <ul class="nav nav-tabs vouches-tabs mx-auto mb-4 justify-content-center" id="vouchTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tabVouchesLabel" data-bs-toggle="tab" data-bs-target="#tabGallery" type="button" role="tab">Vouches</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tabSubmitLabel" data-bs-toggle="tab" data-bs-target="#tabSubmit" type="button" role="tab">Submit Vouch</button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="vouchTabsContent">
+          <!-- TAB 1: GALLERY -->
+          <div class="tab-pane fade show active" id="tabGallery" role="tabpanel">
+            <div id="vouchGalleryArea" class="min-vh-50">
+              <div class="text-center py-5 text-muted-soft">Loading vouches...</div>
+            </div>
+          </div>
+
+          <!-- TAB 2: SUBMIT VOUCH -->
+          <div class="tab-pane fade" id="tabSubmit" role="tabpanel">
+            <div class="bordered-box p-4 mx-auto" style="max-width: 580px; background: #1a1a1a;">
+              <h5 class="fw-semibold mb-2">Upload Proof / Feedback</h5>
+              <p class="text-muted-soft mb-3">Upload screenshots of your successful deliveries or feedback. Once submitted, our team will review and publish them to the gallery.</p>
+
+              <div class="mb-3">
+                <label for="vouchImageInput" class="form-label text-muted-soft">Select Screenshot(s)</label>
+                <input class="form-control" type="file" id="vouchImageInput" accept="image/png, image/jpeg, image/webp, image/gif" multiple style="background: #141414; border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+              </div>
+
+              <div id="vouchUploadStatus" class="mb-3 text-muted-soft" style="font-size: 12.5px;">No photos selected yet</div>
+              <div id="vouchDraftPhotos" class="mb-3"></div>
+
+              <button class="btn btn-primary w-100" id="btnVouchDone" type="button" disabled>Submit for Review</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOUCH LIGHTBOX MODAL -->
+      <div id="vouchLightbox" class="vouch-lightbox" hidden aria-hidden="true">
+        <div class="vouch-lightbox-backdrop" id="vouchLightboxBackdrop"></div>
+        <div class="vouch-lightbox-panel">
+          <button type="button" class="vouch-lightbox-close" id="vouchLightboxClose" aria-label="Close">&times;</button>
+          <button type="button" class="vouch-lightbox-nav vouch-lightbox-prev" id="vouchLightboxPrev" aria-label="Previous">&lsaquo;</button>
+          <button type="button" class="vouch-lightbox-nav vouch-lightbox-next" id="vouchLightboxNext" aria-label="Next">&rsaquo;</button>
+          <div class="vouch-lightbox-stage">
+            <img src="" id="vouchLightboxImg" alt="Vouch full view">
+          </div>
+          <div class="vouch-lightbox-footer">
+            <span id="vouchLightboxCounter">1 / 1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="bg-dark text-white p-4 mb-3 d-flex justify-content-center align-items-center flex-column" style="margin-top:40px; border-radius:8px;">
+        <nav class="navbar navbar-expand navbar-dark bg-transparent p-2 mb-0 mt-0">
+          <ul class="navbar-nav flex-wrap d-flex justify-content-center align-items-center" style="gap: 16px;">
+            <li class="nav-item"><a class="nav-link active" href="/vouches.html">Vouches</a></li>
+            <li class="nav-item"><a class="nav-link" href="/tos.html">TOS</a></li>
+            <li class="nav-item"><a class="nav-link" href="/faq.html">FAQs</a></li>
+            <li class="nav-item"><a class="nav-link" href="/support.html">Support</a></li>
+          </ul>
+        </nav>
+        <p class="m-auto text-center mt-2 text-white" style="font-size: 12.5px; color: rgba(255,255,255,0.6) !important;">
+          &copy; 2026 Falcon Logs. All rights reserved.
+        </p>
+      </footer>
+    </div>
+
+    <script src="/bootstrap.bundle.min.js"></script>
+    <script src="/cart-utils.js?v=mu3gcm9e"></script>
+    <script src="/vouches.js?v=mu3gcm9e"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof initAuthedHeaderNavbar === 'function') initAuthedHeaderNavbar();
+        if (typeof updateGlobalCartBadge === 'function') updateGlobalCartBadge();
+      });
+    </script>
+  </body>
+</html>
