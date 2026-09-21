@@ -392,21 +392,10 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
   color: #fff !important;
 }
 
-/* Back-to-top button — match theme */
+/* Back-to-top button — removed */
 #btn-back-to-top {
-  bottom: 10px;
-  left: 100%;
-  text-align: center;
-  font-weight: 600;
-  background-color: #ea580c !important;
-  color: #141414 !important;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-size: 13px;
-  box-shadow: 0 4px 14px rgba(234, 88, 12,.35) !important;
+  display: none !important;
 }
-#btn-back-to-top:hover { background-color: #ea580c !important; color: #fff !important; }
 .btn.btn-gradient { background: linear-gradient(135deg,#ea580c,#ea580c); border: 1px solid #ea580c !important; color: #fff !important; }
 .btn.btn-gradient:hover { background: rgba(234, 88, 12,.9); border: 1px solid #ea580c !important; color: #fff !important; }
 
@@ -3070,12 +3059,55 @@ body.vouch-lightbox-open {
 .modal.fade .modal-dialog { transition: transform .3s cubic-bezier(.4, 0, .2, 1); }
 .modal.show .modal-dialog { transform: translate(0, 0) scale(1); }
 
-/* ── Footer ──────────────────────────────────────────────────────────────────── */
-footer.bg-dark { background: #212121 !important; }
+/* ── Footer (Falcon Logs Design System) ────────────────────────────────────── */
+.site-footer {
+  margin-top: auto;
+  padding: 28px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 1px solid rgba(234, 88, 12, 0.12);
+}
+
+.footer-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.footer-nav-links a {
+  text-decoration: none;
+  transition: color 0.15s;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.footer-nav-links a:hover {
+  color: #ffffff;
+}
+
+.footer-copyright {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.32);
+  text-align: center;
+}
 
 /* ── Social / back to top ────────────────────────────────────────────────────── */
-.social-media-buttons { z-index: 20; display: flex; justify-content: center; align-items: flex-end; width: max-content; background: transparent; position: sticky; bottom: 20px; left: 100%; flex-direction: column; }
-/* (#btn-back-to-top base styles handled above) */
+.social-media-buttons {
+  display: none !important;
+}
 
 /* ── Loading spinner (in-page, mid-flight requests) ───────────────────────── */
 .loading { display: flex; justify-content: center; align-items: center; padding: 40px 0; }
