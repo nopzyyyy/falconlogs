@@ -32,12 +32,14 @@ This skill defines the official visual design language, spatial hierarchy, color
 
 4. **Less Rounded Corners (Crisp Geometric Style)**:
    - Buttons: `border-radius: 6px`.
-   - Cards & Modals: `border-radius: 8px`.
+   - Cards: `border-radius: 8px`.
+   - **Modals & Popups**: Completely square: `border-radius: 0 !important; border: none !important; box-shadow: none !important;`.
    - Badges & Chips: `border-radius: 4px` - `6px`.
    - Steppers & Inputs: `border-radius: 6px`.
 
 5. **Borderless & Stroke-Free Architecture**:
    - No heavy, high-contrast borders or thick outlines. Elements use `border: none;` or subtle `1px solid rgba(255, 255, 255, 0.07)`.
+   - **Modals & Popups**: All modal dialogs, product popups, and order popups have **ZERO borders and ZERO shadows and ZERO corner rounds** (`border: none !important; box-shadow: none !important; border-radius: 0 !important;`).
    - **Cart & Checkout Boxes**: All container cards (`.cart-section-box`, `.order-summary-card`, `.cart-item-card`, `.payment-method-card`, `.store-search-input`, `.cart-coupon-input`) must have **ZERO borders and ZERO shadows** (`border: none !important; box-shadow: none !important;`). Active payment selection is indicated solely through background contrast (`#23160a`), never high-contrast borders.
    - **Account Balance Icon**: The store credit/balance wallet icon must use Falcon Orange (`#ea580c`), never blue. Cache headers for SVG assets are set to `no-cache, no-store, must-revalidate`.
 

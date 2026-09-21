@@ -997,11 +997,11 @@ input:disabled, textarea:disabled { opacity: .5; pointer-events: none; }
 }
 .crypto-flow-modal .modal-content {
   position: relative;
-  background: linear-gradient(165deg, rgba(28,28,32,.98) 0%, rgba(16,16,18,.99) 100%) !important;
-  border: 1px solid rgba(255,255,255,.1) !important;
-  border-radius: 22px !important;
+  background: #0c0c0e !important;
+  border: none !important;
+  border-radius: 0 !important;
   overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0,0,0,.55) !important;
+  box-shadow: none !important;
   max-height: min(600px, 90dvh);
   display: flex;
   flex-direction: column;
@@ -1353,7 +1353,7 @@ input:disabled, textarea:disabled { opacity: .5; pointer-events: none; }
   }
   .crypto-flow-modal .modal-content {
     max-height: min(520px, 86dvh);
-    border-radius: 18px !important;
+    border-radius: 0 !important;
   }
   .crypto-flow-modal .modal-header {
     padding: 14px 14px 10px !important;
@@ -2918,20 +2918,39 @@ body.vouch-lightbox-open {
   opacity: 0.72 !important;
 }
 
-.modal-content {
+.modal-content,
+.modal-card,
+.order-info-modal-card,
+.mysterio-alert-modal-card,
+.modal-dialog .modal-content,
+#productModal .modal-content,
+#orderInfoModalOverlay .modal-content {
   background: #0c0c0e !important;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 10px !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   position: relative;
   overflow: hidden;
 }
 .modal-content::before,
-.modal-content::after {
+.modal-content::after,
+.modal-card::before,
+.modal-card::after,
+.order-info-modal-card::before,
+.order-info-modal-card::after {
   display: none !important;
 }
-.modal-content > * { position: relative; z-index: 1; }
+.modal-content > *,
+.modal-card > *,
+.order-info-modal-card > * { position: relative; z-index: 1; }
+
+.modal-header,
+.modal-footer,
+.modal-content-holder,
+.modal-body {
+  border-radius: 0 !important;
+}
 
 .modal-header {
   border-bottom: 1px solid rgba(255, 255, 255, .06);

@@ -1600,13 +1600,13 @@ input[type=number] {
   width: 100%;
   max-width: 440px;
   background: #1b1712;
-  border: 1px solid rgba(234, 88, 12, 0.14) !important;
-  border-radius: 8px;
+  border: none !important;
+  border-radius: 0 !important;
   padding: 22px 24px 24px;
   display: flex;
   flex-direction: column;
   position: relative;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+  box-shadow: none !important;
 }
 
 .modal-header-row {
@@ -3764,9 +3764,9 @@ input:checked + .toggle-slider:before {
 
 .modal-content {
   background: #120e0a;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95);
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   color: #ffffff;
 }
 
@@ -4323,9 +4323,9 @@ select.modal-form-control option {
   max-width: 480px;
   width: 100%;
   background: #14110c;
-  border: none;
-  border-radius: 8px;
-  box-shadow: none;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   transform: none;
 }
 
@@ -5079,7 +5079,7 @@ select.modal-form-control option {
   background: #14110c;
   border: none !important;
   box-shadow: none !important;
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   width: 100%;
   max-width: 440px;
   padding: 24px;
@@ -7403,10 +7403,10 @@ button.admin-order-head:hover {
   .modal-card {
     max-width: 360px !important;
     width: 100% !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     margin: auto !important;
-    background: #1b1712 !important;
-    border: 1px solid rgba(234, 88, 12, 0.14) !important;
+    background: #0c0c0e !important;
+    border: none !important;
     box-shadow: none !important;
     padding: 20px !important;
   }
@@ -7414,11 +7414,12 @@ button.admin-order-head:hover {
   .modal-content {
     max-width: 480px !important;
     width: 100% !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     max-height: 90vh !important;
     margin: auto !important;
-    background: #1b1712 !important;
-    border: 1px solid rgba(234, 88, 12, 0.14) !important;
+    background: #0c0c0e !important;
+    border: none !important;
+    box-shadow: none !important;
     padding: 0 !important;
     overflow: hidden !important;
   }
