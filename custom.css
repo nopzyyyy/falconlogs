@@ -2910,26 +2910,24 @@ body.vouch-lightbox-open {
   border-color: #ea580c !important;
 }
 
-/* ── Modal (Liquid Glass) ───────────────────────────────────────────────────── */
+/* ── Modal (Solid Dark - Darker than background) ────────────────────────────── */
+.modal-backdrop {
+  background-color: #000000 !important;
+}
+.modal-backdrop.show {
+  opacity: 0.72 !important;
+}
+
 .modal-content {
-  background: rgba(13, 17, 27, 0.78) !important;
-  backdrop-filter: blur(24px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  background: #0c0c0e !important;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.09) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9) !important;
   position: relative;
   overflow: hidden;
 }
-.modal-content::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.4), rgba(255, 255, 255, 0.3), rgba(234, 88, 12, 0.4), transparent);
-  pointer-events: none;
-  z-index: 1;
-}
+.modal-content::before,
 .modal-content::after {
   display: none !important;
 }
@@ -3027,7 +3025,7 @@ input[type=number] {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: rgba(14, 18, 29, 0.72) !important;
+  background: #141416 !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 8px !important;
   padding: 8px 14px !important;
