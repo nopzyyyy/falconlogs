@@ -134,11 +134,18 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
   font-weight: 700;
   min-width: 18px;
   height: 18px;
-  line-height: 18px;
-  border-radius: 9px;
-  text-align: center;
-  padding: 0 4px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  padding: 0 3px !important;
+  line-height: 1 !important;
   box-shadow: 0 2px 6px rgba(234, 88, 12, 0.4);
+}
+.authed-cart-badge[style*="none"] {
+  display: none !important;
 }
 .navbar-auth-actions {
   display: flex;
@@ -241,7 +248,10 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
   .navbar .nav-item.dropdown > .dropdown-toggle { display: none !important; }
   .navbar .dropdown-menu.account-dropdown {
     position: static !important;
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
@@ -250,15 +260,30 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
     border: none !important;
     box-shadow: none !important;
     min-width: 0 !important;
-    width: max-content;
+    width: 100% !important;
     margin: 0 auto !important;
     padding: 0 !important;
+    list-style: none !important;
+  }
+  .navbar .dropdown-menu.account-dropdown li {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
   }
   /* Hide the "signed in as" header and divider on mobile. */
+  .navbar .dropdown-menu.account-dropdown > li.account-dropdown-header,
+  .navbar .dropdown-menu.account-dropdown > li:has(.dropdown-divider),
   .navbar .account-dropdown-header,
   .navbar .account-dropdown .dropdown-divider { display: none !important; }
   .navbar .account-dropdown .dropdown-item {
+    display: inline-flex !important;
     justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
     padding: 5px 10px !important;
     font-size: 13px !important;
     font-weight: 500 !important;
@@ -270,8 +295,8 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    margin: 0 !important;
-    width: max-content;
+    margin: 0 auto !important;
+    width: max-content !important;
     transition: color .15s ease !important;
   }
   .navbar .account-dropdown .dropdown-item:hover,
@@ -279,6 +304,7 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
     background: transparent !important;
     color: #ea580c !important;
     padding-left: 10px !important;
+    padding-right: 10px !important;
     transform: none !important;
   }
   .navbar .account-dropdown .dropdown-item.active,
@@ -291,6 +317,7 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
     border-radius: 0 !important;
     box-shadow: none !important;
     padding-left: 10px !important;
+    padding-right: 10px !important;
     transform: none !important;
   }
   .navbar .account-dropdown .dropdown-item.text-danger {
@@ -300,7 +327,22 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
     color: #ef4444 !important;
   }
   /* Cart sits inline, centred, no baseline offset */
-  .navbar .nav-link.cart-count { justify-content: center; margin-top: 2px; }
+  .navbar-collapse .nav-item.ms-2,
+  .navbar-collapse .nav-item {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .navbar-collapse .nav-item a[aria-label="Cart"],
+  .navbar-collapse .nav-item a[href*="cart.html"],
+  .navbar .nav-link.cart-count {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    margin: 0 auto !important;
+    transform: translateX(-4px) !important;
+  }
+  .navbar .nav-link.cart-count { margin-top: 2px; }
 }
 .navbar .nav-link {
   text-transform: uppercase !important;

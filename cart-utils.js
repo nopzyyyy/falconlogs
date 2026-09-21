@@ -56,7 +56,7 @@ function updateCartBadge() {
   const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
   document.querySelectorAll("[data-cart-count]").forEach(badge => {
     badge.textContent = totalCount;
-    badge.style.display = totalCount > 0 ? "flex" : "none";
+    badge.style.display = totalCount > 0 ? "inline-flex" : "none";
     badge.classList.remove("pop");
     void badge.offsetWidth; // Trigger reflow for animation
     badge.classList.add("pop");
