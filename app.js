@@ -101,11 +101,16 @@ async function syncGlobalAuth() {
         window.IS_LOGGED_IN = true;
         const user = data.user || data;
         window.CURRENT_USER = user;
+        document.body.classList.add('user-logged-in');
+        document.body.classList.remove('user-logged-out');
         const guestActions = document.getElementById('navGuestActions');
         const authActions = document.getElementById('navAuthActions');
         if (guestActions) guestActions.style.setProperty('display', 'none', 'important');
         if (authActions) authActions.style.setProperty('display', 'flex', 'important');
-        document.querySelectorAll('.nav-auth-only').forEach(el => el.style.setProperty('display', 'block', 'important'));
+        document.querySelectorAll('.nav-auth-only').forEach(el => {
+          el.classList.add('auth-visible');
+          el.style.removeProperty('display');
+        });
         const balEl = document.getElementById('clientBalance');
         if (balEl) balEl.textContent = `£${Number(user.balance || 0).toFixed(2)}`;
         const acctName = document.getElementById('accountUsername');
@@ -115,11 +120,16 @@ async function syncGlobalAuth() {
     }
   } catch (_) {}
   window.IS_LOGGED_IN = false;
+  document.body.classList.remove('user-logged-in');
+  document.body.classList.add('user-logged-out');
   const guestActions = document.getElementById('navGuestActions');
   const authActions = document.getElementById('navAuthActions');
   if (guestActions) guestActions.style.setProperty('display', 'flex', 'important');
   if (authActions) authActions.style.setProperty('display', 'none', 'important');
-  document.querySelectorAll('.nav-auth-only').forEach(el => el.style.setProperty('display', 'none', 'important'));
+  document.querySelectorAll('.nav-auth-only').forEach(el => {
+    el.classList.remove('auth-visible');
+    el.style.setProperty('display', 'none', 'important');
+  });
   return null;
 }
 
@@ -136,6 +146,21 @@ document.addEventListener('click', async (e) => {
       await fetch('/api/auth/logout', { method: 'POST' });
     } catch (_) {}
     window.location.href = '/login.html';
+    return;
+  }
+
+  // Account dropdown toggle on mobile
+  const acctToggle = e.target.closest('#navAccountDropdown');
+  if (acctToggle) {
+    if (window.innerWidth < 992) {
+      e.preventDefault();
+      const menu = acctToggle.closest('.dropdown')?.querySelector('.account-dropdown');
+      if (menu) menu.classList.toggle('show');
+    }
+  } else if (!e.target.closest('.account-dropdown')) {
+    if (window.innerWidth < 992) {
+      document.querySelectorAll('.account-dropdown.show').forEach(m => m.classList.remove('show'));
+    }
   }
 });
 

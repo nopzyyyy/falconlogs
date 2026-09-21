@@ -39,7 +39,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bootstrap.min.css">
     <link rel="stylesheet" href="/custom.css?v=mu3gcn01">
@@ -47,7 +46,6 @@
       *, body, button, input, select, textarea, .cart-wrapper, .cart-section-heading, .cart-product-card, .cart-purchase-button, .cart-processor-tile, .cart-coupon-field, .cart-coupon-submit, .cart-order-details-title, .cart-details-row, .cart-empty-state, .site-footer {
         font-family: 'Montserrat', sans-serif !important;
       }
-
       body {
         background-color: #141414 !important;
         color: #ffffff;
@@ -55,7 +53,6 @@
         padding: 0;
         min-height: 100vh;
       }
-
       /* Cart Container matching mockup & aligned with header container */
       .cart-wrapper {
         width: 100%;
@@ -63,7 +60,6 @@
         margin: 28px 0 60px 0;
         padding: 0 8px;
       }
-
       .cart-section-heading {
         font-size: 16px;
         font-weight: 700;
@@ -72,14 +68,12 @@
         letter-spacing: 0.5px;
         margin-bottom: 14px;
       }
-
       /* Cart Product Card */
       .cart-items-container {
         display: flex;
         flex-direction: column;
         gap: 12px;
       }
-
       .cart-product-card {
         background: #212121;
         border-radius: 8px;
@@ -89,14 +83,12 @@
         border: 1px solid rgba(255, 255, 255, 0.04);
         transition: background 0.15s ease;
       }
-
       .cart-card-top {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         gap: 14px;
       }
-
       .cart-card-thumb-wrap {
         width: 76px;
         height: 50px;
@@ -106,19 +98,16 @@
         background: #191919;
         border: 1px solid rgba(255, 255, 255, 0.08);
       }
-
       .cart-card-thumb {
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
       }
-
       .cart-card-info {
         flex: 1;
         min-width: 0;
       }
-
       .cart-card-title {
         font-size: 13.5px;
         font-weight: 700;
@@ -128,14 +117,12 @@
         text-transform: uppercase;
         letter-spacing: 0.2px;
       }
-
       .cart-card-variant {
         font-size: 12px;
         color: #8c8c8c;
         margin-top: 3px;
         font-weight: 500;
       }
-
       .cart-trash-btn {
         background: transparent;
         border: none;
@@ -150,12 +137,10 @@
         margin-left: 8px;
         flex-shrink: 0;
       }
-
       .cart-trash-btn:hover {
         opacity: 0.8;
         transform: scale(1.1);
       }
-
       .cart-card-bottom {
         display: flex;
         align-items: center;
@@ -163,96 +148,39 @@
         padding-top: 2px;
         font-size: 13px;
       }
-
       .cart-meta-label {
         color: #8c8c8c;
         font-weight: 500;
       }
-
       .cart-meta-value {
         color: #ffffff;
         font-weight: 700;
         margin-left: 4px;
       }
-
       .cart-meta-divider {
         color: #4a4a4a;
         margin: 0 16px;
         font-weight: 300;
         user-select: none;
       }
-
       /* Horizontal line separator */
       .cart-mockup-divider {
         border: none;
         border-top: 1px solid #2a2a2a;
         margin: 28px 0;
       }
-
       /* Bottom 2-column layout */
       .cart-bottom-container {
         display: grid;
         grid-template-columns: 1.15fr 0.85fr;
         gap: 36px;
       }
-
       @media (max-width: 820px) {
         .cart-bottom-container {
           grid-template-columns: 1fr;
           gap: 28px;
         }
       }
-
-      /* Payment Processors Grid */
-      .cart-processors-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-
-      @media (max-width: 500px) {
-        .cart-processors-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .cart-processor-tile {
-        background: #212121;
-        border: 1.5px solid transparent;
-        border-radius: 8px;
-        height: 52px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        color: #ffffff;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        user-select: none;
-        transition: all 0.15s ease;
-        padding: 0 16px;
-        width: 100%;
-        text-align: center;
-      }
-
-      .cart-processor-tile:hover {
-        background: #262626;
-      }
-
-      .cart-processor-tile.selected {
-        border-color: #ea580c !important;
-        background: rgba(234, 88, 12, 0.12) !important;
-        box-shadow: none !important;
-      }
-
-      .cart-processor-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-
       /* Purchase Button */
       .cart-purchase-button {
         width: 100%;
@@ -273,22 +201,18 @@
         gap: 8px;
         box-shadow: none !important;
       }
-
       .cart-purchase-button:hover:not(:disabled) {
         background: #fb923c !important;
       }
-
       .cart-purchase-button:active:not(:disabled) {
         background: #c2410c !important;
         transform: scale(0.99);
       }
-
       .cart-purchase-button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
         background: #333333 !important;
       }
-
       /* Coupon Input Box */
       .cart-coupon-pill {
         background: #212121;
@@ -300,7 +224,6 @@
         padding: 0 14px;
         gap: 8px;
       }
-
       .cart-coupon-field {
         background: transparent;
         border: none;
@@ -310,12 +233,10 @@
         flex: 1;
         min-width: 0;
       }
-
       .cart-coupon-field::placeholder {
         color: #737373;
         font-weight: 400;
       }
-
       .cart-coupon-submit {
         background: transparent;
         border: none;
@@ -327,17 +248,14 @@
         padding: 6px 4px;
         transition: color 0.15s ease;
       }
-
       .cart-coupon-submit:hover {
         color: #ea580c !important;
       }
-
       .cart-coupon-message {
         font-size: 12.5px;
         margin-top: 6px;
         font-weight: 500;
       }
-
       /* Order Details */
       .cart-order-details-title {
         font-size: 18px;
@@ -346,7 +264,6 @@
         margin-top: 24px;
         margin-bottom: 14px;
       }
-
       .cart-details-row {
         display: flex;
         align-items: center;
@@ -354,34 +271,28 @@
         margin-bottom: 10px;
         font-size: 14px;
       }
-
       .cart-details-label {
         color: #9e9e9e;
         font-weight: 500;
       }
-
       .cart-details-val {
         color: #ffffff;
         font-weight: 600;
       }
-
       .cart-discount-val {
         color: #ea580c !important;
         font-weight: 600;
       }
-
       .cart-total-label {
         color: #ffffff;
         font-size: 15px;
         font-weight: 700;
       }
-
       .cart-total-val {
         color: #ffffff;
         font-size: 16px;
         font-weight: 800;
       }
-
       /* Empty Cart Placeholder */
       .cart-empty-state {
         background: #212121;
@@ -390,7 +301,6 @@
         text-align: center;
         color: #8c8c8c;
       }
-
       .cart-empty-btn {
         display: inline-block;
         margin-top: 14px;
@@ -404,7 +314,6 @@
         transition: background 0.15s ease;
         box-shadow: none !important;
       }
-
       .cart-empty-btn:hover {
         background: #fb923c !important;
         color: #ffffff !important;
@@ -467,16 +376,31 @@
                   <div class="acct-greet">Signed in as</div>
                   <div class="acct-name" id="accountUsername">user</div>
                 </li>
-                <li><a class="dropdown-item" href="/dashboard.html"><span>Dashboard</span></a></li>
-                <li><a class="dropdown-item" href="/orders.html"><span>Orders</span></a></li>
-                <li><a class="dropdown-item" href="/support.html"><span>Support</span></a></li>
-                <li><a class="dropdown-item" href="/vouches.html"><span>Vouches</span></a></li>
-                <li><a class="dropdown-item" href="/very.html"><span>Very</span></a></li>
-                <li><a class="dropdown-item" href="/notifications.html"><span>Notifications</span></a></li>
-                <li><a class="dropdown-item" href="/deposit.html"><span>Deposit</span></a></li>
-                <li><a class="dropdown-item active" href="/cart.html"><span>Cart</span></a></li>
+                <li>
+                  <a class="dropdown-item" href="/dashboard.html">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span>Dashboard</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/deposit.html">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    <span>Deposit</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item active" href="/cart.html">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span>Cart</span>
+                  </a>
+                </li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger" href="javascript:void(0)" id="navLogoutBtn"><span>Logout</span></a></li>
+                <li>
+                  <a class="dropdown-item dropdown-item-danger text-danger" href="javascript:void(0)" id="navLogoutBtn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Logout</span>
+                  </a>
+                </li>
               </ul>
             </li>
             <li class="nav-item ms-2">

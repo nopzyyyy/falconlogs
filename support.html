@@ -1,51 +1,23 @@
 <!doctype html>
-<html lang="en" class="loader-active">
+<html lang="en">
   <head>
+    <link rel="icon" type="image/png" href="/logo.png?v=1001">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1001">
+    <link rel="shortcut icon" href="/favicon.ico?v=1001">
+    <link rel="apple-touch-icon" href="/logo.png?v=1001">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Support Tickets - Falcon Logs</title>
-    <link rel="icon" type="image/png" href="/logo.png?v=1003">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1003">
-    <link rel="shortcut icon" href="/favicon.ico?v=1003">
-    <link rel="apple-touch-icon" href="/logo.png?v=1003">
-    <style>
-      html.loader-active,
-      body.loader-active {
-        overflow: hidden !important;
-        overscroll-behavior: none;
-        height: 100%;
-        touch-action: none;
-      }
-      body.loader-active #pageLoader ~ * {
-        visibility: hidden;
-      }
-      #pageLoader {
-        position: fixed;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        min-height: 100vh;
-        min-height: 100dvh;
-        min-height: -webkit-fill-available;
-        z-index: 2147483646;
-        background: #141414;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-      }
-    </style>
+    <link rel="icon" type="image/png" href="/logo.png?v=1001">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1001">
+    <link rel="shortcut icon" href="/favicon.ico?v=1001">
+    <link rel="apple-touch-icon" href="/logo.png?v=1001">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bootstrap.min.css">
-    <link rel="stylesheet" href="/custom.css?v=mu3gcn01">
+    <link rel="stylesheet" href="/custom.css?v=mu3gcm9e">
+    <link rel="stylesheet" href="styles.css?v=1007">
     <style>
-      code, pre, .font-mono, .code-font {
-        font-family: 'JetBrains Mono', monospace !important;
-      }
       .support-tab-nav {
         display: flex;
         justify-content: center;
@@ -481,29 +453,20 @@
       }
     </style>
   </head>
-  <body class="bg-dark2 loader-active">
-    <div id="pageLoader">
-      <div class="loader-card">
-        <img src="/logo.png?v=1003" alt="Falcon Logs" class="loader-logo">
-        <div class="loader-spinner"></div>
-        <div class="loader-text">Loading assets please be patient</div>
-      </div>
-    </div>
-
+  <body style="background-color: #141414 !important; color: #fff;">
     <!-- TOP ANNOUNCEMENT BANNER -->
     <div id="siteAnnouncementBar" class="site-announcement-bar" style="display: none;">
       <div id="siteAnnouncementContent" class="site-announcement-content"></div>
     </div>
 
     <div class="container-md">
-      <!-- HEADER / NAVBAR (EXACT AUTHED.CC) -->
+      <!-- HEADER / NAVBAR (EXACT HOME / AUTHED.CC) -->
       <nav class="navbar navbar-expand-lg navbar-dark rounded-2 p-2">
         <a class="navbar-brand" href="/"><img src="/logo.png?v=1003" alt="Falcon Logs" style="height: 48px; margin-top: 4px;"></a>
         <button class="navbar-toggler" data-bs-target="#headerCollapse" data-bs-toggle="collapse" type="button" aria-label="Menu">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="headerCollapse">
-          <!-- Authed Navigation: Home default, other nav buttons show when logged in -->
           <ul class="navbar-nav align-items-center">
             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
             <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/orders.html">Orders</a></li>
@@ -526,23 +489,34 @@
               <a class="nav-link nav-balance-link" href="/deposit.html">Balance | <span id="clientBalance">£0.00</span></a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="javascript:void(0)" role="button" id="navAccountDropdown">My Account</a>
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)" role="button" id="navAccountDropdown">My Account</a>
               <ul class="dropdown-menu dropdown-menu-end account-dropdown">
                 <li class="account-dropdown-header">
                   <div class="acct-greet">Signed in as</div>
                   <div class="acct-name" id="accountUsername">user</div>
                 </li>
-                <li><a class="dropdown-item" href="/dashboard.html"><span>Dashboard</span></a></li>
-                <li><a class="dropdown-item" href="/orders.html"><span>Orders</span></a></li>
-                <li><a class="dropdown-item active" href="/support.html"><span>Support</span></a></li>
-                <li><a class="dropdown-item" href="/vouches.html"><span>Vouches</span></a></li>
-                <li><a class="dropdown-item" href="/very.html"><span>Very</span></a></li>
-                <li><a class="dropdown-item" href="/notifications.html"><span>Notifications</span></a></li>
-                <li><a class="dropdown-item" href="/deposit.html"><span>Deposit</span></a></li>
-                <li><a class="dropdown-item" href="/cart.html"><span>Cart</span></a></li>
+                <li>
+                  <a class="dropdown-item" href="/dashboard.html">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span>Dashboard</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/deposit.html">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    <span>Deposit</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/cart.html">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span>Cart</span>
+                  </a>
+                </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
-                  <a class="dropdown-item text-danger" href="javascript:void(0)" id="navLogoutBtn">
+                  <a class="dropdown-item dropdown-item-danger text-danger" href="javascript:void(0)" id="navLogoutBtn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                     <span>Logout</span>
                   </a>
                 </li>
@@ -561,9 +535,10 @@
           </ul>
         </div>
       </nav>
+    </div>
 
-      <!-- MAIN SUPPORT CONTAINER -->
-      <main class="store-shell" id="supportMainShell" style="max-width: 1240px; margin: 0 auto; padding: 24px 0 60px; width: 100%;">
+    <!-- MAIN SUPPORT CONTAINER -->
+    <main class="store-shell" id="supportMainShell" style="max-width: 1240px; margin: 0 auto; padding: 24px 20px 60px; width: 100%;">
       <!-- TAB NAVIGATION -->
       <div class="support-tab-nav">
         <button type="button" class="support-tab-btn active" id="tabSubmitBtn">SUBMIT TICKET</button>
@@ -723,35 +698,20 @@
       </div>
     </div>
 
-      </main>
-
-      <!-- FOOTER (EXACT AUTHED 1:1) -->
-      <div class="social-media-buttons">
-        <button class="btn btn-secondary btn-sm position-sticky" id="btn-back-to-top" type="button" style="display:none">Back to top</button>
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-nav-links">
+        <a href="/">Home</a>
+        <a href="/cart.html">Cart</a>
+        <a href="/dashboard.html">Account</a>
+        <a href="/orders.html">Orders</a>
       </div>
-
-      <footer class="bg-dark text-white p-4 mb-3 d-flex justify-content-center align-items-center flex-column" style="margin-top:0">
-        <nav class="navbar navbar-expand navbar-dark bg-transparent p-2 mb-0 mt-0">
-          <ul class="navbar-nav flex-wrap d-flex justify-content-center align-items-center">
-            <li class="nav-item d-flex flex-row align-items-center me-lg-2 text-success">
-              <a class="nav-link me-lg-0 me-1" href="/vouches.html">REVIEWS</a>
-              <svg class="footer-tg-icon" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="7.5" cy="7.5" fill="currentColor" r="7.5"></circle>
-                <path clip-rule="evenodd" d="M9.81536 10.2821L9.81561 10.2815L9.82182 10.266L10.8928 4.86629V4.84875C10.8928 4.71421 10.8431 4.59676 10.7349 4.52631C10.6403 4.46465 10.5314 4.46026 10.4551 4.46605C10.3744 4.47218 10.2983 4.49233 10.2456 4.5091C10.2185 4.51773 10.1958 4.52604 10.1795 4.53233C10.1714 4.53548 10.1648 4.53816 10.16 4.54016L10.1553 4.54214L4.18392 6.88462L4.18227 6.88521C4.17905 6.88638 4.17478 6.88797 4.16963 6.88998C4.15936 6.89398 4.14538 6.8997 4.12896 6.90714C4.09672 6.92175 4.05217 6.9443 4.00699 6.97524C3.93026 7.02779 3.78414 7.15219 3.80882 7.34941C3.82925 7.51277 3.94186 7.61652 4.01778 7.67024C4.05847 7.69903 4.09741 7.7198 4.12592 7.73337C4.14036 7.74025 4.15263 7.74552 4.16177 7.74924C4.16635 7.7511 4.17018 7.75259 4.17315 7.75372L4.17694 7.75513L4.17937 7.75604L5.2241 8.10775C5.22057 8.1733 5.22707 8.24013 5.24446 8.30607L5.76777 10.2912C5.82982 10.5266 6.04276 10.6906 6.28618 10.6904C6.50437 10.6902 6.69788 10.5582 6.78009 10.3613L7.59711 9.48769L9.00032 10.5635L9.02027 10.5722C9.14776 10.6278 9.26687 10.6455 9.37577 10.6306C9.48452 10.6157 9.57094 10.5701 9.63585 10.5182C9.69973 10.4671 9.74351 10.4094 9.77104 10.366C9.78503 10.3439 9.79546 10.3245 9.80269 10.3099C9.80632 10.3026 9.80919 10.2964 9.81133 10.2916L9.81402 10.2853L9.81498 10.283L9.81536 10.2821ZM5.76246 8.16951C5.75056 8.12439 5.76923 8.07677 5.80862 8.05175L9.3522 5.80143C9.3522 5.80143 9.56062 5.67489 9.55317 5.80143C9.55317 5.80143 9.59037 5.82377 9.47869 5.92796C9.37275 6.02692 6.95309 8.36301 6.70825 8.5994C6.69412 8.61304 6.68568 8.6287 6.6807 8.6477L6.28577 10.1547L5.76246 8.16951Z" fill="white" fill-rule="evenodd"></path>
-              </svg>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="/tos.html">TOS</a></li>
-            <li class="nav-item"><a class="nav-link" href="/faq.html">FAQS</a></li>
-          </ul>
-        </nav>
-        <p class="m-auto text-center mt-2 text-white">© 2026 Falcon Logs All rights reserved</p>
-      </footer>
-    </div>
+      <p class="footer-copyright">&copy; 2026 Falcon Logs. All rights reserved.</p>
+    </footer>
 
     <script src="/bootstrap.bundle.min.js"></script>
-    <script src="/cart-utils.js?v=mu3gcn01"></script>
-    <script src="/datetime.js?v=mu3gcn01"></script>
+    <script src="/cart-utils.js?v=1008"></script>
     <script src="/app.js?v=mu3gcn01"></script>
-    <script src="support.js?v=mu3gcn01"></script>
+    <script src="support.js?v=1001"></script>
   </body>
 </html>
