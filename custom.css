@@ -658,14 +658,12 @@ input:disabled, textarea:disabled { opacity: .5; pointer-events: none; }
 @media (max-width: 767.98px) { .products-area .items { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-gap: .75rem; } }
 @media (max-width: 400px)    { .products-area .items { grid-gap: .6rem; } }
 
-/* ── Product card (Liquid Glass) ────────────────────────────────────────────── */
+/* ── Product card ────────────────────────────────────────────────────────────── */
 .items > .item {
-  border-radius: 8px !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  background: rgba(14, 18, 29, 0.68) !important;
-  backdrop-filter: blur(14px) saturate(170%) !important;
-  -webkit-backdrop-filter: blur(14px) saturate(170%) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  border-radius: 5px;
+  border: none !important;
+  box-shadow: 0 3px 15px rgba(0,0,0,.06);
+  background: #212121 !important;
   width: 100%;
   height: 100%;
   display: flex;
@@ -673,15 +671,10 @@ input:disabled, textarea:disabled { opacity: .5; pointer-events: none; }
   cursor: pointer;
   overflow: hidden;
   margin: 0 !important;
-  transition: all ease-in-out .2s !important;
+  transition: all ease-in .15s;
   max-height: 240px;
 }
-.items > .item:hover {
-  background: rgba(22, 28, 44, 0.82) !important;
-  border-color: rgba(234, 88, 12, 0.4) !important;
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-  transform: translateY(-2px);
-}
+.items > .item:hover { background: #282828 !important; }
 .items > .item .img-top {
   flex: 1 1 0%;
   width: 100%;
