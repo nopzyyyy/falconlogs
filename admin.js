@@ -2981,29 +2981,13 @@ async function loadSettings() {
     const cryptoEl = document.getElementById("toggle-crypto");
     if (cryptoEl) cryptoEl.checked = methods.crypto !== false;
 
-    const chimeEl = document.getElementById("toggle-chime");
-    if (chimeEl) chimeEl.checked = methods.chime !== false;
-
-    const tgStarsEl = document.getElementById("toggle-tg_stars");
-    if (tgStarsEl) tgStarsEl.checked = methods.tg_stars !== false;
-    
-    const tgForwarder = settings.telegramForwarder || {};
-    const tgFwdEl = document.getElementById("toggle-tg_forwarder_enabled");
-    if (tgFwdEl) tgFwdEl.checked = tgForwarder.enabled === true;
-
-    const tgLinkEl = document.getElementById("tg_forwarder_source_link");
-    if (tgLinkEl) tgLinkEl.value = tgForwarder.sourceMessageLink || "https://t.me/Flowmark/1287";
-
-    const tgIntEl = document.getElementById("tg_forwarder_interval");
-    if (tgIntEl) tgIntEl.value = tgForwarder.intervalHours || 6;
-
     const toggleParticles = document.getElementById("toggle-particles");
     if (toggleParticles) {
       toggleParticles.checked = settings.particlesEnabled !== false;
     }
     
     if (IS_GOD_MODE) {
-      ["balance", "crypto", "chime", "tg_stars", "particles", "tg_forwarder_enabled"].forEach(m => {
+      ["balance", "crypto", "particles"].forEach(m => {
         const cb = document.getElementById(`toggle-${m}`);
         if (cb) {
           cb.disabled = true;
@@ -3011,10 +2995,6 @@ async function loadSettings() {
           cb.closest(".toggle-switch").style.pointerEvents = "none";
         }
       });
-      if (tgLinkEl) tgLinkEl.disabled = true;
-      if (tgIntEl) tgIntEl.disabled = true;
-      const saveFwdBtn = document.getElementById("saveTgForwarderBtn");
-      if (saveFwdBtn) saveFwdBtn.disabled = true;
     }
   } catch (err) {
     console.error("Failed to load settings:", err);
@@ -3026,26 +3006,14 @@ async function saveSettings(source) {
   
   const toggleBalance = document.getElementById("toggle-balance");
   const toggleCrypto = document.getElementById("toggle-crypto");
-  const toggleChime = document.getElementById("toggle-chime");
-  const toggleTgStars = document.getElementById("toggle-tg_stars");
   const toggleParticles = document.getElementById("toggle-particles");
-  const toggleTgFwd = document.getElementById("toggle-tg_forwarder_enabled");
-  const tgLinkEl = document.getElementById("tg_forwarder_source_link");
-  const tgIntEl = document.getElementById("tg_forwarder_interval");
 
   const payload = {
     paymentMethods: {
       balance: toggleBalance ? toggleBalance.checked : true,
-      crypto: toggleCrypto ? toggleCrypto.checked : true,
-      chime: toggleChime ? toggleChime.checked : true,
-      tg_stars: toggleTgStars ? toggleTgStars.checked : true
+      crypto: toggleCrypto ? toggleCrypto.checked : true
     },
-    particlesEnabled: toggleParticles ? toggleParticles.checked : true,
-    telegramForwarder: {
-      enabled: toggleTgFwd ? toggleTgFwd.checked : false,
-      sourceMessageLink: tgLinkEl ? tgLinkEl.value.trim() : "https://t.me/Flowmark/1287",
-      intervalHours: tgIntEl ? (Number(tgIntEl.value) || 6) : 6
-    }
+    particlesEnabled: toggleParticles ? toggleParticles.checked : true
   };
   
   try {
@@ -3068,8 +3036,6 @@ async function saveSettings(source) {
       if (typeof siteToast === "function") {
         if (source === "particles") {
           siteToast(`Particle effects ${payload.particlesEnabled ? "enabled" : "disabled"}.`, "success");
-        } else if (source === "forwarder") {
-          siteToast("Telegram Auto-Forwarder settings saved!", "success");
         } else {
           siteToast("Settings updated successfully.", "success");
         }
@@ -3085,7 +3051,7 @@ document.querySelectorAll('.admin-tab[data-admin-tab="settings"]').forEach(tab =
   tab?.addEventListener("click", () => loadSettings());
 });
 
-["balance", "crypto", "chime", "tg_stars", "particles", "tg_forwarder_enabled"].forEach(m => {
+["balance", "crypto", "particles"].forEach(m => {
   const el = document.getElementById(`toggle-${m}`);
   if (el) {
     el.addEventListener("change", async () => {

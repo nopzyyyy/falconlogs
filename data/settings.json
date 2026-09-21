@@ -1,14 +1,7 @@
 {
   "paymentMethods": {
     "balance": true,
-    "crypto": true,
-    "chime": true,
-    "tg_stars": true
+    "crypto": true
   },
-  "particlesEnabled": false,
-  "telegramForwarder": {
-    "enabled": false,
-    "intervalHours": 6,
-    "sourceMessageLink": "https://t.me/Flowmark/1287"
-  }
+  "particlesEnabled": false
 }

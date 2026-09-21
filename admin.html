@@ -510,36 +510,6 @@
             </label>
           </article>
         </div>
-
-        <div class="admin-topline" style="margin-top: 40px;">
-          <h1>Telegram Auto-Forwarder Settings</h1>
-        </div>
-        <p style="color: var(--muted); margin-bottom: 24px; font-size: 14px;">Automatically forward a target channel post to all groups and channels your account is in at regular intervals.</p>
-        
-        <div class="settings-list" style="display: flex; flex-direction: column; gap: 16px; max-width: 600px;">
-          <article class="base-card" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; margin-bottom: 0;">
-            <div style="display: flex; flex-direction: column; gap: 4px;">
-              <strong style="font-size: 15px; color: var(--text);">Enable Auto-Forwarder</strong>
-              <span style="font-size: 12.5px; color: var(--muted);">Toggles the periodic forwarding background daemon.</span>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="toggle-tg_forwarder_enabled">
-              <span class="toggle-slider"></span>
-            </label>
-          </article>
-          
-          <article class="base-card" style="display: flex; flex-direction: column; gap: 14px; padding: 18px 24px; margin-bottom: 0; align-items: flex-start;">
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 6px;">
-              <strong style="font-size: 15px; color: var(--text);">Source Message Telegram Link</strong>
-              <input type="text" id="tg_forwarder_source_link" placeholder="e.g. https://t.me/Flowmark/1287" class="modal-form-control" style="margin: 0; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; color: var(--text);">
-            </div>
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 6px;">
-              <strong style="font-size: 15px; color: var(--text);">Interval Period (Hours)</strong>
-              <input type="number" id="tg_forwarder_interval" placeholder="e.g. 6" min="1" class="modal-form-control" style="margin: 0; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; color: var(--text); width: 120px;">
-            </div>
-            <button type="button" id="saveTgForwarderBtn" class="pill-button" style="margin-top: 10px; margin-left: 0;">Save Forwarder Settings</button>
-          </article>
-        </div>
       </section>
 
       <!-- CATEGORIES TAB -->
