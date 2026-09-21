@@ -658,12 +658,14 @@ input:disabled, textarea:disabled { opacity: .5; pointer-events: none; }
 @media (max-width: 767.98px) { .products-area .items { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-gap: .75rem; } }
 @media (max-width: 400px)    { .products-area .items { grid-gap: .6rem; } }
 
-/* ── Product card ────────────────────────────────────────────────────────────── */
+/* ── Product card (Liquid Glass) ────────────────────────────────────────────── */
 .items > .item {
-  border-radius: 5px;
-  border: none !important;
-  box-shadow: 0 3px 15px rgba(0,0,0,.06);
-  background: #212121 !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(14, 18, 29, 0.68) !important;
+  backdrop-filter: blur(14px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(170%) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
   width: 100%;
   height: 100%;
   display: flex;
@@ -671,10 +673,15 @@ input:disabled, textarea:disabled { opacity: .5; pointer-events: none; }
   cursor: pointer;
   overflow: hidden;
   margin: 0 !important;
-  transition: all ease-in .15s;
+  transition: all ease-in-out .2s !important;
   max-height: 240px;
 }
-.items > .item:hover { background: #282828 !important; }
+.items > .item:hover {
+  background: rgba(22, 28, 44, 0.82) !important;
+  border-color: rgba(234, 88, 12, 0.4) !important;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  transform: translateY(-2px);
+}
 .items > .item .img-top {
   flex: 1 1 0%;
   width: 100%;
@@ -1196,13 +1203,13 @@ input:disabled, textarea:disabled { opacity: .5; pointer-events: none; }
   letter-spacing: .2px;
   color: #fff;
   background: linear-gradient(135deg, #ea580c 0%, #ea580c 100%);
-  box-shadow: 0 4px 20px rgba(234, 88, 12, .35);
-  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+  box-shadow: none !important;
+  transition: transform .18s ease, background .18s ease, opacity .18s ease;
 }
 .crypto-flow-confirm:hover:not(:disabled) {
   transform: translateY(-1px);
   background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
-  box-shadow: 0 6px 24px rgba(234, 88, 12, .45);
+  box-shadow: none !important;
 }
 .crypto-flow-confirm:disabled {
   opacity: .45;
@@ -2910,48 +2917,40 @@ body.vouch-lightbox-open {
   border-color: #ea580c !important;
 }
 
-/* ── Modal ───────────────────────────────────────────────────────────────────── */
+/* ── Modal (Liquid Glass) ───────────────────────────────────────────────────── */
 .modal-content {
-  background: linear-gradient(160deg, #1c1c1f 0%, #141416 100%) !important;
+  background: rgba(13, 17, 27, 0.78) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
   color: #fff;
-  border: 1px solid rgba(234, 88, 12, .12) !important;
-  border-radius: 14px !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .5), 0 0 0 1px rgba(255, 255, 255, .02);
-  /* Subtle brand-mark watermark, sized large and pinned to the bottom-right
-     so it bleeds out of the corner as a faint shine — adds a polished
-     "branded" feel without competing with the content. */
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
   position: relative;
   overflow: hidden;
 }
 .modal-content::before {
   content: "";
   position: absolute;
-  inset: auto -60px -120px auto;
-  width: 360px;
-  height: 360px;
-  background: url('/images/logo-icon.png') no-repeat center / contain;
-  opacity: .045;
-  filter: blur(.4px);
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.4), rgba(255, 255, 255, 0.3), rgba(234, 88, 12, 0.4), transparent);
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 .modal-content::after {
-  /* Soft purple glow radiating from the top-left corner */
-  content: "";
-  position: absolute;
-  top: -80px; left: -80px;
-  width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(234, 88, 12, .14) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+  display: none !important;
 }
 .modal-content > * { position: relative; z-index: 1; }
 
 .modal-header {
   border-bottom: 1px solid rgba(255, 255, 255, .06);
   padding: 18px 24px 14px;
+  background: transparent !important;
 }
-.modal-footer { border-top: 1px solid rgba(255, 255, 255, .06); }
+.modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, .06);
+  background: transparent !important;
+}
 .modal-title {
   font-size: 11.5px;
   font-weight: 600;
@@ -2963,33 +2962,37 @@ body.vouch-lightbox-open {
 .btn-close-modal {
   position: absolute;
   top: 14px; right: 18px;
-  background: rgba(255, 255, 255, .04);
-  border: 1px solid rgba(255, 255, 255, .06);
-  border-radius: 8px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
   cursor: pointer;
   padding: 0;
   z-index: 20;
-  width: 28px; height: 28px;
+  width: 26px; height: 26px;
   display: flex; align-items: center; justify-content: center;
-  color: rgba(255, 255, 255, .7);
-  font-size: 14px;
+  color: rgba(255, 255, 255, .6) !important;
+  font-size: 18px;
   line-height: 1;
-  transition: background .15s ease, color .15s ease, transform .15s ease;
+  transition: color .15s ease, transform .15s ease;
 }
 .btn-close-modal:hover {
-  background: rgba(234, 88, 12, .18);
-  color: #fff;
-  transform: rotate(90deg);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  transform: scale(1.15);
 }
 
 .modal-content-holder {
   overflow-y: auto;
-  /* Reserve scrollbar gutter on both edges so children don't reflow / get
-     clipped on the right when the vertical scrollbar appears. Falls back
-     silently on browsers without scrollbar-gutter support. */
   scrollbar-gutter: stable both-edges;
+  background: transparent !important;
 }
-.modal-body { padding: 18px 24px 22px !important; }
+.modal-body {
+  padding: 18px 24px 22px !important;
+  background: transparent !important;
+}
 
 /* ── Product modal ────────────────────────────────────────────────────────────── */
 /* Product title — matches the navbar HOME text: Montserrat, weight 500 (thin),
@@ -3016,47 +3019,153 @@ body.vouch-lightbox-open {
 }
 #productModalBody label:first-of-type { margin-top: 4px !important; }
 
-.buttons-container {
+/* Modal Quantity Stepper & Price Display */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+input[type=number] {
+  -moz-appearance: textfield !important;
+}
+
+.modal-qty-container {
   display: flex;
-  gap: 10px;
-  margin-top: 22px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(14, 18, 29, 0.72) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  transition: border-color 0.15s ease;
 }
-.buttons-container .btn:first-child {
-  flex: 1 1 auto;
-  background: linear-gradient(135deg, #ea580c 0%, #ea580c 100%) !important;
-  color: #fff !important;
-  font-weight: 600 !important;
-  font-size: 14px !important;
-  padding: 12px 16px !important;
-  border-radius: 10px !important;
-  box-shadow: 0 6px 18px rgba(234, 88, 12, .35) !important;
-  transition: transform .15s ease, box-shadow .15s ease, background .15s ease !important;
+.modal-qty-container:focus-within {
+  border-color: rgba(234, 88, 12, 0.5) !important;
 }
-.buttons-container .btn:first-child:hover {
-  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(234, 88, 12, .5) !important;
+.qty-stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.buttons-container .btn:last-child {
-  flex: 0 0 56px;
+.qty-btn {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(234, 88, 12, .12) !important;
-  border: 1px solid rgba(234, 88, 12, .35) !important;
-  border-radius: 10px !important;
-  padding: 12px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 6px !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  cursor: pointer;
+  padding: 0 !important;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease !important;
   box-shadow: none !important;
-  transition: background .15s ease, border-color .15s ease, transform .15s ease !important;
 }
-.buttons-container .btn:last-child:hover {
-  background: rgba(234, 88, 12, .25) !important;
-  border-color: rgba(234, 88, 12, .65) !important;
+.qty-btn:hover {
+  background: rgba(234, 88, 12, 0.2) !important;
+  border-color: rgba(234, 88, 12, 0.45) !important;
+  color: #fb923c !important;
+}
+.qty-btn:active {
+  transform: scale(0.93);
+}
+.qty-stepper-input {
+  width: 58px !important;
+  height: 32px !important;
+  text-align: center !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 6px !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  padding: 0 4px !important;
+  box-shadow: none !important;
+}
+.qty-stepper-input:focus {
+  border-color: rgba(234, 88, 12, 0.6) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  outline: none !important;
+}
+.qty-price-display {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.qty-currency {
+  color: #ea580c;
+  font-size: 14px;
+  font-weight: 700;
+}
+.qty-amount {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+.buttons-container .btn:first-child,
+.buttons-container #btnAddModal {
+  flex: 1 1 auto;
+  background: #ea580c !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  padding: 12px 18px !important;
+  border-radius: 6px !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: background .15s ease, transform .15s ease !important;
+}
+.buttons-container .btn:first-child:hover,
+.buttons-container #btnAddModal:hover {
+  background: #fb923c !important;
   transform: translateY(-1px);
+  box-shadow: none !important;
 }
-.buttons-container .btn:last-child svg { width: 22px; height: 22px; }
+.buttons-container .btn-modal-cart,
+.buttons-container .btn:last-child {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 6px 10px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.65) !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease !important;
+}
+.buttons-container .btn-modal-cart:hover,
+.buttons-container .btn:last-child:hover {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #ea580c !important;
+  transform: scale(1.12);
+}
+.buttons-container .btn-modal-cart svg,
+.buttons-container .btn:last-child svg {
+  width: 22px;
+  height: 22px;
+}
+.buttons-container .btn-modal-cart svg path,
+.buttons-container .btn-modal-cart svg circle,
 .buttons-container .btn:last-child svg path,
-.buttons-container .btn:last-child svg circle { fill: #fff !important; stroke: #fff !important; }
+.buttons-container .btn:last-child svg circle {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  transition: fill 0.15s ease, stroke 0.15s ease;
+}
 
 /* Smooth modal entrance — slight scale-up on top of Bootstrap's translate.
    We avoid touching opacity here so Bootstrap's default fade still works. */
@@ -4183,3 +4292,41 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
   border-radius: 6px;
 }
 .admin-privacy-blur-indicator svg { flex-shrink: 0; opacity: .85; }
+
+/* ── Falcon Logs: Strict ZERO glow on all buttons ────────────────────────── */
+button,
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-gradient,
+.btn-add-modal,
+#btnAddModal,
+.crypto-flow-confirm,
+.btn-danger,
+.btn-success,
+.btn-warning {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+button:hover,
+.btn:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-gradient:hover,
+.btn-add-modal:hover,
+#btnAddModal:hover,
+.crypto-flow-confirm:hover,
+.btn-danger:hover,
+.btn-success:hover,
+.btn-warning:hover {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+button:focus,
+.btn:focus,
+.btn-primary:focus,
+.btn-secondary:focus,
+.btn-gradient:focus,
+#btnAddModal:focus {
+  box-shadow: none !important;
+}
