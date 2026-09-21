@@ -128,6 +128,7 @@ const TELEGRAM_ADMIN_IDS = (process.env.TELEGRAM_ADMIN_IDS || "").split(",").map
 const TELEGRAM_RESTOCK_BOT_TOKEN = process.env.TELEGRAM_RESTOCK_BOT_TOKEN || "";
 const DASHBOARD_BOT_TOKEN = process.env.DASHBOARD_BOT_TOKEN || "";
 const STARS_SECRET = process.env.STARS_SECRET || "FalconLogsStarsSecret2026";
+const CHIME_WEBHOOK_TOKEN    = process.env.CHIME_WEBHOOK_TOKEN || "falconlogs_chime_secure_token_2026";
 const NOWPAYMENTS_TOPUP_API_KEY = process.env.NOWPAYMENTS_TOPUP_API_KEY || "57A2JR9-1WK4G4V-MZZEX3B-N3T5FH9";
 const NOWPAYMENTS_ORDER_API_KEY = process.env.NOWPAYMENTS_ORDER_API_KEY || "FN9YNAF-DZX4N7B-KRT4ZCV-JYSGGAT";
 const NOWPAYMENTS_IPN_SECRET    = process.env.NOWPAYMENTS_IPN_SECRET || "YYKKTZ0fGAgebjKwbhvw4iGaFCd401oc";
@@ -618,7 +619,8 @@ function logAuditAction(req, action, details) {
     const session = getSession(req);
     const userId = session ? session.user.id : "system";
     const userEmail = session ? session.user.email : "system";
-    const ipAddress = (req && req.socket) ? (req.socket.remoteAddress || "127.0.0.1") : "127.0.0.1";
+    const forwarded = req && req.headers ? (req.headers["x-forwarded-for"] || "").split(",")[0].trim() : "";
+    const ipAddress = forwarded || ((req && req.socket) ? (req.socket.remoteAddress || "127.0.0.1") : "127.0.0.1");
     const logs = readJson(auditLogsFile, []);
     const entry = {
       id: "AUD-" + crypto.randomBytes(4).toString("hex").toUpperCase(),
@@ -3879,10 +3881,11 @@ ${escapeTelegramHtml(r.reason)}
     // Chime local webhook listener
     if (url.pathname === "/api/payments/chime-webhook" && req.method === "POST") {
       const remote = req.socket.remoteAddress || "";
-      const isLocal = remote === "127.0.0.1" || remote === "::1" || remote === "::ffff:127.0.0.1";
-      const authHeader = req.headers["authorization"];
+      const isLoopbackDirect = (remote === "127.0.0.1" || remote === "::1" || remote === "::ffff:127.0.0.1") && !req.headers["x-forwarded-for"];
+      const authHeader = req.headers["authorization"] || "";
+      const isValidToken = authHeader === `Bearer ${CHIME_WEBHOOK_TOKEN}` || authHeader === "Bearer chime_secure_vps_token_2026";
 
-      if (authHeader !== "Bearer chime_secure_vps_token_2026" && !isLocal) {
+      if (!isValidToken && !isLoopbackDirect) {
         console.warn(`[Chime Webhook] Unauthorized request from ${remote}`);
         return sendJson(res, 401, { error: "Unauthorized" });
       }
