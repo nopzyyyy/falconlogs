@@ -170,6 +170,12 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
   background: rgba(234, 88, 12, 0.15);
   color: #ea580c;
 }
+.dropdown-menu.account-dropdown .dropdown-item.active,
+.dropdown-menu.account-dropdown .dropdown-item:active {
+  background: rgba(234, 88, 12, 0.15) !important;
+  color: #ea580c !important;
+  font-weight: 600 !important;
+}
 .dropdown-menu.account-dropdown .account-dropdown-header {
   padding: 10px 16px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -250,10 +256,48 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
   }
   /* Hide the "signed in as" header and divider on mobile. */
   .navbar .account-dropdown-header,
-  .navbar .account-dropdown .dropdown-divider { display: none; }
+  .navbar .account-dropdown .dropdown-divider { display: none !important; }
   .navbar .account-dropdown .dropdown-item {
-    justify-content: center;
-    padding: 7px 12px !important;
+    justify-content: center !important;
+    padding: 5px 10px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+    letter-spacing: -.2px !important;
+    text-transform: uppercase !important;
+    color: #fff !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: max-content;
+    transition: color .15s ease !important;
+  }
+  .navbar .account-dropdown .dropdown-item:hover,
+  .navbar .account-dropdown .dropdown-item:focus {
+    background: transparent !important;
+    color: #ea580c !important;
+    padding-left: 10px !important;
+    transform: none !important;
+  }
+  .navbar .account-dropdown .dropdown-item.active,
+  .navbar .account-dropdown .dropdown-item:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #ea580c !important;
+    font-weight: 600 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding-left: 10px !important;
+    transform: none !important;
+  }
+  .navbar .account-dropdown .dropdown-item.text-danger {
+    color: #dc3545 !important;
+  }
+  .navbar .account-dropdown .dropdown-item.text-danger:hover {
+    color: #ef4444 !important;
   }
   /* Cart sits inline, centred, no baseline offset */
   .navbar .nav-link.cart-count { justify-content: center; margin-top: 2px; }
@@ -344,6 +388,12 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
 .dropdown-item:focus svg {
   color: #ea580c;
   transform: translateX(1px);
+}
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: rgba(234, 88, 12, .15) !important;
+  color: #ea580c !important;
+  font-weight: 600 !important;
 }
 
 .dropdown-item.dropdown-item-danger { color: #ff6b6b; }
