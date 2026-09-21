@@ -4567,17 +4567,17 @@ ${escapeTelegramHtml(r.reason)}
     }
 
     // Strict allowlist — anything not listed here is a hard 404
-    // Public: accessible without a session (only login page, legal/info pages & essential assets)
+    // Public: accessible without a session (login page, legal/info pages & essential assets)
     const PUBLIC_FILES  = new Set([
       "/login.html", "/login.js", "/styles.css", "/custom.css",
       "/bootstrap.min.css", "/bootstrap.bundle.min.js",
       "/cart-utils.js", "/app.js", "/datetime.js",
       "/tos.html", "/faq.html", "/vouches.html", "/vouches.js",
-      "/very.html", "/notifications.html", "/notifications.js",
+      "/very.html",
       "/banner.png", "/hero-banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png",
       "/favicon.svg", "/favicon.ico", "/favicon.png"
     ]);
-    // Auth: requires valid logged-in session for access to any page or code on the platform
+    // Auth: requires valid logged-in session for access to private store areas
     const AUTH_FILES    = new Set([
       "/", "/index.html", "/products", "/logs.html", "/logs.js", "/products.js",
       "/main.js",
@@ -4585,8 +4585,7 @@ ${escapeTelegramHtml(r.reason)}
       "/orders.html", "/balance.html",
       "/dashboard.html", "/dashboard.js", "/deposit.html",
       "/support.html", "/support.js",
-      "/vouches.html", "/vouches.js", "/tos.html", "/faq.html",
-      "/very.html", "/notifications.html", "/notifications.js"
+      "/notifications.html", "/notifications.js"
     ]);
     // Admin: requires ADMIN role
     const ADMIN_FILES   = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);
@@ -4603,7 +4602,15 @@ ${escapeTelegramHtml(r.reason)}
 
     const fileSession = getSession(req);
 
-    if (inAdmin) {
+    if (inPublic) {
+      // Already logged in → redirect away from login
+      if (requestedPath === "/login.html" && fileSession) {
+        const role = fileSession.user.role;
+        if (role === "ADMIN") return redirect(res, "/admin");
+        if (role === "GOD")   return redirect(res, "/god");
+        return redirect(res, "/");
+      }
+    } else if (inAdmin) {
       if (!fileSession) return redirect(res, "/login?redirect=/admin");
       if (fileSession.user.role !== "ADMIN" && fileSession.user.role !== "GOD") return redirect(res, "/");
     } else if (inAuth) {
@@ -4612,14 +4619,6 @@ ${escapeTelegramHtml(r.reason)}
         const redir = (cleanPath === "/index" || cleanPath === "/" || cleanPath === "") ? "" : `?redirect=${encodeURIComponent(cleanPath)}`;
         return redirect(res, `/login${redir}`);
       }
-    }
-
-    // Already logged in → redirect away from login
-    if (requestedPath === "/login.html" && fileSession) {
-      const role = fileSession.user.role;
-      if (role === "ADMIN") return redirect(res, "/admin");
-      if (role === "GOD")   return redirect(res, "/god");
-      return redirect(res, "/");
     }
 
     const filePath = path.join(root, requestedPath);
