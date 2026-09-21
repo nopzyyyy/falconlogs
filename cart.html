@@ -428,9 +428,14 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="headerCollapse">
-          <!-- 1:1 Authed Navigation: Only Home in the main navbar -->
+          <!-- Authed Navigation: Home default, other nav buttons show when logged in -->
           <ul class="navbar-nav align-items-center">
             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/orders.html">Orders</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/support.html">Support</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/vouches.html">Vouches</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/very.html">Very</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/notifications.html">Notifications</a></li>
           </ul>
 
           <!-- GUEST ACTIONS (DEFAULT NOT LOGGED IN) -->
@@ -503,34 +508,37 @@
         <div class="cart-bottom-container">
           <!-- LEFT COLUMN: SELECT PAYMENT PROCESSOR -->
           <div>
-            <div class="cart-section-heading">SELECT PAYMENT PROCESSOR</div>
-            <div class="cart-processors-grid">
-              <!-- Crypto Option -->
-              <button type="button" class="cart-processor-tile" id="choiceCrypto" data-method="CRYPTO">
-                <span class="cart-processor-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9 8h4.5a2.5 2.5 0 0 1 0 5H9"></path>
-                    <path d="M9 13h5.5a2.5 2.5 0 0 1 0 5H9"></path>
-                    <line x1="9" y1="5" x2="9" y2="19"></line>
-                    <line x1="12" y1="5" x2="12" y2="7"></line>
-                    <line x1="12" y1="17" x2="12" y2="19"></line>
-                  </svg>
-                </span>
-                <span>Crypto</span>
-              </button>
-
+            <div class="payment-section-label mb-2">SELECT PAYMENT PROCESSOR</div>
+            <div class="paymentProcessors paymentProcessors--compact">
               <!-- Balance Option -->
-              <button type="button" class="cart-processor-tile selected" id="choiceBalance" data-method="BALANCE">
-                <span class="cart-processor-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div class="paymentProcessor selected" id="choiceBalance" data-method="BALANCE" data-paymentprocessor="balance">
+                <div class="paymentProcessor-check">✓</div>
+                <div class="paymentProcessor-icon paymentProcessor-icon--balance">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="5" width="20" height="14" rx="2"></rect>
                     <line x1="2" y1="10" x2="22" y2="10"></line>
                     <circle cx="17" cy="15" r="1"></circle>
                   </svg>
-                </span>
-                <span>Balance</span>
-              </button>
+                </div>
+                <div class="paymentProcessor-info">
+                  <div class="paymentProcessor-title">Account Balance</div>
+                  <div class="paymentProcessor-desc">Instant checkout</div>
+                </div>
+              </div>
+
+              <!-- Crypto Option -->
+              <div class="paymentProcessor" id="choiceCrypto" data-method="CRYPTO" data-paymentprocessor="crypto">
+                <div class="paymentProcessor-check">✓</div>
+                <div class="paymentProcessor-icon paymentProcessor-icon--crypto">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c3.938.694 5.155-4.83.98-5.525m-.98 5.525L6.87 11.23m6.16-5.215-.347 1.97m-2.454.434 5.908 1.042m-4.52-1.847-.348 1.97m-2.793 7.822 5.908 1.042m-6.428-1.97-.348 1.97"/>
+                  </svg>
+                </div>
+                <div class="paymentProcessor-info">
+                  <div class="paymentProcessor-title">Cryptocurrency</div>
+                  <div class="paymentProcessor-desc">NOWPayments automated</div>
+                </div>
+              </div>
             </div>
 
             <!-- PURCHASE BUTTON -->

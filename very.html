@@ -62,8 +62,14 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="headerCollapse">
+          <!-- Authed Navigation: Home default, other nav buttons show when logged in -->
           <ul class="navbar-nav align-items-center">
             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/orders.html">Orders</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/support.html">Support</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/vouches.html">Vouches</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link active" href="/very.html">Very</a></li>
+            <li class="nav-item nav-auth-only" style="display: none !important;"><a class="nav-link" href="/notifications.html">Notifications</a></li>
           </ul>
 
           <!-- GUEST ACTIONS (NOT LOGGED IN) -->

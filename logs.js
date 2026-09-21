@@ -28,6 +28,7 @@ async function checkAuth() {
         const authActions = document.getElementById('navAuthActions');
         if (guestActions) guestActions.style.setProperty('display', 'none', 'important');
         if (authActions) authActions.style.setProperty('display', 'flex', 'important');
+        document.querySelectorAll('.nav-auth-only').forEach(el => el.style.setProperty('display', 'block', 'important'));
         const balEl = document.getElementById('clientBalance');
         if (balEl) balEl.textContent = `£${Number(user.balance || 0).toFixed(2)}`;
         const acctName = document.getElementById('accountUsername');
@@ -42,6 +43,7 @@ async function checkAuth() {
   const authActions = document.getElementById('navAuthActions');
   if (guestActions) guestActions.style.setProperty('display', 'flex', 'important');
   if (authActions) authActions.style.setProperty('display', 'none', 'important');
+  document.querySelectorAll('.nav-auth-only').forEach(el => el.style.setProperty('display', 'none', 'important'));
 }
 
 /** Single entry for any buy/add-to-cart action covers all product types now and in the future. */

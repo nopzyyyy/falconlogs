@@ -91,6 +91,54 @@ async function refreshNavUnreadCount() {
 
 if (document.getElementById('navNotifCount')) refreshNavUnreadCount();
 
+// ── Global Auth & Navbar State ────────────────────────────────────────────────
+async function syncGlobalAuth() {
+  try {
+    const r = await fetch('/api/auth/me');
+    if (r.ok) {
+      const data = await r.json();
+      if (data && (data.authenticated === true || data.user)) {
+        window.IS_LOGGED_IN = true;
+        const user = data.user || data;
+        window.CURRENT_USER = user;
+        const guestActions = document.getElementById('navGuestActions');
+        const authActions = document.getElementById('navAuthActions');
+        if (guestActions) guestActions.style.setProperty('display', 'none', 'important');
+        if (authActions) authActions.style.setProperty('display', 'flex', 'important');
+        document.querySelectorAll('.nav-auth-only').forEach(el => el.style.setProperty('display', 'block', 'important'));
+        const balEl = document.getElementById('clientBalance');
+        if (balEl) balEl.textContent = `£${Number(user.balance || 0).toFixed(2)}`;
+        const acctName = document.getElementById('accountUsername');
+        if (acctName) acctName.textContent = user.email ? user.email.split('@')[0] : (user.name || 'user');
+        return user;
+      }
+    }
+  } catch (_) {}
+  window.IS_LOGGED_IN = false;
+  const guestActions = document.getElementById('navGuestActions');
+  const authActions = document.getElementById('navAuthActions');
+  if (guestActions) guestActions.style.setProperty('display', 'flex', 'important');
+  if (authActions) authActions.style.setProperty('display', 'none', 'important');
+  document.querySelectorAll('.nav-auth-only').forEach(el => el.style.setProperty('display', 'none', 'important'));
+  return null;
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', syncGlobalAuth);
+} else {
+  syncGlobalAuth();
+}
+
+document.addEventListener('click', async (e) => {
+  if (e.target.closest('#navLogoutBtn')) {
+    e.preventDefault();
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (_) {}
+    window.location.href = '/login.html';
+  }
+});
+
 // ── Back to top button ─────────────────────────────────────────────────────────
 
 const backBtn = document.getElementById('btn-back-to-top');
