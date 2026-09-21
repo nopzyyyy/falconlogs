@@ -112,7 +112,6 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
 }
 .navbar-dark .navbar-nav .nav-link:not(.btn):not(.cart-count) { color: #fff !important; }
 .navbar-dark .navbar-nav .nav-link:not(.btn):not(.cart-count):hover { color: #fff !important; }
-.navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .nav-link:not(.btn):not(.cart-count).active { color: #ea580c !important; font-weight: 600; }
 
 .navbar .nav-link.nav-balance-link {
@@ -461,9 +460,18 @@ footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !imp
    color rule wins — pin button text to white in both states. */
 .navbar .nav-link.btn,
 .navbar .nav-link.btn:hover,
-.navbar .nav-link.btn:focus { color: #fff !important; }
-.btn.btn-success { background: #ea580c; color: #141414; }
-.btn.btn-success:hover { background: #ea580c; color: #fff; }
+.navbar .nav-link.btn:focus,
+.navbar .nav-link.btn.active,
+.navbar .nav-link.btn:active,
+.navbar-nav.navbar-auth-actions .nav-link.btn,
+.navbar-nav.navbar-auth-actions .nav-link.btn:hover,
+.navbar-nav.navbar-auth-actions .nav-link.btn:focus,
+.navbar-nav.navbar-auth-actions .nav-link.btn.active,
+.navbar-nav.navbar-auth-actions .nav-link.btn:active {
+  color: #fff !important;
+}
+.btn.btn-success { background: #ea580c; color: #fff !important; }
+.btn.btn-success:hover { background: #c2410c; color: #fff !important; }
 .btn.btn-secondary,
 .btn-secondary {
   --bs-btn-bg: #ea580c;
@@ -3089,7 +3097,7 @@ body.vouch-lightbox-open {
   border-color: #ea580c !important;
 }
 
-/* ── Modal (Solid Dark - Darker than background) ────────────────────────────── */
+/* ── Modal (1:1 Authed Glass & Elevation) ────────────────────────────────── */
 .modal-backdrop {
   background-color: #000000 !important;
 }
@@ -3097,49 +3105,47 @@ body.vouch-lightbox-open {
   opacity: 0.72 !important;
 }
 
-.modal-content,
-.modal-card,
-.order-info-modal-card,
-.falcon-alert-modal-card,
-.modal-dialog .modal-content,
-#productModal .modal-content,
-#orderInfoModalOverlay .modal-content {
-  background: #0c0c0e !important;
+.modal-content {
+  background: linear-gradient(160deg, #1c1c1f 0%, #141416 100%) !important;
   color: #fff;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  border: 1px solid rgba(234, 88, 12, .15) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .5), 0 0 0 1px rgba(255, 255, 255, .02);
+  /* Subtle brand-mark watermark, sized large and pinned to the bottom-right
+     so it bleeds out of the corner as a faint shine — adds a polished
+     "branded" feel without competing with the content. */
   position: relative;
   overflow: hidden;
 }
-.modal-content::before,
-.modal-content::after,
-.modal-card::before,
-.modal-card::after,
-.order-info-modal-card::before,
-.order-info-modal-card::after {
-  display: none !important;
+.modal-content::before {
+  content: "";
+  position: absolute;
+  inset: auto -60px -120px auto;
+  width: 360px;
+  height: 360px;
+  background: url('/logo.png') no-repeat center / contain;
+  opacity: .045;
+  filter: blur(.4px);
+  pointer-events: none;
+  z-index: 0;
 }
-.modal-content > *,
-.modal-card > *,
-.order-info-modal-card > * { position: relative; z-index: 1; }
-
-.modal-header,
-.modal-footer,
-.modal-content-holder,
-.modal-body {
-  border-radius: 0 !important;
+.modal-content::after {
+  /* Soft orange glow radiating from the top-left corner */
+  content: "";
+  position: absolute;
+  top: -80px; left: -80px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(234, 88, 12, .14) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
+.modal-content > * { position: relative; z-index: 1; }
 
 .modal-header {
   border-bottom: 1px solid rgba(255, 255, 255, .06);
   padding: 18px 24px 14px;
-  background: transparent !important;
 }
-.modal-footer {
-  border-top: 1px solid rgba(255, 255, 255, .06);
-  background: transparent !important;
-}
+.modal-footer { border-top: 1px solid rgba(255, 255, 255, .06); }
 .modal-title {
   font-size: 11.5px;
   font-weight: 600;
@@ -3151,42 +3157,32 @@ body.vouch-lightbox-open {
 .btn-close-modal {
   position: absolute;
   top: 14px; right: 18px;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .06);
+  border-radius: 8px;
   cursor: pointer;
   padding: 0;
   z-index: 20;
-  width: 26px; height: 26px;
+  width: 28px; height: 28px;
   display: flex; align-items: center; justify-content: center;
-  color: rgba(255, 255, 255, .6) !important;
-  font-size: 18px;
+  color: rgba(255, 255, 255, .7);
+  font-size: 14px;
   line-height: 1;
-  transition: color .15s ease, transform .15s ease;
+  transition: background .15s ease, color .15s ease, transform .15s ease;
 }
 .btn-close-modal:hover {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: #fff !important;
-  transform: scale(1.15);
+  background: rgba(234, 88, 12, .18);
+  color: #fff;
+  transform: rotate(90deg);
 }
 
 .modal-content-holder {
   overflow-y: auto;
   scrollbar-gutter: stable both-edges;
-  background: transparent !important;
 }
-.modal-body {
-  padding: 18px 24px 22px !important;
-  background: transparent !important;
-}
+.modal-body { padding: 18px 24px 22px !important; }
 
 /* ── Product modal ────────────────────────────────────────────────────────────── */
-/* Product title — matches the navbar HOME text: Montserrat, weight 500 (thin),
-   antialiased, tight negative letter-spacing — just larger. Solid white, no
-   gradient, so the "thinness" reads exactly like the nav links. */
 #productModalBody > h5:first-of-type {
   font-size: 22px !important;
   font-weight: 500 !important;
@@ -3198,7 +3194,6 @@ body.vouch-lightbox-open {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* Section labels — quieter, uppercase tag style */
 #productModalBody label {
   font-size: 10.5px !important;
   text-transform: uppercase;
@@ -3208,184 +3203,58 @@ body.vouch-lightbox-open {
 }
 #productModalBody label:first-of-type { margin-top: 4px !important; }
 
-/* Modal Quantity Stepper & Price Display */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0 !important;
-}
-input[type=number] {
-  -moz-appearance: textfield !important;
-}
-
-.modal-qty-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  background: #141416 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 8px !important;
-  padding: 8px 14px !important;
-  transition: border-color 0.15s ease;
-}
-.modal-qty-container:focus-within {
-  border-color: rgba(234, 88, 12, 0.5) !important;
-}
-.qty-stepper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.qty-btn {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 6px !important;
-  color: rgba(255, 255, 255, 0.85) !important;
-  cursor: pointer;
-  padding: 0 !important;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease !important;
-  box-shadow: none !important;
-}
-.qty-btn:hover {
-  background: rgba(234, 88, 12, 0.2) !important;
-  border-color: rgba(234, 88, 12, 0.45) !important;
-  color: #fb923c !important;
-}
-.qty-btn:active {
-  transform: scale(0.93);
-}
-.qty-stepper-input {
-  width: 58px !important;
-  height: 32px !important;
-  text-align: center !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 6px !important;
-  color: #fff !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
-  padding: 0 4px !important;
-  box-shadow: none !important;
-}
-.qty-stepper-input:focus {
-  border-color: rgba(234, 88, 12, 0.6) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  outline: none !important;
-}
-.qty-price-display {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-}
-.qty-currency {
-  color: #ea580c;
-  font-size: 14px;
-  font-weight: 700;
-}
-.qty-amount {
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
-}
-
 .buttons-container {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin-top: 22px;
 }
 .buttons-container .btn:first-child,
 .buttons-container #btnAddModal {
   flex: 1 1 auto;
-  background: #ea580c !important;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
   color: #fff !important;
   font-weight: 600 !important;
   font-size: 14px !important;
-  padding: 12px 18px !important;
-  border-radius: 6px !important;
-  border: none !important;
-  box-shadow: none !important;
-  transition: background .15s ease, transform .15s ease !important;
+  padding: 12px 16px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, .35) !important;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease !important;
 }
 .buttons-container .btn:first-child:hover,
 .buttons-container #btnAddModal:hover {
-  background: #fb923c !important;
+  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%) !important;
   transform: translateY(-1px);
-  box-shadow: none !important;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, .5) !important;
 }
-.buttons-container .btn-modal-cart,
-.buttons-container .btn:last-child {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 6px 10px !important;
+.buttons-container .btn:last-child,
+.buttons-container a.btn-primary {
+  flex: 0 0 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.65) !important;
-  text-decoration: none !important;
-  cursor: pointer;
-  transition: color 0.15s ease, transform 0.15s ease !important;
-}
-.buttons-container .btn-modal-cart:hover,
-.buttons-container .btn:last-child:hover {
-  background: transparent !important;
-  border: none !important;
+  background: rgba(234, 88, 12, .12) !important;
+  border: 1px solid rgba(234, 88, 12, .35) !important;
+  border-radius: 10px !important;
+  padding: 12px !important;
   box-shadow: none !important;
-  color: #ea580c !important;
-  transform: scale(1.12);
+  transition: background .15s ease, border-color .15s ease, transform .15s ease !important;
 }
-.buttons-container .btn-modal-cart svg,
-.buttons-container .btn:last-child svg {
-  width: 22px;
-  height: 22px;
+.buttons-container .btn:last-child:hover,
+.buttons-container a.btn-primary:hover {
+  background: rgba(234, 88, 12, .25) !important;
+  border-color: rgba(234, 88, 12, .65) !important;
+  transform: translateY(-1px);
 }
-.buttons-container .btn-modal-cart svg path,
-.buttons-container .btn-modal-cart svg circle,
+.buttons-container .btn:last-child svg,
+.buttons-container a.btn-primary svg { width: 22px; height: 22px; }
 .buttons-container .btn:last-child svg path,
-.buttons-container .btn:last-child svg circle {
-  fill: currentColor !important;
-  stroke: currentColor !important;
-  transition: fill 0.15s ease, stroke 0.15s ease;
-}
+.buttons-container .btn:last-child svg circle,
+.buttons-container a.btn-primary svg path,
+.buttons-container a.btn-primary svg circle { fill: #fff !important; stroke: #fff !important; }
 
-/* Smooth modal entrance — slight scale-up on top of Bootstrap's translate.
-   We avoid touching opacity here so Bootstrap's default fade still works. */
+/* Smooth modal entrance — slight scale-up on top of Bootstrap's translate. */
 .modal.fade .modal-dialog { transition: transform .3s cubic-bezier(.4, 0, .2, 1); }
 .modal.show .modal-dialog { transform: translate(0, 0) scale(1); }
-
-/* Ensure #productModal renders as a floating centered popup on mobile, never fullscreen */
-@media (max-width: 767.98px) {
-  #productModal.modal {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  #productModal .modal-dialog,
-  .modal-dialog.modal-fullscreen-md-down {
-    max-width: min(440px, calc(100vw - 32px)) !important;
-    width: calc(100vw - 32px) !important;
-    margin: 1.5rem auto !important;
-    min-height: calc(100% - 3rem) !important;
-    height: auto !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  #productModal .modal-content,
-  .modal-fullscreen-md-down .modal-content {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 88vh !important;
-    border-radius: 0 !important;
-  }
-}
 
 /* ── Footer (Falcon Logs Design System) ────────────────────────────────────── */
 .site-footer {
@@ -4707,4 +4576,74 @@ footer .navbar .nav-link {
 .very-install-page--mobile .very-install-lead strong {
   color: #fb923c;
 }
+
+/* ── Loading spinner (in-page, mid-flight requests) ───────────────────────── */
+.loading { display: flex; justify-content: center; align-items: center; padding: 40px 0; }
+.loading::after { content: ''; width: 36px; height: 36px; border: 3px solid rgba(255,255,255,.2); border-top-color: #ea580c; border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Full-page initial loading overlay (Authed 1:1) ───────────────────────── */
+html.loader-active,
+body.loader-active {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  height: 100%;
+  touch-action: none;
+}
+body.loader-active #pageLoader ~ * {
+  visibility: hidden;
+}
+#pageLoader {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  background: #141414;
+  z-index: 2147483646;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  overflow: hidden;
+  transition: opacity .35s ease, visibility .35s ease;
+}
+#pageLoader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+#pageLoader .loader-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.4);
+  border: 1px solid rgba(234, 88, 12, .18);
+}
+#pageLoader .loader-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(234, 88, 12, .18);
+  border-top-color: #ea580c;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+#pageLoader .loader-text {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .3px;
+  text-align: center;
+}
+#pageLoader .loader-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: contain;
+  opacity: .9;
+}
+
 

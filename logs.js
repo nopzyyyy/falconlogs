@@ -243,66 +243,24 @@ async function openProductModal(productId) {
         </div>
       </div>
       <label class="mt-4 mb-2 d-flex">Amount to add</label>
-      <div class="modal-qty-container">
-        <div class="qty-stepper">
-          <button type="button" class="qty-btn qty-btn-minus" id="btnQtyMinus" aria-label="Decrease quantity">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </button>
-          <input id="totalQuantity" placeholder="1" type="number" value="1" min="1" class="qty-stepper-input">
-          <button type="button" class="qty-btn qty-btn-plus" id="btnQtyPlus" aria-label="Increase quantity">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </button>
-        </div>
-        <div class="qty-price-display">
-          <span class="qty-currency">${CURRENCY}</span>
-          <span id="totalAmount" class="qty-amount">${firstPrice.toFixed(2)}</span>
-        </div>
+      <div class="input-group">
+        <input id="totalQuantity" placeholder="enter amount" type="number" value="" min="1" class="form-control">
+        <span class="input-group-text">${CURRENCY}</span>
+        <span id="totalAmount" class="input-group-text">${firstPrice.toFixed(2)}</span>
       </div>
       <div class="buttons-container">
         <button class="btn btn-secondary" id="btnAddModal" onclick="addToCartFromModal('${product.id}')">${addToCartLabel()}</button>
-        <a href="/cart" class="btn-modal-cart" aria-label="View Cart" title="View Cart">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 23 23" fill="none">
-            <path d="M3.28174 3.68962C2.78388 3.68962 2.38029 4.09321 2.38029 4.59106C2.38029 5.08892 2.78388 5.49251 3.28174 5.49251V3.68962ZM5.08463 4.59106L5.98238 4.50945C5.94017 4.04513 5.55087 3.68962 5.08463 3.68962V4.59106ZM19.5078 7.29541L20.4002 7.42289C20.4371 7.1642 20.36 6.9022 20.1888 6.70478C20.0176 6.50736 19.7691 6.39396 19.5078 6.39396V7.29541ZM5.33048 7.29541L4.43274 7.37702L5.33048 7.29541ZM17.1557 13.7092L17.2199 14.6083L17.1557 13.7092ZM7.74993 14.381L7.6857 13.4818L7.74993 14.381ZM5.82598 12.7459L4.92824 12.8275L5.82598 12.7459ZM3.28174 5.49251H5.08463V3.68962H3.28174V5.49251ZM7.81415 15.2802L17.2199 14.6083L17.0915 12.81L7.6857 13.4818L7.81415 15.2802ZM19.7044 12.2933L20.4002 7.42289L18.6154 7.16793L17.9196 12.0383L19.7044 12.2933ZM4.18689 4.67268L4.43274 7.37702L6.22823 7.2138L5.98238 4.50945L4.18689 4.67268ZM4.43274 7.37702L4.92824 12.8275L6.72373 12.6643L6.22823 7.2138L4.43274 7.37702ZM19.5078 6.39396H5.33048V8.19686H19.5078V6.39396ZM17.2199 14.6083C18.4898 14.5176 19.5244 13.5536 19.7044 12.2933L17.9196 12.0383C17.8596 12.4584 17.5148 12.7798 17.0915 12.81L17.2199 14.6083ZM7.6857 13.4818C7.19589 13.5168 6.76819 13.1533 6.72373 12.6643L4.92824 12.8275C5.06161 14.2946 6.34473 15.3851 7.81415 15.2802L7.6857 13.4818Z" fill="currentColor"></path>
-            <circle cx="8.69039" cy="18.1128" r="0.9014" fill="currentColor" stroke="currentColor" stroke-width="1.8029"/>
-            <circle cx="15.9021" cy="18.1128" r="0.9014" fill="currentColor" stroke="currentColor" stroke-width="1.8029"/>
+        <a href="/cart.html" class="btn btn-primary" aria-label="Cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+            <path d="M3.28174 3.68962C2.78388 3.68962 2.38029 4.09321 2.38029 4.59106C2.38029 5.08892 2.78388 5.49251 3.28174 5.49251V3.68962ZM5.08463 4.59106L5.98238 4.50945C5.94017 4.04513 5.55087 3.68962 5.08463 3.68962V4.59106ZM19.5078 7.29541L20.4002 7.42289C20.4371 7.1642 20.36 6.9022 20.1888 6.70478C20.0176 6.50736 19.7691 6.39396 19.5078 6.39396V7.29541ZM5.33048 7.29541L4.43274 7.37702L5.33048 7.29541ZM17.1557 13.7092L17.2199 14.6083L17.1557 13.7092ZM7.74993 14.381L7.6857 13.4818L7.74993 14.381ZM5.82598 12.7459L4.92824 12.8275L5.82598 12.7459ZM3.28174 5.49251H5.08463V3.68962H3.28174V5.49251ZM7.81415 15.2802L17.2199 14.6083L17.0915 12.81L7.6857 13.4818L7.81415 15.2802ZM19.7044 12.2933L20.4002 7.42289L18.6154 7.16793L17.9196 12.0383L19.7044 12.2933ZM4.18689 4.67268L4.43274 7.37702L6.22823 7.2138L5.98238 4.50945L4.18689 4.67268ZM4.43274 7.37702L4.92824 12.8275L6.72373 12.6643L6.22823 7.2138L4.43274 7.37702ZM19.5078 6.39396H5.33048V8.19686H19.5078V6.39396ZM17.2199 14.6083C18.4898 14.5176 19.5244 13.5536 19.7044 12.2933L17.9196 12.0383C17.8596 12.4584 17.5148 12.7798 17.0915 12.81L17.2199 14.6083ZM7.6857 13.4818C7.19589 13.5168 6.76819 13.1533 6.72373 12.6643L4.92824 12.8275C5.06161 14.2946 6.34473 15.3851 7.81415 15.2802L7.6857 13.4818Z" fill="white"></path>
+            <circle cx="8.69039" cy="18.1128" r="0.9014" fill="white" stroke="white" stroke-width="1.8029"/>
+            <circle cx="15.9021" cy="18.1128" r="0.9014" fill="white" stroke="white" stroke-width="1.8029"/>
           </svg>
         </a>
       </div>
     `;
 
     const qtyInput = document.getElementById('totalQuantity');
-    const btnMinus = document.getElementById('btnQtyMinus');
-    const btnPlus = document.getElementById('btnQtyPlus');
-
-    if (btnMinus) {
-      btnMinus.addEventListener('click', (e) => {
-        e.preventDefault();
-        let cur = parseInt(qtyInput.value, 10);
-        if (isNaN(cur) || cur <= 1) {
-          qtyInput.value = '1';
-        } else {
-          qtyInput.value = String(cur - 1);
-        }
-        updateModalTotal();
-      });
-    }
-
-    if (btnPlus) {
-      btnPlus.addEventListener('click', (e) => {
-        e.preventDefault();
-        const stock = getSelectedRegularOptionStock();
-        let cur = parseInt(qtyInput.value, 10);
-        if (isNaN(cur) || cur < 1) cur = 1;
-        else cur += 1;
-        if (stock > 0 && cur > stock) {
-          cur = stock;
-          if (typeof showToast === 'function') showToast(`Max available stock is ${stock}`, 'warning');
-        }
-        qtyInput.value = String(cur);
-        updateModalTotal();
-      });
-    }
-
     qtyInput.addEventListener('input', () => {
       if (qtyInput.value === '') { updateModalTotal(); return; }
       const stock = getSelectedRegularOptionStock();
@@ -430,65 +388,24 @@ function renderFcaProductModal(product, folders) {
       </div>
     </div>
     <label class="mt-4 mb-2 d-flex">Amount to add</label>
-    <div class="modal-qty-container">
-      <div class="qty-stepper">
-        <button type="button" class="qty-btn qty-btn-minus" id="btnQtyMinus" aria-label="Decrease quantity">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        </button>
-        <input id="totalQuantity" placeholder="1" type="number" value="1" min="1" class="qty-stepper-input">
-        <button type="button" class="qty-btn qty-btn-plus" id="btnQtyPlus" aria-label="Increase quantity">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        </button>
-      </div>
-      <div class="qty-price-display">
-        <span class="qty-currency">${CURRENCY}</span>
-        <span id="totalAmount" class="qty-amount">${firstPrice.toFixed(2)}</span>
-      </div>
+    <div class="input-group">
+      <input id="totalQuantity" placeholder="enter amount" type="number" value="" min="1" class="form-control">
+      <span class="input-group-text">${CURRENCY}</span>
+      <span id="totalAmount" class="input-group-text">${firstPrice.toFixed(2)}</span>
     </div>
     <div class="buttons-container">
       <button class="btn btn-secondary" id="btnAddModal" onclick="addToCartFromModal('${product.id}')">${addToCartLabel()}</button>
-      <a href="/cart" class="btn-modal-cart" aria-label="View Cart" title="View Cart">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 23 23" fill="none">
-          <path d="M3.28174 3.68962C2.78388 3.68962 2.38029 4.09321 2.38029 4.59106C2.38029 5.08892 2.78388 5.49251 3.28174 5.49251V3.68962ZM5.08463 4.59106L5.98238 4.50945C5.94017 4.04513 5.55087 3.68962 5.08463 3.68962V4.59106ZM19.5078 7.29541L20.4002 7.42289C20.4371 7.1642 20.36 6.9022 20.1888 6.70478C20.0176 6.50736 19.7691 6.39396 19.5078 6.39396V7.29541ZM5.33048 7.29541L4.43274 7.37702L5.33048 7.29541ZM17.1557 13.7092L17.2199 14.6083L17.1557 13.7092ZM7.74993 14.381L7.6857 13.4818L7.74993 14.381ZM5.82598 12.7459L4.92824 12.8275L5.82598 12.7459ZM3.28174 5.49251H5.08463V3.68962H3.28174V5.49251ZM7.81415 15.2802L17.2199 14.6083L17.0915 12.81L7.6857 13.4818L7.81415 15.2802ZM19.7044 12.2933L20.4002 7.42289L18.6154 7.16793L17.9196 12.0383L19.7044 12.2933ZM4.18689 4.67268L4.43274 7.37702L6.22823 7.2138L5.98238 4.50945L4.18689 4.67268ZM4.43274 7.37702L4.92824 12.8275L6.72373 12.6643L6.22823 7.2138L4.43274 7.37702ZM19.5078 6.39396H5.33048V8.19686H19.5078V6.39396ZM17.2199 14.6083C18.4898 14.5176 19.5244 13.5536 19.7044 12.2933L17.9196 12.0383C17.8596 12.4584 17.5148 12.7798 17.0915 12.81L17.2199 14.6083ZM7.6857 13.4818C7.19589 13.5168 6.76819 13.1533 6.72373 12.6643L4.92824 12.8275C5.06161 14.2946 6.34473 15.3851 7.81415 15.2802L7.6857 13.4818Z" fill="currentColor"></path>
-          <circle cx="8.69039" cy="18.1128" r="0.9014" fill="currentColor" stroke="currentColor" stroke-width="1.8029"/>
-          <circle cx="15.9021" cy="18.1128" r="0.9014" fill="currentColor" stroke="currentColor" stroke-width="1.8029"/>
+      <a href="/cart.html" class="btn btn-primary" aria-label="Cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+          <path d="M3.28174 3.68962C2.78388 3.68962 2.38029 4.09321 2.38029 4.59106C2.38029 5.08892 2.78388 5.49251 3.28174 5.49251V3.68962ZM5.08463 4.59106L5.98238 4.50945C5.94017 4.04513 5.55087 3.68962 5.08463 3.68962V4.59106ZM19.5078 7.29541L20.4002 7.42289C20.4371 7.1642 20.36 6.9022 20.1888 6.70478C20.0176 6.50736 19.7691 6.39396 19.5078 6.39396V7.29541ZM5.33048 7.29541L4.43274 7.37702L5.33048 7.29541ZM17.1557 13.7092L17.2199 14.6083L17.1557 13.7092ZM7.74993 14.381L7.6857 13.4818L7.74993 14.381ZM5.82598 12.7459L4.92824 12.8275L5.82598 12.7459ZM3.28174 5.49251H5.08463V3.68962H3.28174V5.49251ZM7.81415 15.2802L17.2199 14.6083L17.0915 12.81L7.6857 13.4818L7.81415 15.2802ZM19.7044 12.2933L20.4002 7.42289L18.6154 7.16793L17.9196 12.0383L19.7044 12.2933ZM4.18689 4.67268L4.43274 7.37702L6.22823 7.2138L5.98238 4.50945L4.18689 4.67268ZM4.43274 7.37702L4.92824 12.8275L6.72373 12.6643L6.22823 7.2138L4.43274 7.37702ZM19.5078 6.39396H5.33048V8.19686H19.5078V6.39396ZM17.2199 14.6083C18.4898 14.5176 19.5244 13.5536 19.7044 12.2933L17.9196 12.0383C17.8596 12.4584 17.5148 12.7798 17.0915 12.81L17.2199 14.6083ZM7.6857 13.4818C7.19589 13.5168 6.76819 13.1533 6.72373 12.6643L4.92824 12.8275C5.06161 14.2946 6.34473 15.3851 7.81415 15.2802L7.6857 13.4818Z" fill="white"></path>
+          <circle cx="8.69039" cy="18.1128" r="0.9014" fill="white" stroke="white" stroke-width="1.8029"/>
+          <circle cx="15.9021" cy="18.1128" r="0.9014" fill="white" stroke="white" stroke-width="1.8029"/>
         </svg>
       </a>
     </div>
   `;
 
   const qtyInput = document.getElementById('totalQuantity');
-  const btnMinus = document.getElementById('btnQtyMinus');
-  const btnPlus = document.getElementById('btnQtyPlus');
-
-  if (btnMinus) {
-    btnMinus.addEventListener('click', (e) => {
-      e.preventDefault();
-      let cur = parseInt(qtyInput.value, 10);
-      if (isNaN(cur) || cur <= 1) {
-        qtyInput.value = '1';
-      } else {
-        qtyInput.value = String(cur - 1);
-      }
-      updateModalTotal();
-    });
-  }
-
-  if (btnPlus) {
-    btnPlus.addEventListener('click', (e) => {
-      e.preventDefault();
-      const { stock } = fcaGetSelection();
-      let cur = parseInt(qtyInput.value, 10);
-      if (isNaN(cur) || cur < 1) cur = 1;
-      else cur += 1;
-      if (stock > 0 && cur > stock) {
-        cur = stock;
-        if (typeof showToast === 'function') showToast(`Max available stock is ${stock}`, 'warning');
-      }
-      qtyInput.value = String(cur);
-      updateModalTotal();
-    });
-  }
 
   function refreshFileSelect(folderId) {
     const folder = folders.find(f => f.id === folderId);
