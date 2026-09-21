@@ -4573,7 +4573,6 @@ ${escapeTelegramHtml(r.reason)}
       "/bootstrap.min.css", "/bootstrap.bundle.min.js",
       "/cart-utils.js", "/app.js", "/datetime.js",
       "/tos.html", "/faq.html", "/vouches.html", "/vouches.js",
-      "/very.html",
       "/banner.png", "/hero-banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png",
       "/favicon.svg", "/favicon.ico", "/favicon.png"
     ]);
@@ -4585,7 +4584,8 @@ ${escapeTelegramHtml(r.reason)}
       "/orders.html", "/balance.html",
       "/dashboard.html", "/dashboard.js", "/deposit.html",
       "/support.html", "/support.js",
-      "/notifications.html", "/notifications.js"
+      "/notifications.html", "/notifications.js",
+      "/very.html"
     ]);
     // Admin: requires ADMIN role
     const ADMIN_FILES   = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);

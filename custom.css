@@ -4563,3 +4563,148 @@ button:focus,
 #btnAddModal:focus {
   box-shadow: none !important;
 }
+
+/* ── Authed 1:1 Footer Styling ────────────────────────────────────────────── */
+footer.bg-dark {
+  background: transparent !important;
+  border: none !important;
+}
+footer .navbar .nav-link {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+.footer-tg-icon {
+  transform: translateY(3px);
+  margin-left: 5px;
+  flex-shrink: 0;
+}
+
+/* ── Authed 1:1 Very Verification Page ───────────────────────────────────── */
+.very-page .main-content {
+  padding: 0;
+}
+.very-app-shell {
+  width: 100%;
+  min-height: calc(100vh - 220px);
+  border: 1.5px solid rgba(234, 88, 12, 0.25);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #141414;
+}
+.very-app-frame {
+  display: block;
+  width: 100%;
+  min-height: calc(100vh - 220px);
+  border: 0;
+  background: #141414;
+}
+
+.very-install-page {
+  padding: 24px 0 40px;
+}
+.very-install-page .main-content {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.very-install-card {
+  border: 1.5px solid rgba(234, 88, 12, 0.35);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 28px 24px 32px;
+  text-align: center;
+}
+.very-install-logo {
+  border-radius: 22%;
+  box-shadow: none !important;
+  margin-bottom: 16px;
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
+.very-install-signed-in {
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: left;
+}
+.very-install-signed-in strong {
+  color: #4ade80;
+}
+.very-install-signed-in-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+.very-install-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fb923c;
+  margin-bottom: 10px;
+}
+.very-install-lead {
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 20px;
+}
+.very-install-url-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(234, 88, 12, 0.25);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+.very-install-url-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 6px;
+}
+.very-install-url {
+  display: block;
+  font-size: 15px;
+  color: #ea580c;
+  word-break: break-all;
+  font-family: 'JetBrains Mono', monospace;
+}
+.very-install-steps {
+  text-align: left;
+  margin-bottom: 16px;
+}
+.very-install-steps-heading {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin: 18px 0 8px;
+}
+.very-install-steps ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.78);
+}
+.very-install-steps li {
+  margin-bottom: 6px;
+}
+.very-install-note {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  line-height: 1.45;
+}
+.very-install-page--mobile .very-install-title {
+  color: #fff;
+}
+.very-install-page--mobile .very-install-lead strong {
+  color: #fb923c;
+}
+
