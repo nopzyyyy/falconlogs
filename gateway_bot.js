@@ -28,7 +28,7 @@ const path = require("path");
 const https = require("https");
 
 const BOT_TOKEN = process.env.GATEWAY_BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN || "";
-const GATEWAY_NAME = process.env.GATEWAY_NAME || "mysteriogateway";
+const GATEWAY_NAME = process.env.GATEWAY_NAME || "falconlogsgateway";
 
 // Authorized admin list
 const ADMIN_IDS = [6926823977]; // Replace with actual Admin Telegram IDs, e.g. [123456789]

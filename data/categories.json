@@ -1,8 +1,1 @@
-[
-  { "name": "Food & Groceries", "icon": "restaurant" },
-  { "name": "Retail & Shopping", "icon": "shopping_cart" },
-  { "name": "Cards & Rewards", "icon": "credit_card" },
-  { "name": "Entertainment & Cinema", "icon": "movie" },
-  { "name": "Banking & Finance", "icon": "vpn_key" },
-  { "name": "Travel & Airlines", "icon": "flight" }
-]
+[]

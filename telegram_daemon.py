@@ -11,7 +11,7 @@ from telethon.errors import FloodWaitError, SessionPasswordNeededError
 # API credentials
 api_id = int(os.environ.get("TELEGRAM_API_ID", 12345678))
 api_hash = os.environ.get("TELEGRAM_API_HASH", "your_telegram_api_hash")
-SESSION_NAME = os.environ.get("TELEGRAM_SESSION_NAME", "mysterio_session")
+SESSION_NAME = os.environ.get("TELEGRAM_SESSION_NAME", "falconlogs_session")
 
 # Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

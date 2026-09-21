@@ -1,8 +1,8 @@
 ================================================================================
-          MYSTERIO.CC — COMPREHENSIVE ARCHITECTURE & OPERATIONS MANUAL
+          FALCONLOGS.COM — COMPREHENSIVE ARCHITECTURE & OPERATIONS MANUAL
 ================================================================================
 
-This document explains exactly how the Mysterio digital storefront, database,
+This document explains exactly how the Falcon Logs digital storefront, database,
 payment gateways, Telegram bots, and emergency security systems work, along with
 step-by-step instructions to redeploy or rehost the site at any time.
 
@@ -10,7 +10,7 @@ step-by-step instructions to redeploy or rehost the site at any time.
 1. ARCHITECTURAL OVERVIEW
 ================================================================================
 
-Mysterio is built as a high-performance, lightweight Node.js digital marketplace
+Falcon Logs is built as a high-performance, lightweight Node.js digital marketplace
 designed for speed, resilience, and privacy.
 
 - Core Web Engine: Node.js HTTP server (`server.js`) listening on port 3001.
@@ -49,7 +49,7 @@ The platform uses three distinct permission levels:
    - Review and approve/deny refund tickets.
    - Configure active payment methods, coupons, announcements, and FAQs.
    - Current Login:
-     * Email:    admin_ops_d0c2c93f@mysterio.cc
+     * Email:    admin_ops_d0c2c93f@falconlogs.com
      * Password: h@!rTKFj(J&p4N@Kyl==v%PaBM)nyEJR
 
 3. GOD SUPER-ADMIN (Role: "GOD"):
@@ -57,7 +57,7 @@ The platform uses three distinct permission levels:
    - High-level analytics, complete inventory inspection, revenue tracking.
    - Contains the Master Emergency Lockdown Control.
    - Current Login:
-     * Email:    god_root_0674f78e@mysterio.cc
+     * Email:    god_root_0674f78e@falconlogs.com
      * Password: wjnDHESfjR$*qH)Z4epNsW35!EZbFUwo
 
 4. MASTER EMERGENCY LOCKDOWN KEY:
@@ -73,7 +73,7 @@ A. NOWPAYMENTS (CRYPTOCURRENCY GATEWAY)
 The store supports 10+ cryptocurrencies (BTC, LTC, ETH, SOL, USDT-TRC20, TRX, etc.).
 - Direct Store Checkout: Uses `NOWPAYMENTS_ORDER_API_KEY`.
 - Balance Deposit Checkout: Uses `NOWPAYMENTS_TOPUP_API_KEY` (gives +10% bonus credit).
-- IPN Webhook Receiver: `https://mysterio.cc/api/payments/webhook`
+- IPN Webhook Receiver: `https://falconlogs.com/api/payments/webhook`
 - Webhook Security: Incoming webhook calls from NOWPayments are cryptographically
   verified using HMAC-SHA512 with `NOWPAYMENTS_IPN_SECRET` over canonically sorted JSON keys.
 - Real-Time Dual Checking: In addition to instant webhook delivery, the customer's
@@ -147,22 +147,22 @@ To start this website on a new Ubuntu/Debian VPS:
    sudo npm install -g pm2
 
 3. UPLOAD FILES:
-   Extract this entire folder into `/var/www/mysterio/`
+   Extract this entire folder into `/var/www/falconlogs/`
 
 4. INSTALL DEPENDENCIES:
-   cd /var/www/mysterio && npm install
+   cd /var/www/falconlogs && npm install
 
 5. CONFIGURE ENVIRONMENT (.env):
    Verify `.env` has the correct `PORT=3001` and your API keys.
 
 6. START WITH PM2:
-   pm2 start server.js --name "mysterio"
+   pm2 start server.js --name "falconlogs"
    pm2 save
    pm2 startup
 
 7. CONFIGURE NGINX:
-   Copy `mysterio.nginx.conf` to `/etc/nginx/sites-available/default`:
-   sudo cp mysterio.nginx.conf /etc/nginx/sites-available/default
+   Copy `falconlogs.nginx.conf` to `/etc/nginx/sites-available/default`:
+   sudo cp falconlogs.nginx.conf /etc/nginx/sites-available/default
    sudo systemctl restart nginx
 
 8. ENABLE SSL (HTTPS):

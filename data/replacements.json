@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "id": "TCK-315BB090",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "orderId": "ORD-7A44CE1F",
+    "productName": "Discord FA - Discord Nitro",
+    "variantName": "Discord Nitro",
+    "issueReason": "Other Issue",
+    "replacementCount": 1,
+    "message": "dsfsdf",
+    "status": "REFUNDED",
+    "replacementCredentials": null,
+    "refundAmount": 12,
+    "messages": [
+      {
+        "senderRole": "USER",
+        "message": "dsfsdf",
+        "createdAt": "2026-09-17T17:18:20.131Z"
+      },
+      {
+        "senderRole": "REPLACE_ADMIN",
+        "message": "✓ Full refund of £12.00 issued to user balance.",
+        "createdAt": "2026-09-17T17:20:27.191Z"
+      }
+    ],
+    "createdAt": "2026-09-17T17:18:20.131Z",
+    "updatedAt": "2026-09-17T17:20:27.191Z"
+  }
+]

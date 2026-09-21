@@ -1,20 +1,17 @@
 const fs = require('fs');
 
 const titleMap = {
-  'index.html': 'Store - Mysterio',
-  'cart.html': 'Cart - Mysterio',
-  'orders.html': 'Orders - Mysterio',
-  'dashboard.html': 'Dashboard - Mysterio',
-  'deposit.html': 'Add Balance - Mysterio',
-  'pay.html': 'Payment - Mysterio',
-  'login.html': 'Account - Mysterio',
-  'logs.html': 'Products - Mysterio',
-  'faq.html': 'FAQ - Mysterio',
-  'tos.html': 'Terms - Mysterio',
-  'privacy.html': 'Privacy - Mysterio',
-  'admin.html': 'Admin - Mysterio',
-  'god.html': 'God View - Mysterio',
-  'balance.html': 'Redirecting - Mysterio'
+  'index.html': 'Store - Falcon Logs',
+  'cart.html': 'Cart - Falcon Logs',
+  'orders.html': 'Orders - Falcon Logs',
+  'dashboard.html': 'Dashboard - Falcon Logs',
+  'deposit.html': 'Add Balance - Falcon Logs',
+  'pay.html': 'Payment - Falcon Logs',
+  'login.html': 'Account - Falcon Logs',
+  'logs.html': 'Products - Falcon Logs',
+  'admin.html': 'Admin - Falcon Logs',
+  'god.html': 'God View - Falcon Logs',
+  'balance.html': 'Redirecting - Falcon Logs'
 };
 
 const faviconTags = '<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=380">\n    <link rel="alternate icon" type="image/png" href="/logo.png">';

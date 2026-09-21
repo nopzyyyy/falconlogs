@@ -30,10 +30,10 @@ const http = require("http");
 
 // ─── Configuration ──────────────────────────────────────────────────────────
 const BOT_TOKEN = process.env.REPLACEMENT_BOT_TOKEN || "";
-const BOT_USERNAME = process.env.REPLACEMENT_BOT_USERNAME || "mysterio_replacement_bot";
+const BOT_USERNAME = process.env.REPLACEMENT_BOT_USERNAME || "falcon_replacement_bot";
 const ADMIN_ID = process.env.TELEGRAM_ADMIN_IDS ? Number(process.env.TELEGRAM_ADMIN_IDS.split(",")[0]) : 0;
 const STORE_API_URL = process.env.STORE_API_URL || "http://localhost:3001";
-const SECRET = process.env.REPLACEMENT_SECRET || "MysterioReplacementSecret2026";
+const SECRET = process.env.REPLACEMENT_SECRET || "FalconLogsReplacementSecret2026";
 
 const dataDir = path.join(__dirname, "data");
 const stateFile = path.join(dataDir, "replacement_bot_state.json");

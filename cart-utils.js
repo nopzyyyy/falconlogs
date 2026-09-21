@@ -1,16 +1,23 @@
 const CART_EXPIRY_MS = 15 * 60 * 1000;
 
+const CART_STORAGE_KEY = "falcon_cart";
+const CART_EXPIRY_KEY = "falcon_cart_expires_at";
+
+function getRawCartFromStorage() {
+  return localStorage.getItem(CART_STORAGE_KEY);
+}
+
 function checkCartExpiry() {
   try {
-    const raw = localStorage.getItem("mysterio_cart");
+    const raw = getRawCartFromStorage();
     if (!raw || raw === "[]") {
-      localStorage.removeItem("mysterio_cart_expires_at");
+      localStorage.removeItem(CART_EXPIRY_KEY);
       return false;
     }
-    const expiresAt = Number(localStorage.getItem("mysterio_cart_expires_at") || 0);
+    const expiresAt = Number(localStorage.getItem(CART_EXPIRY_KEY) || 0);
     if (expiresAt && Date.now() > expiresAt) {
-      localStorage.removeItem("mysterio_cart");
-      localStorage.removeItem("mysterio_cart_expires_at");
+      localStorage.removeItem(CART_STORAGE_KEY);
+      localStorage.removeItem(CART_EXPIRY_KEY);
       updateCartBadge();
       window.dispatchEvent(new CustomEvent("cart:expired"));
       return true;
@@ -22,7 +29,7 @@ function checkCartExpiry() {
 function getCart() {
   try {
     if (checkCartExpiry()) return [];
-    return JSON.parse(localStorage.getItem("mysterio_cart") || "[]");
+    return JSON.parse(getRawCartFromStorage() || "[]");
   } catch (e) {
     return [];
   }
@@ -30,11 +37,11 @@ function getCart() {
 
 function setCart(cart) {
   if (!cart || cart.length === 0) {
-    localStorage.removeItem("mysterio_cart");
-    localStorage.removeItem("mysterio_cart_expires_at");
+    localStorage.removeItem(CART_STORAGE_KEY);
+    localStorage.removeItem(CART_EXPIRY_KEY);
   } else {
-    localStorage.setItem("mysterio_cart", JSON.stringify(cart));
-    localStorage.setItem("mysterio_cart_expires_at", String(Date.now() + CART_EXPIRY_MS));
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    localStorage.setItem(CART_EXPIRY_KEY, String(Date.now() + CART_EXPIRY_MS));
   }
   updateCartBadge();
   window.dispatchEvent(new CustomEvent("cart:updated", { detail: { cart } }));
@@ -69,7 +76,7 @@ setInterval(() => {
 }, 3000);
 
 window.addEventListener("storage", (e) => {
-  if (e.key === "mysterio_cart" || e.key === "mysterio_cart_expires_at") {
+  if (e.key === "falcon_cart" || e.key === "falcon_cart_expires_at") {
     updateCartBadge();
   }
 });
@@ -95,10 +102,10 @@ function initPageLoader() {
 }
 
 function showToast(message, viewCart = false) {
-  let toast = document.querySelector("#mysterioToast");
+  let toast = document.querySelector("#falconToast");
   if (!toast) {
     toast = document.createElement("div");
-    toast.id = "mysterioToast";
+    toast.id = "falconToast";
     document.body.appendChild(toast);
   }
   toast.style.cssText = `
@@ -775,71 +782,71 @@ function openCryptoPaymentDrawer(data) {
   };
 }
 
-function showMysterioAlert(opts) {
-  let overlay = document.querySelector("#mysterioAlertModalOverlay");
+function showFalconAlert(opts) {
+  let overlay = document.querySelector("#falconAlertModalOverlay");
   if (!overlay) {
     overlay = document.createElement("div");
-    overlay.id = "mysterioAlertModalOverlay";
-    overlay.className = "mysterio-alert-modal-overlay";
+    overlay.id = "falconAlertModalOverlay";
+    overlay.className = "falcon-alert-modal-overlay";
     overlay.innerHTML = `
-      <div class="mysterio-alert-modal-card">
-        <div class="mysterio-alert-head">
-          <div class="mysterio-alert-title-wrap">
-            <div class="mysterio-alert-title" id="mysterioAlertTitle">Notice</div>
-            <div class="mysterio-alert-subtitle" id="mysterioAlertSubtitle">Falcon Logs</div>
+      <div class="falcon-alert-modal-card">
+        <div class="falcon-alert-head">
+          <div class="falcon-alert-title-wrap">
+            <div class="falcon-alert-title" id="falconAlertTitle">Notice</div>
+            <div class="falcon-alert-subtitle" id="falconAlertSubtitle">Falcon Logs</div>
           </div>
         </div>
-        <div class="mysterio-alert-body" id="mysterioAlertBody"></div>
-        <button type="button" class="mysterio-alert-btn" id="mysterioAlertBtn">Got it</button>
+        <div class="falcon-alert-body" id="falconAlertBody"></div>
+        <button type="button" class="falcon-alert-btn" id="falconAlertBtn">Got it</button>
       </div>
     `;
     document.body.appendChild(overlay);
   }
 
-  const titleEl = overlay.querySelector("#mysterioAlertTitle");
-  const subEl = overlay.querySelector("#mysterioAlertSubtitle");
-  const bodyEl = overlay.querySelector("#mysterioAlertBody");
-  const btnEl = overlay.querySelector("#mysterioAlertBtn");
+  const titleEl = overlay.querySelector("#falconAlertTitle");
+  const subEl = overlay.querySelector("#falconAlertSubtitle");
+  const bodyEl = overlay.querySelector("#falconAlertBody");
+  const btnEl = overlay.querySelector("#falconAlertBtn");
 
   if (typeof opts === "string") {
     opts = { message: opts };
   }
 
-  titleEl.textContent = opts.title || (opts.isMinimalError ? "Minimum Amount Required" : "Notice");
-  subEl.textContent = opts.subtitle || (opts.isMinimalError ? "NOWPayments Requirement" : "Falcon Logs");
+  if (titleEl) titleEl.textContent = opts.title || (opts.isMinimalError ? "Minimum Amount Required" : "Notice");
+  if (subEl) subEl.textContent = opts.subtitle || (opts.isMinimalError ? "NOWPayments Requirement" : "Falcon Logs");
 
   if (opts.isMinimalError && (opts.gbpMin || opts.usdMin)) {
     const minVal = Number(opts.gbpMin || opts.usdMin || 0);
     const currVal = Number(opts.currentAmountGbp || opts.currentAmountUsd || 0);
     const diff = Math.max(0, minVal - currVal);
     bodyEl.innerHTML = `
-      <div class="mysterio-alert-msg">${opts.error || opts.message || ''}</div>
-      <div class="mysterio-alert-grid">
-        <div class="mysterio-alert-row">
-          <span class="mysterio-alert-label">Selected Coin</span>
-          <span class="mysterio-alert-val">${opts.coinSymbol || 'Crypto'}</span>
+      <div class="falcon-alert-msg">${opts.error || opts.message || ''}</div>
+      <div class="falcon-alert-grid">
+        <div class="falcon-alert-row">
+          <span class="falcon-alert-label">Selected Coin</span>
+          <span class="falcon-alert-val">${opts.coinSymbol || 'Crypto'}</span>
         </div>
-        <div class="mysterio-alert-row">
-          <span class="mysterio-alert-label">Minimum Required</span>
-          <span class="mysterio-alert-val" style="color: #fb923c; font-weight: 800;">£${minVal.toFixed(2)} GBP <span style="font-size:11px; opacity:0.65; font-weight:500;">(${opts.cryptoMin || ''} ${opts.coinSymbol || ''})</span></span>
+        <div class="falcon-alert-row">
+          <span class="falcon-alert-label">Minimum Required</span>
+          <span class="falcon-alert-val" style="color: #fb923c; font-weight: 800;">£${minVal.toFixed(2)} GBP <span style="font-size:11px; opacity:0.65; font-weight:500;">(${opts.cryptoMin || ''} ${opts.coinSymbol || ''})</span></span>
         </div>
-        <div class="mysterio-alert-row">
-          <span class="mysterio-alert-label">Current Total</span>
-          <span class="mysterio-alert-val">£${currVal.toFixed(2)} GBP</span>
+        <div class="falcon-alert-row">
+          <span class="falcon-alert-label">Current Total</span>
+          <span class="falcon-alert-val">£${currVal.toFixed(2)} GBP</span>
         </div>
         ${diff > 0 ? `
-        <div class="mysterio-alert-row">
-          <span class="mysterio-alert-label">Amount Needed</span>
-          <span class="mysterio-alert-val" style="color: #fbbf24; font-weight: 800;">+£${diff.toFixed(2)} GBP</span>
+        <div class="falcon-alert-row">
+          <span class="falcon-alert-label">Amount Needed</span>
+          <span class="falcon-alert-val" style="color: #fbbf24; font-weight: 800;">+£${diff.toFixed(2)} GBP</span>
         </div>
         ` : ''}
       </div>
-      <div class="mysterio-alert-tip">
+      <div class="falcon-alert-tip">
         <strong>Recommendation:</strong> Add items to reach <strong>£${minVal.toFixed(2)} GBP</strong>, or select <strong>LTC/SOL</strong> for smaller order amounts.
       </div>
     `;
   } else {
-    bodyEl.innerHTML = `<div class="mysterio-alert-msg">${opts.error || opts.message || opts.text || "An issue occurred."}</div>`;
+    bodyEl.innerHTML = `<div class="falcon-alert-msg">${opts.error || opts.message || opts.text || "An issue occurred."}</div>`;
   }
 
   overlay.classList.add("active");
@@ -859,7 +866,7 @@ window.getCart = getCart;
 window.setCart = setCart;
 window.initGlobalAccountHeader = initGlobalAccountHeader;
 window.openCryptoPaymentDrawer = openCryptoPaymentDrawer;
-window.showMysterioAlert = showMysterioAlert;
+window.showFalconAlert = showFalconAlert;
 window.setGlobalParticlesActive = setGlobalParticlesActive;
 window.initFalconGlobalParticlesEngine = initFalconGlobalParticlesEngine;
 

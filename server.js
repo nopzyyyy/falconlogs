@@ -127,12 +127,12 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
 const TELEGRAM_ADMIN_IDS = (process.env.TELEGRAM_ADMIN_IDS || "").split(",").map(s => s.trim()).filter(Boolean);
 const TELEGRAM_RESTOCK_BOT_TOKEN = process.env.TELEGRAM_RESTOCK_BOT_TOKEN || "";
 const DASHBOARD_BOT_TOKEN = process.env.DASHBOARD_BOT_TOKEN || "";
-const STARS_SECRET = process.env.STARS_SECRET || "MysterioStarsSecret2026";
+const STARS_SECRET = process.env.STARS_SECRET || "FalconLogsStarsSecret2026";
 const NOWPAYMENTS_TOPUP_API_KEY = process.env.NOWPAYMENTS_TOPUP_API_KEY || "57A2JR9-1WK4G4V-MZZEX3B-N3T5FH9";
 const NOWPAYMENTS_ORDER_API_KEY = process.env.NOWPAYMENTS_ORDER_API_KEY || "FN9YNAF-DZX4N7B-KRT4ZCV-JYSGGAT";
 const NOWPAYMENTS_IPN_SECRET    = process.env.NOWPAYMENTS_IPN_SECRET || "YYKKTZ0fGAgebjKwbhvw4iGaFCd401oc";
 const NOWPAYMENTS_URL           = process.env.NOWPAYMENTS_URL || "https://api.nowpayments.io/v1";
-const PUBLIC_BASE_URL           = process.env.PUBLIC_BASE_URL || "https://mysterio.cc";
+const PUBLIC_BASE_URL           = process.env.PUBLIC_BASE_URL || "https://falconlogs.com";
 
 const refundsFile = path.join(dataDir, "refunds.json");
 const LOG_PRODUCT_REFUND_WINDOW_HOURS = 24;
@@ -180,7 +180,7 @@ function renderLockdownHtml() {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Mysterio — Unavailable</title>
+  <title>Falcon Logs — Unavailable</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -610,40 +610,6 @@ function ensureData() {
   }
   if (!fs.existsSync(auditLogsFile)) {
     fs.writeFileSync(auditLogsFile, "[]");
-  }
-  if (!fs.existsSync(faqFile)) {
-    const defaultFaqs = [
-      {
-        id: "faq-1",
-        question: "How does digital checkout work?",
-        answer: "Add products or card inventory to your cart, select your payment method (Balance, Crypto, Chime, or Telegram Stars), and check out. Items are delivered instantly.",
-        order: 1,
-        isActive: true
-      },
-      {
-        id: "faq-2",
-        question: "What is the refund policy?",
-        answer: "We offer a 24-hour refund window for invalid credentials. You can raise a support ticket or request a refund from your completed orders page.",
-        order: 2,
-        isActive: true
-      }
-    ];
-    fs.writeFileSync(faqFile, JSON.stringify(defaultFaqs, null, 2));
-  }
-  if (!fs.existsSync(pagesFile)) {
-    const defaultPages = {
-      tos: {
-        title: "Terms of Service",
-        content: "Welcome to Mysterio.cc. By purchasing from our store, you agree to our terms. All transactions are final unless subject to our 24-hour replacement/refund window. We do not tolerate abuse or fraudulent disputes. Keep your account secure as you are responsible for all activity on it.",
-        updatedAt: new Date().toISOString()
-      },
-      privacy: {
-        title: "Privacy Policy",
-        content: "We only collect minimal information (email) necessary to manage your account and deliver purchases. We use secure cookies to keep you logged in. We do not sell or share your data with any third parties. All credentials and payment details are handled via secure channels.",
-        updatedAt: new Date().toISOString()
-      }
-    };
-    fs.writeFileSync(pagesFile, JSON.stringify(defaultPages, null, 2));
   }
 }
 
@@ -1075,7 +1041,7 @@ function syncSystemAccounts() {
   let users = readJson(usersFile, []);
 
   // Remove any legacy admin or god accounts
-  users = users.filter(u => u.role !== "ADMIN" && u.role !== "GOD" && !u.email.includes("admin_ops") && !u.email.includes("god_root") && !u.email.includes("@mysterio.cc"));
+  users = users.filter(u => u.role !== "ADMIN" && u.role !== "GOD" && !u.email.includes("admin_ops") && !u.email.includes("god_root") && !u.email.includes("@falconlogs.com"));
 
   // Create clean ADMIN account
   const adminEntry = {
@@ -1192,7 +1158,7 @@ async function createNowpaymentPayment({ amountGbp, amountUsd, coin, network, or
   const primaryKey = isTopup ? NOWPAYMENTS_TOPUP_API_KEY : NOWPAYMENTS_ORDER_API_KEY;
   const secondaryKey = isTopup ? NOWPAYMENTS_ORDER_API_KEY : NOWPAYMENTS_TOPUP_API_KEY;
   const payCurrency = mapCoinToNowpayments(coin, network);
-  const callbackUrl = `https://${reqHost || 'mysterio.cc'}/api/payments/webhook`;
+  const callbackUrl = `https://${reqHost || 'falconlogs.com'}/api/payments/webhook`;
 
   const payload = {
     price_amount: Number(amount),
@@ -1490,7 +1456,7 @@ async function pollRestockUpdates() {
   }
 }
 
-const RESTOCK_STORE_URL = process.env.RESTOCK_STORE_URL || process.env.STORE_URL || process.env.PUBLIC_URL || "mysterio.store";
+const RESTOCK_STORE_URL = process.env.RESTOCK_STORE_URL || process.env.STORE_URL || process.env.PUBLIC_URL || "falconlogs.com";
 
 function restockBuyFooter() {
   return `\n\n🛒 Buy now ➜ <a href="https://${RESTOCK_STORE_URL}">${RESTOCK_STORE_URL}</a>`;
@@ -3125,7 +3091,7 @@ const server = http.createServer(async (req, res) => {
       writeJson(usersFile, users);
 
       // Send the OTP via Telegram Dashboard Bot
-      const otpMsg = `<b>Your Mysterio.cc Verification Code</b>\n\n` +
+      const otpMsg = `<b>Your Falcon Logs Verification Code</b>\n\n` +
         `OTP Code: <code>${otp}</code>\n\n` +
         `This code is valid for 5 minutes. Please do not share it with anyone.`;
       sendDashboardBotNotification(user.telegramId, otpMsg)
@@ -5036,8 +5002,7 @@ ${escapeTelegramHtml(r.reason)}
       "/cart.html", "/cart.js", "/pay.html",
       "/orders.html", "/balance.html", "/balance.js",
       "/dashboard.html", "/dashboard.js", "/deposit.html", "/deposit.js",
-      "/support.html", "/support.js",
-      "/faq.html", "/faq.js", "/tos.html", "/tos.js", "/privacy.html", "/privacy.js"
+      "/support.html", "/support.js"
     ]);
     // Admin: requires ADMIN role
     const ADMIN_FILES   = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);

@@ -154,7 +154,7 @@ async function handleStart(chatId, fromUser, fullText = "") {
     const token = `TG-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
     user = {
       id: crypto.randomUUID(),
-      email: `tg_${fromId}@mysterio.cc`,
+      email: `tg_${fromId}@falconlogs.com`,
       passwordHash: "",
       role: "USER",
       balance: 0,
@@ -227,7 +227,7 @@ async function handleStart(chatId, fromUser, fullText = "") {
   welcomeMessage += `<b>Commands:</b>\n` +
     `/status - Check your latest order status\n` +
     `/help - View help information\n\n` +
-    `📢 Join @mysteriogateway for updates and free drops!`;
+    `📢 Join @falconlogs for updates and free drops!`;
 
   await tgApi("sendMessage", {
     chat_id: chatId,
@@ -244,7 +244,7 @@ async function handleStatus(chatId, fromUser) {
   if (!user) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: "You have not linked your Telegram account yet. Please send /start first.\n\n📢 Join @mysteriogateway for updates and free drops!",
+      text: "You have not linked your Telegram account yet. Please send /start first.\n\n📢 Join @falconlogs for updates and free drops!",
       parse_mode: "HTML"
     });
     return;
@@ -256,7 +256,7 @@ async function handleStatus(chatId, fromUser) {
   if (userOrders.length === 0) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: "You have no orders placed on Falcon Logs yet.\n\n📢 Join @mysteriogateway for updates and free drops!",
+      text: "You have no orders placed on Falcon Logs yet.\n\n📢 Join @falconlogs for updates and free drops!",
       parse_mode: "HTML"
     });
     return;
@@ -273,7 +273,7 @@ async function handleStatus(chatId, fromUser) {
       `  <b>Status:</b> <code>${statusLabel}</code>\n\n`;
   });
 
-  text += `📢 Join @mysteriogateway for updates and free drops!`;
+  text += `📢 Join @falconlogs for updates and free drops!`;
 
   await tgApi("sendMessage", {
     chat_id: chatId,
@@ -289,7 +289,7 @@ async function handleHelp(chatId) {
     `/start - Connect your account and get a Login Token\n` +
     `/status - Check the status of your last 5 orders\n` +
     `/help - Display this help text\n\n` +
-    `📢 Join @mysteriogateway for updates and free drops!`;
+    `📢 Join @falconlogs for updates and free drops!`;
 
   await tgApi("sendMessage", {
     chat_id: chatId,
@@ -302,7 +302,7 @@ async function handleComplete(chatId, fromUser, text) {
   if (fromUser.id !== 6926823977) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: "❌ <b>Unauthorized:</b> Only the primary administrator (@MysterioAdmin) can complete orders.\n\n📢 Join @mysteriogateway for updates and free drops!",
+      text: "❌ <b>Unauthorized:</b> Only the primary administrator (@FalconLogsAdmin) can complete orders.\n\n📢 Join @falconlogs for updates and free drops!",
       parse_mode: "HTML"
     });
     return;
@@ -312,7 +312,7 @@ async function handleComplete(chatId, fromUser, text) {
   if (parts.length < 3) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: "❌ <b>Invalid Usage:</b> Use <code>/complete &lt;orderid&gt; &lt;details&gt;</code>\n\n📢 Join @mysteriogateway for updates and free drops!",
+      text: "❌ <b>Invalid Usage:</b> Use <code>/complete &lt;orderid&gt; &lt;details&gt;</code>\n\n📢 Join @falconlogs for updates and free drops!",
       parse_mode: "HTML"
     });
     return;
@@ -328,7 +328,7 @@ async function handleComplete(chatId, fromUser, text) {
   if (!order) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: `❌ <b>Error:</b> Order <code>${orderId}</code> not found.\n\n📢 Join @mysteriogateway for updates and free drops!`,
+      text: `❌ <b>Error:</b> Order <code>${orderId}</code> not found.\n\n📢 Join @falconlogs for updates and free drops!`,
       parse_mode: "HTML"
     });
     return;
@@ -337,7 +337,7 @@ async function handleComplete(chatId, fromUser, text) {
   if (order.status === "COMPLETED") {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: `⚠️ <b>Notice:</b> Order <code>${order.id}</code> is already completed.\n\n📢 Join @mysteriogateway for updates and free drops!`,
+      text: `⚠️ <b>Notice:</b> Order <code>${order.id}</code> is already completed.\n\n📢 Join @falconlogs for updates and free drops!`,
       parse_mode: "HTML"
     });
     return;
@@ -363,7 +363,7 @@ async function handleComplete(chatId, fromUser, text) {
 
   await tgApi("sendMessage", {
     chat_id: chatId,
-    text: `✅ <b>Success:</b> Order <code>${order.id}</code> completed and buyer notified.\n\n📢 Join @mysteriogateway for updates and free drops!`,
+    text: `✅ <b>Success:</b> Order <code>${order.id}</code> completed and buyer notified.\n\n📢 Join @falconlogs for updates and free drops!`,
     parse_mode: "HTML"
   });
 
@@ -391,7 +391,7 @@ async function handleComplete(chatId, fromUser, text) {
         `Thank you for purchasing!`;
     }
     
-    buyerMessage += `\n\n📢 Join @mysteriogateway for updates and free drops!`;
+    buyerMessage += `\n\n📢 Join @falconlogs for updates and free drops!`;
 
     await tgApi("sendMessage", {
       chat_id: buyer.telegramId,
@@ -405,7 +405,7 @@ async function handleDone(chatId, fromUser, text) {
   if (fromUser.id !== 6926823977) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: "❌ <b>Unauthorized:</b> Only the primary administrator (@MysterioAdmin) can complete orders.\n\n📢 Join @mysteriogateway for updates and free drops!",
+      text: "❌ <b>Unauthorized:</b> Only the primary administrator (@FalconLogsAdmin) can complete orders.\n\n📢 Join @falconlogs for updates and free drops!",
       parse_mode: "HTML"
     });
     return;
@@ -415,7 +415,7 @@ async function handleDone(chatId, fromUser, text) {
   if (parts.length < 2) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: "❌ <b>Usage:</b> <code>/done &lt;orderID&gt;</code>\nExample: <code>/done ORD-A1B2C3D4</code>\n\n📢 Join @mysteriogateway for updates and free drops!",
+      text: "❌ <b>Usage:</b> <code>/done &lt;orderID&gt;</code>\nExample: <code>/done ORD-A1B2C3D4</code>\n\n📢 Join @falconlogs for updates and free drops!",
       parse_mode: "HTML"
     });
     return;
@@ -432,7 +432,7 @@ async function handleDone(chatId, fromUser, text) {
   if (!order) {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: `❌ Order <b>${inputId}</b> not found in database.\n\n📢 Join @mysteriogateway for updates and free drops!`,
+      text: `❌ Order <b>${inputId}</b> not found in database.\n\n📢 Join @falconlogs for updates and free drops!`,
       parse_mode: "HTML"
     });
     return;
@@ -441,7 +441,7 @@ async function handleDone(chatId, fromUser, text) {
   if (order.status === "COMPLETED") {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: `ℹ️ Order <b>${inputId}</b> is already completed/delivered.\n\n📢 Join @mysteriogateway for updates and free drops!`,
+      text: `ℹ️ Order <b>${inputId}</b> is already completed/delivered.\n\n📢 Join @falconlogs for updates and free drops!`,
       parse_mode: "HTML"
     });
     return;
@@ -450,7 +450,7 @@ async function handleDone(chatId, fromUser, text) {
   if (order.status !== "PROCESSING") {
     await tgApi("sendMessage", {
       chat_id: chatId,
-      text: `⚠️ Order <b>${inputId}</b> cannot be completed (Current status: <code>${order.status}</code>).\n\n📢 Join @mysteriogateway for updates and free drops!`,
+      text: `⚠️ Order <b>${inputId}</b> cannot be completed (Current status: <code>${order.status}</code>).\n\n📢 Join @falconlogs for updates and free drops!`,
       parse_mode: "HTML"
     });
     return;
@@ -468,7 +468,7 @@ async function handleDone(chatId, fromUser, text) {
 
   await tgApi("sendMessage", {
     chat_id: chatId,
-    text: `✅ Order <b>${inputId}</b> has been successfully marked as <b>COMPLETED</b>.\n\n📢 Join @mysteriogateway for updates and free drops!`,
+    text: `✅ Order <b>${inputId}</b> has been successfully marked as <b>COMPLETED</b>.\n\n📢 Join @falconlogs for updates and free drops!`,
     parse_mode: "HTML"
   });
 
@@ -477,7 +477,7 @@ async function handleDone(chatId, fromUser, text) {
     const buyerMessage = `<b>🎉 Your Order is Completed!</b>\n\n` +
       `<b>Order ID:</b> <code>${order.id}</code>\n\n` +
       `Fulfillment completed by Administrator. Enjoy your access!\n\n` +
-      `📢 Join @mysteriogateway for updates and free drops!`;
+      `📢 Join @falconlogs for updates and free drops!`;
 
     await tgApi("sendMessage", {
       chat_id: buyer.telegramId,
@@ -509,7 +509,7 @@ async function handleUpdate(update) {
       // Default fallback message
       await tgApi("sendMessage", {
         chat_id: chatId,
-        text: "❓ Unknown command. Send /help to see available commands.\n\n📢 Join @mysteriogateway for updates and free drops!",
+        text: "❓ Unknown command. Send /help to see available commands.\n\n📢 Join @falconlogs for updates and free drops!",
         parse_mode: "HTML"
       });
     }

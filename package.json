@@ -1,7 +1,7 @@
 {
-  "name": "mysterio-storefront",
+  "name": "falconlogs-storefront",
   "version": "2.0.0",
-  "description": "Mysterio Digital Marketplace & Bot Ecosystem",
+  "description": "Falcon Logs Digital Marketplace & Bot Ecosystem",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -12,13 +12,13 @@
     "replacement": "node replacement_bot.js"
   },
   "keywords": [
-    "mysterio",
+    "falconlogs",
     "marketplace",
     "telegram-bot",
     "crypto-checkout",
     "digital-store"
   ],
-  "author": "Mysterio",
+  "author": "Falcon Logs",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5"

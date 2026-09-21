@@ -1,7 +1,7 @@
 ================================================================================
-          MYSTERIO.CC — COMPLETE ARCHITECTURE & STEP-BY-STEP GUIDE
+          FALCONLOGS.COM — COMPLETE ARCHITECTURE & STEP-BY-STEP GUIDE
 ================================================================================
-Project Name  : Mysterio (mysterio.cc)
+Project Name  : Falcon Logs (falconlogs.com)
 Architecture  : Node.js (Express-style native HTTP/HTTPS) + JSON Flat-File DB + 
                 Telegram Bot Suite + Python Daemons + Nginx Reverse Proxy + PM2
 Version       : 2.0.0 Production Edition
@@ -33,7 +33,7 @@ TABLE OF CONTENTS:
 1. SYSTEM OVERVIEW & ARCHITECTURE
 ================================================================================
 
-Mysterio is a high-performance, automated digital marketplace and service 
+Falcon Logs is a high-performance, automated digital marketplace and service 
 platform designed for instant delivery of digital products, accounts, software, 
 and card inventory. 
 
@@ -51,7 +51,7 @@ The entire system is decoupled into modular components:
               |                                   +------------------+
               v (Port 3001)                                |
        +---------------------------------------------------+---------+
-       |                  MYSTERIO WEB BACKEND                       |
+       |                  FALCON LOGS WEB BACKEND                       |
        |                      (server.js)                            |
        +-------------------------------------------------------------+
               |                      |                      |
@@ -81,7 +81,7 @@ Core Technologies:
 |-- .env.example             <- Template environment file for deployment
 |-- package.json             <- NPM project definition & startup scripts
 |-- ecosystem.config.js      <- PM2 process configuration for all bots & server
-|-- mysterio.nginx.conf      <- Production Nginx reverse proxy configuration
+|-- falconlogs.nginx.conf      <- Production Nginx reverse proxy configuration
 |-- EXPLANATION.txt          <- This complete architecture guide
 |
 |-- server.js                <- Main Web Server, REST API & Order Engine
@@ -155,21 +155,21 @@ PORT=3001
   - The local internal port the Node server listens on.
   - Default: 3001 (Proxied by Nginx).
 
-PUBLIC_BASE_URL=https://mysterio.cc
+PUBLIC_BASE_URL=https://falconlogs.com
   - The public HTTPS URL of your website.
   - Used when generating payment return URLs and webhook callbacks.
 
 --------------------------------------------------------------------------------
 B. ADMIN & MASTER CREDENTIALS
 --------------------------------------------------------------------------------
-ADMIN_EMAIL=admin@mysterio.cc
+ADMIN_EMAIL=admin@falconlogs.com
 ADMIN_PASSWORD=YourSecureAdminPasswordHere!
-  - Used to log into the Admin Control Panel at `https://mysterio.cc/admin`.
+  - Used to log into the Admin Control Panel at `https://falconlogs.com/admin`.
   - Automatically seeded into `data/users.json` with the role "ADMIN".
 
-GOD_EMAIL=god@mysterio.cc
+GOD_EMAIL=god@falconlogs.com
 GOD_PASSWORD=YourSecureGodPasswordHere!
-  - Used to log into the God Mode Control Panel at `https://mysterio.cc/god`.
+  - Used to log into the God Mode Control Panel at `https://falconlogs.com/god`.
   - Automatically seeded into `data/users.json` with the role "GOD".
 
 --------------------------------------------------------------------------------
@@ -188,7 +188,7 @@ C. TELEGRAM BOT TOKENS & CHAT IDS
 
 2. Restock Channel Bot:
    TELEGRAM_RESTOCK_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
-   RESTOCK_STORE_URL=mysterio.cc
+   RESTOCK_STORE_URL=falconlogs.com
    - Create via @BotFather on Telegram.
    - Add this bot as an ADMIN to your Telegram Restock/Announcement channel.
    - Whenever an administrator restocks products or cards in the Admin panel,
@@ -204,22 +204,22 @@ C. TELEGRAM BOT TOKENS & CHAT IDS
 
 4. Gateway Channel Verification Bot:
    GATEWAY_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
-   GATEWAY_NAME=mysteriogateway
+   GATEWAY_NAME=falconlogsgateway
    - Create via @BotFather on Telegram.
    - Protects your private Telegram channels against bots and raids.
    - Solves math captchas before auto-approving channel join requests.
 
 5. Telegram Stars Payments Bot:
    PAYMENTS_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
-   STARS_SECRET=MysterioStarsSecret2026
+   STARS_SECRET=Falcon LogsStarsSecret2026
    - Create via @BotFather on Telegram.
    - In @BotFather, enable Payments for this bot and select "Telegram Stars".
    - Handles Apple Pay & Google Pay transactions natively inside Telegram.
 
 6. Automated Replacement Bot:
    REPLACEMENT_BOT_TOKEN=1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ
-   REPLACEMENT_BOT_USERNAME=mysterio_replacement_bot
-   REPLACEMENT_SECRET=MysterioReplacementSecret2026
+   REPLACEMENT_BOT_USERNAME=falconlogs_replacement_bot
+   REPLACEMENT_SECRET=Falcon LogsReplacementSecret2026
    - Dedicated support bot where customers can submit replacement claims.
 
 7. Success & Proof Feed Bot:
@@ -237,16 +237,16 @@ D. PAYMENT GATEWAY APIS
    - Sign up at https://nowpayments.io
    - In Account Settings -> API Keys:
      * Generate an API Key for Topups and Orders.
-     * Set IPN Callback URL to `https://mysterio.cc/api/payments/nowpayments-ipn`
+     * Set IPN Callback URL to `https://falconlogs.com/api/payments/nowpayments-ipn`
      * Generate your IPN Secret Key (used for cryptographic HMAC-SHA512 verification).
 
 2. Chime Automated Verification (Email IMAP):
-   CHIME_EMAIL=mysterio.payments@gmail.com
+   CHIME_EMAIL=falconlogs.payments@gmail.com
    CHIME_EMAIL_PASSWORD=your_16_char_app_password
    CHIME_IMAP_SERVER=imap.gmail.com
    CHIME_IMAP_PORT=993
    CHIME_WEBHOOK_URL=http://localhost:3001/api/payments/chime-webhook
-   CHIME_WEBHOOK_TOKEN=mysterio_chime_secure_token_2026
+   CHIME_WEBHOOK_TOKEN=falconlogs_chime_secure_token_2026
    - If accepting Chime payments, create a dedicated Gmail or Outlook account.
    - In Google Account -> Security -> 2-Step Verification -> Generate "App Password".
    - Put the 16-character App Password in `CHIME_EMAIL_PASSWORD`.
@@ -287,7 +287,7 @@ How it works:
 3. When the user selects the correct inline button:
    - The bot approves the join request via Telegram API (`approveChatJoinRequest`).
    - The user is automatically admitted to the channel.
-   - The user receives a welcome message with a link to `mysterio.cc`.
+   - The user receives a welcome message with a link to `falconlogs.com`.
 4. Admin features inside Gateway Bot:
    - `/admin` or `/stats`: Shows total verified users and active channels.
    - `/broadcast <HTML message>`: Mass-broadcasts an update to all verified users.
@@ -300,7 +300,7 @@ Allows customers to pay with Telegram Stars (funded directly via Apple Pay or
 Google Pay inside Telegram) for checkout or balance topups.
 
 How it works:
-1. On the Mysterio storefront (`cart.html` or `balance.html`), the customer 
+1. On the Falcon Logs storefront (`cart.html` or `balance.html`), the customer 
    selects "Apple Pay / GPay (Telegram Stars)".
 2. The website generates a unique order reference and opens a Telegram deep-link:
    `https://t.me/YourPaymentsBot?start=order_ORD-12345`
@@ -326,7 +326,7 @@ How it works:
 1. Connecting Account:
    - User messages `/start` to Dashboard Bot.
    - The bot creates a unique token `TG-XXXXXXXX` in `data/users.json`.
-   - The user enters this token on `mysterio.cc/login.html` under "Sign in with Telegram".
+   - The user enters this token on `falconlogs.com/login.html` under "Sign in with Telegram".
    - The bot immediately sends a 6-digit one-time code (OTP).
    - The user enters the 6-digit code on the website and is instantly logged in.
 2. Real-Time Order Notifications:
@@ -346,7 +346,7 @@ Automates customer warranty claims without requiring manual support staff.
 How it works:
 1. Customers have a 24-hour replacement window on eligible digital products and cards.
 2. If an account or card is invalid, the customer clicks "Replace" in their 
-   Orders page (`orders.html`), opening `https://t.me/mysterio_replacement_bot?start=replace_ORD123_0`.
+   Orders page (`orders.html`), opening `https://t.me/falconlogs_replacement_bot?start=replace_ORD123_0`.
 3. The Replacement Bot:
    - Queries `server.js` (`/api/bot/order?orderId=...&secret=...`).
    - Verifies the order is within the 24-hour window and has not been replaced yet.
@@ -358,7 +358,7 @@ How it works:
    - Swaps the dead credential with fresh working credentials.
 5. Auto-Refund Fallback:
    - If no replacement stock is available, the bot automatically credits the full 
-     purchase amount back to the user's Mysterio balance via `/api/bot/refund-balance`.
+     purchase amount back to the user's Falcon Logs balance via `/api/bot/refund-balance`.
 
 --------------------------------------------------------------------------------
 4.5 SUCCESS BOT (`success_bot.js` — Public Vouchers Feed)
@@ -380,7 +380,7 @@ How it works:
 --------------------------------------------------------------------------------
 5.1 CHIME AUTOMATED MATCHING ENGINE (`chime_daemon.py` & `email_checker.py`)
 --------------------------------------------------------------------------------
-Chime offers zero-fee deposits, but lacks a public API. Mysterio overcomes this 
+Chime offers zero-fee deposits, but lacks a public API. Falcon Logs overcomes this 
 with an automated email parsing daemon:
 
 1. Invoice Creation:
@@ -406,7 +406,7 @@ with an automated email parsing daemon:
 --------------------------------------------------------------------------------
 - Powered by Python Telethon (MTProto).
 - Monitors private supplier channels for product restocks and auto-forwards 
-  them into your Mysterio announcement feed.
+  them into your Falcon Logs announcement feed.
 
 --------------------------------------------------------------------------------
 5.3 GATEWAY DEPLOYER (`deploy_gateway.py`)
@@ -442,7 +442,7 @@ Step 3: Instant Fulfillment & Delivery
     are extracted, attached to the order record in `data/orders.json`, and displayed 
     immediately on-screen.
   * For Manual Items: The order is marked `MANUAL_PENDING`, and admin bots are alerted.
-- The user can view past purchases anytime under `mysterio.cc/orders.html`.
+- The user can view past purchases anytime under `falconlogs.com/orders.html`.
 
 Step 4: Balance Top-Up Mechanism
 - Users can pre-fund their account via `balance.html`.
@@ -483,7 +483,7 @@ B. GOD MODE DASHBOARD (`/god.html`)
 8. STEP-BY-STEP DEPLOYMENT & HOSTING GUIDE (Ubuntu VPS)
 ================================================================================
 
-Follow these steps to deploy Mysterio on a clean Ubuntu 22.04 or 24.04 VPS:
+Follow these steps to deploy Falcon Logs on a clean Ubuntu 22.04 or 24.04 VPS:
 
 --------------------------------------------------------------------------------
 STEP 1: Server Preparation & Dependencies
@@ -502,15 +502,15 @@ sudo npm install -g pm2
 ```
 
 --------------------------------------------------------------------------------
-STEP 2: Deploy Mysterio Files
+STEP 2: Deploy Falcon Logs Files
 --------------------------------------------------------------------------------
 Create the destination directory and copy your project files:
 ```bash
-sudo mkdir -p /var/www/mysterio
-sudo chown -R ubuntu:ubuntu /var/www/mysterio
-cd /var/www/mysterio
+sudo mkdir -p /var/www/falconlogs
+sudo chown -R ubuntu:ubuntu /var/www/falconlogs
+cd /var/www/falconlogs
 ```
-(Upload your local Mysterio folder contents here using SCP, SFTP, or Git).
+(Upload your local Falcon Logs folder contents here using SCP, SFTP, or Git).
 
 Install dependencies:
 ```bash
@@ -522,7 +522,7 @@ STEP 3: Configure Environment Variables (.env)
 --------------------------------------------------------------------------------
 Edit your `.env` file with your real bot tokens, domain, and API keys:
 ```bash
-nano /var/www/mysterio/.env
+nano /var/www/falconlogs/.env
 ```
 Fill in:
 - `ADMIN_EMAIL` & `ADMIN_PASSWORD`
@@ -535,7 +535,7 @@ STEP 4: Start Applications with PM2
 --------------------------------------------------------------------------------
 Start the entire ecosystem (storefront + all 5 bots) in one command:
 ```bash
-cd /var/www/mysterio
+cd /var/www/falconlogs
 pm2 start ecosystem.config.js
 pm2 save
 pm2 startup
@@ -545,7 +545,7 @@ pm2 startup
 Check status:
 ```bash
 pm2 status
-pm2 logs mysterio-storefront
+pm2 logs falconlogs-storefront
 ```
 
 --------------------------------------------------------------------------------
@@ -553,19 +553,19 @@ STEP 5: Configure Nginx & SSL Certificate
 --------------------------------------------------------------------------------
 Copy the Nginx configuration file:
 ```bash
-sudo cp /var/www/mysterio/mysterio.nginx.conf /etc/nginx/sites-available/mysterio.cc
-sudo ln -s /etc/nginx/sites-available/mysterio.cc /etc/nginx/sites-enabled/
+sudo cp /var/www/falconlogs/falconlogs.nginx.conf /etc/nginx/sites-available/falconlogs.com
+sudo ln -s /etc/nginx/sites-available/falconlogs.com /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
 
 Obtain a free SSL Certificate via Certbot:
 ```bash
-sudo certbot --nginx -d mysterio.cc -d www.mysterio.cc
+sudo certbot --nginx -d falconlogs.com -d www.falconlogs.com
 ```
 Certbot will automatically configure HTTPS, HTTP->HTTPS redirect, and auto-renewal.
 
-Your site is now live at `https://mysterio.cc`!
+Your site is now live at `https://falconlogs.com`!
 
 
 ================================================================================
@@ -577,21 +577,21 @@ Your site is now live at `https://mysterio.cc`!
 
 2. View Live Logs:
    `pm2 logs`                           # All processes
-   `pm2 logs mysterio-storefront`       # Web server only
-   `pm2 logs mysterio-payments-bot`     # Stars payments bot only
+   `pm2 logs falconlogs-storefront`       # Web server only
+   `pm2 logs falconlogs-payments-bot`     # Stars payments bot only
 
 3. Restarting After Code Changes:
    `pm2 restart ecosystem.config.js`
 
 4. Resetting Admin Password:
-   Update `ADMIN_PASSWORD` in `.env` and restart `pm2 restart mysterio-storefront`.
+   Update `ADMIN_PASSWORD` in `.env` and restart `pm2 restart falconlogs-storefront`.
    The server automatically syncs system credentials on startup.
 
 5. Database Backups:
-   All data lives in `/var/www/mysterio/data/`.
+   All data lives in `/var/www/falconlogs/data/`.
    To create an instant backup archive:
-   `tar -czvf /home/ubuntu/mysterio_backup_$(date +%F).tar.gz /var/www/mysterio/data`
+   `tar -czvf /home/ubuntu/falconlogs_backup_$(date +%F).tar.gz /var/www/falconlogs/data`
 
 ================================================================================
-                    END OF MYSTERIO.CC MASTER GUIDE
+                    END OF FALCONLOGS.COM MASTER GUIDE
 ================================================================================

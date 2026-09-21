@@ -1,0 +1,499 @@
+{
+  "400895": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "THE BANCORP BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "402087": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "GREEN DOT BANK DBA BONNEVILLE BANK",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "402347": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "MOUNTAIN AMERICA FEDERAL CREDIT UNION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "403766": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "U.S. BANK NATIONAL ASSOCIATION-CREDIT",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "403784": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "U.S. BANK NATIONAL ASSOCIATION-CREDIT",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "406032": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "JPMORGAN CHASE BANK N.A. - DEBIT",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "408832": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "PATHWARD, N.A.",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "409451": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "U.S. BANK NATIONAL ASSOCIATION-CREDIT",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "411238": null,
+  "414398": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "GREEN DOT BANK DBA BONNEVILLE BANK",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "414720": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "JPMORGAN CHASE BANK N.A.",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "414776": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "U.S. BANK NATIONAL ASSOCIATION-CREDIT",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "414846": null,
+  "415158": null,
+  "416994": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "PREPAID CLASSIC",
+    "issuer": "PATHWARD, N.A.",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "421783": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "CLASSIC",
+    "issuer": "STRIDE BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "423223": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "THE BANCORP BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "424642": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "CAPITAL ONE, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "425418": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "SIGNATURE",
+    "issuer": "CAPITAL ONE, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "426684": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "JPMORGAN CHASE BANK N.A.",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "426752": null,
+  "428824": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "PURCHASING",
+    "issuer": "CELTIC BANK",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "431503": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "TRANSPORTATION ALLIANCE BANK, INC. D/B/A TAB BANK",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "433297": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "VARO BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "434256": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "WELLS FARGO BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "434258": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "WELLS FARGO BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "447227": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "STRIDE BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "447914": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "PATHWARD, N.A.",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "471830": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "U.S. BANK NATIONAL ASSOCIATION-CREDIT",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "473490": null,
+  "474488": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "BANK OF AMERICA, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "475833": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "CHOICE FINANCIAL GROUP",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "482812": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "TRADITIONAL",
+    "issuer": "THE BANCORP BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "485953": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "PURCHASING",
+    "issuer": "CELTIC BANK",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "486208": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "STRIDE BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "486796": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "JPMORGAN CHASE BANK N.A. - DEBIT",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "487917": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "VARO BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "494638": {
+    "scheme": "VISA",
+    "type": "CREDIT",
+    "tier": "CLASSIC",
+    "issuer": "EVOLVE BANK & TRUST",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "498503": {
+    "scheme": "VISA",
+    "type": "DEBIT",
+    "tier": "CLASSIC",
+    "issuer": "STRIDE BANK, NATIONAL ASSOCIATION",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "512992": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Santander Bank, NA",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "514377": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "The Bancorp Bank National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "514750": null,
+  "515676": {
+    "scheme": "MASTERCARD",
+    "type": "CREDIT",
+    "tier": "MASTERCARD WORLD ELITE",
+    "issuer": "Capital One, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "517148": {
+    "scheme": "MASTERCARD",
+    "type": "CREDIT",
+    "tier": "MASTERCARD WORLD ELITE",
+    "issuer": "Capital One, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "517546": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Huntington National Bank",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "517805": {
+    "scheme": "MASTERCARD",
+    "type": "CREDIT",
+    "tier": "WORLD",
+    "issuer": "Capital One, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "518725": {
+    "scheme": "MASTERCARD",
+    "type": "CREDIT",
+    "tier": "MASTERCARD WORLD ELITE",
+    "issuer": "Capital One, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "520524": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Coastal Community Bank",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "521138": null,
+  "521870": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Pathward, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "526219": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Citibank N.A.",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "526226": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Citibank N.A.",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "526412": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Green Dot Bank",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "527515": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Bank of America, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "527519": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Bank of America, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "527520": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Bank of America, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "529580": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Evolve Bank & Trust",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "531260": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Bank of America, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "533248": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "MASTERCARD PREPAID GOVT",
+    "issuer": "Comerica Bank",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "534303": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT STANDARD",
+    "issuer": "Pathward, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "539689": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Coastal Community Bank",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "541071": {
+    "scheme": "MASTERCARD",
+    "type": "CREDIT",
+    "tier": "WORLD",
+    "issuer": "Santander Bank, NA",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "542432": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT MASTERCARD  ENHANCED",
+    "issuer": "Fifth Third Bank, The",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "542543": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "WORLD DEBIT EMBOSSED",
+    "issuer": "Sofi Bank, N.A.",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "543464": {
+    "scheme": "MASTERCARD",
+    "type": "CREDIT",
+    "tier": "PLATINUM",
+    "issuer": "Wallee Europe S.A.",
+    "country": "LTU",
+    "countryName": "Lithuania"
+  },
+  "544317": {
+    "scheme": "MASTERCARD",
+    "type": "CREDIT",
+    "tier": "MASTERCARD WORLD ELITE",
+    "issuer": "Capital One, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "544347": null,
+  "551783": null,
+  "552342": {
+    "scheme": "MASTERCARD",
+    "type": "CREDIT",
+    "tier": "WORLD",
+    "issuer": "Capital One, National Association",
+    "country": "USA",
+    "countryName": "United States"
+  },
+  "558158": {
+    "scheme": "MASTERCARD",
+    "type": "DEBIT",
+    "tier": "DEBIT BUSINESSCARD",
+    "issuer": "The Bancorp Bank National Association",
+    "country": "USA",
+    "countryName": "United States"
+  }
+}

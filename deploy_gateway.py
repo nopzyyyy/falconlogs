@@ -4,7 +4,7 @@ import os
 HOST = "<SERVER_IP>"
 USER = "root"
 PASS = "<SERVER_PASSWORD>"
-REMOTE_DIR = os.environ.get("REMOTE_GATEWAY_DIR", "/var/www/mysterio_gateway")
+REMOTE_DIR = os.environ.get("REMOTE_GATEWAY_DIR", "/var/www/falconlogs_gateway")
 
 local_file = "gateway_bot.js"
 remote_file = os.path.join(REMOTE_DIR, local_file).replace('\\', '/')
@@ -38,13 +38,13 @@ except Exception as e:
     exit(1)
 sftp.close()
 
-# Start/Restart the bot using PM2 and delete old files from /var/www/mysterio
+# Start/Restart the bot using PM2 and delete old files from /var/www/falconlogs
 print("[*] Configuring PM2, cleaning up old files, and restarting process 'gateway-bot'...")
 commands = [
-    # Clean up the old process and files from `/var/www/mysterio`
-    "pm2 delete mysterio-gateway || true",
-    "rm -f /var/www/mysterio/gateway_bot.js",
-    "rm -f /var/www/mysterio/data/gateway_sessions.json",
+    # Clean up the old process and files from `/var/www/falconlogs`
+    "pm2 delete falconlogs-gateway || true",
+    "rm -f /var/www/falconlogs/gateway_bot.js",
+    "rm -f /var/www/falconlogs/data/gateway_sessions.json",
     
     # Configure and start the new isolated process
     "cd /var/www/gateway_bot",

@@ -9,7 +9,7 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(errors='replace')
 
 # ── Config ──
-EMAIL = os.environ.get("CHIME_EMAIL", "mysterio.payments@gmail.com")
+EMAIL = os.environ.get("CHIME_EMAIL", "falconlogs.payments@gmail.com")
 PASSWORD = os.environ.get("CHIME_EMAIL_PASSWORD", "your_email_app_password")
 IMAP_SERVER = "imap.gmail.com"
 IMAP_PORT   = 993

@@ -5054,8 +5054,8 @@ select.modal-form-control option {
   font-weight: 500;
 }
 
-/* MYSTERIO CUSTOM SITE MODAL POPUP (NO BROWSER ALERT) */
-.mysterio-alert-modal-overlay {
+/* FALCON LOGS CUSTOM SITE MODAL POPUP (NO BROWSER ALERT) */
+.falcon-alert-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(4, 6, 12, 0.82);
@@ -5070,12 +5070,12 @@ select.modal-form-control option {
   transition: opacity 0.08s ease;
 }
 
-.mysterio-alert-modal-overlay.active {
+.falcon-alert-modal-overlay.active {
   opacity: 1;
   pointer-events: auto;
 }
 
-.mysterio-alert-modal-card {
+.falcon-alert-modal-card {
   background: #14110c;
   border: none !important;
   box-shadow: none !important;
@@ -5093,35 +5093,35 @@ select.modal-form-control option {
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mysterio-alert-modal-overlay.active .mysterio-alert-modal-card {
+.falcon-alert-modal-overlay.active .falcon-alert-modal-card {
   transform: translateY(0);
   opacity: 1 !important;
 }
 
-.mysterio-alert-head {
+.falcon-alert-head {
   display: flex;
   align-items: flex-start;
 }
 
-.mysterio-alert-title-wrap {
+.falcon-alert-title-wrap {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.mysterio-alert-title {
+.falcon-alert-title {
   font-size: 17px;
   font-weight: 600;
   color: #ffffff;
 }
 
-.mysterio-alert-subtitle {
+.falcon-alert-subtitle {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.45);
   font-weight: 600;
 }
 
-.mysterio-alert-body {
+.falcon-alert-body {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -5130,12 +5130,12 @@ select.modal-form-control option {
   color: rgba(255, 255, 255, 0.85);
 }
 
-.mysterio-alert-msg {
+.falcon-alert-msg {
   font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
 }
 
-.mysterio-alert-grid {
+.falcon-alert-grid {
   background: #110e0a;
   border: none !important;
   border-radius: 6px !important;
@@ -5146,14 +5146,14 @@ select.modal-form-control option {
   box-shadow: none !important;
 }
 
-.mysterio-alert-row {
+.falcon-alert-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 12.5px;
 }
 
-.mysterio-alert-label {
+.falcon-alert-label {
   color: rgba(255, 255, 255, 0.45);
   font-weight: 600;
   text-transform: uppercase;
@@ -5161,12 +5161,12 @@ select.modal-form-control option {
   letter-spacing: 0.5px;
 }
 
-.mysterio-alert-val {
+.falcon-alert-val {
   color: #ffffff;
   font-weight: 600;
 }
 
-.mysterio-alert-tip {
+.falcon-alert-tip {
   background: rgba(234, 88, 12, 0.08);
   border: none !important;
   border-radius: 6px !important;
@@ -5177,7 +5177,7 @@ select.modal-form-control option {
   box-shadow: none !important;
 }
 
-.mysterio-alert-btn {
+.falcon-alert-btn {
   height: 42px;
   background: #ea580c;
   color: #ffffff;
@@ -5192,7 +5192,7 @@ select.modal-form-control option {
   width: 100%;
 }
 
-.mysterio-alert-btn:hover {
+.falcon-alert-btn:hover {
   background: #c2410c;
 }
 
@@ -5264,7 +5264,7 @@ select.modal-form-control option {
     gap: 8px !important;
   }
 
-  .modal-card, .order-info-modal-card, .mysterio-alert-modal-card {
+  .modal-card, .order-info-modal-card, .falcon-alert-modal-card {
     width: 100% !important;
     max-width: calc(100vw - 28px) !important;
     padding: 20px 16px !important;
@@ -5296,7 +5296,7 @@ select.modal-form-control option {
     font-size: 12.5px !important;
   }
 
-  button:not(.product-card-btn):not(.btn-var-stock):not(.btn-var-icon-btn):not(.btn-var-download):not(.btn-var-edit):not(.btn-var-delete):not(.cart-remove-btn):not(.cart-coupon-btn):not(.stepper-btn):not(.change-coin-btn):not(.network-chip):not(.modal-close-square-btn):not(.category-item-btn):not(.password-toggle-btn):not(.tag-pill-btn):not(.cart-item-remove-btn):not(.drawer-coin-card):not(.deposit-preset-chip):not(.copy-btn):not(.orders-page-btn):not(.history-badge), .pill-button, .mysterio-alert-btn, .dashboard-submit-btn, .deposit-submit-btn {
+  button:not(.product-card-btn):not(.btn-var-stock):not(.btn-var-icon-btn):not(.btn-var-download):not(.btn-var-edit):not(.btn-var-delete):not(.cart-remove-btn):not(.cart-coupon-btn):not(.stepper-btn):not(.change-coin-btn):not(.network-chip):not(.modal-close-square-btn):not(.category-item-btn):not(.password-toggle-btn):not(.tag-pill-btn):not(.cart-item-remove-btn):not(.drawer-coin-card):not(.deposit-preset-chip):not(.copy-btn):not(.orders-page-btn):not(.history-badge), .pill-button, .falcon-alert-btn, .dashboard-submit-btn, .deposit-submit-btn {
     min-height: 44px !important;
     touch-action: manipulation;
   }
@@ -5519,8 +5519,8 @@ select.modal-form-control option {
   .crypto-copy-btn,
   .pay-field-label,
   .pay-field-value,
-  .mysterio-alert-title,
-  .mysterio-alert-btn,
+  .falcon-alert-title,
+  .falcon-alert-btn,
   .footer-heading,
   h1, h2, h3, h4 {
     font-weight: 600 !important;
@@ -5874,7 +5874,7 @@ select.modal-form-control option {
 }
 
 /* =========================================================================
-   MYSTERIO DESIGN SYSTEM: ORDERS & ADMIN TABLES (#14110c, SHADOWLESS)
+   FALCON LOGS DESIGN SYSTEM: ORDERS & ADMIN TABLES (#14110c, SHADOWLESS)
    ========================================================================= */
 .admin-orders-list {
   display: flex;

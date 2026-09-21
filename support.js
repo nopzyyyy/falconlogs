@@ -138,8 +138,8 @@ function initFormSubmit() {
     const selectedOption = productSelect.options[productSelect.selectedIndex];
 
     if (!orderId || !selectedOption || !selectedOption.value) {
-      if (typeof showMysterioAlert === "function") {
-        showMysterioAlert({ message: "Please submit a valid Order ID and select a product first.", title: "Missing Order Info", isError: true });
+      if (typeof showFalconAlert === "function") {
+        showFalconAlert({ message: "Please submit a valid Order ID and select a product first.", title: "Missing Order Info", isError: true });
       } else {
         alert("Please submit a valid Order ID and select a product first.");
       }
@@ -153,8 +153,8 @@ function initFormSubmit() {
     const message = document.querySelector("#ticketMessageInput").value.trim();
 
     if (!message) {
-      if (typeof showMysterioAlert === "function") {
-        showMysterioAlert({ message: "Please provide a message explaining your issue.", title: "Missing Details", isError: true });
+      if (typeof showFalconAlert === "function") {
+        showFalconAlert({ message: "Please provide a message explaining your issue.", title: "Missing Details", isError: true });
       } else {
         alert("Please provide a message explaining your issue.");
       }
@@ -184,8 +184,8 @@ function initFormSubmit() {
       submitBtn.textContent = "Submit Ticket";
 
       if (res.ok && data.success) {
-        if (typeof showMysterioAlert === "function") {
-          showMysterioAlert({ message: "Your support ticket has been submitted! Support staff will review it shortly.", title: "Ticket Submitted", isError: false });
+        if (typeof showFalconAlert === "function") {
+          showFalconAlert({ message: "Your support ticket has been submitted! Support staff will review it shortly.", title: "Ticket Submitted", isError: false });
         } else {
           alert("Your support ticket has been submitted!");
         }
@@ -198,8 +198,8 @@ function initFormSubmit() {
         // Switch to History tab
         document.querySelector("#tabHistoryBtn").click();
       } else {
-        if (typeof showMysterioAlert === "function") {
-          showMysterioAlert({ message: data.error || "Failed to submit ticket.", title: "Error", isError: true });
+        if (typeof showFalconAlert === "function") {
+          showFalconAlert({ message: data.error || "Failed to submit ticket.", title: "Error", isError: true });
         } else {
           alert(data.error || "Failed to submit ticket.");
         }

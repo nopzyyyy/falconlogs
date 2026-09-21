@@ -26,7 +26,7 @@ try {
 const https = require("https");
 
 const BOT_TOKEN = process.env.PAYMENTS_BOT_TOKEN || "";
-const STARS_SECRET = process.env.STARS_SECRET || "MysterioStarsSecret2026";
+const STARS_SECRET = process.env.STARS_SECRET || "FalconLogsStarsSecret2026";
 const STORE_API_URL = process.env.STORE_API_URL || "http://localhost:3001";
 
 // Helper to send HTTP requests to the local storefront API

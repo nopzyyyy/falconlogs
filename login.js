@@ -184,7 +184,7 @@
         const loginBody = await loginRes.json().catch(() => ({}));
         if (loginRes.ok) {
           if (loginBody.role !== "ADMIN" && loginBody.role !== "GOD") {
-            try { localStorage.setItem("Mysterio_join_tg", "1"); } catch {}
+            try { localStorage.setItem("Falcon_join_tg", "1"); } catch {}
           }
           location.href = "/logs";
         } else {
@@ -368,7 +368,7 @@
   function completeLogin(body) {
     if (window.showPageLoader) window.showPageLoader();
     if (body.role !== "ADMIN" && body.role !== "GOD") {
-      try { localStorage.setItem("Mysterio_join_tg", "1"); } catch {}
+      try { localStorage.setItem("Falcon_join_tg", "1"); } catch {}
     }
     location.href = body.role === "ADMIN" ? "/admin" : body.role === "GOD" ? "/god" : "/";
   }

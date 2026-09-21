@@ -33,13 +33,13 @@ function loadCart() {
     cart = window.getCart();
   } else {
     try {
-      const expiresAt = Number(localStorage.getItem("mysterio_cart_expires_at") || 0);
+      const expiresAt = Number(localStorage.getItem("falcon_cart_expires_at") || 0);
       if (expiresAt && Date.now() > expiresAt) {
-        localStorage.removeItem("mysterio_cart");
-        localStorage.removeItem("mysterio_cart_expires_at");
+        localStorage.removeItem("falcon_cart");
+        localStorage.removeItem("falcon_cart_expires_at");
         cart = [];
       } else {
-        cart = JSON.parse(localStorage.getItem("mysterio_cart") || "[]");
+        cart = JSON.parse(localStorage.getItem("falcon_cart") || "[]");
       }
     } catch (e) {
       cart = [];
@@ -52,11 +52,11 @@ function saveCart() {
     window.setCart(cart);
   } else {
     if (!cart || cart.length === 0) {
-      localStorage.removeItem("mysterio_cart");
-      localStorage.removeItem("mysterio_cart_expires_at");
+      localStorage.removeItem("falcon_cart");
+      localStorage.removeItem("falcon_cart_expires_at");
     } else {
-      localStorage.setItem("mysterio_cart", JSON.stringify(cart));
-      localStorage.setItem("mysterio_cart_expires_at", String(Date.now() + 15 * 60 * 1000));
+      localStorage.setItem("falcon_cart", JSON.stringify(cart));
+      localStorage.setItem("falcon_cart_expires_at", String(Date.now() + 15 * 60 * 1000));
     }
     if (typeof window.updateCartBadge === "function") window.updateCartBadge();
   }
@@ -319,9 +319,10 @@ function setupPurchase() {
   if (!purchaseBtn) return;
 
   purchaseBtn.addEventListener("click", async () => {
+    const showAlert = window.showFalconAlert;
     if (!cart || cart.length === 0) {
-      if (typeof showMysterioAlert === "function") {
-        showMysterioAlert({ message: "Your cart is empty.", title: "Cart Empty", isError: true });
+      if (typeof showAlert === "function") {
+        showAlert({ message: "Your cart is empty.", title: "Cart Empty", isError: true });
       } else {
         alert("Your cart is empty.");
       }
@@ -329,8 +330,8 @@ function setupPurchase() {
     }
 
     if (!currentUser) {
-      if (typeof showMysterioAlert === "function") {
-        showMysterioAlert({ message: "Please log in to complete your purchase.", title: "Login Required", isError: true });
+      if (typeof showAlert === "function") {
+        showAlert({ message: "Please log in to complete your purchase.", title: "Login Required", isError: true });
       } else {
         alert("Please log in to complete your purchase.");
       }
@@ -386,8 +387,8 @@ function setupPurchase() {
         }
       } else {
         if (res.status === 401) {
-          if (typeof showMysterioAlert === "function") {
-            showMysterioAlert({ title: "Login Required", message: "Please sign in to complete your purchase.", isError: true });
+          if (typeof showAlert === "function") {
+            showAlert({ title: "Login Required", message: "Please sign in to complete your purchase.", isError: true });
           } else {
             alert("Please sign in to complete your purchase.");
           }
@@ -396,15 +397,15 @@ function setupPurchase() {
         }
 
         const errMsg = data.error || data.message || "Failed to process purchase.";
-        if (typeof showMysterioAlert === "function") {
-          showMysterioAlert({ title: "Checkout Error", message: errMsg, isError: true });
+        if (typeof showAlert === "function") {
+          showAlert({ title: "Checkout Error", message: errMsg, isError: true });
         } else {
           alert(errMsg);
         }
       }
     } catch (e) {
-      if (typeof showMysterioAlert === "function") {
-        showMysterioAlert({ message: e.message || "Network error during checkout.", title: "Checkout Error", isError: true });
+      if (typeof showAlert === "function") {
+        showAlert({ message: e.message || "Network error during checkout.", title: "Checkout Error", isError: true });
       } else {
         alert(e.message || "Network error during checkout.");
       }

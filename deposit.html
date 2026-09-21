@@ -535,7 +535,7 @@
         const amount = parseFloat(amountInput.value);
         const submitBtn = document.querySelector("#submitDepositBtn");
         if (isNaN(amount) || amount < 1) {
-          showMysterioAlert({ message: "Please enter a deposit amount of at least £1.", title: "Invalid Amount" });
+          showFalconAlert({ message: "Please enter a deposit amount of at least £1.", title: "Invalid Amount" });
           return;
         }
 
@@ -566,10 +566,10 @@
               window.location.href = "/orders.html";
             }
           } else {
-            showMysterioAlert({ message: data.error || "Failed to initiate deposit invoice.", title: "Deposit Error" });
+            showFalconAlert({ message: data.error || "Failed to initiate deposit invoice.", title: "Deposit Error" });
           }
         } catch (e) {
-          showMysterioAlert({ message: "Network error. Please try again.", title: "Network Error" });
+          showFalconAlert({ message: "Network error. Please try again.", title: "Network Error" });
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;

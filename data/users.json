@@ -1,18 +1,72 @@
 [
   {
-    "id": "b5415bbf-da9b-4e75-8f5d-cbc401fab86f",
+    "id": "cdc5546a-9600-47db-b417-9237fffc22fd",
     "email": "admin@falconlogs.com",
-    "passwordHash": "a7d5bc8edd074992759006a4698944ab:996fba34b79dab6f1f8e5fc3e7c1e47c5d7d3be5852538138916869329838db72887ce20e28e32b2d98074beb8b02a850f46bc4211143c855682ab2d0303e210",
+    "passwordHash": "00c465d2eea4a5454c6bcc54608f3527:c010cabc07d68c085a43365e51dd33a931a507fa28a72872b14b82ef55f2adc26e8a36ecca7dc2b71aee5af0543b7c3dc1300ace9d93a301285a54d1b3d43dde",
     "role": "ADMIN",
     "balance": 0,
-    "createdAt": "2026-09-15T22:19:48.419Z"
+    "createdAt": "2026-09-21T12:23:37.850Z"
   },
   {
-    "id": "2b372c45-6fb4-4caf-82bc-41ff99219b51",
+    "id": "3fec4ab9-ad3a-4e37-b418-5e505b597a2a",
+    "name": "",
+    "email": "hshsh62@hhhh.com",
+    "passwordHash": "f0c1b0624eb70965e7394fa63c586bfd:2e3c7aa401588c0c79eb64b31db0c53c2d83b19888c4b57ecbd27dfc92c9c04e618f5668bbacc25bab94e241b231b80be6a92eaedb404ccb664c9f6da2f2714d",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-16T14:14:46.901Z"
+  },
+  {
+    "id": "f35cde27-cb7d-4f99-bb7b-3f61484a4bee",
+    "name": "Kortes",
+    "email": "kortesfl@uberip.com",
+    "passwordHash": "f5142b682deca89dce6b7c7ff1f75370:f36d252a25965d9902b6f86af4f0695bf4cb1e9743bf778cce1a3f1225d7c5f8e2d13ff3ed695812d364acaa7d051886118bfc3f4c131e41ec870c95de4dd209",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-16T15:20:03.909Z"
+  },
+  {
+    "id": "77eb821d-363d-40dd-b4de-8acb2cb29b47",
+    "name": "SADS",
+    "email": "sfadsfdf39@gmail.com",
+    "passwordHash": "271590ab3c0b15f4587809060df720e0:5a8b2a4e7e7f4648d66c9671a2bed0aef3826a038c491cd86f918a1e9c4f0bcbc34fd01fd3fe272a57aefc048cf5f9495f940d343ad1985d7df15780cec835f3",
+    "role": "USER",
+    "balance": 50,
+    "createdAt": "2026-09-16T19:24:05.633Z"
+  },
+  {
+    "id": "6347aaac-498d-4b59-81b2-a806bd52fd42",
+    "name": "Hshs",
+    "email": "ajajjas6@6.com",
+    "passwordHash": "26274ca4c04018e3ab37a3149ef40b16:16b46ce9ed885627b9e0147f3acc5dc06a4a9f77b7c0d00bcc50e31f1842919650d78e8f646d0fb76b7649d4b44d6ff901680a61d2870d7ee90511dbdd3e28b4",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-16T19:37:35.395Z"
+  },
+  {
+    "id": "2286089a-feb5-4372-bda2-ff01ac2e6282",
+    "name": "",
+    "email": "shshjsjs2772@x.ckm",
+    "passwordHash": "60ba5f1834749d47dab1291a84f65d60:2ea66430aecb942910f3743240dce67f0e691469750b15bd464d1adb7f19e7b871f8bd53c3af380607227c58ae4522cc1a5f305b7d08c5df227ca3e36744af5a",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-16T19:39:31.327Z"
+  },
+  {
+    "id": "4f488600-e2d9-49fa-8f13-87e584e6ebdb",
+    "name": "Gang",
+    "email": "gang@gang.com",
+    "passwordHash": "8b99b6d82f8f9e6fdaf839066efc822f:f8e370f405a4b7f4064d689eb1d07a223d5b5a5523c1dd7be8535614ad6ed813b070aaf14606d9d314ecf433097145a12591590e5f4320ea4167e5b8fd972d68",
+    "role": "USER",
+    "balance": 0,
+    "createdAt": "2026-09-20T18:00:24.747Z"
+  },
+  {
+    "id": "3608760d-6310-4c03-8a5b-c0fb0ce4db3f",
     "email": "god@falconlogs.com",
-    "passwordHash": "af6ee080c7d4c4e6842ff6fd809ae5c5:9abbba11af5415067e2412fb903143e8ce7e62536dddcd49645a07271fee3e73325b0a2043d61663055c49262cd2c3a431fc3170f6d934d4a1fdc5c4e78ac0bd",
+    "passwordHash": "51d7116613ccd9bdf95ecd6a201c1584:7b0a756be06ecff5d22ca6adef1b80bd578f7267b82f60824fc018a97df639424a65d1c17c7f271379f30d63682e2c80fcec912fcb0846daf1e84f446c1260c8",
     "role": "GOD",
     "balance": 0,
-    "createdAt": "2026-09-15T22:19:48.453Z"
+    "createdAt": "2026-09-21T12:23:37.904Z"
   }
 ]

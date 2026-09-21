@@ -1,1 +1,407 @@
-[]
+[
+  {
+    "id": "AUD-BA55CB60",
+    "userId": "cb8293cf-b18c-49cf-b1d3-71221fd451de",
+    "userEmail": "admin@falconlogs.com",
+    "action": "SETTINGS_CHANGE",
+    "details": "Updated Site Settings (Payment, Particles, and Auto-Forwarder)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-21T03:44:04.167Z"
+  },
+  {
+    "id": "AUD-F7B910BB",
+    "userId": "cb8293cf-b18c-49cf-b1d3-71221fd451de",
+    "userEmail": "admin@falconlogs.com",
+    "action": "SETTINGS_CHANGE",
+    "details": "Updated Site Settings (Payment, Particles, and Auto-Forwarder)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-21T03:43:56.130Z"
+  },
+  {
+    "id": "AUD-F57A7D58",
+    "userId": "9a66e2dd-e847-4553-b885-f06543b346aa",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Early Supporter Badge\" (ID: discord-early-supporter-5f63) to false",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T20:02:36.884Z"
+  },
+  {
+    "id": "AUD-45729783",
+    "userId": "9a66e2dd-e847-4553-b885-f06543b346aa",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Early Supporter Badge\" (ID: discord-early-supporter-5f63) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T20:02:32.459Z"
+  },
+  {
+    "id": "AUD-898BC3F6",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Early Supporter Badge\" (ID: discord-early-supporter-5f63) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:49:09.446Z"
+  },
+  {
+    "id": "AUD-10BC652B",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Server Boosts (Level 3)\" (ID: discord-server-boosts-2a91) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:49:08.945Z"
+  },
+  {
+    "id": "AUD-AEA277B7",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Aged Account (2018-2020)\" (ID: discord-aged-2018-7e88) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:49:08.496Z"
+  },
+  {
+    "id": "AUD-2D0532E3",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Nitro (3 Months)\" (ID: discord-nitro-3m-4c12) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:49:08.060Z"
+  },
+  {
+    "id": "AUD-3553A6AC",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Early Supporter Badge\" (ID: discord-early-supporter-5f63) to false",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:49:07.382Z"
+  },
+  {
+    "id": "AUD-3A0A134E",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Server Boosts (Level 3)\" (ID: discord-server-boosts-2a91) to false",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:49:06.868Z"
+  },
+  {
+    "id": "AUD-2F455EED",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Aged Account (2018-2020)\" (ID: discord-aged-2018-7e88) to false",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:49:06.431Z"
+  },
+  {
+    "id": "AUD-43C42189",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Nitro (3 Months)\" (ID: discord-nitro-3m-4c12) to false",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:49:05.468Z"
+  },
+  {
+    "id": "AUD-59A429F6",
+    "userId": "24688f44-50c0-4497-ad70-2aa1985fc01f",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_EDIT",
+    "details": "Edited product: \"Discord FA\" (ID: discord-fa-9b24)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T19:48:57.253Z"
+  },
+  {
+    "id": "AUD-10401C7D",
+    "userId": "b2ef7b45-e618-4472-bb7c-7c9da858ebf5",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Aged Account (2018-2020)\" (ID: discord-aged-2018-7e88) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T15:09:31.925Z"
+  },
+  {
+    "id": "AUD-405EB040",
+    "userId": "b2ef7b45-e618-4472-bb7c-7c9da858ebf5",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Aged Account (2018-2020)\" (ID: discord-aged-2018-7e88) to false",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T15:09:31.420Z"
+  },
+  {
+    "id": "AUD-5F89B612",
+    "userId": "b2ef7b45-e618-4472-bb7c-7c9da858ebf5",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Early Supporter Badge\" (ID: discord-early-supporter-5f63) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T15:09:22.069Z"
+  },
+  {
+    "id": "AUD-4B9B8F17",
+    "userId": "b2ef7b45-e618-4472-bb7c-7c9da858ebf5",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Server Boosts (Level 3)\" (ID: discord-server-boosts-2a91) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T15:09:21.555Z"
+  },
+  {
+    "id": "AUD-E272BC8F",
+    "userId": "b2ef7b45-e618-4472-bb7c-7c9da858ebf5",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Nitro (3 Months)\" (ID: discord-nitro-3m-4c12) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T15:09:20.553Z"
+  },
+  {
+    "id": "AUD-41541389",
+    "userId": "b2ef7b45-e618-4472-bb7c-7c9da858ebf5",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_HIDE_TOGGLE",
+    "details": "Toggled hidden status of product \"Discord Aged Account (2018-2020)\" (ID: discord-aged-2018-7e88) to true",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-20T15:09:20.045Z"
+  },
+  {
+    "id": "AUD-87D85D65",
+    "userId": "332ce0af-08d9-45d7-8e01-d85a4c00b72b",
+    "userEmail": "admin@falconlogs.com",
+    "action": "ORDER_PLACE",
+    "details": "Placed order ORD-1D52F0C9 via BALANCE checkout (12.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-18T19:21:45.410Z"
+  },
+  {
+    "id": "AUD-1C0F8D7E",
+    "userId": "332ce0af-08d9-45d7-8e01-d85a4c00b72b",
+    "userEmail": "admin@falconlogs.com",
+    "action": "USER_BALANCE_ADJUST",
+    "details": "Adjusted balance of user admin@falconlogs.com by £1000.00 (New balance: £1000.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-18T19:21:19.477Z"
+  },
+  {
+    "id": "AUD-79A9A281",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "USER_BALANCE_ADJUST",
+    "details": "Adjusted balance of user sfadsfdf39@gmail.com by £50.00 (New balance: £50.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:27:12.934Z"
+  },
+  {
+    "id": "AUD-783F9CD6",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "ORDER_PLACE",
+    "details": "Placed order ORD-9BFF8567 via BALANCE checkout (12.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:24:31.907Z"
+  },
+  {
+    "id": "AUD-93856CBC",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "CATEGORY_DELETE",
+    "details": "Deleted category: \"Food & Groceries\"",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:23:57.816Z"
+  },
+  {
+    "id": "AUD-2B29B95B",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "TICKET_ACTION",
+    "details": "Admin performed REFUND_FULL on ticket ID: TCK-315BB090",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:20:27.191Z"
+  },
+  {
+    "id": "AUD-B7FA9539",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "TICKET_CREATE",
+    "details": "User created support ticket TCK-315BB090 for Order ORD-7A44CE1F",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:18:20.132Z"
+  },
+  {
+    "id": "AUD-78CF542F",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "ORDER_PLACE",
+    "details": "Placed order ORD-7A44CE1F via BALANCE checkout (12.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:14:29.954Z"
+  },
+  {
+    "id": "AUD-55EC8297",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "USER_BALANCE_ADJUST",
+    "details": "Adjusted balance of user admin@falconlogs.com by £100.00 (New balance: £110.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:13:24.797Z"
+  },
+  {
+    "id": "AUD-061629E6",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "USER_BALANCE_ADJUST",
+    "details": "Adjusted balance of user admin@falconlogs.com by £10.00 (New balance: £10.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:13:20.225Z"
+  },
+  {
+    "id": "AUD-7B56F081",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_STOCK_ADD",
+    "details": "Restocked variant \"Discord Nitro\" (ID: var-93944f) of product \"Discord FA\" (ID: discord-fa-9b24) with 3 items",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:12:36.877Z"
+  },
+  {
+    "id": "AUD-25EEC463",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_EDIT",
+    "details": "Edited product: \"Discord FA\" (ID: discord-fa-9b24)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:11:49.781Z"
+  },
+  {
+    "id": "AUD-E10DD96D",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "CATEGORY_DELETE",
+    "details": "Deleted category: \"GAS\"",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:11:42.348Z"
+  },
+  {
+    "id": "AUD-DFA0FC00",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "CATEGORY_CREATE",
+    "details": "Created category: \"GAS\" with icon: \"GAS\"",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:11:39.191Z"
+  },
+  {
+    "id": "AUD-3521FF3C",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "CATEGORY_DELETE",
+    "details": "Deleted category: \"Travel & Airlines\"",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:11:31.411Z"
+  },
+  {
+    "id": "AUD-E0770904",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "CATEGORY_DELETE",
+    "details": "Deleted category: \"Banking & Finance\"",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:11:30.210Z"
+  },
+  {
+    "id": "AUD-69C7B26D",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "CATEGORY_DELETE",
+    "details": "Deleted category: \"Entertainment & Cinema\"",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:11:28.993Z"
+  },
+  {
+    "id": "AUD-4138AD6F",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "CATEGORY_DELETE",
+    "details": "Deleted category: \"Cards & Rewards\"",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:11:27.177Z"
+  },
+  {
+    "id": "AUD-C4A216A1",
+    "userId": "524719a8-f059-4e5d-b231-17d0956f5159",
+    "userEmail": "admin@falconlogs.com",
+    "action": "CATEGORY_DELETE",
+    "details": "Deleted category: \"Retail & Shopping\"",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-17T17:11:25.992Z"
+  },
+  {
+    "id": "AUD-3BA4BB83",
+    "userId": "37142ec7-65a6-4ea5-85d4-2269a8b9aa7d",
+    "userEmail": "admin@falconlogs.com",
+    "action": "SETTINGS_CHANGE",
+    "details": "Updated Site Settings (Payment, Particles, and Auto-Forwarder)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-16T14:00:05.540Z"
+  },
+  {
+    "id": "AUD-F30BFE89",
+    "userId": "ea384c11-cd00-411f-8d60-3660c059aa81",
+    "userEmail": "admin@falconlogs.com",
+    "action": "ORDER_PLACE",
+    "details": "Placed order ORD-5D35B978 via BALANCE checkout (12.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-16T03:29:42.313Z"
+  },
+  {
+    "id": "AUD-27438F9C",
+    "userId": "ea384c11-cd00-411f-8d60-3660c059aa81",
+    "userEmail": "admin@falconlogs.com",
+    "action": "USER_BALANCE_ADJUST",
+    "details": "Adjusted balance of user admin@falconlogs.com by £50000.00 (New balance: £50000.00)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-16T03:29:33.663Z"
+  },
+  {
+    "id": "AUD-545376AE",
+    "userId": "ea384c11-cd00-411f-8d60-3660c059aa81",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_EDIT",
+    "details": "Edited product: \"Discord FA\" (ID: discord-fa-9b24)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-16T03:29:12.180Z"
+  },
+  {
+    "id": "AUD-0B503E2B",
+    "userId": "ea384c11-cd00-411f-8d60-3660c059aa81",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_STOCK_ADD",
+    "details": "Restocked variant \"Discord Nitro\" (ID: var-93944f) of product \"Discord FA\" (ID: discord-fa-9b24) with 1 items",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-16T03:29:10.340Z"
+  },
+  {
+    "id": "AUD-A0DCFB5A",
+    "userId": "ea384c11-cd00-411f-8d60-3660c059aa81",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_VARIANT_CREATE",
+    "details": "Added variant \"Discord Nitro\" (ID: var-93944f) to product \"Discord FA\" (ID: discord-fa-9b24)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-16T03:28:32.665Z"
+  },
+  {
+    "id": "AUD-2F4C3D5E",
+    "userId": "ea384c11-cd00-411f-8d60-3660c059aa81",
+    "userEmail": "admin@falconlogs.com",
+    "action": "PRODUCT_CREATE",
+    "details": "Created product: \"Discord FA\" (ID: discord-fa-9b24)",
+    "ipAddress": "::ffff:127.0.0.1",
+    "createdAt": "2026-09-16T03:27:47.379Z"
+  }
+]

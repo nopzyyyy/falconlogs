@@ -8,13 +8,13 @@ from email.header import decode_header
 from datetime import datetime
 
 # ── Config ──
-EMAIL = os.environ.get("CHIME_EMAIL", "mysterio.payments@gmail.com")
+EMAIL = os.environ.get("CHIME_EMAIL", "falconlogs.payments@gmail.com")
 PASSWORD = os.environ.get("CHIME_EMAIL_PASSWORD", "your_email_app_password")
 IMAP_SERVER = "imap.gmail.com"
 IMAP_PORT = 993
 
 WEBHOOK_URL = os.environ.get("CHIME_WEBHOOK_URL", "http://localhost:3001/api/payments/chime-webhook")
-WEBHOOK_TOKEN = os.environ.get("CHIME_WEBHOOK_TOKEN", "mysterio_chime_secure_token_2026")
+WEBHOOK_TOKEN = os.environ.get("CHIME_WEBHOOK_TOKEN", "falconlogs_chime_secure_token_2026")
 
 # Reconfigure stdout to handle non-ASCII/emojis gracefully
 if hasattr(sys.stdout, 'reconfigure'):
