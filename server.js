@@ -3703,7 +3703,7 @@ const server = http.createServer(async (req, res) => {
       if (!session) return;
 
       const body = JSON.parse(await parseBody(req) || "{}");
-      const { orderId, itemKeys } = body;
+      const { orderId, itemKeys, screenshots, reason } = body;
       if (!orderId) {
         return sendJson(res, 400, { error: "Order ID is required." });
       }
