@@ -3232,6 +3232,32 @@ input[type=number] {
 .modal.fade .modal-dialog { transition: transform .3s cubic-bezier(.4, 0, .2, 1); }
 .modal.show .modal-dialog { transform: translate(0, 0) scale(1); }
 
+/* Ensure #productModal renders as a floating centered popup on mobile, never fullscreen */
+@media (max-width: 767.98px) {
+  #productModal.modal {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+  #productModal .modal-dialog,
+  .modal-dialog.modal-fullscreen-md-down {
+    max-width: 440px !important;
+    width: 100% !important;
+    margin: 1.5rem auto !important;
+    min-height: calc(100% - 3rem) !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  #productModal .modal-content,
+  .modal-fullscreen-md-down .modal-content {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 88vh !important;
+    border-radius: 0 !important;
+  }
+}
+
 /* ── Footer (Falcon Logs Design System) ────────────────────────────────────── */
 .site-footer {
   margin-top: auto;
