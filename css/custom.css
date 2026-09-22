@@ -4067,26 +4067,11 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
 .admin-privacy-blur-indicator svg { flex-shrink: 0; opacity: .85; }
 
 
-/* Square modals & zero round corners per Falcon Logs design standard */
 .modal-dialog {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
   background: transparent !important;
-}
-
-.modal-content,
-.modal-card,
-.crypto-flow-dialog .modal-content,
-#productModal .modal-content,
-#paymentResultModal .modal-content,
-#purchaseResultModal .modal-content,
-.order-info-modal-card {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
-  background: #141416 !important;
 }
 
 /* Perfect mobile nav centering */
