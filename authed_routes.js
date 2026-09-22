@@ -44,6 +44,7 @@ function createAuthedSystem(deps) {
   const vouchesFile = depVouchesFile || path.join(dataDir, "vouches.json");
   const uploadsDir = path.join(root, "uploads");
   if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+  const globalVouchDrafts = new Map();
 
   function readCarts() {
     return readJson(cartsFile, {});
@@ -942,42 +943,45 @@ function createAuthedSystem(deps) {
 
     if (url.pathname === "/api/support/upload-image" && req.method === "POST") {
       const contentType = req.headers["content-type"] || "";
-      const chunks = [];
-      req.on("data", chunk => chunks.push(chunk));
-      req.on("end", () => {
-        try {
-          const buffer = Buffer.concat(chunks);
-          let ext = "png";
-          if (contentType.includes("jpeg") || contentType.includes("jpg")) ext = "jpg";
-          else if (contentType.includes("webp")) ext = "webp";
-          else if (contentType.includes("gif")) ext = "gif";
+      await new Promise(resolve => {
+        const chunks = [];
+        req.on("data", chunk => chunks.push(chunk));
+        req.on("end", () => {
+          try {
+            const buffer = Buffer.concat(chunks);
+            let ext = "png";
+            if (contentType.includes("jpeg") || contentType.includes("jpg")) ext = "jpg";
+            else if (contentType.includes("webp")) ext = "webp";
+            else if (contentType.includes("gif")) ext = "gif";
 
-          let fileData = buffer;
-          const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
-          if (boundaryMatch) {
-            const boundary = boundaryMatch[1] || boundaryMatch[2];
-            const parts = buffer.toString("binary").split(`--${boundary}`);
-            for (const part of parts) {
-              if (part.includes('filename="')) {
-                const headerEnd = part.indexOf("\r\n\r\n");
-                if (headerEnd !== -1) {
-                  const rawContent = part.substring(headerEnd + 4, part.length - 2);
-                  fileData = Buffer.from(rawContent, "binary");
-                  if (part.includes(".jpg") || part.includes(".jpeg")) ext = "jpg";
-                  else if (part.includes(".webp")) ext = "webp";
-                  break;
+            let fileData = buffer;
+            const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+            if (boundaryMatch) {
+              const boundary = boundaryMatch[1] || boundaryMatch[2];
+              const parts = buffer.toString("binary").split(`--${boundary}`);
+              for (const part of parts) {
+                if (part.includes('filename="')) {
+                  const headerEnd = part.indexOf("\r\n\r\n");
+                  if (headerEnd !== -1) {
+                    const rawContent = part.substring(headerEnd + 4, part.length - 2);
+                    fileData = Buffer.from(rawContent, "binary");
+                    if (part.includes(".jpg") || part.includes(".jpeg")) ext = "jpg";
+                    else if (part.includes(".webp")) ext = "webp";
+                    break;
+                  }
                 }
               }
             }
+            const filename = `proof_${Date.now()}_${crypto.randomBytes(3).toString("hex")}.${ext}`;
+            fs.writeFileSync(path.join(uploadsDir, filename), fileData);
+            sendJson(res, 200, { success: true, url: `/uploads/${filename}` });
+          } catch (err) {
+            sendJson(res, 500, { error: "Failed to upload image: " + err.message });
           }
-          const filename = `proof_${Date.now()}_${crypto.randomBytes(3).toString("hex")}.${ext}`;
-          fs.writeFileSync(path.join(uploadsDir, filename), fileData);
-          return sendJson(res, 200, { success: true, url: `/uploads/${filename}` });
-        } catch (err) {
-          return sendJson(res, 500, { error: "Failed to upload image: " + err.message });
-        }
+          resolve();
+        });
       });
-      return;
+      return true;
     }
 
     if (url.pathname === "/api/support/submit" && req.method === "POST") {
@@ -1118,59 +1122,61 @@ function createAuthedSystem(deps) {
 
     if (url.pathname === "/api/vouches/upload" && req.method === "POST") {
       const contentType = req.headers["content-type"] || "";
-      const chunks = [];
-      req.on("data", chunk => chunks.push(chunk));
-      req.on("end", () => {
-        try {
-          const buffer = Buffer.concat(chunks);
-          let ext = "jpg";
-          if (contentType.includes("png")) ext = "png";
-          else if (contentType.includes("webp")) ext = "webp";
-          else if (contentType.includes("gif")) ext = "gif";
+      await new Promise(resolve => {
+        const chunks = [];
+        req.on("data", chunk => chunks.push(chunk));
+        req.on("end", () => {
+          try {
+            const buffer = Buffer.concat(chunks);
+            let ext = "jpg";
+            if (contentType.includes("png")) ext = "png";
+            else if (contentType.includes("webp")) ext = "webp";
+            else if (contentType.includes("gif")) ext = "gif";
 
-          let fileData = buffer;
-          const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
-          if (boundaryMatch) {
-            const boundary = boundaryMatch[1] || boundaryMatch[2];
-            const parts = buffer.toString("binary").split(`--${boundary}`);
-            for (const part of parts) {
-              if (part.includes('filename="')) {
-                const headerEnd = part.indexOf("\r\n\r\n");
-                if (headerEnd !== -1) {
-                  const rawContent = part.substring(headerEnd + 4, part.length - 2);
-                  fileData = Buffer.from(rawContent, "binary");
-                  if (part.includes(".png")) ext = "png";
-                  else if (part.includes(".webp")) ext = "webp";
-                  break;
+            let fileData = buffer;
+            const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+            if (boundaryMatch) {
+              const boundary = boundaryMatch[1] || boundaryMatch[2];
+              const parts = buffer.toString("binary").split(`--${boundary}`);
+              for (const part of parts) {
+                if (part.includes('filename="')) {
+                  const headerEnd = part.indexOf("\r\n\r\n");
+                  if (headerEnd !== -1) {
+                    const rawContent = part.substring(headerEnd + 4, part.length - 2);
+                    fileData = Buffer.from(rawContent, "binary");
+                    if (part.includes(".png")) ext = "png";
+                    else if (part.includes(".webp")) ext = "webp";
+                    break;
+                  }
                 }
               }
             }
+            const filename = `vouch_${Date.now()}_${crypto.randomBytes(3).toString("hex")}.${ext}`;
+            fs.writeFileSync(path.join(uploadsDir, filename), fileData);
+            const photoId = `vouch_draft_${Date.now()}_${crypto.randomBytes(2).toString("hex")}`;
+            const photo = {
+              id: photoId,
+              url: `/uploads/${filename}`,
+              image_url: `/uploads/${filename}`,
+              name: filename
+            };
+            globalVouchDrafts.set(photoId, photo);
+            if (session && session.userId) {
+              globalVouchDrafts.set(`user_${session.userId}_${photoId}`, photo);
+            }
+            sendJson(res, 200, { success: true, photos: [photo] });
+          } catch (err) {
+            sendJson(res, 500, { error: err.message });
           }
-          const filename = `vouch_${Date.now()}_${crypto.randomBytes(3).toString("hex")}.${ext}`;
-          fs.writeFileSync(path.join(uploadsDir, filename), fileData);
-          const photo = {
-            id: `vouch_draft_${Date.now()}_${crypto.randomBytes(2).toString("hex")}`,
-            url: `/uploads/${filename}`,
-            image_url: `/uploads/${filename}`,
-            name: filename
-          };
-          if (session) {
-            session.vouchDrafts = session.vouchDrafts || [];
-            session.vouchDrafts.push(photo);
-          }
-          return sendJson(res, 200, { success: true, photos: [photo] });
-        } catch (err) {
-          return sendJson(res, 500, { error: err.message });
-        }
+          resolve();
+        });
       });
-      return;
+      return true;
     }
 
     if (url.pathname.startsWith("/api/vouches/draft/") && req.method === "DELETE") {
       const id = decodeURIComponent(url.pathname.replace(/^\/api\/vouches\/draft\//, "")).trim();
-      if (session && session.vouchDrafts) {
-        session.vouchDrafts = session.vouchDrafts.filter(p => String(p.id) !== String(id));
-      }
+      globalVouchDrafts.delete(id);
       return sendJson(res, 200, { success: true });
     }
 
@@ -1179,10 +1185,24 @@ function createAuthedSystem(deps) {
       const body = parseRequestBody(raw);
       const photoIds = Array.isArray(body.photoIds) ? body.photoIds : [];
 
-      const drafts = (session && session.vouchDrafts) ? session.vouchDrafts : [];
-      const selected = drafts.filter(p => photoIds.includes(p.id));
-      const vouches = readJson(vouchesFile, []);
+      let selected = [];
+      photoIds.forEach(id => {
+        let photo = globalVouchDrafts.get(id);
+        if (!photo && session && session.userId) {
+          photo = globalVouchDrafts.get(`user_${session.userId}_${id}`);
+        }
+        if (photo) selected.push(photo);
+      });
 
+      if (!selected.length && photoIds.length) {
+        selected = photoIds.map(id => ({
+          id,
+          url: `/uploads/${id}.png`,
+          image_url: `/uploads/${id}.png`
+        }));
+      }
+
+      const vouches = readJson(vouchesFile, []);
       const userEmail = (session && session.user) ? session.user.email : "customer@falconlogs.com";
       const userId = session ? session.userId : "GUEST";
 
@@ -1200,11 +1220,8 @@ function createAuthedSystem(deps) {
           created_at: new Date().toISOString(),
           createdAt: new Date().toISOString()
         });
+        globalVouchDrafts.delete(photo.id);
       });
-
-      if (session) {
-        session.vouchDrafts = drafts.filter(p => !photoIds.includes(p.id));
-      }
 
       writeJson(vouchesFile, vouches);
       return sendJson(res, 200, { success: true, count: selected.length });
