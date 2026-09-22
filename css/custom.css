@@ -2852,18 +2852,22 @@ body.vouch-lightbox-open {
 }
 
 .modal-content {
-  background: #141416 !important;
+  background: linear-gradient(160deg, #1c1c1f 0%, #141416 100%) !important;
   color: #fff;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  border: 1px solid rgba(234, 88, 12, .18) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .5), 0 0 0 1px rgba(255, 255, 255, .02);
   position: relative;
   overflow: hidden;
 }
-.modal-content::before,
 .modal-content::after {
-  display: none !important;
-  content: none !important;
+  content: "";
+  position: absolute;
+  top: -80px; left: -80px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(234, 88, 12, .14) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 .modal-content > * { position: relative; z-index: 1; }
 
@@ -2943,39 +2947,37 @@ body.vouch-lightbox-open {
 }
 .buttons-container .btn:first-child {
   flex: 1 1 auto;
-  background: #ea580c !important;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
   color: #fff !important;
   font-weight: 600 !important;
   font-size: 14px !important;
   padding: 12px 16px !important;
-  border-radius: 0 !important;
-  border: 1px solid #ea580c !important;
-  box-shadow: none !important;
+  border-radius: 10px !important;
+  border: none !important;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, .35) !important;
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease !important;
 }
 .buttons-container .btn:first-child:hover {
-  background: #c2410c !important;
-  border-color: #c2410c !important;
-  color: #fff !important;
-  transform: none !important;
-  box-shadow: none !important;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(234, 88, 12, .5) !important;
 }
 .buttons-container .btn:last-child {
   flex: 0 0 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #1c1c1f !important;
-  border: 1px solid #2a2a2e !important;
-  border-radius: 0 !important;
+  background: rgba(234, 88, 12, .12) !important;
+  border: 1px solid rgba(234, 88, 12, .35) !important;
+  border-radius: 10px !important;
   padding: 12px !important;
   box-shadow: none !important;
   transition: background .15s ease, border-color .15s ease, transform .15s ease !important;
 }
 .buttons-container .btn:last-child:hover {
-  background: #252528 !important;
-  border-color: #ea580c !important;
-  transform: none !important;
+  background: rgba(234, 88, 12, .25) !important;
+  border-color: rgba(234, 88, 12, .65) !important;
+  transform: translateY(-1px);
 }
 .buttons-container .btn:last-child svg { width: 22px; height: 22px; }
 .buttons-container .btn:last-child svg path,
@@ -4247,7 +4249,7 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
   color: #ea580c !important;
 }
 
-/* 2. Zero Round Corners & No Box Shadow or Border for ALL Modals */
+/* 2. Authentic Authed.cc Modal Styling with Falcon Orange Theme */
 .modal-dialog {
   border: none !important;
   outline: none !important;
@@ -4255,19 +4257,20 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
   background: transparent !important;
 }
 
-.modal-content,
-.modal-card,
-.crypto-flow-dialog .modal-content,
-#productModal .modal-content,
-#paymentResultModal .modal-content,
-#purchaseResultModal .modal-content,
-#orderInfoModal .modal-content,
-.order-info-modal-card {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
-  background: #141416 !important;
+.modal-content {
+  background: linear-gradient(160deg, #1c1c1f 0%, #141416 100%) !important;
+  color: #fff !important;
+  border: 1px solid rgba(234, 88, 12, .18) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .5), 0 0 0 1px rgba(255, 255, 255, .02) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.crypto-flow-dialog .modal-content {
+  border-radius: 22px !important;
+  border: 1px solid rgba(255, 255, 255, .1) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .55) !important;
 }
 
 .modal-backdrop {
@@ -4277,28 +4280,12 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
   opacity: 0.82 !important;
 }
 
-.modal-header,
-.modal-body,
-.modal-footer,
-.crypto-flow-header,
-.crypto-flow-body,
-.crypto-flow-footer {
-  border-radius: 0 !important;
+.modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, .06) !important;
+  padding: 18px 24px 14px !important;
 }
-
-#productModal .btn-close-modal,
-#productModal .product-tag,
-#productModal .custom-select-wrapper,
-#productModal .custom-select-display,
-#productModal .custom-options,
-#productModal .custom-option,
-#productModal .input-group,
-#productModal .input-group-text,
-#productModal .form-control,
-#productModal .buttons-container,
-#productModal .buttons-container .btn {
-  border-radius: 0 !important;
-  box-shadow: none !important;
+.modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, .06) !important;
 }
 
 /* 3. Mobile Product Popup — Centered Floating Popup (never full-screen) */
@@ -4306,13 +4293,19 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
   #productModal .modal-dialog,
   .crypto-flow-dialog {
     margin: 1.5rem auto !important;
-    max-width: 92% !important;
-    width: 92% !important;
+    max-width: min(500px, 92vw) !important;
+    width: 92vw !important;
     height: auto !important;
+    min-height: unset !important;
   }
-  #productModal .modal-content,
+  #productModal .modal-content {
+    border-radius: 14px !important;
+    height: auto !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
   .crypto-flow-dialog .modal-content {
-    border-radius: 0 !important;
+    border-radius: 22px !important;
     height: auto !important;
     max-height: 90vh !important;
     overflow-y: auto !important;

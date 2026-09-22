@@ -1787,6 +1787,7 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === "/api/products" && req.method === "GET") {
       expireStalePayments();
       const session = getSession(req);
+      if (!session) return sendJson(res, 401, { error: "Login required." });
       const allProds = readProducts();
       const includeHidden = url.searchParams.get("includeHidden") === "true";
       const isAdminOrGod = session && (session.user.role === "ADMIN" || session.user.role === "GOD");
@@ -5102,28 +5103,33 @@ ${escapeTelegramHtml(r.reason)}
       }
     }
 
-    // Strict allowlist & Role Guard
+    // Strict allowlist & Mandatory Login Gate
     const ADMIN_FILES = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);
-    const AUTH_REQUIRED_PAGES = new Set(["/orders.html", "/dashboard.html", "/change-email.html", "/change-password.html"]);
+    const PUBLIC_PAGES = new Set(["/login.html", "/signup.html"]);
 
     const fileSession = getSession(req);
 
     if (ADMIN_FILES.has(requestedPath)) {
       if (!fileSession) return redirect(res, "/auth/login?next=/admin");
-      if (fileSession.user.role !== "ADMIN" && fileSession.user.role !== "GOD") return redirect(res, "/");
+      if (fileSession.user.role !== "ADMIN" && fileSession.user.role !== "GOD") return redirect(res, "/products");
     }
 
-    if (AUTH_REQUIRED_PAGES.has(requestedPath) && !fileSession) {
-      const cleanPath = requestedPath.endsWith(".html") ? requestedPath.slice(0, -5) : requestedPath;
-      return redirect(res, `/auth/login?next=${encodeURIComponent(cleanPath)}`);
-    }
-
-    // If already logged in and visiting login or signup, redirect to store
-    if ((requestedPath === "/login.html" || requestedPath === "/signup.html") && fileSession) {
-      const role = fileSession.user.role;
-      if (role === "ADMIN") return redirect(res, "/admin");
-      if (role === "GOD") return redirect(res, "/god");
-      return redirect(res, "/products");
+    if (!fileSession) {
+      if (requestedPath.endsWith(".html") && !PUBLIC_PAGES.has(requestedPath)) {
+        const cleanPath = requestedPath.slice(0, -5);
+        const nextParam = (cleanPath === "/index" || cleanPath === "/" || cleanPath === "/products" || cleanPath === "/logs")
+          ? ""
+          : `?next=${encodeURIComponent(cleanPath)}`;
+        return redirect(res, `/auth/login${nextParam}`);
+      }
+    } else {
+      // If already logged in and visiting login or signup, redirect to store or admin
+      if (PUBLIC_PAGES.has(requestedPath)) {
+        const role = fileSession.user.role;
+        if (role === "ADMIN") return redirect(res, "/admin");
+        if (role === "GOD") return redirect(res, "/god");
+        return redirect(res, "/products");
+      }
     }
 
     let filePath = path.join(root, requestedPath);

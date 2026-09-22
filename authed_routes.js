@@ -236,7 +236,8 @@ function createAuthedSystem(deps) {
       sessions.push({ token, userId: user.id, expiresAt: Date.now() + 1000 * 60 * 60 * 24 * 7 });
       writeJson(sessionsFile, sessions);
 
-      const nextUrl = url.searchParams.get("next") || "/products";
+      const defaultRedirect = (user.role === "ADMIN") ? "/admin" : (user.role === "GOD" ? "/god" : "/products");
+      const nextUrl = url.searchParams.get("next") || body.next || defaultRedirect;
       if (url.pathname.startsWith("/api/")) {
         res.writeHead(200, {
           "Content-Type": "application/json; charset=utf-8",
@@ -291,8 +292,9 @@ function createAuthedSystem(deps) {
         });
         return res.end(JSON.stringify({ success: true, role: user.role, email: user.email, name: user.name || user.username }));
       }
+      const nextUrl = url.searchParams.get("next") || body.next || "/products";
       res.writeHead(302, {
-        "Location": "/products",
+        "Location": nextUrl,
         "Set-Cookie": `market_session=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=604800`
       });
       return res.end();
@@ -326,7 +328,7 @@ function createAuthedSystem(deps) {
       return sendJson(res, 200, { items });
     }
 
-    if (url.pathname === "/api/cart/add" && req.method === "POST") {
+    if ((url.pathname === "/api/cart/add" || url.pathname === "/api/cart") && req.method === "POST") {
       const raw = await parseBody(req);
       const body = parseRequestBody(raw);
       const cartKey = getUserCartKey(req, session);
@@ -497,7 +499,8 @@ function createAuthedSystem(deps) {
               option_name: item.option_name,
               quantity: item.quantity,
               price: item.price,
-              delivered_content: allocated.credentials
+              delivered_content: allocated.credentials,
+              credentials: allocated.credentials
             });
           } else {
             purchasedItems.push({
@@ -506,7 +509,8 @@ function createAuthedSystem(deps) {
               option_name: item.option_name,
               quantity: item.quantity,
               price: item.price,
-              delivered_content: "Stock allocation pending."
+              delivered_content: "Stock allocation pending.",
+              credentials: "Stock allocation pending."
             });
           }
         }
