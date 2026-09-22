@@ -122,12 +122,17 @@ function lookupBin(bin6) {
     req.end();
   });
 }
-// Payment Gateways: Crypto (NOWPayments) & Balance
+// Telegram & Bot tokens
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
+const TELEGRAM_ADMIN_IDS = (process.env.TELEGRAM_ADMIN_IDS || "").split(",").map(s => s.trim()).filter(Boolean);
+const TELEGRAM_RESTOCK_BOT_TOKEN = process.env.TELEGRAM_RESTOCK_BOT_TOKEN || "";
+const DASHBOARD_BOT_TOKEN = process.env.DASHBOARD_BOT_TOKEN || "";
+const STARS_SECRET = process.env.STARS_SECRET || "MysterioStarsSecret2026";
 const NOWPAYMENTS_TOPUP_API_KEY = process.env.NOWPAYMENTS_TOPUP_API_KEY || "57A2JR9-1WK4G4V-MZZEX3B-N3T5FH9";
 const NOWPAYMENTS_ORDER_API_KEY = process.env.NOWPAYMENTS_ORDER_API_KEY || "FN9YNAF-DZX4N7B-KRT4ZCV-JYSGGAT";
 const NOWPAYMENTS_IPN_SECRET    = process.env.NOWPAYMENTS_IPN_SECRET || "YYKKTZ0fGAgebjKwbhvw4iGaFCd401oc";
 const NOWPAYMENTS_URL           = process.env.NOWPAYMENTS_URL || "https://api.nowpayments.io/v1";
-const PUBLIC_BASE_URL           = process.env.PUBLIC_BASE_URL || "https://falconlogs.com";
+const PUBLIC_BASE_URL           = process.env.PUBLIC_BASE_URL || "https://mysterio.cc";
 
 const refundsFile = path.join(dataDir, "refunds.json");
 const LOG_PRODUCT_REFUND_WINDOW_HOURS = 24;
@@ -142,7 +147,6 @@ const couponsFile = path.join(dataDir, "coupons.json");
 const announcementsFile = path.join(dataDir, "announcements.json");
 const faqFile = path.join(dataDir, "faq.json");
 const pagesFile = path.join(dataDir, "pages.json");
-const vouchesFile = path.join(dataDir, "vouches.json");
 const auditLogsFile = path.join(dataDir, "audit_logs.json");
 const lockdownFile = path.join(dataDir, "lockdown.json");
 const LOCKDOWN_PASSWORD = process.env.LOCKDOWN_PASSWORD || "";
@@ -176,7 +180,7 @@ function renderLockdownHtml() {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Falcon Logs — Unavailable</title>
+  <title>Mysterio — Unavailable</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -372,7 +376,14 @@ function readSettings() {
   const defaultSettings = {
     paymentMethods: {
       balance: true,
-      crypto: true
+      crypto: true,
+      chime: true,
+      tg_stars: true
+    },
+    telegramForwarder: {
+      enabled: false,
+      intervalHours: 6,
+      sourceMessageLink: "https://t.me/Flowmark/1287"
     },
     particlesEnabled: true
   };
@@ -600,14 +611,39 @@ function ensureData() {
   if (!fs.existsSync(auditLogsFile)) {
     fs.writeFileSync(auditLogsFile, "[]");
   }
-  if (!fs.existsSync(vouchesFile)) {
-    fs.writeFileSync(vouchesFile, "[]");
-  }
   if (!fs.existsSync(faqFile)) {
-    fs.writeFileSync(faqFile, "[]");
+    const defaultFaqs = [
+      {
+        id: "faq-1",
+        question: "How does digital checkout work?",
+        answer: "Add products or card inventory to your cart, select your payment method (Balance, Crypto, Chime, or Telegram Stars), and check out. Items are delivered instantly.",
+        order: 1,
+        isActive: true
+      },
+      {
+        id: "faq-2",
+        question: "What is the refund policy?",
+        answer: "We offer a 24-hour refund window for invalid credentials. You can raise a support ticket or request a refund from your completed orders page.",
+        order: 2,
+        isActive: true
+      }
+    ];
+    fs.writeFileSync(faqFile, JSON.stringify(defaultFaqs, null, 2));
   }
   if (!fs.existsSync(pagesFile)) {
-    fs.writeFileSync(pagesFile, "{}");
+    const defaultPages = {
+      tos: {
+        title: "Terms of Service",
+        content: "Welcome to Mysterio.cc. By purchasing from our store, you agree to our terms. All transactions are final unless subject to our 24-hour replacement/refund window. We do not tolerate abuse or fraudulent disputes. Keep your account secure as you are responsible for all activity on it.",
+        updatedAt: new Date().toISOString()
+      },
+      privacy: {
+        title: "Privacy Policy",
+        content: "We only collect minimal information (email) necessary to manage your account and deliver purchases. We use secure cookies to keep you logged in. We do not sell or share your data with any third parties. All credentials and payment details are handled via secure channels.",
+        updatedAt: new Date().toISOString()
+      }
+    };
+    fs.writeFileSync(pagesFile, JSON.stringify(defaultPages, null, 2));
   }
 }
 
@@ -616,8 +652,7 @@ function logAuditAction(req, action, details) {
     const session = getSession(req);
     const userId = session ? session.user.id : "system";
     const userEmail = session ? session.user.email : "system";
-    const forwarded = req && req.headers ? (req.headers["x-forwarded-for"] || "").split(",")[0].trim() : "";
-    const ipAddress = forwarded || ((req && req.socket) ? (req.socket.remoteAddress || "127.0.0.1") : "127.0.0.1");
+    const ipAddress = (req && req.socket) ? (req.socket.remoteAddress || "127.0.0.1") : "127.0.0.1";
     const logs = readJson(auditLogsFile, []);
     const entry = {
       id: "AUD-" + crypto.randomBytes(4).toString("hex").toUpperCase(),
@@ -692,7 +727,65 @@ function writeItems(items) {
   fs.writeFileSync(dataFile, JSON.stringify(items, null, 2));
 }
 
-function sendCustomOrderTelegramNotification() {}
+const SUCCESS_BOT_TOKEN = "8809385026:AAGHDJbzgNHMfkUDV6LZecagd4zD4487RYM";
+
+function sendCustomOrderTelegramNotification(order) {
+  let message = `🔔 <b>New Custom Order Paid!</b>\n\n`;
+  message += `Order ID: <code>${order.id}</code>\n`;
+  message += `Total Paid: <b>£${Number(order.total || 0).toFixed(2)}</b>\n`;
+  message += `Payment Method: <b>${order.paymentMethod}</b>\n`;
+  message += `Customer ID: <code>${order.userId}</code>\n\n`;
+  message += `<b>Requested Items:</b>\n`;
+
+  (order.items || []).forEach((item, idx) => {
+    if (item.type === "custom-product") {
+      message += `\n📦 <b>Item #${idx + 1}: ${item.name}</b>\n`;
+      const inputs = item.customInputs || {};
+      if (inputs.email) message += `📧 <i>Email</i>: <code>${inputs.email}</code>\n`;
+      if (inputs.password) message += `🔑 <i>Password</i>: <code>${inputs.password}</code>\n`;
+      if (inputs.description) message += `📝 <i>Details</i>: <code>${inputs.description}</code>\n`;
+    }
+  });
+
+  message += `\n💡 <b>How to deliver this order:</b>\n`;
+  message += `• To deliver with details (e.g. email:pass or link):\n`;
+  message += `  <code>/complete ${order.id} &lt;details&gt;</code>\n`;
+  message += `• To mark completed with default template:\n`;
+  message += `  <code>/done ${order.id}</code>\n`;
+
+  const payload = {
+    chat_id: 6926823977,
+    text: message,
+    parse_mode: "HTML"
+  };
+
+  const postData = JSON.stringify(payload);
+  const options = {
+    hostname: "api.telegram.org",
+    port: 443,
+    path: `/bot${DASHBOARD_BOT_TOKEN}/sendMessage`,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Length": Buffer.byteLength(postData)
+    }
+  };
+
+  const req = https.request(options, (res) => {
+    let body = "";
+    res.on("data", (chunk) => body += chunk);
+    res.on("end", () => {
+      console.log(`[Success Bot Notify] Result:`, body);
+    });
+  });
+
+  req.on("error", (err) => {
+    console.error(`[Success Bot Notify] Error:`, err.message);
+  });
+
+  req.write(postData);
+  req.end();
+}
 
 function completeProductOrderInternal(orderId) {
   const orders = readJson(ordersFile, []);
@@ -859,6 +952,9 @@ function allocateProductStock(cartItem, userId, orderId) {
 function paymentExpiryTime(record) {
   if (record.expiresAt) return record.expiresAt;
   const created = Date.parse(record.createdAt || "") || 0;
+  if (record.paymentMethod === "CHIME") {
+    return created ? created + 10 * 60 * 1000 : 0;
+  }
   return created ? created + PAYMENT_EXPIRY_MS : 0;
 }
 
@@ -979,7 +1075,7 @@ function syncSystemAccounts() {
   let users = readJson(usersFile, []);
 
   // Remove any legacy admin or god accounts
-  users = users.filter(u => u.role !== "ADMIN" && u.role !== "GOD" && !u.email.includes("admin_ops") && !u.email.includes("god_root") && !u.email.includes("@falconlogs.com"));
+  users = users.filter(u => u.role !== "ADMIN" && u.role !== "GOD" && !u.email.includes("admin_ops") && !u.email.includes("god_root") && !u.email.includes("@mysterio.cc"));
 
   // Create clean ADMIN account
   const adminEntry = {
@@ -1096,7 +1192,7 @@ async function createNowpaymentPayment({ amountGbp, amountUsd, coin, network, or
   const primaryKey = isTopup ? NOWPAYMENTS_TOPUP_API_KEY : NOWPAYMENTS_ORDER_API_KEY;
   const secondaryKey = isTopup ? NOWPAYMENTS_ORDER_API_KEY : NOWPAYMENTS_TOPUP_API_KEY;
   const payCurrency = mapCoinToNowpayments(coin, network);
-  const callbackUrl = `https://${reqHost || 'falconlogs.com'}/api/payments/webhook`;
+  const callbackUrl = `https://${reqHost || 'mysterio.cc'}/api/payments/webhook`;
 
   const payload = {
     price_amount: Number(amount),
@@ -1168,15 +1264,269 @@ function verifyNowpaymentsSignature(rawBody, signatureHeader) {
   }
 }
 
-// Residual notification stubs (Telegram disabled)
-function telegramApi() { return Promise.resolve(null); }
-function broadcastTelegram() { return Promise.resolve([]); }
-function broadcastTelegramPhoto() { return Promise.resolve(); }
-function sendDashboardBotNotification() { return Promise.resolve(null); }
-function notifyUserDashboard() {}
-function notifyUserOrderCreation() {}
-function notifyRestock() {}
-function restockBuyFooter() { return ""; }
+// ---- Telegram bot helpers ----
+function telegramApi(method, payload) {
+  if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.startsWith("YOUR_")) return Promise.resolve(null);
+  return new Promise((resolve) => {
+    const data = JSON.stringify(payload);
+    const options = {
+      hostname: "api.telegram.org",
+      port: 443,
+      path: `/bot${TELEGRAM_BOT_TOKEN}/${method}`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(data)
+      }
+    };
+    const req = https.request(options, (res) => {
+      let body = "";
+      res.on("data", (chunk) => (body += chunk));
+      res.on("end", () => {
+        try { resolve(JSON.parse(body)); } catch { resolve(null); }
+      });
+    });
+    req.on("error", () => resolve(null));
+    req.write(data);
+    req.end();
+  });
+}
+
+async function broadcastTelegram(text, inlineKeyboard) {
+  const results = [];
+  for (const chatId of TELEGRAM_ADMIN_IDS) {
+    const payload = {
+      chat_id: chatId,
+      text,
+      parse_mode: "HTML",
+      disable_web_page_preview: true
+    };
+    if (inlineKeyboard) payload.reply_markup = { inline_keyboard: inlineKeyboard };
+    const result = await telegramApi("sendMessage", payload);
+    results.push({ chatId, result });
+  }
+  return results;
+}
+
+async function broadcastTelegramPhoto(photoUrl, caption) {
+  for (const chatId of TELEGRAM_ADMIN_IDS) {
+    await telegramApi("sendPhoto", { chat_id: chatId, photo: photoUrl, caption, parse_mode: "HTML" });
+  }
+}
+
+function escapeTelegramHtml(str) {
+  return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// ---- Restock channel bot (separate token from the admin bot) ----
+const telegramRestockFile = path.join(dataDir, "telegram_restock.json");
+
+function restockBotApi(method, payload) {
+  return new Promise((resolve) => {
+    const data = JSON.stringify(payload);
+    const options = {
+      hostname: "api.telegram.org",
+      port: 443,
+      path: `/bot${TELEGRAM_RESTOCK_BOT_TOKEN}/${method}`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(data)
+      }
+    };
+    const req = https.request(options, (res) => {
+      let body = "";
+      res.on("data", (chunk) => (body += chunk));
+      res.on("end", () => { try { resolve(JSON.parse(body)); } catch { resolve(null); } });
+    });
+    req.on("error", () => resolve(null));
+    req.setTimeout(8000, () => { req.destroy(); resolve(null); });
+    req.write(data);
+    req.end();
+  });
+}
+
+function sendDashboardBotNotification(telegramId, text, replyMarkup = null) {
+  if (!telegramId) return Promise.resolve(null);
+  
+  const formattedText = text;
+
+  return new Promise((resolve) => {
+    const payload = {
+      chat_id: telegramId,
+      text: formattedText,
+      parse_mode: "HTML",
+      disable_web_page_preview: true
+    };
+    if (replyMarkup) payload.reply_markup = replyMarkup;
+    const data = JSON.stringify(payload);
+    const options = {
+      hostname: "api.telegram.org",
+      port: 443,
+      path: `/bot${DASHBOARD_BOT_TOKEN}/sendMessage`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(data)
+      }
+    };
+    const req = https.request(options, (res) => {
+      let body = "";
+      res.on("data", chunk => body += chunk);
+      res.on("end", () => { try { resolve(JSON.parse(body)); } catch { resolve(null); } });
+    });
+    req.on("error", () => resolve(null));
+    req.setTimeout(8000, () => { req.destroy(); resolve(null); });
+    req.write(data);
+    req.end();
+  });
+}
+
+function notifyUserDashboard(userId, text, replyMarkup = null) {
+  try {
+    const users = readJson(usersFile, []);
+    const user = users.find(u => u.id === userId);
+    if (user && user.telegramId) {
+      sendDashboardBotNotification(user.telegramId, text, replyMarkup);
+    }
+  } catch (e) {
+    console.error("Failed to send user dashboard notification:", e.message);
+  }
+}
+
+function notifyUserOrderCreation(order, paymentUrl = null) {
+  try {
+    let msg = `<b>New Order Created!</b>\n` +
+      `Order ID: <code>${order.id}</code>\n` +
+      `Total: <b>£${Number(order.total || 0).toFixed(2)}</b>\n` +
+      `Payment Method: <b>${order.paymentMethod}</b>\n` +
+      `Status: <b>WAITING PAYMENT</b>\n\n` +
+      `Please complete your payment to fulfill this order.`;
+    let replyMarkup = null;
+    if (paymentUrl) {
+      replyMarkup = {
+        inline_keyboard: [
+          [{ text: "Complete Payment", url: paymentUrl }]
+        ]
+      };
+    } else {
+      replyMarkup = {
+        inline_keyboard: [
+          [{ text: "View Orders on Website", url: `${PUBLIC_BASE_URL}/orders.html` }]
+        ]
+      };
+    }
+    notifyUserDashboard(order.userId, msg, replyMarkup);
+  } catch (err) {
+    console.error("Error sending Telegram order creation notification:", err.message);
+  }
+}
+
+function restockBotGetUpdates(offset) {
+  if (!TELEGRAM_RESTOCK_BOT_TOKEN || TELEGRAM_RESTOCK_BOT_TOKEN.startsWith("YOUR_")) return Promise.resolve(null);
+  return new Promise((resolve) => {
+    // Include my_chat_member so we capture a channel the instant the bot is added/removed.
+    const allowed = encodeURIComponent(JSON.stringify(["channel_post", "my_chat_member"]));
+    let path = `/bot${TELEGRAM_RESTOCK_BOT_TOKEN}/getUpdates?timeout=0&allowed_updates=${allowed}`;
+    if (offset) path += `&offset=${offset}`;
+    const options = { hostname: "api.telegram.org", port: 443, path, method: "GET" };
+    const req = https.request(options, (res) => {
+      let body = "";
+      res.on("data", (chunk) => (body += chunk));
+      res.on("end", () => { try { resolve(JSON.parse(body)); } catch { resolve(null); } });
+    });
+    req.on("error", () => resolve(null));
+    req.setTimeout(8000, () => { req.destroy(); resolve(null); });
+    req.end();
+  });
+}
+
+// Restock config shape: { offset: <number>, channels: { "<chatId>": { title } } }
+function readRestockCfg() {
+  const cfg = readJson(telegramRestockFile, { offset: 0, channels: {} });
+  if (!cfg.channels) cfg.channels = {};
+  if (typeof cfg.offset !== "number") cfg.offset = 0;
+  return cfg;
+}
+
+// Poll Telegram and keep an up-to-date set of CHANNELS the bot belongs to.
+// Channels only — groups/supergroups are intentionally ignored.
+async function pollRestockUpdates() {
+  try {
+    const cfg = readRestockCfg();
+    const data = await restockBotGetUpdates(cfg.offset);
+    if (!data || !data.ok || !Array.isArray(data.result) || data.result.length === 0) return;
+
+    let changed = false;
+    for (const u of data.result) {
+      if (typeof u.update_id === "number" && u.update_id >= cfg.offset) {
+        cfg.offset = u.update_id + 1; // advance so each update is processed once
+        changed = true;
+      }
+
+      // Bot added to / removed from a channel.
+      if (u.my_chat_member && u.my_chat_member.chat && u.my_chat_member.chat.type === "channel") {
+        const chat = u.my_chat_member.chat;
+        const status = (u.my_chat_member.new_chat_member || {}).status || "";
+        const id = String(chat.id);
+        if (status === "left" || status === "kicked") {
+          if (cfg.channels[id]) { delete cfg.channels[id]; changed = true; }
+        } else {
+          cfg.channels[id] = { title: chat.title || "" }; changed = true;
+        }
+      }
+
+      // Any channel post also confirms the bot is in that channel.
+      if (u.channel_post && u.channel_post.chat && u.channel_post.chat.type === "channel") {
+        const chat = u.channel_post.chat;
+        const id = String(chat.id);
+        if (!cfg.channels[id]) { cfg.channels[id] = { title: chat.title || "" }; changed = true; }
+      }
+    }
+
+    if (changed) writeJson(telegramRestockFile, cfg);
+  } catch (e) {
+    console.log("[restock-telegram] poll error:", e.message);
+  }
+}
+
+const RESTOCK_STORE_URL = process.env.RESTOCK_STORE_URL || process.env.STORE_URL || process.env.PUBLIC_URL || "mysterio.store";
+
+function restockBuyFooter() {
+  return `\n\n🛒 Buy now ➜ <a href="https://${RESTOCK_STORE_URL}">${RESTOCK_STORE_URL}</a>`;
+}
+
+// Fire-and-forget restock announcement — broadcast to EVERY channel the bot is in.
+async function notifyRestock(text) {
+  try {
+    await pollRestockUpdates(); // catch channels added/removed right before sending
+    const cfg = readRestockCfg();
+    const ids = Object.keys(cfg.channels);
+    if (ids.length === 0) {
+      console.log("[restock-telegram] no channels yet — add the bot to a channel as admin");
+      return;
+    }
+    let removed = false;
+    for (const id of ids) {
+      const result = await restockBotApi("sendMessage", {
+        chat_id: id,
+        text,
+        parse_mode: "HTML",
+        disable_web_page_preview: true
+      });
+      if (result && !result.ok) {
+        console.log(`[restock-telegram] send to ${id} failed:`, result.description);
+        // Bot was removed / channel deleted → drop it from the broadcast list.
+        if (/chat not found|bot was (kicked|blocked)|not enough rights|CHAT_ADMIN_REQUIRED|deactivated|user is deactivated|PEER_ID_INVALID/i.test(result.description || "")) {
+          delete cfg.channels[id]; removed = true;
+        }
+      }
+    }
+    if (removed) writeJson(telegramRestockFile, cfg);
+  } catch (e) {
+    console.log("[restock-telegram] error:", e.message);
+  }
+}
 
 // Approve or deny a refund. On approve, credit the user's balance.
 async function processRefundDecision(refundId, action, actor) {
@@ -1315,6 +1665,40 @@ function apiCall(endpoint, method, apiKey, data = null) {
   });
 }
 
+
+const { createAuthedSystem } = require("./authed_routes");
+
+
+const authedSystem = createAuthedSystem({
+  root,
+  dataDir,
+  usersFile,
+  sessionsFile,
+  ordersFile,
+  topupsFile,
+  couponsFile,
+  categoriesFile,
+  ADMIN_EMAIL,
+  ADMIN_PASSWORD,
+  GOD_EMAIL,
+  GOD_PASSWORD,
+  readJson,
+  writeJson,
+  readProducts,
+  readItems,
+  writeItems,
+  getSession,
+  hashPassword,
+  verifyPassword,
+  sendJson,
+  redirect,
+  parseBody,
+  createNowpaymentPayment,
+  allocateProductStock,
+  paymentExpiryTime,
+  onOrderCompleted
+});
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
 
@@ -1358,7 +1742,7 @@ const server = http.createServer(async (req, res) => {
 
     // 4. If site IS locked, intercept all non-essential traffic
     if (isSiteLocked()) {
-      const allowedStatic = new Set(["/favicon.svg", "/favicon.ico", "/favicon.png", "/logo.png", "/login-logo.png", "/banner.png", "/hero-banner.png", "/custom.css", "/bootstrap.min.css", "/bootstrap.bundle.min.js"]);
+      const allowedStatic = new Set(["/favicon.svg", "/favicon.ico", "/favicon.png", "/logo.png", "/login-logo.png", "/chime_logo.png", "/banner.png", "/hero-banner.png", "/custom.css", "/bootstrap.min.css", "/bootstrap.bundle.min.js"]);
       if (allowedStatic.has(url.pathname)) {
         // Allow static brand assets to fall through
       } else if (url.pathname.startsWith("/api/")) {
@@ -1374,6 +1758,13 @@ const server = http.createServer(async (req, res) => {
         return res.end(renderLockdownHtml());
       }
     }
+
+    // -------------------------------------------------------------------------
+    // 1:1 AUTHED.CC STOREFRONT API & AUTH DISPATCHER
+    // -------------------------------------------------------------------------
+    await authedSystem.handleAuthedApi(req, res, url);
+    if (res.writableEnded || res.headersSent) return;
+
     // -------------------------------------------------------------------------
     // PUBLIC ITEMS (Unsold only for regular users, all for admins)
     if (url.pathname === "/api/items" && req.method === "GET") {
@@ -1505,13 +1896,21 @@ const server = http.createServer(async (req, res) => {
       const settings = readSettings();
       settings.paymentMethods = {
         balance: paymentMethods.balance !== false,
-        crypto: paymentMethods.crypto !== false
+        crypto: paymentMethods.crypto !== false,
+        chime: paymentMethods.chime !== false,
+        tg_stars: paymentMethods.tg_stars !== false
       };
       if (body.particlesEnabled !== undefined) {
         settings.particlesEnabled = body.particlesEnabled !== false;
       }
+      const telegramForwarder = body.telegramForwarder || {};
+      settings.telegramForwarder = {
+        enabled: telegramForwarder.enabled === true,
+        intervalHours: Number(telegramForwarder.intervalHours) || 6,
+        sourceMessageLink: String(telegramForwarder.sourceMessageLink || "https://t.me/Flowmark/1287").trim()
+      };
       writeSettings(settings);
-      logAuditAction(req, "SETTINGS_CHANGE", "Updated Site Settings (Payment and Particles)");
+      logAuditAction(req, "SETTINGS_CHANGE", "Updated Site Settings (Payment, Particles, and Auto-Forwarder)");
       return sendJson(res, 200, settings);
     }
 
@@ -2153,252 +2552,6 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, pages[slug] || { title: "", content: "" });
     }
 
-    // -------------------------------------------------------------------------
-    // VOUCHES & REVIEWS API
-    // -------------------------------------------------------------------------
-    // 1. Public Gallery
-    if (url.pathname === "/api/vouches/gallery" && req.method === "GET") {
-      const vouches = readJson(vouchesFile, []);
-      const approved = vouches
-        .filter(v => v.status === "approved" || v.approved === true)
-        .map(v => ({
-          id: v.id,
-          image_url: v.image_url || v.url,
-          title: v.title || "",
-          created_at: v.created_at || v.createdAt
-        }));
-      return sendJson(res, 200, { photos: approved });
-    }
-
-    // 2. User Drafts
-    if (url.pathname === "/api/vouches/drafts" && req.method === "GET") {
-      const session = getSession(req);
-      if (!session) return sendJson(res, 200, { photos: [] });
-      const vouches = readJson(vouchesFile, []);
-      const drafts = vouches.filter(v => (v.userId === session.user.id || v.user_id === session.user.id) && v.status === "draft");
-      return sendJson(res, 200, { photos: drafts });
-    }
-
-    // 3. User Upload Draft Vouch Photos (supports JSON base64 or multipart)
-    if (url.pathname === "/api/vouches/upload" && req.method === "POST") {
-      const session = getSession(req);
-      const userId = session ? session.user.id : "guest";
-      const contentType = req.headers["content-type"] || "";
-
-      if (contentType.includes("application/json")) {
-        const body = JSON.parse(await parseBody(req) || "{}");
-        const files = Array.isArray(body.files) ? body.files : (body.image ? [{ data: body.image, name: body.name }] : []);
-        const saved = [];
-        const vouches = readJson(vouchesFile, []);
-        for (const f of files) {
-          const data = f.data || f;
-          if (typeof data === "string" && data.includes(";base64,")) {
-            const [meta, raw] = data.split(";base64,");
-            const ext = meta.includes("jpeg") || meta.includes("jpg") ? "jpg" : meta.includes("webp") ? "webp" : "png";
-            const filename = `vouch_${Date.now()}_${crypto.randomBytes(4).toString("hex")}.${ext}`;
-            fs.writeFileSync(path.join(uploadsDir, filename), Buffer.from(raw, "base64"));
-            const item = {
-              id: "vouch_" + crypto.randomBytes(6).toString("hex"),
-              userId,
-              image_url: `/uploads/${filename}`,
-              url: `/uploads/${filename}`,
-              status: "draft",
-              created_at: new Date().toISOString()
-            };
-            vouches.push(item);
-            saved.push(item);
-          }
-        }
-        writeJson(vouchesFile, vouches);
-        return sendJson(res, 200, { success: true, photos: saved });
-      }
-
-      const chunks = [];
-      req.on("data", chunk => chunks.push(chunk));
-      req.on("end", () => {
-        try {
-          const buffer = Buffer.concat(chunks);
-          if (!buffer.length) return sendJson(res, 400, { error: "Empty upload payload." });
-          const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
-          const saved = [];
-          const vouches = readJson(vouchesFile, []);
-          if (boundaryMatch) {
-            const boundary = boundaryMatch[1] || boundaryMatch[2];
-            const boundaryBuf = Buffer.from("--" + boundary);
-            let start = 0;
-            while ((start = buffer.indexOf(boundaryBuf, start)) !== -1) {
-              start += boundaryBuf.length;
-              if (buffer.slice(start, start + 2).toString() === "--") break;
-              if (buffer.slice(start, start + 2).toString() === "\r\n") start += 2;
-              const headerEnd = buffer.indexOf("\r\n\r\n", start);
-              if (headerEnd === -1) break;
-              const headersText = buffer.slice(start, headerEnd).toString();
-              const nextBoundary = buffer.indexOf(boundaryBuf, headerEnd + 4);
-              if (nextBoundary === -1) break;
-              const fileEnd = nextBoundary - 2;
-              const fileData = buffer.slice(headerEnd + 4, fileEnd);
-              if (fileData.length > 0 && headersText.includes("filename=")) {
-                let ext = "png";
-                if (headersText.includes("image/jpeg") || headersText.includes(".jpg") || headersText.includes(".jpeg")) ext = "jpg";
-                else if (headersText.includes("image/webp") || headersText.includes(".webp")) ext = "webp";
-                else if (headersText.includes("image/gif") || headersText.includes(".gif")) ext = "gif";
-                const filename = `vouch_${Date.now()}_${crypto.randomBytes(4).toString("hex")}.${ext}`;
-                fs.writeFileSync(path.join(uploadsDir, filename), fileData);
-                const item = {
-                  id: "vouch_" + crypto.randomBytes(6).toString("hex"),
-                  userId,
-                  image_url: `/uploads/${filename}`,
-                  url: `/uploads/${filename}`,
-                  status: "draft",
-                  created_at: new Date().toISOString()
-                };
-                vouches.push(item);
-                saved.push(item);
-              }
-              start = nextBoundary;
-            }
-          } else {
-            let ext = "png";
-            if (contentType.includes("jpeg") || contentType.includes("jpg")) ext = "jpg";
-            else if (contentType.includes("webp")) ext = "webp";
-            const filename = `vouch_${Date.now()}_${crypto.randomBytes(4).toString("hex")}.${ext}`;
-            fs.writeFileSync(path.join(uploadsDir, filename), buffer);
-            const item = {
-              id: "vouch_" + crypto.randomBytes(6).toString("hex"),
-              userId,
-              image_url: `/uploads/${filename}`,
-              url: `/uploads/${filename}`,
-              status: "draft",
-              created_at: new Date().toISOString()
-            };
-            vouches.push(item);
-            saved.push(item);
-          }
-          writeJson(vouchesFile, vouches);
-          return sendJson(res, 200, { success: true, photos: saved });
-        } catch (err) {
-          return sendJson(res, 500, { error: err.message });
-        }
-      });
-      return;
-    }
-
-    // 4. Delete Draft Vouch
-    if (url.pathname.startsWith("/api/vouches/draft/") && req.method === "DELETE") {
-      const session = getSession(req);
-      if (!session) return sendJson(res, 401, { error: "Login required." });
-      const id = url.pathname.replace("/api/vouches/draft/", "").trim();
-      const vouches = readJson(vouchesFile, []);
-      const idx = vouches.findIndex(v => String(v.id) === String(id) && (v.userId === session.user.id || v.user_id === session.user.id) && v.status === "draft");
-      if (idx !== -1) {
-        vouches.splice(idx, 1);
-        writeJson(vouchesFile, vouches);
-      }
-      return sendJson(res, 200, { success: true });
-    }
-
-    // 5. Submit Draft Vouches for Approval
-    if (url.pathname === "/api/vouches/submit" && req.method === "POST") {
-      const session = getSession(req);
-      const body = JSON.parse(await parseBody(req) || "{}");
-      const photoIds = Array.isArray(body.photoIds) ? body.photoIds.map(String) : [];
-      const vouches = readJson(vouchesFile, []);
-      let updated = 0;
-      for (const v of vouches) {
-        if (photoIds.includes(String(v.id))) {
-          v.status = "pending";
-          if (session) v.user_email = session.user.email;
-          updated++;
-        }
-      }
-      writeJson(vouchesFile, vouches);
-      return sendJson(res, 200, { success: true, updated });
-    }
-
-    // 6. Admin Vouches Management
-    if (url.pathname === "/api/admin/vouches" && req.method === "GET") {
-      if (!requireAdminOrGod(req, res)) return;
-      const vouches = readJson(vouchesFile, []);
-      return sendJson(res, 200, { vouches });
-    }
-
-    if (url.pathname === "/api/admin/vouches/approve" && req.method === "POST") {
-      if (!requireAdmin(req, res)) return;
-      const body = JSON.parse(await parseBody(req) || "{}");
-      const { id } = body;
-      const vouches = readJson(vouchesFile, []);
-      const item = vouches.find(v => String(v.id) === String(id));
-      if (!item) return sendJson(res, 404, { error: "Vouch not found." });
-      item.status = "approved";
-      writeJson(vouchesFile, vouches);
-      logAuditAction(req, "VOUCH_APPROVE", `Approved vouch ${id}`);
-      return sendJson(res, 200, { success: true, vouch: item });
-    }
-
-    if (url.pathname === "/api/admin/vouches/reject" && req.method === "POST") {
-      if (!requireAdmin(req, res)) return;
-      const body = JSON.parse(await parseBody(req) || "{}");
-      const { id } = body;
-      const vouches = readJson(vouchesFile, []);
-      const idx = vouches.findIndex(v => String(v.id) === String(id));
-      if (idx !== -1) {
-        vouches.splice(idx, 1);
-        writeJson(vouchesFile, vouches);
-        logAuditAction(req, "VOUCH_REJECT", `Rejected/deleted vouch ${id}`);
-      }
-      return sendJson(res, 200, { success: true });
-    }
-
-    if (url.pathname === "/api/admin/vouches/create" && req.method === "POST") {
-      if (!requireAdmin(req, res)) return;
-      const body = JSON.parse(await parseBody(req) || "{}");
-      const { image_url, title } = body;
-      if (!image_url) return sendJson(res, 400, { error: "Image URL is required." });
-      const vouches = readJson(vouchesFile, []);
-      const item = {
-        id: "vouch_" + crypto.randomBytes(6).toString("hex"),
-        image_url: String(image_url).trim(),
-        url: String(image_url).trim(),
-        title: String(title || "Falcon Logs Customer Vouch").trim(),
-        status: "approved",
-        created_at: new Date().toISOString()
-      };
-      vouches.unshift(item);
-      writeJson(vouchesFile, vouches);
-      logAuditAction(req, "VOUCH_CREATE", `Created approved vouch ${item.id}`);
-      return sendJson(res, 200, { success: true, vouch: item });
-    }
-
-    if (url.pathname.startsWith("/api/admin/vouches/") && req.method === "DELETE") {
-      if (!requireAdmin(req, res)) return;
-      const id = url.pathname.replace("/api/admin/vouches/", "").trim();
-      const vouches = readJson(vouchesFile, []);
-      const idx = vouches.findIndex(v => String(v.id) === String(id));
-      if (idx !== -1) {
-        vouches.splice(idx, 1);
-        writeJson(vouchesFile, vouches);
-        logAuditAction(req, "VOUCH_DELETE", `Deleted vouch ${id}`);
-      }
-      return sendJson(res, 200, { success: true });
-    }
-
-    // 7. Notifications API
-    if (url.pathname === "/api/notifications/unread-count" && req.method === "GET") {
-      return sendJson(res, 200, { count: 0 });
-    }
-
-    if (url.pathname === "/api/notifications" && req.method === "GET") {
-      return sendJson(res, 200, { notifications: [], total: 0, unread: 0, totalPages: 1 });
-    }
-
-    if (url.pathname.startsWith("/api/notifications/") && url.pathname.endsWith("/read") && req.method === "POST") {
-      return sendJson(res, 200, { success: true });
-    }
-
-    if (url.pathname === "/api/notifications/read-all" && req.method === "POST") {
-      return sendJson(res, 200, { success: true });
-    }
-
     // CATEGORIES
     if (url.pathname === "/api/categories" && req.method === "GET") {
       const cats = readJson(categoriesFile, ["Shopping"]);
@@ -2992,6 +3145,69 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, { ok: true, message: "Password updated successfully." });
     }
 
+    if (url.pathname === "/api/auth/telegram-login" && req.method === "POST") {
+      const body = JSON.parse(await parseBody(req) || "{}");
+      const token = String(body.token || "").trim().toUpperCase();
+      if (!token) {
+        return sendJson(res, 400, { error: "Login token is required." });
+      }
+      const users = readJson(usersFile, []);
+      const user = users.find(u => String(u.telegramToken || "").toUpperCase() === token);
+      if (!user) {
+        return sendJson(res, 401, { error: "Invalid or unrecognized Telegram login token." });
+      }
+      if (!user.telegramId) {
+        return sendJson(res, 400, { error: "This account is not linked with a Telegram ID." });
+      }
+      // Generate a 6-digit OTP code
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      user.telegramOtp = otp;
+      user.telegramOtpExpiresAt = Date.now() + 5 * 60 * 1000; // 5 minutes validity
+      writeJson(usersFile, users);
+
+      // Send the OTP via Telegram Dashboard Bot
+      const otpMsg = `<b>Your Mysterio.cc Verification Code</b>\n\n` +
+        `OTP Code: <code>${otp}</code>\n\n` +
+        `This code is valid for 5 minutes. Please do not share it with anyone.`;
+      sendDashboardBotNotification(user.telegramId, otpMsg)
+        .then(res => console.log(`[DashboardBot OTP Send] Sent to ${user.telegramId}: ${res && res.ok ? "Success" : "Failed"}`))
+        .catch(err => console.error("[DashboardBot OTP Send Error]", err));
+
+      return sendJson(res, 200, { step: "OTP_REQUIRED" });
+    }
+
+    if (url.pathname === "/api/auth/telegram-verify-otp" && req.method === "POST") {
+      const body = JSON.parse(await parseBody(req) || "{}");
+      const token = String(body.token || "").trim().toUpperCase();
+      const otp = String(body.otp || "").trim();
+      if (!token || !otp) {
+        return sendJson(res, 400, { error: "Token and OTP code are required." });
+      }
+      const users = readJson(usersFile, []);
+      const user = users.find(u => String(u.telegramToken || "").toUpperCase() === token);
+      if (!user) {
+        return sendJson(res, 401, { error: "Invalid login token." });
+      }
+      if (!user.telegramOtp || user.telegramOtp !== otp || Date.now() > (user.telegramOtpExpiresAt || 0)) {
+        return sendJson(res, 401, { error: "Invalid or expired OTP code." });
+      }
+      // OTP matches! Clear OTP state in DB
+      delete user.telegramOtp;
+      delete user.telegramOtpExpiresAt;
+      writeJson(usersFile, users);
+
+      // Log the user in and create a session
+      const sessionToken = crypto.randomBytes(32).toString("hex");
+      const sessions = readJson(sessionsFile, []).filter(item => Date.now() < item.expiresAt);
+      sessions.push({ token: sessionToken, userId: user.id, expiresAt: Date.now() + 1000 * 60 * 60 * 12 });
+      writeJson(sessionsFile, sessions);
+      res.writeHead(200, {
+        "Content-Type": "application/json; charset=utf-8",
+        "Set-Cookie": `market_session=${sessionToken}; HttpOnly; SameSite=Lax; Path=/; Max-Age=43200`
+      });
+      return res.end(JSON.stringify({ role: user.role, email: user.email }));
+    }
+
     // REAL ORDERS & INVENTORY DELIVERY ENDPOINTS
     if (url.pathname === "/api/orders/checkout" && req.method === "POST") {
       expireStalePayments();
@@ -3331,7 +3547,101 @@ const server = http.createServer(async (req, res) => {
         }
       }
 
-      return sendJson(res, 400, { error: "Unsupported payment method. Only CRYPTO and BALANCE are accepted." });
+      // 3. CHIME CHECKOUT
+      if (paymentMethod === "CHIME") {
+        const orderId = `ORD-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
+        const newOrder = {
+          id: orderId,
+          status: "WAITING_PAYMENT",
+          paymentMethod: "CHIME",
+          total: total,
+          rawTotal: rawTotal,
+          discountAmount: discountAmount,
+          couponCode: appliedCoupon ? appliedCoupon.code : null,
+          items: items.map(item => {
+            let serverPrice = item.price;
+            if (item.type === "stock") {
+              const dbItem = allInventory.find(inv => inv.id === item.id);
+              if (dbItem) serverPrice = dbItem.price;
+            } else {
+              const parts = String(item.id).split(":");
+              const prod = allProducts.find(p => p.id === parts[0]);
+              const variant = prod ? (prod.variants || []).find(v => v.id === parts[1]) : null;
+              if (variant) serverPrice = variant.price;
+            }
+            return {
+              id: item.id,
+              type: item.type,
+              name: item.name,
+              price: serverPrice,
+              quantity: item.quantity,
+              customInputs: item.customInputs || {}
+            };
+          }),
+          userId: session.userId,
+          createdAt: new Date().toISOString(),
+          expiresAt: Date.now() + 10 * 60 * 1000
+        };
+
+        const orders = readJson(ordersFile, []);
+        orders.unshift(newOrder);
+        writeJson(ordersFile, orders);
+
+        notifyUserOrderCreation(newOrder, "");
+
+        return sendJson(res, 200, { success: true, order: newOrder, orderId: newOrder.id });
+      }
+
+      // 4. TELEGRAM STARS CHECKOUT
+      if (paymentMethod === "TG_STARS" || paymentMethod === "TELEGRAM_STARS") {
+        const orderId = `ORD-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
+        const newOrder = {
+          id: orderId,
+          status: "WAITING_PAYMENT",
+          paymentMethod: "TG_STARS",
+          total: total,
+          rawTotal: rawTotal,
+          discountAmount: discountAmount,
+          couponCode: appliedCoupon ? appliedCoupon.code : null,
+          items: items.map(item => {
+            let serverPrice = item.price;
+            if (item.type === "stock") {
+              const dbItem = allInventory.find(inv => inv.id === item.id);
+              if (dbItem) serverPrice = dbItem.price;
+            } else {
+              const parts = String(item.id).split(":");
+              const prod = allProducts.find(p => p.id === parts[0]);
+              const variant = prod ? (prod.variants || []).find(v => v.id === parts[1]) : null;
+              if (variant) serverPrice = variant.price;
+            }
+            return {
+              id: item.id,
+              type: item.type,
+              name: item.name,
+              price: serverPrice,
+              quantity: item.quantity,
+              customInputs: item.customInputs || {}
+            };
+          }),
+          userId: session.userId,
+          createdAt: new Date().toISOString(),
+          expiresAt: Date.now() + 15 * 60 * 1000
+        };
+
+        const orders = readJson(ordersFile, []);
+        orders.unshift(newOrder);
+        writeJson(ordersFile, orders);
+
+        notifyUserOrderCreation(newOrder, "");
+
+        const botUser = process.env.PAYMENTS_BOT_USERNAME || process.env.GATEWAY_NAME || "FalconPaymentsBot";
+        return sendJson(res, 200, {
+          success: true,
+          order: newOrder,
+          orderId: newOrder.id,
+          redirectUrl: `https://t.me/${botUser}?start=order_${orderId}`
+        });
+      }
     }
 
         // USER ORDERS QUERY
@@ -3376,6 +3686,27 @@ const server = http.createServer(async (req, res) => {
       }
 
       const topupId = `TOP-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
+
+      // Handle CHIME Payment Method
+      if (paymentMethod === "CHIME") {
+        const paidAmount = Number(amount.toFixed(2));
+        const newTopup = {
+          id: topupId,
+          userId: session.userId,
+          amount: paidAmount,
+          creditAmount: paidAmount,
+          status: "WAITING_PAYMENT",
+          paymentMethod: "CHIME",
+          createdAt: new Date().toISOString(),
+          expiresAt: Date.now() + 10 * 60 * 1000
+        };
+
+        const topups = readJson(topupsFile, []);
+        topups.unshift(newTopup);
+        writeJson(topupsFile, topups);
+
+        return sendJson(res, 200, { success: true, topup: newTopup });
+      }
 
       // Handle CRYPTO (NOWPayments) Payment Method
       try {
@@ -3445,7 +3776,7 @@ const server = http.createServer(async (req, res) => {
       if (!session) return;
 
       const body = JSON.parse(await parseBody(req) || "{}");
-      const { orderId, itemKeys, screenshots, reason } = body;
+      const { orderId, itemKeys } = body;
       if (!orderId) {
         return sendJson(res, 400, { error: "Order ID is required." });
       }
@@ -3618,6 +3949,129 @@ ${escapeTelegramHtml(r.reason)}
         }
         return sendJson(res, 200, { ok: true });
       }
+    }
+
+    // Chime local webhook listener
+    if (url.pathname === "/api/payments/chime-webhook" && req.method === "POST") {
+      const remote = req.socket.remoteAddress || "";
+      const isLocal = remote === "127.0.0.1" || remote === "::1" || remote === "::ffff:127.0.0.1";
+      const authHeader = req.headers["authorization"];
+
+      if (authHeader !== "Bearer chime_secure_vps_token_2026" && !isLocal) {
+        console.warn(`[Chime Webhook] Unauthorized request from ${remote}`);
+        return sendJson(res, 401, { error: "Unauthorized" });
+      }
+
+      expireStalePayments();
+
+      const body = JSON.parse(await parseBody(req) || "{}");
+      const { id, amount } = body;
+      console.log(`[Chime Webhook] Received request for ID: ${id}, Amount: $${amount}`);
+
+      const paidAmount = parseFloat(amount);
+      if (isNaN(paidAmount)) {
+        return sendJson(res, 400, { error: "Invalid amount" });
+      }
+
+      let order_id = id ? String(id).trim() : "";
+
+      // If ID is not provided, look it up by matching the exact pending amount!
+      if (!order_id) {
+        // Check topups first
+        const topups = readJson(topupsFile, []);
+        const matchingTopup = topups.find(t => 
+          t.status === "WAITING_PAYMENT" && 
+          t.paymentMethod === "CHIME" && 
+          Math.abs(t.amount - paidAmount) <= 0.02 &&
+          (Date.now() - new Date(t.createdAt).getTime()) <= 10 * 60 * 1000
+        );
+        
+        if (matchingTopup) {
+          order_id = matchingTopup.id;
+          console.log(`[Chime Webhook] Auto-matched amount $${paidAmount} to pending topup ${order_id}`);
+        } else {
+          // Check orders
+          const orders = readJson(ordersFile, []);
+          const matchingOrder = orders.find(o => 
+            o.status === "WAITING_PAYMENT" && 
+            o.paymentMethod === "CHIME" && 
+            Math.abs(o.total - paidAmount) <= 0.02 &&
+            (Date.now() - new Date(o.createdAt).getTime()) <= 10 * 60 * 1000
+          );
+          
+          if (matchingOrder) {
+            order_id = matchingOrder.id;
+            console.log(`[Chime Webhook] Auto-matched amount $${paidAmount} to pending order ${order_id}`);
+          }
+        }
+      }
+
+      if (!order_id) {
+        return sendJson(res, 400, { error: `No pending Chime transaction found matching amount $${paidAmount.toFixed(2)}` });
+      }
+
+      // 1. Process balance topup
+      if (order_id.startsWith("TOP-")) {
+        const topups = readJson(topupsFile, []);
+        const topup = topups.find(t => t.id === order_id);
+        if (!topup) {
+          return sendJson(res, 404, { error: "Topup not found" });
+        }
+
+        if (topup.status === "COMPLETED") {
+          return sendJson(res, 200, { success: true, alreadyCompleted: true });
+        }
+
+        // Verify amount with 0.02 tolerance
+        if (Math.abs(topup.amount - paidAmount) > 0.02) {
+          console.warn(`[Chime Webhook] Amount mismatch for ${order_id}. Required: $${topup.amount}, Paid: $${paidAmount}`);
+          return sendJson(res, 400, { error: `Amount mismatch. Required: $${topup.amount}, Received: $${paidAmount}` });
+        }
+
+        topup.status = "COMPLETED";
+        writeJson(topupsFile, topups);
+
+        // Update user balance
+        const users = readJson(usersFile, []);
+        const user = users.find(u => u.id === topup.userId);
+        if (user) {
+          const credit = Number((topup.creditAmount || topup.amount).toFixed(2));
+          user.balance = Number((Number(user.balance || 0) + credit).toFixed(2));
+          writeJson(usersFile, users);
+        }
+
+        console.log(`[Chime Webhook] Completed topup ${order_id} for user ${topup.userId}. Credited: $${topup.creditAmount}`);
+        return sendJson(res, 200, { success: true });
+      }
+
+      // 2. Process product order
+      if (order_id.startsWith("ORD-")) {
+        const orders = readJson(ordersFile, []);
+        const order = orders.find(o => o.id === order_id);
+        if (!order) {
+          return sendJson(res, 404, { error: "Order not found" });
+        }
+
+        if (order.status === "COMPLETED") {
+          return sendJson(res, 200, { success: true, alreadyCompleted: true });
+        }
+
+        // Verify amount with 0.02 tolerance
+        if (Math.abs(order.total - paidAmount) > 0.02) {
+          console.warn(`[Chime Webhook] Amount mismatch for ${order_id}. Required: $${order.total}, Paid: $${paidAmount}`);
+          return sendJson(res, 400, { error: `Amount mismatch. Required: $${order.total}, Received: $${paidAmount}` });
+        }
+
+        const completedOrder = completeProductOrderInternal(order_id);
+        if (!completedOrder) {
+          return sendJson(res, 500, { error: "Failed to complete order" });
+        }
+
+        console.log(`[Chime Webhook] Completed order ${order_id} for user ${order.userId}. Items delivered: ${completedOrder.items.length}`);
+        return sendJson(res, 200, { success: true });
+      }
+
+      return sendJson(res, 400, { error: "Unknown ID format" });
     }
 
     // IPN NOWPayments webhook listener
@@ -3845,6 +4299,47 @@ ${escapeTelegramHtml(r.reason)}
       }
     }
 
+    // Get order details for Telegram Stars Bot
+    if (url.pathname === "/api/orders/details-stars" && req.method === "GET") {
+      const orderId = url.searchParams.get("orderId");
+      const secret = url.searchParams.get("secret");
+
+      if (secret !== STARS_SECRET) {
+        return sendJson(res, 403, { error: "Forbidden" });
+      }
+
+      const orders = readJson(ordersFile, []);
+      const order = orders.find(o => o.id === orderId);
+      if (!order) {
+        return sendJson(res, 404, { error: "Order not found" });
+      }
+
+      const itemsDesc = order.items.map(item => `${item.quantity || 1}x ${item.name}`).join(", ");
+      return sendJson(res, 200, {
+        id: order.id,
+        total: order.total,
+        status: order.status,
+        itemsDescription: itemsDesc
+      });
+    }
+
+    // Complete Telegram Stars payment
+    if (url.pathname === "/api/orders/complete-stars" && req.method === "POST") {
+      const body = JSON.parse(await parseBody(req) || "{}");
+      const { orderId, secret } = body;
+
+      if (secret !== STARS_SECRET) {
+        return sendJson(res, 403, { error: "Forbidden" });
+      }
+
+      const completedOrder = completeProductOrderInternal(orderId);
+      if (!completedOrder) {
+        return sendJson(res, 404, { error: "Order not found" });
+      }
+
+      return sendJson(res, 200, { success: true, order: completedOrder });
+    }
+
     // Poll order status (called by storefront)
     if (url.pathname === "/api/orders/status" && req.method === "GET") {
       const session = getSession(req);
@@ -3899,9 +4394,24 @@ ${escapeTelegramHtml(r.reason)}
         created_at: target.createdAt
       };
 
+      const isPaid = target.status === "COMPLETED" || target.status === "finished" || target.status === "confirmed";
       return sendJson(res, 200, {
         success: true,
-        status: target.status,
+        paid: isPaid,
+        status: isPaid ? "paid" : (target.status === "confirming" ? "confirming" : "waiting"),
+        type: topup ? "balance" : "purchase",
+        fiatAmount: target.total || target.amount || 0,
+        chargeAmount: target.amount || target.total || 0,
+        fiatCurrencySign: "£",
+        checkout: {
+          address: np.pay_address || np.payAddress || target.payAddress,
+          payAmount: np.pay_amount || np.payAmount || target.payAmount,
+          payAmountExact: String(np.pay_amount || np.payAmount || target.payAmount),
+          payCurrency: (np.pay_currency || np.coin || target.coin || "BTC").toUpperCase(),
+          network: np.network || target.network || "",
+          memo: null,
+          expiredAt: Math.floor(paymentExpiryTime(target) / 1000)
+        },
         createdAt: target.createdAt,
         nowpayments: {
           ...np,
@@ -4508,11 +5018,37 @@ ${escapeTelegramHtml(r.reason)}
 
     // Map clean URLs to .html files
     let requestedPath;
-    if (url.pathname === "/" || url.pathname === "/products") {
+    if (url.pathname === "/" || url.pathname === "/products" || url.pathname === "/logs") {
       requestedPath = "/index.html";
-    } else if (url.pathname === "/auth/login" || url.pathname === "/auth/signup") {
+    } else if (url.pathname === "/auth/login" || url.pathname === "/login") {
       requestedPath = "/login.html";
-    } else if (!path.extname(url.pathname) && !url.pathname.startsWith("/screenshots/") && !url.pathname.startsWith("/uploads/")) {
+    } else if (url.pathname === "/auth/signup" || url.pathname === "/signup") {
+      requestedPath = "/signup.html";
+    } else if (url.pathname === "/dashboard/orders" || url.pathname === "/orders") {
+      requestedPath = "/orders.html";
+    } else if (url.pathname === "/dashboard/change-email") {
+      requestedPath = "/change-email.html";
+    } else if (url.pathname === "/dashboard/change-password") {
+      requestedPath = "/change-password.html";
+    } else if (url.pathname === "/cart") {
+      requestedPath = "/cart.html";
+    } else if (url.pathname === "/balance" || url.pathname === "/deposit") {
+      requestedPath = "/balance.html";
+    } else if (url.pathname === "/pay") {
+      requestedPath = "/pay.html";
+    } else if (url.pathname === "/support") {
+      requestedPath = "/support.html";
+    } else if (url.pathname === "/faq") {
+      requestedPath = "/faq.html";
+    } else if (url.pathname === "/tos") {
+      requestedPath = "/tos.html";
+    } else if (url.pathname === "/vouches") {
+      requestedPath = "/vouches.html";
+    } else if (url.pathname === "/very") {
+      requestedPath = "/very.html";
+    } else if (url.pathname === "/notifications") {
+      requestedPath = "/notifications.html";
+    } else if (!path.extname(url.pathname) && !url.pathname.startsWith("/screenshots/") && !url.pathname.startsWith("/uploads/") && !url.pathname.startsWith("/js/") && !url.pathname.startsWith("/css/")) {
       requestedPath = url.pathname + ".html";
     } else {
       requestedPath = url.pathname;
@@ -4566,67 +5102,52 @@ ${escapeTelegramHtml(r.reason)}
       }
     }
 
-    // Strict allowlist — anything not listed here is a hard 404
-    // Public: accessible without a session (login page, legal/info pages & essential assets)
-    const PUBLIC_FILES  = new Set([
-      "/login.html", "/login.js", "/styles.css", "/custom.css",
-      "/bootstrap.min.css", "/bootstrap.bundle.min.js",
-      "/cart-utils.js", "/app.js", "/datetime.js",
-      "/tos.html", "/faq.html", "/vouches.html", "/vouches.js",
-      "/banner.png", "/hero-banner.png", "/logo.png", "/hero-logo.png", "/login-logo.png",
-      "/favicon.svg", "/favicon.ico", "/favicon.png"
-    ]);
-    // Auth: requires valid logged-in session for access to private store areas
-    const AUTH_FILES    = new Set([
-      "/", "/index.html", "/products", "/logs.html", "/logs.js", "/products.js",
-      "/main.js",
-      "/cart.html", "/cart.js", "/pay.html",
-      "/orders.html", "/balance.html",
-      "/dashboard.html", "/dashboard.js", "/deposit.html",
-      "/support.html", "/support.js",
-      "/notifications.html", "/notifications.js",
-      "/very.html"
-    ]);
-    // Admin: requires ADMIN role
-    const ADMIN_FILES   = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);
-
-    const inPublic = PUBLIC_FILES.has(requestedPath);
-    const inAuth   = AUTH_FILES.has(requestedPath);
-    const inAdmin  = ADMIN_FILES.has(requestedPath);
-
-    if (!inPublic && !inAuth && !inAdmin) {
-      // Not on the allowlist — return 404 (not 403, to avoid confirming the file exists)
-      res.writeHead(404);
-      return res.end("Not found");
-    }
+    // Strict allowlist & Role Guard
+    const ADMIN_FILES = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);
+    const AUTH_REQUIRED_PAGES = new Set(["/orders.html", "/dashboard.html", "/change-email.html", "/change-password.html"]);
 
     const fileSession = getSession(req);
 
-    if (inPublic) {
-      // Already logged in → redirect away from login
-      if (requestedPath === "/login.html" && fileSession) {
-        const role = fileSession.user.role;
-        if (role === "ADMIN") return redirect(res, "/admin");
-        if (role === "GOD")   return redirect(res, "/god");
-        return redirect(res, "/");
-      }
-    } else if (inAdmin) {
-      if (!fileSession) return redirect(res, "/login?redirect=/admin");
+    if (ADMIN_FILES.has(requestedPath)) {
+      if (!fileSession) return redirect(res, "/auth/login?next=/admin");
       if (fileSession.user.role !== "ADMIN" && fileSession.user.role !== "GOD") return redirect(res, "/");
-    } else if (inAuth) {
-      if (!fileSession) {
-        const cleanPath = requestedPath.endsWith(".html") ? requestedPath.slice(0, -5) : requestedPath;
-        const redir = (cleanPath === "/index" || cleanPath === "/" || cleanPath === "") ? "" : `?redirect=${encodeURIComponent(cleanPath)}`;
-        return redirect(res, `/login${redir}`);
-      }
     }
 
-    const filePath = path.join(root, requestedPath);
+    if (AUTH_REQUIRED_PAGES.has(requestedPath) && !fileSession) {
+      const cleanPath = requestedPath.endsWith(".html") ? requestedPath.slice(0, -5) : requestedPath;
+      return redirect(res, `/auth/login?next=${encodeURIComponent(cleanPath)}`);
+    }
+
+    // If already logged in and visiting login or signup, redirect to store
+    if ((requestedPath === "/login.html" || requestedPath === "/signup.html") && fileSession) {
+      const role = fileSession.user.role;
+      if (role === "ADMIN") return redirect(res, "/admin");
+      if (role === "GOD") return redirect(res, "/god");
+      return redirect(res, "/products");
+    }
+
+    let filePath = path.join(root, requestedPath);
+    if (!fs.existsSync(filePath) && requestedPath.startsWith("/js/")) {
+      const fallback = path.join(root, path.basename(requestedPath));
+      if (fs.existsSync(fallback)) filePath = fallback;
+    }
+
     fs.readFile(filePath, (err, data) => {
       if (err) { res.writeHead(404); return res.end("Not found"); }
 
       const ext = path.extname(filePath);
       const mime = contentTypes[ext] || "application/octet-stream";
+
+      if (ext === ".html") {
+        try {
+          let htmlStr = data.toString("utf8");
+          const sessionUser = fileSession ? (readJson(usersFile, []).find(u => u.id === fileSession.userId) || fileSession.user) : null;
+          htmlStr = authedSystem.injectDynamicPageElements(htmlStr, sessionUser, url.pathname);
+          data = Buffer.from(htmlStr, "utf8");
+        } catch (e) {
+          console.error("Error injecting dynamic page elements:", e);
+        }
+      }
 
       // Smart caching: HTML, CSS, and JS stay fresh immediately; images/icons cache safely
       const isHtml = ext === ".html";
@@ -4673,6 +5194,15 @@ const port = Number(process.env.PORT) || 3001;
 syncSystemAccounts(); // Enforce secure credentials on every start
 server.listen(port, () => {
   console.log(`Falcon Logs production backend listening at http://localhost:${port}`);
+  // Register Telegram webhook (idempotent — fine to re-run on every start)
+  telegramApi("setWebhook", { url: `${PUBLIC_BASE_URL}/api/telegram/webhook` })
+    .then(r => console.log("[Telegram setWebhook]", r && r.ok ? "OK" : JSON.stringify(r)))
+    .catch(e => console.warn("[Telegram setWebhook failed]", e));
+
+  // Restock bot uses getUpdates polling (separate bot, no webhook) to keep the
+  // list of channels it belongs to current. Poll at startup then every 60s.
+  pollRestockUpdates();
+  setInterval(pollRestockUpdates, 60 * 1000);
 
   // Expire stale crypto invoices (20m) and release their reserved stock. Sweep every 30s.
   expireStalePayments();

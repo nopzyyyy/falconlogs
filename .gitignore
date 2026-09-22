@@ -11,3 +11,4 @@ backups/
 backups_archive/
 __pycache__/
 *.pyc
+scratch/
