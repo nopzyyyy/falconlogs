@@ -33,11 +33,17 @@ function createAuthedSystem(deps) {
     createNowpaymentPayment,
     allocateProductStock,
     paymentExpiryTime,
-    onOrderCompleted
+    onOrderCompleted,
+    replacementsFile: depReplacementsFile,
+    vouchesFile: depVouchesFile
   } = deps;
 
   const cartsFile = path.join(dataDir, "carts.json");
-  const ticketsFile = path.join(dataDir, "tickets.json");
+  const replacementsFile = depReplacementsFile || path.join(dataDir, "replacements.json");
+  const ticketsFile = replacementsFile;
+  const vouchesFile = depVouchesFile || path.join(dataDir, "vouches.json");
+  const uploadsDir = path.join(root, "uploads");
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
   function readCarts() {
     return readJson(cartsFile, {});
@@ -760,8 +766,95 @@ function createAuthedSystem(deps) {
       });
     }
 
+    // ── REPLACEMENTS TAB ENDPOINT (MUST BE BEFORE /api/orders/:id) ────────────
+    if (url.pathname === "/api/orders/replacements" && req.method === "GET") {
+      if (!session) return sendJson(res, 401, { error: "Login required." });
+
+      const page = parseInt(url.searchParams.get("page") || "1", 10) || 1;
+      const perPage = parseInt(url.searchParams.get("perPage") || "25", 10) || 25;
+      const searchOid = (url.searchParams.get("orderId") || "").trim().toLowerCase();
+
+      const tickets = readJson(replacementsFile, []);
+      const orders = readJson(ordersFile, []);
+
+      const userTickets = tickets.filter(t => 
+        (t.userId === session.userId || (session.user && (t.userEmail === session.user.email || t.user_email === session.user.email))) &&
+        (t.replacementCredentials || t.replacement_content || t.status === "RESOLVED" || t.status === "REPLACED")
+      );
+
+      const list = [];
+
+      userTickets.forEach((t, idx) => {
+        const creds = (t.replacementCredentials || t.replacement_content || "").trim();
+        if (!creds && t.status !== "RESOLVED") return;
+        const lineCount = creds ? creds.split("\n").filter(Boolean).length : 1;
+        list.push({
+          id: String(t.id || `rep-${idx + 1}`),
+          order_id: String(t.orderId || "ORD-REPLACEMENT"),
+          product_title: t.productName || "Delivered Item",
+          option_name: t.variantName || "Replacement",
+          line_count: lineCount || 1,
+          replacement_content: creds || "Replacement delivered by staff.",
+          is_replacement_order: !!t.isReplacementOrder,
+          parent_order_id: t.orderId || null,
+          created_at: t.updatedAt || t.createdAt || new Date().toISOString()
+        });
+      });
+
+      // Also scan orders for replacement flags
+      const userOrders = orders.filter(o => o.userId === session.userId || (session.user && o.userEmail === session.user.email));
+      userOrders.forEach(o => {
+        if (o.reason === "replacement" || (Array.isArray(o.items) && o.items.some(i => (i.credentials || "").includes("[REPLACEMENT")))) {
+          (o.items || []).forEach((item, itemIdx) => {
+            const creds = item.delivered_content || item.credentials || "";
+            if (creds.includes("[REPLACEMENT DELIVERED]") || o.reason === "replacement") {
+              const cleanedCreds = creds.includes("[REPLACEMENT DELIVERED]")
+                ? creds.split("[Original]:")[0].replace("[REPLACEMENT DELIVERED]:", "").trim()
+                : creds;
+              const repId = `ord-rep-${o.id}-${itemIdx}`;
+              if (!list.some(r => r.order_id === o.id && r.replacement_content === cleanedCreds)) {
+                list.push({
+                  id: repId,
+                  order_id: String(o.id),
+                  product_title: item.product_title || item.name || "Replacement Product",
+                  option_name: item.option_name || item.variantName || "Delivered",
+                  line_count: cleanedCreds.split("\n").filter(Boolean).length || 1,
+                  replacement_content: cleanedCreds,
+                  is_replacement_order: true,
+                  parent_order_id: o.parentOrderId || o.id,
+                  created_at: o.createdAt || new Date().toISOString()
+                });
+              }
+            }
+          });
+        }
+      });
+
+      let filtered = list;
+      if (searchOid) {
+        filtered = filtered.filter(r => 
+          r.order_id.toLowerCase().includes(searchOid) || 
+          (r.parent_order_id && r.parent_order_id.toLowerCase().includes(searchOid)) ||
+          r.product_title.toLowerCase().includes(searchOid)
+        );
+      }
+
+      const total = filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / perPage));
+      const start = (page - 1) * perPage;
+      const paged = filtered.slice(start, start + perPage);
+
+      return sendJson(res, 200, {
+        replacements: paged,
+        total: total,
+        totalPages: totalPages
+      });
+    }
+
     if (url.pathname.startsWith("/api/orders/") && req.method === "GET") {
       const orderId = decodeURIComponent(url.pathname.replace(/^\/api\/orders\//, "")).trim();
+      if (orderId === "replacements") return sendJson(res, 200, { replacements: [], total: 0, totalPages: 1 });
+
       const orders = readJson(ordersFile, []);
       const order = orders.find(o => o.id === orderId);
       if (!order) return sendJson(res, 404, { error: "Order not found" });
@@ -769,7 +862,7 @@ function createAuthedSystem(deps) {
       const statusLower = String(order.status || "").toLowerCase();
       const isFulfilled = statusLower === "completed" || statusLower === "fulfilled";
       const createdMs = Date.parse(order.createdAt || new Date().toISOString());
-      const warrantyMs = 60 * 60 * 1000;
+      const warrantyMs = 24 * 60 * 60 * 1000;
       const expiresMs = createdMs + warrantyMs;
       const remainingMs = Math.max(0, expiresMs - Date.now());
 
@@ -787,7 +880,7 @@ function createAuthedSystem(deps) {
           id: order.id,
           status: isFulfilled ? "fulfilled" : "pending",
           reason: order.reason || null,
-          warrantyMinutes: 60,
+          warrantyMinutes: 1440,
           warrantyExpiresAt: new Date(expiresMs).toISOString(),
           warrantyRemainingMs: remainingMs,
           warrantyExpired: remainingMs <= 0,
@@ -799,45 +892,464 @@ function createAuthedSystem(deps) {
       });
     }
 
-    if (url.pathname === "/api/orders/replacements" && req.method === "GET") {
-      return sendJson(res, 200, { replacements: [], total: 0, totalPages: 1 });
-    }
-
-    // ── SUPPORT & CHAT ────────────────────────────────────────────────────────
+    // ── SUPPORT SYSTEM ────────────────────────────────────────────────────────
     if (url.pathname === "/api/support/issues" && req.method === "GET") {
       return sendJson(res, 200, {
         issues: [
-          "Order not received",
-          "Invalid account credentials",
-          "Balance topup inquiry",
-          "Product question",
-          "Replacement request",
-          "Other general support"
+          { id: "invalid_creds", label: "Invalid account credentials" },
+          { id: "not_working", label: "Account / Key not working" },
+          { id: "replacement_req", label: "Replacement request" },
+          { id: "wrong_product", label: "Wrong product received" },
+          { id: "balance_topup", label: "Balance / Top-up inquiry" },
+          { id: "other", label: "Other general support" }
         ]
       });
     }
 
-    if (url.pathname === "/api/support/tickets" && req.method === "GET") {
-      const tickets = session ? readJson(ticketsFile, []).filter(t => t.userId === session.userId) : [];
-      return sendJson(res, 200, { tickets });
+    if (url.pathname.startsWith("/api/support/order/") && req.method === "GET") {
+      const orderId = decodeURIComponent(url.pathname.replace(/^\/api\/support\/order\//, "")).trim();
+      const orders = readJson(ordersFile, []);
+      const order = orders.find(o => o.id === orderId);
+      if (!order) return sendJson(res, 404, { error: "Order not found" });
+
+      const createdMs = Date.parse(order.createdAt || new Date().toISOString());
+      const warrantyMs = 24 * 60 * 60 * 1000;
+      const expiresMs = createdMs + warrantyMs;
+      const remainingMs = Math.max(0, expiresMs - Date.now());
+
+      const items = Array.isArray(order.items) ? order.items.map((i, idx) => ({
+        id: String(i.id || idx + 1),
+        product_title: i.product_title || i.productTitle || i.name || "Purchased Product",
+        option_name: i.option_name || i.variantName || "Default",
+        delivered_content: i.delivered_content || i.credentials || ""
+      })) : [];
+
+      return sendJson(res, 200, {
+        order: {
+          id: order.id,
+          status: "fulfilled",
+          reason: order.reason || "purchase",
+          total_amount: Number(order.total || 0),
+          created_at: order.createdAt || new Date().toISOString()
+        },
+        items: items,
+        warrantyMinutes: 1440,
+        warrantyExpiresAt: new Date(expiresMs).toISOString(),
+        warrantyRemainingMs: remainingMs > 0 ? remainingMs : 86400000,
+        warrantyExpired: false
+      });
+    }
+
+    if (url.pathname === "/api/support/upload-image" && req.method === "POST") {
+      const contentType = req.headers["content-type"] || "";
+      const chunks = [];
+      req.on("data", chunk => chunks.push(chunk));
+      req.on("end", () => {
+        try {
+          const buffer = Buffer.concat(chunks);
+          let ext = "png";
+          if (contentType.includes("jpeg") || contentType.includes("jpg")) ext = "jpg";
+          else if (contentType.includes("webp")) ext = "webp";
+          else if (contentType.includes("gif")) ext = "gif";
+
+          let fileData = buffer;
+          const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+          if (boundaryMatch) {
+            const boundary = boundaryMatch[1] || boundaryMatch[2];
+            const parts = buffer.toString("binary").split(`--${boundary}`);
+            for (const part of parts) {
+              if (part.includes('filename="')) {
+                const headerEnd = part.indexOf("\r\n\r\n");
+                if (headerEnd !== -1) {
+                  const rawContent = part.substring(headerEnd + 4, part.length - 2);
+                  fileData = Buffer.from(rawContent, "binary");
+                  if (part.includes(".jpg") || part.includes(".jpeg")) ext = "jpg";
+                  else if (part.includes(".webp")) ext = "webp";
+                  break;
+                }
+              }
+            }
+          }
+          const filename = `proof_${Date.now()}_${crypto.randomBytes(3).toString("hex")}.${ext}`;
+          fs.writeFileSync(path.join(uploadsDir, filename), fileData);
+          return sendJson(res, 200, { success: true, url: `/uploads/${filename}` });
+        } catch (err) {
+          return sendJson(res, 500, { error: "Failed to upload image: " + err.message });
+        }
+      });
+      return;
     }
 
     if (url.pathname === "/api/support/submit" && req.method === "POST") {
       const raw = await parseBody(req);
       const body = parseRequestBody(raw);
+      const { orderId, orderItemId, issueType, replacementsCount, message, images } = body;
+
+      if (!orderId) return sendJson(res, 400, { error: "Order ID is required." });
+      if (!message || !message.trim()) return sendJson(res, 400, { error: "Message is required." });
+
+      const orders = readJson(ordersFile, []);
+      const order = orders.find(o => o.id === orderId);
+
+      let productName = "Support Inquiry";
+      let variantName = "Default";
+      if (order && Array.isArray(order.items) && order.items.length) {
+        const item = order.items.find(i => String(i.id) === String(orderItemId)) || order.items[0];
+        productName = item.product_title || item.productTitle || item.name || productName;
+        variantName = item.option_name || item.variantName || variantName;
+      }
+
       const ticketId = `TCK-${crypto.randomBytes(3).toString("hex").toUpperCase()}`;
       const newTicket = {
         id: ticketId,
-        userId: session ? session.userId : "GUEST",
-        subject: body.subject || body.issue || "Support Inquiry",
-        message: body.message || "",
-        status: "OPEN",
+        userId: session ? session.userId : (order ? order.userId : "GUEST"),
+        userEmail: (session && session.user) ? session.user.email : (order ? order.userEmail : "customer@falconlogs.com"),
+        orderId: orderId,
+        orderItemId: orderItemId || "",
+        productName: productName,
+        variantName: variantName,
+        issueReason: issueType || "General Support",
+        issue_type: issueType || "General Support",
+        replacementCount: parseInt(replacementsCount, 10) || 1,
+        replacements_count: parseInt(replacementsCount, 10) || 1,
+        message: message.trim(),
+        images: Array.isArray(images) ? images.map(img => typeof img === "string" ? { image_url: img } : img) : [],
+        status: "PENDING",
+        replacementCredentials: null,
+        replacement_content: null,
+        admin_reply: null,
+        refundAmount: null,
+        messages: [
+          {
+            senderRole: "USER",
+            message: message.trim(),
+            createdAt: new Date().toISOString()
+          }
+        ],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      const tickets = readJson(replacementsFile, []);
+      tickets.unshift(newTicket);
+      writeJson(replacementsFile, tickets);
+
+      return sendJson(res, 200, { success: true, ticketId });
+    }
+
+    if (url.pathname === "/api/support/tickets" && req.method === "GET") {
+      if (!session) return sendJson(res, 200, { tickets: [], total: 0, totalPages: 1 });
+
+      const page = parseInt(url.searchParams.get("page") || "1", 10) || 1;
+      const perPage = parseInt(url.searchParams.get("perPage") || "25", 10) || 25;
+
+      const tickets = readJson(replacementsFile, []).filter(t => 
+        t.userId === session.userId || (session.user && (t.userEmail === session.user.email || t.user_email === session.user.email))
+      );
+
+      const mapped = tickets.map(t => {
+        const lastAdminMsg = Array.isArray(t.messages) ? t.messages.filter(m => m.senderRole === "REPLACE_ADMIN").pop() : null;
+        return {
+          id: t.id,
+          order_id: t.orderId,
+          product_title: t.productName,
+          option_name: t.variantName,
+          issue_type: t.issueReason || t.issue_type || "Support",
+          replacements_count: t.replacementCount || t.replacements_count || 1,
+          message: t.message,
+          status: (t.status || "open").toLowerCase(),
+          replacement_content: t.replacementCredentials || t.replacement_content || null,
+          replacement_order_id: t.replacementOrderId || null,
+          admin_reply: t.admin_reply || (lastAdminMsg ? lastAdminMsg.message : null),
+          created_at: t.createdAt,
+          updated_at: t.updatedAt || t.createdAt
+        };
+      });
+
+      const total = mapped.length;
+      const totalPages = Math.max(1, Math.ceil(total / perPage));
+      const start = (page - 1) * perPage;
+
+      return sendJson(res, 200, {
+        tickets: mapped.slice(start, start + perPage),
+        total,
+        totalPages
+      });
+    }
+
+    if (url.pathname.startsWith("/api/support/tickets/") && req.method === "GET") {
+      const ticketId = decodeURIComponent(url.pathname.replace(/^\/api\/support\/tickets\//, "")).trim();
+      const tickets = readJson(replacementsFile, []);
+      const t = tickets.find(x => x.id === ticketId);
+      if (!t) return sendJson(res, 404, { error: "Ticket not found" });
+
+      const lastAdminMsg = Array.isArray(t.messages) ? t.messages.filter(m => m.senderRole === "REPLACE_ADMIN").pop() : null;
+      const mappedTicket = {
+        id: t.id,
+        order_id: t.orderId,
+        product_title: t.productName,
+        option_name: t.variantName,
+        issue_type: t.issueReason || t.issue_type || "Support",
+        replacements_count: t.replacementCount || t.replacements_count || 1,
+        message: t.message,
+        status: (t.status || "open").toLowerCase(),
+        replacement_content: t.replacementCredentials || t.replacement_content || null,
+        replacement_order_id: t.replacementOrderId || null,
+        admin_reply: t.admin_reply || (lastAdminMsg ? lastAdminMsg.message : null),
+        created_at: t.createdAt,
+        updated_at: t.updatedAt || t.createdAt
+      };
+
+      const images = Array.isArray(t.images) ? t.images.map(img => typeof img === "string" ? { image_url: img } : img) : [];
+      return sendJson(res, 200, { ticket: mappedTicket, images });
+    }
+
+    // ── VOUCHES SYSTEM (STOREFRONT & ADMIN WITH BALANCE CREDITING) ────────────
+    if (url.pathname === "/api/vouches/gallery" && req.method === "GET") {
+      const vouches = readJson(vouchesFile, []);
+      const approved = vouches.filter(v => v.status === "approved" || v.approved === true);
+      return sendJson(res, 200, { photos: approved });
+    }
+
+    if (url.pathname === "/api/vouches/drafts" && req.method === "GET") {
+      const drafts = (session && session.vouchDrafts) ? session.vouchDrafts : [];
+      return sendJson(res, 200, { photos: drafts });
+    }
+
+    if (url.pathname === "/api/vouches/upload" && req.method === "POST") {
+      const contentType = req.headers["content-type"] || "";
+      const chunks = [];
+      req.on("data", chunk => chunks.push(chunk));
+      req.on("end", () => {
+        try {
+          const buffer = Buffer.concat(chunks);
+          let ext = "jpg";
+          if (contentType.includes("png")) ext = "png";
+          else if (contentType.includes("webp")) ext = "webp";
+          else if (contentType.includes("gif")) ext = "gif";
+
+          let fileData = buffer;
+          const boundaryMatch = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+          if (boundaryMatch) {
+            const boundary = boundaryMatch[1] || boundaryMatch[2];
+            const parts = buffer.toString("binary").split(`--${boundary}`);
+            for (const part of parts) {
+              if (part.includes('filename="')) {
+                const headerEnd = part.indexOf("\r\n\r\n");
+                if (headerEnd !== -1) {
+                  const rawContent = part.substring(headerEnd + 4, part.length - 2);
+                  fileData = Buffer.from(rawContent, "binary");
+                  if (part.includes(".png")) ext = "png";
+                  else if (part.includes(".webp")) ext = "webp";
+                  break;
+                }
+              }
+            }
+          }
+          const filename = `vouch_${Date.now()}_${crypto.randomBytes(3).toString("hex")}.${ext}`;
+          fs.writeFileSync(path.join(uploadsDir, filename), fileData);
+          const photo = {
+            id: `vouch_draft_${Date.now()}_${crypto.randomBytes(2).toString("hex")}`,
+            url: `/uploads/${filename}`,
+            image_url: `/uploads/${filename}`,
+            name: filename
+          };
+          if (session) {
+            session.vouchDrafts = session.vouchDrafts || [];
+            session.vouchDrafts.push(photo);
+          }
+          return sendJson(res, 200, { success: true, photos: [photo] });
+        } catch (err) {
+          return sendJson(res, 500, { error: err.message });
+        }
+      });
+      return;
+    }
+
+    if (url.pathname.startsWith("/api/vouches/draft/") && req.method === "DELETE") {
+      const id = decodeURIComponent(url.pathname.replace(/^\/api\/vouches\/draft\//, "")).trim();
+      if (session && session.vouchDrafts) {
+        session.vouchDrafts = session.vouchDrafts.filter(p => String(p.id) !== String(id));
+      }
+      return sendJson(res, 200, { success: true });
+    }
+
+    if (url.pathname === "/api/vouches/submit" && req.method === "POST") {
+      const raw = await parseBody(req);
+      const body = parseRequestBody(raw);
+      const photoIds = Array.isArray(body.photoIds) ? body.photoIds : [];
+
+      const drafts = (session && session.vouchDrafts) ? session.vouchDrafts : [];
+      const selected = drafts.filter(p => photoIds.includes(p.id));
+      const vouches = readJson(vouchesFile, []);
+
+      const userEmail = (session && session.user) ? session.user.email : "customer@falconlogs.com";
+      const userId = session ? session.userId : "GUEST";
+
+      selected.forEach(photo => {
+        vouches.unshift({
+          id: `VCH-${crypto.randomBytes(3).toString("hex").toUpperCase()}`,
+          userId: userId,
+          user_email: userEmail,
+          userEmail: userEmail,
+          image_url: photo.url || photo.image_url,
+          url: photo.url || photo.image_url,
+          title: "Verified Customer Vouch",
+          status: "pending",
+          approved: false,
+          created_at: new Date().toISOString(),
+          createdAt: new Date().toISOString()
+        });
+      });
+
+      if (session) {
+        session.vouchDrafts = drafts.filter(p => !photoIds.includes(p.id));
+      }
+
+      writeJson(vouchesFile, vouches);
+      return sendJson(res, 200, { success: true, count: selected.length });
+    }
+
+    // Admin Vouches Management
+    if (url.pathname === "/api/admin/vouches" && req.method === "GET") {
+      return sendJson(res, 200, { vouches: readJson(vouchesFile, []) });
+    }
+
+    if (url.pathname === "/api/admin/vouches/approve" && req.method === "POST") {
+      const raw = await parseBody(req);
+      const body = parseRequestBody(raw);
+      const { id, creditAmount } = body;
+      const amt = parseFloat(creditAmount) || 0;
+
+      const vouches = readJson(vouchesFile, []);
+      const vouch = vouches.find(v => v.id === id);
+      if (!vouch) return sendJson(res, 404, { error: "Vouch not found" });
+
+      vouch.status = "approved";
+      vouch.approved = true;
+      vouch.updatedAt = new Date().toISOString();
+
+      let credited = false;
+      let newBalance = 0;
+      let creditedUser = null;
+
+      if (amt > 0) {
+        const users = readJson(usersFile, []);
+        const user = users.find(u => u.id === vouch.userId || u.email === vouch.user_email || u.email === vouch.userEmail);
+        if (user) {
+          user.balance = Number((Number(user.balance || 0) + amt).toFixed(2));
+          writeJson(usersFile, users);
+          credited = true;
+          newBalance = user.balance;
+          creditedUser = user.email;
+
+          const topups = readJson(topupsFile, []);
+          topups.unshift({
+            id: `VOUCH-${crypto.randomBytes(3).toString("hex").toUpperCase()}`,
+            userId: user.id,
+            userEmail: user.email,
+            amount: amt,
+            status: "COMPLETED",
+            paymentMethod: "VOUCH_REWARD",
+            method: "VOUCH_REWARD",
+            description: `Vouch Reward Credit (£${amt.toFixed(2)}) for Vouch #${id}`,
+            createdAt: new Date().toISOString()
+          });
+          writeJson(topupsFile, topups);
+          vouch.creditedAmount = amt;
+          vouch.creditedAt = new Date().toISOString();
+        }
+      }
+
+      writeJson(vouchesFile, vouches);
+
+      return sendJson(res, 200, {
+        success: true,
+        credited,
+        amount: amt,
+        userEmail: creditedUser,
+        newBalance,
+        message: credited
+          ? `Vouch approved and £${amt.toFixed(2)} credited to ${creditedUser}!`
+          : "Vouch approved and published to store gallery."
+      });
+    }
+
+    if (url.pathname === "/api/admin/vouches/reject" && req.method === "POST") {
+      const raw = await parseBody(req);
+      const body = parseRequestBody(raw);
+      const { id } = body;
+      const vouches = readJson(vouchesFile, []).filter(v => v.id !== id);
+      writeJson(vouchesFile, vouches);
+      return sendJson(res, 200, { success: true });
+    }
+
+    if (url.pathname.startsWith("/api/admin/vouches/") && req.method === "DELETE") {
+      const id = decodeURIComponent(url.pathname.replace(/^\/api\/admin\/vouches\//, "")).trim();
+      const vouches = readJson(vouchesFile, []).filter(v => v.id !== id);
+      writeJson(vouchesFile, vouches);
+      return sendJson(res, 200, { success: true });
+    }
+
+    if (url.pathname === "/api/admin/vouches/create" && req.method === "POST") {
+      const raw = await parseBody(req);
+      const body = parseRequestBody(raw);
+      const { image_url, title } = body;
+      if (!image_url) return sendJson(res, 400, { error: "Image URL is required" });
+
+      const vouches = readJson(vouchesFile, []);
+      const newVouch = {
+        id: `VCH-${crypto.randomBytes(3).toString("hex").toUpperCase()}`,
+        userId: "ADMIN",
+        user_email: "admin@falconlogs.com",
+        userEmail: "admin@falconlogs.com",
+        image_url: image_url,
+        url: image_url,
+        title: title || "Verified Customer Vouch",
+        status: "approved",
+        approved: true,
+        created_at: new Date().toISOString(),
         createdAt: new Date().toISOString()
       };
-      const tickets = readJson(ticketsFile, []);
-      tickets.unshift(newTicket);
-      writeJson(ticketsFile, tickets);
-      return sendJson(res, 200, { success: true, ticketId });
+      vouches.unshift(newVouch);
+      writeJson(vouchesFile, vouches);
+      return sendJson(res, 200, { success: true, vouch: newVouch });
+    }
+
+    if (url.pathname === "/api/admin/vouches/credit" && req.method === "POST") {
+      const raw = await parseBody(req);
+      const body = parseRequestBody(raw);
+      const { userEmail, amount, note } = body;
+      const amt = parseFloat(amount) || 0;
+      if (!userEmail || amt <= 0) return sendJson(res, 400, { error: "Valid user email and amount required" });
+
+      const users = readJson(usersFile, []);
+      const user = users.find(u => u.email.toLowerCase() === userEmail.toLowerCase() || u.id === userEmail);
+      if (!user) return sendJson(res, 404, { error: "User not found with email: " + userEmail });
+
+      user.balance = Number((Number(user.balance || 0) + amt).toFixed(2));
+      writeJson(usersFile, users);
+
+      const topups = readJson(topupsFile, []);
+      topups.unshift({
+        id: `VOUCH-${crypto.randomBytes(3).toString("hex").toUpperCase()}`,
+        userId: user.id,
+        userEmail: user.email,
+        amount: amt,
+        status: "COMPLETED",
+        paymentMethod: "VOUCH_REWARD",
+        method: "VOUCH_REWARD",
+        description: note || `Manual Vouch Reward Credit (£${amt.toFixed(2)})`,
+        createdAt: new Date().toISOString()
+      });
+      writeJson(topupsFile, topups);
+
+      return sendJson(res, 200, {
+        success: true,
+        amount: amt,
+        userEmail: user.email,
+        newBalance: user.balance
+      });
     }
 
     return false;

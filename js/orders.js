@@ -222,7 +222,7 @@ function renderOrderDesktopRow(o) {
 function renderReplacementMobileCard(r) {
   const orderLabel = r.is_replacement_order ? 'Replacement order' : 'Original order';
   return `
-    <button type="button" class="order-mobile-card order-mobile-card--replacement" data-replacement-id="${r.id}" onclick="openReplacementModal(${r.id})">
+    <button type="button" class="order-mobile-card order-mobile-card--replacement" data-replacement-id="${escAttr(String(r.id))}" onclick="openReplacementModal('${escAttr(String(r.id))}')">
       <div class="order-mobile-card__top">
         <span class="badge-status fulfilled">${r.line_count} key${r.line_count === 1 ? '' : 's'}</span>
         <time class="order-mobile-card__date" datetime="${escHtml(r.created_at)}">${formatShortDate(r.created_at)}</time>
@@ -244,7 +244,7 @@ function renderReplacementMobileCard(r) {
 function renderReplacementDesktopRow(r) {
   const orderLabel = r.is_replacement_order ? 'Replacement order' : 'Original order';
   return `
-    <tr data-replacement-id="${r.id}" onclick="openReplacementModal(${r.id})">
+    <tr data-replacement-id="${escAttr(String(r.id))}" onclick="openReplacementModal('${escAttr(String(r.id))}')">
       <td>${escHtml(r.product_title)}</td>
       <td style="color:rgba(255,255,255,.65)">${escHtml(r.option_name)}</td>
       <td><span class="badge-status fulfilled">${r.line_count}</span></td>
@@ -541,7 +541,7 @@ async function openOrderModal(orderId) {
 }
 
 function openReplacementModal(itemId) {
-  const row = allReplacements.find(r => r.id === itemId);
+  const row = allReplacements.find(r => String(r.id) === String(itemId));
   if (!row) return;
   activeReplacement = row;
 

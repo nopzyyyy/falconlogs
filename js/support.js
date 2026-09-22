@@ -111,7 +111,7 @@ function setFieldsEnabled(enabled) {
 
 document.getElementById('btnSubmitOrderId')?.addEventListener('click', async () => {
   const orderId = document.getElementById('order-id-input').value.trim();
-  if (orderId.length !== 36) { showToast('Invalid order ID format', 'error'); return; }
+  if (!orderId || orderId.length < 4) { showToast('Invalid order ID format', 'error'); return; }
 
   try {
     const d = await apiFetch(`/api/support/order/${orderId}`);
@@ -492,7 +492,7 @@ if (prefilledOrderId) {
   const input = document.getElementById('order-id-input');
   if (input) {
     input.value = prefilledOrderId.trim();
-    if (prefilledOrderId.trim().length === 36) {
+    if (prefilledOrderId.trim().length >= 4) {
       document.getElementById('btnSubmitOrderId')?.click();
     }
   }

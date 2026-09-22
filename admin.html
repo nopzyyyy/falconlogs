@@ -636,12 +636,13 @@
             <h1 style="margin: 2px 0 0; font-size: 24px; font-weight: 800; color: #fff;">Customer Vouches</h1>
           </div>
           <div style="display:flex; gap:10px;">
+            <button id="openCreditUserModalBtn" class="pill-button" type="button" style="background:#22c55e; color:#04060b; font-weight:700;">+ Credit User Balance</button>
             <button id="openNewVouchModalBtn" class="pill-button" type="button">+ Add Vouch</button>
             <button id="refreshVouchesBtn" class="ghost-cta" type="button" style="min-height:38px;">Refresh</button>
           </div>
         </div>
 
-        <h3 style="font-size:15px; font-weight:700; margin:24px 0 12px; color:#ea580c;">Pending Submissions (Awaiting Approval)</h3>
+        <h3 style="font-size:15px; font-weight:700; margin:24px 0 12px; color:#ea580c;">Pending Submissions (Awaiting Approval &amp; Credit)</h3>
         <div class="admin-table-wrap">
           <table class="admin-table">
             <thead>
@@ -650,11 +651,12 @@
                 <th>Vouch ID</th>
                 <th>Submitter</th>
                 <th>Date</th>
+                <th style="width:130px; text-align:center;">Credit (£)</th>
                 <th style="text-align:right;">Actions</th>
               </tr>
             </thead>
             <tbody id="adminPendingVouchesRows">
-              <tr><td colspan="5" class="empty">Loading pending vouches...</td></tr>
+              <tr><td colspan="6" class="empty">Loading pending vouches...</td></tr>
             </tbody>
           </table>
         </div>
@@ -1279,6 +1281,36 @@
           <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
             <button type="button" id="cancelAdminVouchBtn" class="ghost-cta" style="min-height:38px;">Cancel</button>
             <button type="submit" class="pill-button" style="min-height:38px;">Publish Vouch</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- CREDIT USER FOR VOUCH MODAL -->
+    <div class="modal-overlay" id="adminCreditUserModal">
+      <div class="modal-content" style="max-width: 480px; width: 100%;">
+        <div class="modal-header">
+          <h2>Credit User Balance (Vouch Reward)</h2>
+          <button class="modal-close-btn" id="closeAdminCreditUserModalBtn" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <form id="adminCreditUserForm" class="modal-body">
+          <div class="modal-form-group">
+            <label>Customer Email or User ID <span style="color:var(--red);">*</span></label>
+            <input type="text" id="adminCreditUserEmailInput" class="modal-form-control" placeholder="customer@example.com" required>
+          </div>
+          <div class="modal-form-group">
+            <label>Credit Amount (£ GBP) <span style="color:var(--red);">*</span></label>
+            <input type="number" id="adminCreditAmountInput" class="modal-form-control" placeholder="1.00" step="0.50" min="0.10" value="1.00" required>
+          </div>
+          <div class="modal-form-group">
+            <label>Reason / Note</label>
+            <input type="text" id="adminCreditNoteInput" class="modal-form-control" placeholder="Customer Vouch Reward" value="Customer Vouch Reward">
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+            <button type="button" id="cancelAdminCreditUserBtn" class="ghost-cta" style="min-height:38px;">Cancel</button>
+            <button type="submit" class="pill-button" style="min-height:38px; background:#22c55e; color:#04060b; font-weight:700;">Add Credit to Balance</button>
           </div>
         </form>
       </div>

@@ -3718,7 +3718,7 @@ document.getElementById("savePrivacyEditorBtn")?.addEventListener("click", () =>
 async function loadAdminVouches() {
   const pendingTbody = document.querySelector("#adminPendingVouchesRows");
   const approvedTbody = document.querySelector("#adminApprovedVouchesRows");
-  if (pendingTbody) pendingTbody.innerHTML = `<tr><td colspan="5" class="empty">Loading pending vouches...</td></tr>`;
+  if (pendingTbody) pendingTbody.innerHTML = `<tr><td colspan="6" class="empty">Loading pending vouches...</td></tr>`;
   if (approvedTbody) approvedTbody.innerHTML = `<tr><td colspan="6" class="empty">Loading published vouches...</td></tr>`;
 
   try {
@@ -3731,7 +3731,7 @@ async function loadAdminVouches() {
 
     if (pendingTbody) {
       if (!pending.length) {
-        pendingTbody.innerHTML = `<tr><td colspan="5" class="empty" style="text-align:center; padding:24px; color:var(--muted);">No pending vouches awaiting approval.</td></tr>`;
+        pendingTbody.innerHTML = `<tr><td colspan="6" class="empty" style="text-align:center; padding:24px; color:var(--muted);">No pending vouches awaiting approval.</td></tr>`;
       } else {
         pendingTbody.innerHTML = pending.map(v => `
           <tr>
@@ -3743,9 +3743,12 @@ async function loadAdminVouches() {
             <td style="font-family:monospace; font-size:12px; color:var(--primary);">${escapeHtml(v.id)}</td>
             <td>${escapeHtml(v.user_email || v.userId || 'Customer')}</td>
             <td style="font-size:12px; color:var(--muted);">${new Date(v.created_at || v.createdAt || Date.now()).toLocaleDateString()}</td>
+            <td style="text-align:center;">
+              <input type="number" id="vouchCreditAmt_${escapeHtml(v.id)}" value="1.00" min="0" step="0.50" style="width:70px; background:#04060b; border:1px solid #334155; color:#4ade80; border-radius:4px; padding:3px 6px; text-align:center; font-family:'JetBrains Mono', monospace; font-size:12px;">
+            </td>
             <td style="text-align:right;">
-              <button class="pill-button" style="min-height:30px; padding:4px 10px; font-size:12px; background:var(--green); margin-right:6px;" onclick="window.approveVouch('${v.id}')">Approve</button>
-              <button class="ghost-cta" style="min-height:30px; padding:4px 10px; font-size:12px; color:var(--red);" onclick="window.rejectVouch('${v.id}')">Reject</button>
+              <button class="pill-button" style="min-height:30px; padding:4px 10px; font-size:12px; background:var(--green); margin-right:6px;" onclick="window.approveVouchWithCredit('${escapeHtml(v.id)}')">Approve &amp; Credit</button>
+              <button class="ghost-cta" style="min-height:30px; padding:4px 10px; font-size:12px; color:var(--red);" onclick="window.rejectVouch('${escapeHtml(v.id)}')">Reject</button>
             </td>
           </tr>
         `).join('');
@@ -3768,29 +3771,48 @@ async function loadAdminVouches() {
             <td><span class="badge" style="background:rgba(34,197,94,0.15); color:#22c55e; border-radius:4px; padding:2px 8px; font-size:11px;">Live</span></td>
             <td style="font-size:12px; color:var(--muted);">${new Date(v.created_at || v.createdAt || Date.now()).toLocaleDateString()}</td>
             <td style="text-align:right;">
-              <button class="ghost-cta" style="min-height:30px; padding:4px 10px; font-size:12px; color:var(--red);" onclick="window.deleteVouch('${v.id}')">Delete</button>
+              <button class="ghost-cta" style="min-height:30px; padding:4px 10px; font-size:12px; color:var(--red);" onclick="window.deleteVouch('${escapeHtml(v.id)}')">Delete</button>
             </td>
           </tr>
         `).join('');
       }
     }
   } catch (err) {
-    if (pendingTbody) pendingTbody.innerHTML = `<tr><td colspan="5" class="empty" style="color:var(--red);">Failed to load vouches.</td></tr>`;
+    if (pendingTbody) pendingTbody.innerHTML = `<tr><td colspan="6" class="empty" style="color:var(--red);">Failed to load vouches.</td></tr>`;
   }
 }
 
-window.approveVouch = async function(id) {
+window.approveVouchWithCredit = async function(id) {
+  const input = document.getElementById(`vouchCreditAmt_${id}`);
+  const creditAmount = input ? parseFloat(input.value) : 1.0;
   try {
     const res = await fetch("/api/admin/vouches/approve", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id })
+      body: JSON.stringify({ id, creditAmount })
     });
-    if (res.ok) {
-      if (typeof siteAlert === "function") siteAlert("Vouch approved and published to store!", { variant: "success", title: "Approved" });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      if (typeof siteAlert === "function") {
+        siteAlert(data.message || `Vouch approved! £${(data.amount || creditAmount).toFixed(2)} credited to user balance.`, { variant: "success", title: "Vouch Approved" });
+      } else {
+        alert(data.message || "Vouch approved and balance credited!");
+      }
       loadAdminVouches();
+    } else {
+      if (typeof siteAlert === "function") {
+        siteAlert(data.error || "Failed to approve vouch", { variant: "warn", title: "Error" });
+      } else {
+        alert(data.error || "Failed to approve vouch");
+      }
     }
-  } catch (_) {}
+  } catch (err) {
+    console.error("approveVouchWithCredit error:", err);
+  }
+};
+
+window.approveVouch = async function(id) {
+  return window.approveVouchWithCredit(id);
 };
 
 window.rejectVouch = async function(id) {
@@ -3870,6 +3892,53 @@ document.getElementById("adminVouchForm")?.addEventListener("submit", async (e) 
       if (typeof siteAlert === "function") siteAlert("Vouch published to gallery!", { variant: "success", title: "Published" });
     }
   } catch (_) {}
+});
+
+document.getElementById("openCreditUserModalBtn")?.addEventListener("click", () => {
+  document.getElementById("adminCreditUserModal")?.classList.add("active");
+});
+document.getElementById("closeAdminCreditUserModalBtn")?.addEventListener("click", () => {
+  document.getElementById("adminCreditUserModal")?.classList.remove("active");
+});
+document.getElementById("cancelAdminCreditUserBtn")?.addEventListener("click", () => {
+  document.getElementById("adminCreditUserModal")?.classList.remove("active");
+});
+document.getElementById("adminCreditUserForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const userEmail = document.getElementById("adminCreditUserEmailInput")?.value.trim();
+  const amount = parseFloat(document.getElementById("adminCreditAmountInput")?.value || "0");
+  const note = document.getElementById("adminCreditNoteInput")?.value.trim() || "Customer Vouch Reward";
+
+  if (!userEmail || !amount || amount <= 0) {
+    if (typeof siteAlert === "function") siteAlert("Please provide valid user email and credit amount.", { variant: "warn", title: "Missing Fields" });
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/admin/vouches/credit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userEmail, amount, note })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      document.getElementById("adminCreditUserModal")?.classList.remove("active");
+      document.getElementById("adminCreditUserForm")?.reset();
+      if (typeof siteAlert === "function") {
+        siteAlert(`Successfully credited £${amount.toFixed(2)} to ${userEmail}! New balance: £${(data.newBalance || 0).toFixed(2)}`, { variant: "success", title: "Balance Credited" });
+      } else {
+        alert(`Successfully credited £${amount.toFixed(2)} to ${userEmail}!`);
+      }
+    } else {
+      if (typeof siteAlert === "function") {
+        siteAlert(data.error || "Failed to credit user", { variant: "warn", title: "Error" });
+      } else {
+        alert(data.error || "Failed to credit user");
+      }
+    }
+  } catch (err) {
+    console.error("credit user error:", err);
+  }
 });
 
 // =========================================================================

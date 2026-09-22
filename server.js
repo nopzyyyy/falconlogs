@@ -1678,6 +1678,8 @@ const authedSystem = createAuthedSystem({
   topupsFile,
   couponsFile,
   categoriesFile,
+  replacementsFile,
+  vouchesFile: path.join(dataDir, "vouches.json"),
   ADMIN_EMAIL,
   ADMIN_PASSWORD,
   GOD_EMAIL,
@@ -4762,11 +4764,14 @@ ${escapeTelegramHtml(r.reason)}
         }
         ticket.status = "RESOLVED";
         ticket.replacementCredentials = replacementText.trim();
+        ticket.replacement_content = replacementText.trim();
+        ticket.admin_reply = `✓ Replacement stock dispatched:\n${replacementText.trim()}`;
         
         if (order && Array.isArray(order.items)) {
           const matchedItem = order.items.find(i => i.name === ticket.productName) || order.items[0];
           if (matchedItem) {
             matchedItem.credentials = `[REPLACEMENT DELIVERED]:\n${replacementText.trim()}\n\n[Original]:\n${matchedItem.credentials || ''}`;
+            matchedItem.delivered_content = matchedItem.credentials;
             writeJson(ordersFile, orders);
           }
         }
