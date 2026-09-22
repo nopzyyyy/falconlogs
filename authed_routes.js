@@ -327,6 +327,28 @@ function createAuthedSystem(deps) {
       return res.end();
     }
 
+    if (url.pathname === "/api/auth/me" && req.method === "GET") {
+      if (!session) return sendJson(res, 200, { authenticated: false });
+      const users = readJson(usersFile, []);
+      const user = users.find(u => u.id === session.userId || (session.user && u.id === session.user.id)) || session.user;
+      if (!user) return sendJson(res, 200, { authenticated: false });
+      return sendJson(res, 200, {
+        authenticated: true,
+        id: user.id,
+        name: user.name || user.username || "",
+        email: user.email,
+        role: user.role,
+        balance: Number(user.balance || 0),
+        user: {
+          id: user.id,
+          name: user.name || user.username || "",
+          email: user.email,
+          role: user.role,
+          balance: Number(user.balance || 0)
+        }
+      });
+    }
+
     // ── CART APIS ─────────────────────────────────────────────────────────────
     if (url.pathname === "/api/cart" && req.method === "GET") {
       const cartKey = getUserCartKey(req, session);

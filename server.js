@@ -3105,7 +3105,14 @@ const server = http.createServer(async (req, res) => {
         name: user.name || "",
         email: user.email,
         role: user.role,
-        balance: Number(user.balance || 0)
+        balance: Number(user.balance || 0),
+        user: {
+          id: user.id,
+          name: user.name || "",
+          email: user.email,
+          role: user.role,
+          balance: Number(user.balance || 0)
+        }
       });
     }
 
