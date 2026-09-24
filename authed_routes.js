@@ -311,11 +311,11 @@ function createAuthedSystem(deps) {
       return res.end();
     }
 
-    if ((url.pathname === "/auth/signup" || url.pathname === "/api/auth/signup") && req.method === "POST") {
+    if ((url.pathname === "/auth/signup" || url.pathname === "/api/auth/signup" || url.pathname === "/api/auth/register") && req.method === "POST") {
       const raw = await parseBody(req);
       const body = parseRequestBody(raw);
       const email = String(body.email || "").trim().toLowerCase();
-      const username = String(body.username || email.split("@")[0] || "User").trim();
+      const username = String(body.username || body.name || email.split("@")[0] || "User").trim();
       const password = String(body.password || "");
 
       if (!email || !password) {
