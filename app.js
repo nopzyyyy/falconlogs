@@ -60,7 +60,7 @@ async function updateCartCount() {
     const r = await fetch('/api/cart/count');
     const d = await r.json();
     const count = d.count || 0;
-    document.querySelectorAll('#cartItemsCount, .cartItemsCount, [data-cart-count]').forEach(el => {
+    document.querySelectorAll('#cartItemsCount, #cartItemsCountMobile, .mobile-cart-count, .cartItemsCount, [data-cart-count]').forEach(el => {
       el.textContent = count;
     });
   } catch {}

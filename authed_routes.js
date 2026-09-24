@@ -99,7 +99,7 @@ function createAuthedSystem(deps) {
   </button>
   <div class="collapse navbar-collapse" id="headerCollapse">
     <!-- Desktop Header (>= 992px) -->
-    <div class="d-none d-lg-flex w-100 align-items-center">
+    <div class="d-none d-lg-flex w-100 align-items-center desktop-nav-wrap">
       <ul class="navbar-nav align-items-center">
         <li class="nav-item"><a class="nav-link ${isHome ? 'active' : ''}" href="/products">Home</a></li>
         <li class="nav-item"><a class="nav-link ${isOrders ? 'active' : ''}" href="/dashboard/orders">Orders</a></li>
@@ -184,7 +184,7 @@ function createAuthedSystem(deps) {
         <!-- 6. Cart Icon at Bottom -->
         <div class="mobile-cart-item">
           <a class="mobile-cart-link" href="/cart" aria-label="Cart">
-            <span class="mobile-cart-count cartItemsCount">0</span>
+            <span class="mobile-cart-count" id="cartItemsCountMobile">0</span>
             <svg height="28" viewBox="0 -960 960 960" width="28">
               <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L710-496q-11 20-29.5 32T640-452H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 72Z"/>
             </svg>
