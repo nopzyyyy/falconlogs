@@ -204,7 +204,7 @@ function createAuthedSystem(deps) {
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="headerCollapse">
-    <div class="d-none d-lg-flex w-100 align-items-center">
+    <div class="d-none d-lg-flex w-100 align-items-center desktop-nav-wrap">
       <ul class="navbar-nav align-items-center">
         <li class="nav-item"><a class="nav-link ${isHome ? 'active' : ''}" href="/products">Home</a></li>
       </ul>

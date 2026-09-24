@@ -4294,11 +4294,29 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
 
 /* 4. Desktop Navbar Alignment & Centered Cart Badge */
 @media (min-width: 992px) {
-  .navbar .desktop-nav-wrap,
-  .navbar .navbar-nav {
+  .navbar .desktop-nav-wrap {
     display: flex !important;
     align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
     margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .navbar .navbar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .navbar .navbar-nav.ms-auto,
+  .navbar .desktop-nav-wrap > .navbar-nav:last-child {
+    margin-left: auto !important;
+    margin-right: 0 !important;
   }
 
   .navbar .navbar-nav .nav-link {
