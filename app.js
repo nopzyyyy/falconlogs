@@ -59,12 +59,14 @@ async function updateCartCount() {
   try {
     const r = await fetch('/api/cart/count');
     const d = await r.json();
-    const el = document.getElementById('cartItemsCount');
-    if (el) el.textContent = d.count || 0;
+    const count = d.count || 0;
+    document.querySelectorAll('#cartItemsCount, .cartItemsCount, [data-cart-count]').forEach(el => {
+      el.textContent = count;
+    });
   } catch {}
 }
 
-if (document.getElementById('cartItemsCount')) updateCartCount();
+if (document.querySelector('#cartItemsCount, .cartItemsCount')) updateCartCount();
 
 function updateNavUnreadCount(count) {
   const el = document.getElementById('navNotifCount');
@@ -113,6 +115,9 @@ async function syncGlobalAuth() {
         });
         const balEl = document.getElementById('clientBalance');
         if (balEl) balEl.textContent = `£${Number(user.balance || 0).toFixed(2)}`;
+        document.querySelectorAll('.clientBalanceMobile').forEach(el => {
+          el.textContent = `${Number(user.balance || 0).toFixed(2)}`;
+        });
         const acctName = document.getElementById('accountUsername');
         if (acctName) acctName.textContent = user.email ? user.email.split('@')[0] : (user.name || 'user');
         return user;

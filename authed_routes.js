@@ -83,8 +83,6 @@ function createAuthedSystem(deps) {
     const isOrders = currentPath === "/dashboard/orders" || currentPath === "/orders" || currentPath === "/orders.html";
     const isSupport = currentPath === "/support" || currentPath === "/support.html";
     const isVouches = currentPath === "/vouches" || currentPath === "/vouches.html";
-    const isVery = currentPath === "/very" || currentPath === "/very.html";
-    const isNotifications = currentPath === "/notifications" || currentPath === "/notifications.html";
     const isCart = currentPath === "/cart" || currentPath === "/cart.html";
     const isBalance = currentPath === "/balance" || currentPath === "/deposit" || currentPath === "/balance.html";
 
@@ -100,55 +98,100 @@ function createAuthedSystem(deps) {
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="headerCollapse">
-    <ul class="navbar-nav align-items-center">
-      <li class="nav-item"><a class="nav-link ${isHome ? 'active' : ''}" href="/products">Home</a></li>
-      <li class="nav-item"><a class="nav-link ${isOrders ? 'active' : ''}" href="/dashboard/orders">Orders</a></li>
-      <li class="nav-item"><a class="nav-link ${isSupport ? 'active' : ''}" href="/support">Support</a></li>
-      <li class="nav-item"><a class="nav-link ${isVouches ? 'active' : ''}" href="/vouches">Vouches</a></li>
-      <li class="nav-item"><a class="nav-link ${isVery ? 'active' : ''}" href="/very">VERY</a></li>
-      <li class="nav-item nav-item-notifications">
-        <a class="nav-link ${isNotifications ? 'active' : ''}" href="/notifications">Notifications</a>
-        <span class="nav-notif-badge" id="navNotifCount" hidden>0</span>
-      </li>
-    </ul>
-    <ul class="navbar-nav ms-auto align-items-center">
-      <li class="nav-item nav-item-balance">
-        <a class="nav-link nav-balance-link ${isBalance ? 'active' : ''}" href="/balance">Balance | <span id="clientBalance">£${balanceVal}</span></a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)" role="button">My Account</a>
-        <ul class="dropdown-menu dropdown-menu-end account-dropdown">
-          <li class="account-dropdown-header"><div class="acct-greet">Signed in as</div><div class="acct-name">${escapeHtml(displayName)}</div></li>
-          <li>
-            <a class="dropdown-item" href="/dashboard/change-email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              <span>Change Email</span>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="/dashboard/change-password">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>Change Password</span>
-            </a>
-          </li>
-          <li><hr class="dropdown-divider"></li>
-          <li>
-            <a class="dropdown-item dropdown-item-danger" href="/auth/logout">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              <span>Logout</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link position-relative cart-count ${isCart ? 'active' : ''}" href="/cart">
-          <svg height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M274.272-95.384q-30.272 0-51.118-20.882-20.847-20.882-20.847-51.154 0-30.272 20.882-51.118 20.882-20.847 51.154-20.847 30.272 0 51.119 20.882 20.846 20.882 20.846 51.154 0 30.272-20.882 51.118-20.881 20.847-51.154 20.847Zm399.385 0q-30.272 0-51.119-20.882-20.846-20.882-20.846-51.154 0-30.272 20.882-51.118 20.881-20.847 51.154-20.847 30.272 0 51.118 20.882 20.847 20.882 20.847 51.154 0 30.272-20.882 51.118-20.882 20.847-51.154 20.847ZM231.231-742 334-527.385h271.385q6.923 0 12.307-3.461 5.385-3.462 9.231-9.615l98.615-180.001q4.616-8.461.77-14.999Q722.462-742 713.231-742h-482Zm-31.539-66h574.77q25.587 0 38.486 21.269 12.898 21.269.129 43.808L678.769-500.615q-9.692 17.615-27.026 28.423t-38.051 10.808H316l-36.615 65.23q-6.154 9.231-.385 20t17.308 10.769h418.384q13.539 0 23.27 9.731t9.731 23.269q0 13.539-9.731 23.27t-23.27 9.731H274.308q-43 0-62.731-36.5-19.731-36.501-.346-72.27l56.153-103.231L120.307-822H75q-13.539 0-23.27-9.731Q42-841.461 42-855q0-13.539 9.73-23.269Q61.462-888 75-888h57.308q13.128 0 24.153 6.672 11.026 6.672 16.924 18.713L199.692-808ZM334-527.385h286-286Z" fill="currentColor"></path>
-          </svg>
-          <span id="cartItemsCount">0</span>
+    <!-- Desktop Header (>= 992px) -->
+    <div class="d-none d-lg-flex w-100 align-items-center">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item"><a class="nav-link ${isHome ? 'active' : ''}" href="/products">Home</a></li>
+        <li class="nav-item"><a class="nav-link ${isOrders ? 'active' : ''}" href="/dashboard/orders">Orders</a></li>
+        <li class="nav-item"><a class="nav-link ${isSupport ? 'active' : ''}" href="/support">Support</a></li>
+        <li class="nav-item"><a class="nav-link ${isVouches ? 'active' : ''}" href="/vouches">Vouches</a></li>
+      </ul>
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item nav-item-balance">
+          <a class="nav-link nav-balance-link ${isBalance ? 'active' : ''}" href="/balance">Balance | <span id="clientBalance">£${balanceVal}</span></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)" role="button">My Account</a>
+          <ul class="dropdown-menu dropdown-menu-end account-dropdown">
+            <li class="account-dropdown-header"><div class="acct-greet">Signed in as</div><div class="acct-name">${escapeHtml(displayName)}</div></li>
+            <li>
+              <a class="dropdown-item" href="/dashboard/change-email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <span>Change Email</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/dashboard/change-password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Change Password</span>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item dropdown-item-danger" href="/auth/logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Logout</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link position-relative cart-count ${isCart ? 'active' : ''}" href="/cart">
+            <svg height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M274.272-95.384q-30.272 0-51.118-20.882-20.847-20.882-20.847-51.154 0-30.272 20.882-51.118 20.882-20.847 51.154-20.847 30.272 0 51.119 20.882 20.846 20.846 20.846 51.154 0 30.272-20.882 51.118-20.881 20.847-51.154 20.847Zm399.385 0q-30.272 0-51.119-20.882-20.846-20.882-20.846-51.154 0-30.272 20.882-51.118 20.881-20.847 51.154-20.847 30.272 0 51.118 20.882 20.847 20.882 20.847 51.154 0 30.272-20.882 51.118-20.882 20.847-51.154 20.847ZM231.231-742 334-527.385h271.385q6.923 0 12.307-3.461 5.385-3.462 9.231-9.615l98.615-180.001q4.616-8.461.77-14.999Q722.462-742 713.231-742h-482Zm-31.539-66h574.77q25.587 0 38.486 21.269 12.898 21.269.129 43.808L678.769-500.615q-9.692 17.615-27.026 28.423t-38.051 10.808H316l-36.615 65.23q-6.154 9.231-.385 20t17.308 10.769h418.384q13.539 0 23.27 9.731t9.731 23.269q0 13.539-9.731 23.27t-23.27 9.731H274.308q-43 0-62.731-36.5-19.731-36.501-.346-72.27l56.153-103.231L120.307-822H75q-13.539 0-23.27-9.731Q42-841.461 42-855q0-13.539 9.73-23.269Q61.462-888 75-888h57.308q13.128 0 24.153 6.672 11.026 6.672 16.924 18.713L199.692-808ZM334-527.385h286-286Z" fill="currentColor"></path>
+            </svg>
+            <span id="cartItemsCount" class="cartItemsCount">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Mobile Navigation (< 992px) matching authed.cc 1:1 -->
+    <div class="d-flex d-lg-none flex-column align-items-center mobile-nav-container w-100">
+      <div class="mobile-pill-stack">
+        <!-- 1. HOME -->
+        <a class="mobile-pill-btn mobile-pill-home ${isHome ? 'active' : ''}" href="/products">HOME</a>
+
+        <!-- 2. VOUCHES -->
+        <a class="mobile-pill-btn ${isVouches ? 'active' : ''}" href="/vouches">VOUCHES</a>
+
+        <!-- 3. SUPPORT -->
+        <a class="mobile-pill-btn ${isSupport ? 'active' : ''}" href="/support">SUPPORT</a>
+
+        <!-- 4. COMMUNITY with Telegram Icon Badge -->
+        <a class="mobile-pill-btn mobile-pill-community" href="https://t.me/FalconLogsGatewayBot" target="_blank" rel="noopener">
+          <span>COMMUNITY</span>
+          <span class="tg-circle-badge">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+            </svg>
+          </span>
         </a>
-      </li>
-    </ul>
+
+        <!-- 5. DASHBOARD Dropdown -->
+        <div class="mobile-dashboard-wrapper">
+          <button class="mobile-pill-btn mobile-dashboard-btn" type="button" data-bs-toggle="collapse" data-bs-target="#mobileDashboardCard" aria-expanded="false" aria-controls="mobileDashboardCard">
+            <span>DASHBOARD</span> <span class="dashboard-chevron">▾</span>
+          </button>
+          <div class="collapse mobile-dashboard-card" id="mobileDashboardCard">
+            <a class="mobile-dashboard-link" href="/dashboard/orders">ORDERS</a>
+            <a class="mobile-dashboard-link" href="/dashboard/change-password">SETTING</a>
+            <a class="mobile-dashboard-link" href="/balance">BALANCE | £<span class="clientBalanceMobile">${balanceVal}</span></a>
+            <a class="mobile-dashboard-link mobile-dashboard-logout" href="/auth/logout">LOGOUT</a>
+          </div>
+        </div>
+
+        <!-- 6. Cart Icon at Bottom -->
+        <div class="mobile-cart-item">
+          <a class="mobile-cart-link" href="/cart" aria-label="Cart">
+            <span class="mobile-cart-count cartItemsCount">0</span>
+            <svg height="28" viewBox="0 -960 960 960" width="28">
+              <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L710-496q-11 20-29.5 32T640-452H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 72Z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>`;
     } else {
@@ -161,14 +204,23 @@ function createAuthedSystem(deps) {
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="headerCollapse">
-    <ul class="navbar-nav align-items-center">
-      <li class="nav-item"><a class="nav-link ${isHome ? 'active' : ''}" href="/products">Home</a></li>
-    </ul>
-    <ul class="navbar-nav ms-auto navbar-auth-actions">
-      <li class="nav-item"><a class="nav-link btn btn-primary" href="/auth/login">login</a></li>
-      <li class="nav-item navbar-auth-or-wrap"><span class="navbar-auth-or text-white">or</span></li>
-      <li class="nav-item"><a class="nav-link btn btn-gradient" href="/auth/signup">create account</a></li>
-    </ul>
+    <div class="d-none d-lg-flex w-100 align-items-center">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item"><a class="nav-link ${isHome ? 'active' : ''}" href="/products">Home</a></li>
+      </ul>
+      <ul class="navbar-nav ms-auto navbar-auth-actions">
+        <li class="nav-item"><a class="nav-link btn btn-primary" href="/auth/login">login</a></li>
+        <li class="nav-item navbar-auth-or-wrap"><span class="navbar-auth-or text-white">or</span></li>
+        <li class="nav-item"><a class="nav-link btn btn-gradient" href="/auth/signup">create account</a></li>
+      </ul>
+    </div>
+    <div class="d-flex d-lg-none flex-column align-items-center mobile-nav-container w-100">
+      <div class="mobile-pill-stack">
+        <a class="mobile-pill-btn mobile-pill-home ${isHome ? 'active' : ''}" href="/products">HOME</a>
+        <a class="mobile-pill-btn" href="/auth/login">LOGIN</a>
+        <a class="mobile-pill-btn" href="/auth/signup">CREATE ACCOUNT</a>
+      </div>
+    </div>
   </div>
 </nav>`;
     }

@@ -4306,20 +4306,237 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
   padding: .5rem .75rem !important;
 }
 
-#cartItemsCount {
+#cartItemsCount,
+.cartItemsCount {
   position: absolute !important;
-  top: 2px !important;
-  right: 2px !important;
+  top: 1px !important;
+  left: 52% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-width: 17px !important;
-  height: 17px !important;
-  padding: 0 4px !important;
-  border-radius: 10px !important;
-  background: #ea580c !important;
+  min-width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
   color: #fff !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
 }
+
+/* =========================================================================
+   Mobile Navigation Menu Redesign (1:1 with authed.cc)
+   ========================================================================= */
+@media (max-width: 991.98px) {
+  #headerCollapse {
+    background: #141414;
+    border-radius: 8px;
+    padding: 1.25rem 0 1rem;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .mobile-nav-container {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .mobile-pill-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .mobile-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #1c1c1c;
+    color: #ffffff !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    padding: 9px 24px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    min-width: 130px;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  }
+
+  .mobile-pill-btn:hover,
+  .mobile-pill-btn:active {
+    background: #252525;
+    color: #ffffff !important;
+  }
+
+  /* HOME button is primary Falcon Orange */
+  .mobile-pill-home {
+    background: #ea580c !important;
+    border-color: #ea580c !important;
+    color: #ffffff !important;
+    min-width: 120px;
+  }
+
+  .mobile-pill-home:hover {
+    background: #c2410c !important;
+    border-color: #c2410c !important;
+  }
+
+  /* Telegram icon badge for COMMUNITY */
+  .mobile-pill-community {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 170px;
+  }
+
+  .tg-circle-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ea580c;
+    flex-shrink: 0;
+  }
+
+  .tg-circle-badge svg {
+    width: 10px;
+    height: 10px;
+    fill: #ffffff;
+  }
+
+  /* DASHBOARD button */
+  .mobile-dashboard-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mobile-dashboard-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 190px;
+  }
+
+  .mobile-dashboard-btn[aria-expanded="true"],
+  .mobile-dashboard-btn.active {
+    border-color: #2563eb;
+    background: #222222;
+  }
+
+  .dashboard-chevron {
+    font-size: 11px;
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-dashboard-btn[aria-expanded="true"] .dashboard-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Dropdown Card directly beneath DASHBOARD */
+  .mobile-dashboard-card {
+    display: none;
+    width: 230px;
+    background: #171717;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    margin-top: 6px;
+    padding: 8px 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+
+  .mobile-dashboard-card.collapse.show,
+  .mobile-dashboard-card.show {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .mobile-dashboard-link {
+    display: block;
+    padding: 10px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    text-align: left;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .mobile-dashboard-link:hover {
+    background: #222222;
+    color: #ea580c !important;
+  }
+
+  .mobile-dashboard-logout {
+    color: #ef4444 !important;
+  }
+
+  .mobile-dashboard-logout:hover {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #f87171 !important;
+  }
+
+  /* Cart at bottom of mobile menu */
+  .mobile-cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 18px;
+    margin-bottom: 6px;
+  }
+
+  .mobile-cart-link {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    color: #ffffff !important;
+  }
+
+  .mobile-cart-count {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff !important;
+    line-height: 1;
+    margin-bottom: 3px;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    min-width: auto !important;
+    height: auto !important;
+  }
+
+  .mobile-cart-link svg {
+    color: #ffffff;
+    fill: currentColor;
+  }
+}
+

@@ -64,13 +64,44 @@ async function loadProducts() {
 }
 
 // Map our country codes to flagcdn ISO codes
-const COUNTRY_FLAG = { ww: 'un', usa: 'us', uk: 'gb', ca: 'ca', aus: 'au' };
-const COUNTRY_LABEL = { ww: 'Worldwide', usa: 'USA', uk: 'UK', ca: 'Canada', aus: 'Australia' };
-// Worldwide gets a globe emoji instead of the UN flag for a friendlier look
 const TWEMOJI_GLOBE = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f30e.svg';
+
+const COUNTRY_FLAG = {
+  ww: 'un',
+  global: 'un',
+  worldwide: 'un',
+  all: 'un',
+  usa: 'us',
+  us: 'us',
+  uk: 'gb',
+  gb: 'gb',
+  ca: 'ca',
+  aus: 'au',
+  au: 'au',
+  eu: 'eu'
+};
+
+const COUNTRY_LABEL = {
+  ww: 'Worldwide',
+  global: 'Worldwide',
+  worldwide: 'Worldwide',
+  all: 'Worldwide',
+  usa: 'USA',
+  us: 'USA',
+  uk: 'UK',
+  gb: 'UK',
+  ca: 'Canada',
+  aus: 'Australia',
+  au: 'Australia',
+  eu: 'Europe'
+};
+
 function flagUrl(code) {
-  if (code === 'ww' || !code) return TWEMOJI_GLOBE;
-  return `https://flagcdn.com/${COUNTRY_FLAG[code] || 'un'}.svg`;
+  const c = String(code || 'ww').toLowerCase().trim();
+  if (c === 'ww' || c === 'global' || c === 'worldwide' || c === 'all' || !c) {
+    return TWEMOJI_GLOBE;
+  }
+  return `https://flagcdn.com/${COUNTRY_FLAG[c] || 'un'}.svg`;
 }
 
 function renderProducts() {
@@ -80,7 +111,7 @@ function renderProducts() {
 
   grid.innerHTML = page.map(p => {
     const flagSrc = flagUrl(p.country);
-    const label = COUNTRY_LABEL[p.country] || 'Worldwide';
+    const label = COUNTRY_LABEL[String(p.country || '').toLowerCase().trim()] || 'Worldwide';
     return `
     <div class="item" data-productid="${p.id}" onclick="handleProductBuy('${p.id}')">
       <div class="img-top image${p.image_url ? '' : ' no-image'}">
@@ -447,7 +478,7 @@ async function addToCartFromModal(productId) {
     if (stockFileId) body.stockFileId = stockFileId;
     const d = await apiFetch('/api/cart/add', { method: 'POST', body });
     showToast('Added to cart!', 'success');
-    document.getElementById('cartItemsCount').textContent = d.cartCount;
+    document.querySelectorAll('#cartItemsCount, .cartItemsCount').forEach(el => el.textContent = d.cartCount);
     btn.textContent = 'Added ✓';
     setTimeout(() => { btn.textContent = 'Add to cart'; btn.disabled = false; }, 2000);
   } catch (err) {

@@ -80,7 +80,9 @@ async function loadCart() {
     }).join('');
 
     updateTotals();
-    document.getElementById('cartItemsCount').textContent = cartItems.reduce((s, i) => s + i.quantity, 0);
+    document.querySelectorAll('#cartItemsCount, .cartItemsCount').forEach(el => {
+      el.textContent = cartItems.reduce((s, i) => s + i.quantity, 0);
+    });
   } catch (err) {
     area.innerHTML = `<p class="text-danger">${err.message}</p>`;
   }
