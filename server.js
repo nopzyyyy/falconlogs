@@ -5117,7 +5117,8 @@ ${escapeTelegramHtml(r.reason)}
 
     // Strict allowlist & Mandatory Login Gate
     const ADMIN_FILES = new Set(["/admin.html", "/admin.js", "/god.html", "/god.js"]);
-    const PUBLIC_PAGES = new Set(["/login.html", "/signup.html"]);
+    const AUTH_PAGES = new Set(["/login.html", "/signup.html"]);
+    const PUBLIC_PAGES = new Set(["/tos.html", "/faq.html"]);
 
     const fileSession = getSession(req);
 
@@ -5127,7 +5128,7 @@ ${escapeTelegramHtml(r.reason)}
     }
 
     if (!fileSession) {
-      if (requestedPath.endsWith(".html") && !PUBLIC_PAGES.has(requestedPath)) {
+      if (requestedPath.endsWith(".html") && !AUTH_PAGES.has(requestedPath) && !PUBLIC_PAGES.has(requestedPath)) {
         const cleanPath = requestedPath.slice(0, -5);
         const nextParam = (cleanPath === "/index" || cleanPath === "/" || cleanPath === "/products" || cleanPath === "/logs")
           ? ""
@@ -5136,7 +5137,7 @@ ${escapeTelegramHtml(r.reason)}
       }
     } else {
       // If already logged in and visiting login or signup, redirect to store or admin
-      if (PUBLIC_PAGES.has(requestedPath)) {
+      if (AUTH_PAGES.has(requestedPath)) {
         const role = fileSession.user.role;
         if (role === "ADMIN") return redirect(res, "/admin");
         if (role === "GOD") return redirect(res, "/god");
