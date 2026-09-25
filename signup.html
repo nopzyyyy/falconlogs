@@ -19,7 +19,7 @@
       }
 
       body {
-        background: #000000;
+        background: #141414;
         color: #ffffff;
         font-family: 'Montserrat', sans-serif;
         min-height: 100vh;
@@ -28,16 +28,6 @@
         justify-content: center;
         padding: 24px 16px;
         overflow-x: hidden;
-      }
-
-      .login-particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 0;
       }
 
       .standalone-login-wrap {
@@ -228,7 +218,6 @@
     </style>
   </head>
   <body>
-    <canvas id="particlesCanvas" class="login-particles"></canvas>
     <div class="standalone-login-wrap">
       <!-- LOGO -->
       <a href="/" class="login-brand-link" aria-label="Falcon Logs Home">
@@ -428,108 +417,6 @@
           submitBtn.textContent = isRegister ? "Register" : "Login";
         }
       });
-
-      // ==========================================
-      // RISING ORANGE PARTICLES ENGINE
-      // ==========================================
-      (function() {
-        const canvas = document.getElementById('particlesCanvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let width = 0;
-        let height = 0;
-        let animationFrameId = null;
-
-        const colors = [
-          { r: 234, g: 88, b: 12 },   // #ea580c (Falcon Orange)
-          { r: 249, g: 115, b: 22 },  // #f97316 (Vibrant Orange)
-          { r: 251, g: 146, b: 60 },  // #fb923c (Bright Orange)
-          { r: 253, g: 186, b: 116 }, // #fdba74 (Soft Orange Amber)
-          { r: 194, g: 65, b: 12 }    // #c2410c (Deep Ember)
-        ];
-
-        function resize() {
-          const dpr = Math.min(window.devicePixelRatio || 1, 2);
-          width = window.innerWidth;
-          height = window.innerHeight;
-          canvas.width = Math.floor(width * dpr);
-          canvas.height = Math.floor(height * dpr);
-          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        }
-
-        const PARTICLE_COUNT = 60;
-        const particles = [];
-
-        class Particle {
-          constructor(initialRandomY = true) {
-            this.reset(initialRandomY);
-          }
-
-          reset(initialRandomY = false) {
-            this.x = Math.random() * width;
-            this.y = initialRandomY ? Math.random() * height : height + 10 + Math.random() * 20;
-            this.radius = Math.random() * 1.6 + 0.8;
-            this.speedY = -(Math.random() * 0.75 + 0.35);
-            this.speedX = (Math.random() - 0.5) * 0.3;
-            this.color = colors[Math.floor(Math.random() * colors.length)];
-            this.baseAlpha = Math.random() * 0.45 + 0.25;
-            this.alpha = this.baseAlpha;
-            this.twinkleSpeed = Math.random() * 0.03 + 0.015;
-            this.twinkleAngle = Math.random() * Math.PI * 2;
-          }
-
-          update() {
-            this.y += this.speedY;
-            this.x += this.speedX + Math.sin(this.twinkleAngle) * 0.25;
-            this.twinkleAngle += this.twinkleSpeed;
-            this.alpha = Math.max(0.1, this.baseAlpha + Math.sin(this.twinkleAngle) * 0.15);
-
-            if (this.y < -15 || this.x < -25 || this.x > width + 25) {
-              this.reset(false);
-            }
-          }
-
-          draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`;
-            ctx.fill();
-          }
-        }
-
-        function initParticles() {
-          particles.length = 0;
-          for (let i = 0; i < PARTICLE_COUNT; i++) {
-            particles.push(new Particle(true));
-          }
-        }
-
-        function animate() {
-          ctx.clearRect(0, 0, width, height);
-          for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-          }
-          animationFrameId = requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', () => {
-          resize();
-          initParticles();
-        });
-
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) {
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-          } else {
-            animationFrameId = requestAnimationFrame(animate);
-          }
-        });
-
-        resize();
-        initParticles();
-        animate();
-      })();
     </script>
   </body>
 </html>
