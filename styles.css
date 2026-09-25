@@ -8473,23 +8473,25 @@ button.admin-order-head:hover {
 
 .paymentProcessor-check {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: transparent;
-  transition: all 0.2s ease;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 14px !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: transparent !important;
+  transition: all 0.2s ease !important;
 }
 
 .paymentProcessor.selected .paymentProcessor-check {
-  background: #ea580c;
-  border-color: #ea580c;
-  color: #fff;
+  background: #ea580c !important;
+  border-color: #ea580c !important;
+  color: #fff !important;
+  transform: translateY(-50%) scale(1) !important;
 }
 
 .paymentProcessor-icon {
@@ -8533,5 +8535,65 @@ button.admin-order-head:hover {
 
 .paymentProcessor.selected .paymentProcessor-desc {
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* Footer navigation and aligned Telegram badge */
+footer .navbar-nav,
+footer .footer-nav-list {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+footer .navbar .nav-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  padding: 6px 10px !important;
+  color: #fff !important;
+}
+footer .navbar .nav-link:hover {
+  color: #ea580c !important;
+}
+.footer-reviews-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+}
+.tg-circle-badge,
+.footer-tg-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  border-radius: 50% !important;
+  background: #ea580c !important;
+  flex-shrink: 0 !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: middle !important;
+}
+.tg-circle-badge svg,
+.footer-tg-badge svg {
+  width: 10px !important;
+  height: 10px !important;
+  fill: #ffffff !important;
+  display: block !important;
+}
+.footer-tg-icon {
+  transform: none !important;
 }
 

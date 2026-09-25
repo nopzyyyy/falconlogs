@@ -86,11 +86,65 @@ body > .container-md > .navbar .navbar-nav.navbar-auth-actions .navbar-auth-or,
 body > .container-md > .navbar .navbar-nav.navbar-auth-actions .nav-link.btn {
   transform: translateY(-1.5px);
 }
-/* Restore natural padding for footer nav-links so the Telegram icon sits
-   level with the surrounding text labels. */
-footer .navbar .nav-link { padding-top: 8px !important; padding-bottom: 8px !important; }
-/* Drop the Telegram icon down so it sits in the optical center of the row */
-.footer-tg-icon { transform: translateY(3px); }
+/* Footer navigation and aligned Telegram badge */
+footer .navbar-nav,
+footer .footer-nav-list {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+footer .navbar .nav-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  padding: 6px 10px !important;
+  color: #fff !important;
+}
+footer .navbar .nav-link:hover {
+  color: #ea580c !important;
+}
+.footer-reviews-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+}
+.tg-circle-badge,
+.footer-tg-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  border-radius: 50% !important;
+  background: #ea580c !important;
+  flex-shrink: 0 !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: middle !important;
+}
+.tg-circle-badge svg,
+.footer-tg-badge svg {
+  width: 10px !important;
+  height: 10px !important;
+  fill: #ffffff !important;
+  display: block !important;
+}
+.footer-tg-icon {
+  transform: none !important;
+}
 .navbar-brand > img { width: auto !important; height: 38px !important; max-height: 38px; object-fit: contain; user-select: none; outline: none; }
 .navbar-dark .navbar-nav .nav-link:not(.btn):not(.cart-count) { color: #fff !important; }
 .navbar-dark .navbar-nav .nav-link:not(.btn):not(.cart-count):hover { color: #fff !important; }
@@ -810,23 +864,24 @@ input:disabled, textarea:disabled { opacity: .5; pointer-events: none; }
 .paymentProcessor.selected::before { opacity: 1; }
 .paymentProcessor-check {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: transparent;
-  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 14px !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid rgba(255,255,255,.18) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: transparent !important;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease !important;
 }
 .paymentProcessor.selected .paymentProcessor-check {
-  background: #c2410c;
-  border-color: #c2410c;
-  color: #fff;
-  transform: scale(1);
+  background: #ea580c !important;
+  border-color: #ea580c !important;
+  color: #fff !important;
+  transform: translateY(-50%) scale(1) !important;
 }
 .paymentProcessor-icon {
   flex-shrink: 0;
