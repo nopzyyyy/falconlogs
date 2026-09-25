@@ -143,7 +143,14 @@ footer .navbar .nav-link:hover {
   display: block !important;
 }
 .footer-tg-icon {
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
   transform: none !important;
+  flex-shrink: 0 !important;
 }
 .navbar-brand > img { width: auto !important; height: 38px !important; max-height: 38px; object-fit: contain; user-select: none; outline: none; }
 .navbar-dark .navbar-nav .nav-link:not(.btn):not(.cart-count) { color: #fff !important; }
@@ -4489,7 +4496,7 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
     background: #c2410c !important;
   }
 
-  /* Telegram icon badge for COMMUNITY (no border, fits to text) */
+  /* Telegram icon for COMMUNITY (no border, fits to text) */
   .mobile-pill-community {
     display: inline-flex !important;
     align-items: center !important;
@@ -4501,21 +4508,15 @@ body.admin.admin-privacy-blur-on input.sensitive-blur {
     border: none !important;
   }
 
-  .tg-circle-badge {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 18px !important;
-    height: 18px !important;
-    border-radius: 50% !important;
-    background: #ea580c !important;
+  .mobile-pill-community .footer-tg-icon {
+    width: 15px !important;
+    height: 15px !important;
+    min-width: 15px !important;
+    min-height: 15px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    transform: none !important;
     flex-shrink: 0 !important;
-  }
-
-  .tg-circle-badge svg {
-    width: 10px !important;
-    height: 10px !important;
-    fill: #ffffff !important;
   }
 
   /* DASHBOARD button (no border, fits to text) */

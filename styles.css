@@ -8594,6 +8594,13 @@ footer .navbar .nav-link:hover {
   display: block !important;
 }
 .footer-tg-icon {
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
   transform: none !important;
+  flex-shrink: 0 !important;
 }
 
