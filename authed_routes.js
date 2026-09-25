@@ -314,7 +314,8 @@ function createAuthedSystem(deps) {
       const raw = await parseBody(req);
       const body = parseRequestBody(raw);
       const email = String(body.email || "").trim().toLowerCase();
-      const username = String(body.username || body.name || email.split("@")[0] || "User").trim();
+      const name = String(body.name || body.username || "").trim();
+      const username = name || email.split("@")[0] || "User";
       const password = String(body.password || "");
 
       if (!email || !password) {
@@ -326,7 +327,7 @@ function createAuthedSystem(deps) {
       if (!user) {
         user = {
           id: crypto.randomUUID(),
-          name: username,
+          name: name,
           username: username,
           email: email,
           passwordHash: hashPassword(password),

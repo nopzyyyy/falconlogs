@@ -225,7 +225,7 @@
       </a>
 
       <!-- TITLE -->
-      <h1 class="login-title" id="authTitle">Login</h1>
+      <h1 class="login-title" id="authTitle">Register</h1>
 
       <!-- ERROR ALERT -->
       <div class="login-alert-msg" id="authErrorMsg"></div>
@@ -233,7 +233,7 @@
       <!-- FORM -->
       <form class="login-form" id="authForm" autocomplete="on">
         <!-- Optional Name on Register -->
-        <div class="form-field" id="authNameField" style="display: none;">
+        <div class="form-field" id="authNameField" style="display: flex;">
           <label class="form-label" for="authName">Name</label>
           <input type="text" id="authName" class="form-input" placeholder="Your name (optional)" autocomplete="name">
         </div>
@@ -248,7 +248,7 @@
         <div class="form-field">
           <label class="form-label" for="authPassword">Password</label>
           <div class="form-input-wrap">
-            <input type="password" id="authPassword" class="form-input" placeholder="password" required autocomplete="current-password">
+            <input type="password" id="authPassword" class="form-input" placeholder="password" required autocomplete="new-password">
             <button type="button" class="toggle-pass-btn" id="togglePassBtn" aria-label="Toggle password">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
@@ -256,7 +256,7 @@
         </div>
 
         <!-- Confirm Password on Register -->
-        <div class="form-field" id="authConfirmPassField" style="display: none;">
+        <div class="form-field" id="authConfirmPassField" style="display: flex;">
           <label class="form-label" for="authConfirmPassword">Confirm Password</label>
           <div class="form-input-wrap">
             <input type="password" id="authConfirmPassword" class="form-input" placeholder="repeat password" autocomplete="new-password">
@@ -264,13 +264,13 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="login-btn" id="authSubmitBtn">Login</button>
+        <button type="submit" class="login-btn" id="authSubmitBtn">Register</button>
       </form>
 
       <!-- Toggle Mode -->
       <div class="login-toggle-row">
-        <span id="authToggleText">Don't have an account?</span>
-        <button type="button" class="login-toggle-btn" id="toggleAuthBtn">create one now</button>
+        <span id="authToggleText">Already have an account?</span>
+        <button type="button" class="login-toggle-btn" id="toggleAuthBtn">log in now</button>
       </div>
     </div>
 
@@ -313,9 +313,11 @@
         errorMsg.style.display = 'none';
       }
 
-      // Check URL parameters for mode=register
+      // Default to register mode on signup.html unless mode=login
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('mode') === 'register' || urlParams.has('register')) {
+      if (urlParams.get('mode') === 'login') {
+        setAuthMode(false);
+      } else {
         setAuthMode(true);
       }
 

@@ -1943,8 +1943,10 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 409, { error: "Account already exists." });
       }
 
+      const name = String(body.name || "").trim();
       const newStaff = {
         id: crypto.randomUUID(),
+        name,
         email,
         passwordHash: hashPassword(password),
         role: "ADMIN",
@@ -2928,6 +2930,7 @@ const server = http.createServer(async (req, res) => {
         .filter(user => user.role !== "GOD")
         .map(user => ({
           id: user.id,
+          name: user.name || user.username || "",
           email: user.email,
           role: user.role,
           balance: user.balance || 0,

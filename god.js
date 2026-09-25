@@ -283,12 +283,13 @@
     const list = state.users.filter(u => {
       if (!q) return true;
       return (u.email || '').toLowerCase().includes(q)
+          || (u.name  || '').toLowerCase().includes(q)
           || (u.role  || '').toLowerCase().includes(q);
     });
     $('#usersCount').textContent = `${list.length} of ${state.users.length} users`;
     const tbody = $('#usersBody');
     if (!list.length) {
-      tbody.innerHTML = '<tr><td colspan="5" class="god-empty">No users.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" class="god-empty">No users.</td></tr>';
       return;
     }
     tbody.innerHTML = list.map(u => {
@@ -297,6 +298,7 @@
         : `<span class="god-chip chip-muted">${esc(u.role)}</span>`;
       return `
         <tr>
+          <td style="font-weight:600; color:${u.name ? '#ffffff' : 'var(--muted)'};">${esc(u.name || u.username || '—')}</td>
           <td>${esc(u.email)}</td>
           <td>${roleChip}</td>
           <td style="color:var(--green); font-weight:700;">${money(u.balance)}</td>

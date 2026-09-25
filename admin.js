@@ -386,9 +386,13 @@ async function renderUsers(users) {
     const isGod = user.role === "GOD";
     const canToggleRole = !isSelf && !isGod && !IS_GOD_MODE;
     const canDelete = !isSelf && !isGod && !IS_GOD_MODE;
+    const displayName = (user.name || user.username || "").trim();
     
     return `
-      <tr data-user-email="${escapeHtml(user.email)}">
+      <tr data-user-email="${escapeHtml(user.email)}" data-user-name="${escapeHtml(displayName)}">
+        <td style="font-weight:600; color:${displayName ? '#ffffff' : 'var(--muted)'};">
+          ${escapeHtml(displayName || "—")}
+        </td>
         <td>${escapeHtml(user.email)}</td>
         <td>
           <span class="status-pill status-${user.role === 'ADMIN' ? 'completed' : (user.role === 'GOD' ? 'topup' : 'pending')}">
@@ -4072,10 +4076,12 @@ document.getElementById("createStaffForm")?.addEventListener("submit", async (e)
   }
   
   try {
+    const nameInput = document.getElementById("staffNameInput");
     const res = await fetch("/api/admin/users/create-staff", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        name: nameInput?.value.trim() || "",
         email: emailInput.value.trim(),
         password: passwordInput.value
       })
